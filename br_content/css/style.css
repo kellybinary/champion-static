@@ -492,6 +492,13 @@ fieldset .form-input {
   background-color: #013365;
 }
 
+.fx-section-start-trading h4 {
+  color: #004385;
+}
+.fx-section-start-trading .p-title {
+  padding: 10px 0;
+}
+
 .fx-advisors {
   background: url("../images/symbols/advisors.svg");
 }
