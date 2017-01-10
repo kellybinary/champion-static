@@ -199,6 +199,13 @@
   margin-bottom: 15px;
 }
 
+.fx-section-start-trading h4 {
+  color: #004385;
+}
+.fx-section-start-trading .p-title {
+  padding: 10px 0;
+}
+
 .fx-mission-header {
   width: 100%;
   /* for IE 6 */
@@ -490,13 +497,6 @@ fieldset .form-input {
 
 .test {
   background-color: #013365;
-}
-
-.fx-section-start-trading h4 {
-  color: #004385;
-}
-.fx-section-start-trading .p-title {
-  padding: 10px 0;
 }
 
 .fx-advisors {
