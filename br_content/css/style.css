@@ -486,6 +486,10 @@ fieldset .form-input {
   background-color: #013365;
 }
 
+.fx-home-start-trading ul {
+  list-style: circle;
+}
+
 .fx-advisors {
   background: url("../images/symbols/advisors.svg");
 }
