@@ -83,6 +83,9 @@
   font-weight: 700;
   margin-top: 0;
 }
+#footer-menu img {
+  width: 35px;
+}
 
 #footer-regulatory {
   padding: 10px 0;
@@ -204,9 +207,6 @@
 }
 .fx-section-start-trading .p-title {
   padding: 10px 0;
-}
-.fx-section-start-trading .button span {
-  width: 100%;
 }
 
 .fx-mission-header {
