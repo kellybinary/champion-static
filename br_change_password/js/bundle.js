@@ -20348,7 +20348,7 @@
 	                    $('#error-change-password').removeClass('hidden').text(response.error.message);
 	                } else {
 	                    setTimeout(function () {
-	                        Client.do_logout(response);
+	                        ChampionSocket.send({ logout: 1 });
 	                    }, 5000);
 	                    $form.addClass('hidden');
 	                    $('#alert-msg').removeClass('hidden');
