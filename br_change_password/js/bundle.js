@@ -20347,11 +20347,11 @@
 	                if (response.error) {
 	                    $('#error-change-password').removeClass('hidden').text(response.error.message);
 	                } else {
-	                    $('#alert-msg').removeClass('hidden');
-	                    $form.addClass('hidden');
 	                    setTimeout(function () {
 	                        Client.do_logout(response);
 	                    }, 5000);
+	                    $form.addClass('hidden');
+	                    $('#alert-msg').removeClass('hidden');
 	                }
 	            });
 	        }
