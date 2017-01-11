@@ -20322,7 +20322,7 @@
 
 	        if (!Client.is_logged_in()) {
 	            $form.addClass('hidden');
-	            $form.find('.notice-msg').removeClass('hidden').text('Please login.');
+	            $('#client_message').show().find('.notice-msg').text('Please login.');
 	            return;
 	        }
 
@@ -20351,7 +20351,7 @@
 	                        ChampionSocket.send({ logout: 1 });
 	                    }, 5000);
 	                    $form.addClass('hidden');
-	                    $form.find('.notice-msg').removeClass('hidden').text('Your password has been changed.');
+	                    $('#client_message').show().find('.notice-msg').text('Your password has been changed.');
 	                }
 	            });
 	        }
