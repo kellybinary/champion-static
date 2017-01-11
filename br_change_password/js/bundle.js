@@ -20342,6 +20342,10 @@
 	                    $('#error-change-password').removeClass('hidden').text(response.error.message);
 	                } else {
 	                    $('#success-msg').removeClass('hidden');
+	                    form_selector.addClass('hidden');
+	                    setTimeout(function () {
+	                        Client.do_logout(response);
+	                    }, 5000);
 	                }
 	            });
 	        }
