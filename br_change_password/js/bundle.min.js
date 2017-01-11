@@ -20318,7 +20318,7 @@
 	        submit_btn = void 0;
 
 	    var load = function load() {
-	        if (Client.redirect_if_login()) return;
+	        if (!Client.is_logged_in) return;
 	        $form = $(form_selector + ':visible');
 	        submit_btn = $form.find('#change_password_btn');
 	        submit_btn.on('click', submit);
