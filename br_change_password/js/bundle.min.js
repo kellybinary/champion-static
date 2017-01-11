@@ -20319,13 +20319,11 @@
 
 	    var load = function load() {
 	        $form = $(form_selector + ':visible');
-
 	        if (!Client.is_logged_in()) {
 	            $form.addClass('hidden');
 	            $('#client_message').show().find('.notice-msg').text('Please login.');
 	            return;
 	        }
-
 	        submit_btn = $form.find('#change_password_btn');
 	        submit_btn.on('click', submit);
 	        Validation.init(form_selector, [{ selector: '#old_password', validations: ['req', 'password'] }, { selector: '#new_password', validations: ['req', 'password'] }, { selector: '#repeat_password', validations: ['req', ['compare', { to: '#new_password' }]] }]);
