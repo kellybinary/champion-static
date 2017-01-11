@@ -20318,8 +20318,14 @@
 	        submit_btn = void 0;
 
 	    var load = function load() {
-	        if (!Client.is_logged_in()) return;
 	        $form = $(form_selector + ':visible');
+
+	        if (!Client.is_logged_in()) {
+	            $form.addClass('hidden');
+	            $('#alert-msg').removeClass('hidden').text('Please login.');
+	            return;
+	        }
+
 	        submit_btn = $form.find('#change_password_btn');
 	        submit_btn.on('click', submit);
 	        Validation.init(form_selector, [{ selector: '#old_password', validations: ['req', 'password'] }, { selector: '#new_password', validations: ['req', 'password'] }, { selector: '#repeat_password', validations: ['req', ['compare', { to: '#new_password' }]] }]);
@@ -20341,8 +20347,8 @@
 	                if (response.error) {
 	                    $('#error-change-password').removeClass('hidden').text(response.error.message);
 	                } else {
-	                    $('#success-msg').removeClass('hidden');
-	                    form_selector.addClass('hidden');
+	                    $('#alert-msg').removeClass('hidden');
+	                    $form.addClass('hidden');
 	                    setTimeout(function () {
 	                        Client.do_logout(response);
 	                    }, 5000);
