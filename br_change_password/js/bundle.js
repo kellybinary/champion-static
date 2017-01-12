@@ -20322,9 +20322,7 @@
 	        $form = $(form_selector + ':visible');
 	        if (!Client.is_logged_in()) {
 	            $form.addClass('hidden');
-	            $('#client_message').show().find('.notice-msg').html('Please <a href onclick="javascript:;">login</a> to view this page.');
-	            $('.notice-msg a').on('click', function (e) {
-	                e.preventDefault();
+	            $('#client_message').show().find('.notice-msg').html('Please <a href="javascript:;">log in</a> to view this page.').find('a').on('click', function () {
 	                Login.redirect_to_login();
 	            });
 	            return;
