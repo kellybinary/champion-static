@@ -662,7 +662,7 @@ fieldset .form-input {
   background: url("../images/symbols/lever_icon.svg");
 }
 
-.fx-xlg, .fx-lg, .fx-md, .fx-sm, .fx-xs, .fx-xss {
+.fx-xlg, .fx-lg, .fx-md, .fx-sm, .fx-xs, .fx-xxs {
   margin-left: auto;
   margin-right: auto;
   background-repeat: no-repeat;
