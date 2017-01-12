@@ -18464,10 +18464,10 @@
 	var ChampionContact = __webpack_require__(299);
 	var ChampionEndpoint = __webpack_require__(315);
 	var ChangePassword = __webpack_require__(316);
-	var BinaryOptions = __webpack_require__(317);
+	var BinaryOptions = __webpack_require__(318);
 	var Client = __webpack_require__(304);
-	var LoggedIn = __webpack_require__(318);
-	var Login = __webpack_require__(319);
+	var LoggedIn = __webpack_require__(319);
+	var Login = __webpack_require__(317);
 	var Utility = __webpack_require__(308);
 
 	var Champion = function () {
@@ -20308,6 +20308,7 @@
 	var ChampionSocket = __webpack_require__(301);
 	var Client = __webpack_require__(304);
 	var Validation = __webpack_require__(313);
+	var Login = __webpack_require__(317);
 
 	var ChangePassword = function () {
 	    'use strict';
@@ -20321,7 +20322,11 @@
 	        $form = $(form_selector + ':visible');
 	        if (!Client.is_logged_in()) {
 	            $form.addClass('hidden');
-	            $('#client_message').show().find('.notice-msg').text('Please login.');
+	            $('#client_message').show().find('.notice-msg').html('Please <a href onclick="javascript:;">login</a> to view this page.');
+	            $('.notice-msg a').on('click', function (e) {
+	                e.preventDefault();
+	                Login.redirect_to_login();
+	            });
 	            return;
 	        }
 	        submit_btn = $form.find('#change_password_btn');
@@ -20349,7 +20354,7 @@
 	                        ChampionSocket.send({ logout: 1 });
 	                    }, 5000);
 	                    $form.addClass('hidden');
-	                    $('#client_message').show().find('.notice-msg').text('Your password has been changed.');
+	                    $('#client_message').show().find('.notice-msg').text('Your password has been changed. Please log in again.');
 	                }
 	            });
 	        }
@@ -20365,6 +20370,47 @@
 
 /***/ },
 /* 317 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var getAppId = __webpack_require__(301).getAppId;
+	var getLanguage = __webpack_require__(303).getLanguage;
+	var Client = __webpack_require__(304);
+
+	var Login = function () {
+	    'use strict';
+
+	    var redirect_to_login = function redirect_to_login() {
+	        if (!Client.is_logged_in() && !is_login_pages()) {
+	            try {
+	                sessionStorage.setItem('redirect_url', window.location.href);
+	            } catch (e) {
+	                console.error('The website needs features which are not enabled on private mode browsing. Please use normal mode.');
+	            }
+	            window.location.href = login_url();
+	        }
+	    };
+
+	    var login_url = function login_url() {
+	        var server_url = localStorage.getItem('config.server_url');
+	        return server_url && /qa/.test(server_url) ? 'https://www.' + server_url.split('.')[1] + '.com/oauth2/authorize?app_id=' + getAppId() + '&l=' + getLanguage() : 'https://oauth.champion-fx.com/oauth2/authorize?app_id=' + getAppId() + '&l=' + getLanguage();
+	    };
+
+	    var is_login_pages = function is_login_pages() {
+	        return (/logged_inws|oauth2/.test(document.URL)
+	        );
+	    };
+
+	    return {
+	        redirect_to_login: redirect_to_login
+	    };
+	}();
+
+	module.exports = Login;
+
+/***/ },
+/* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20401,7 +20447,7 @@
 	module.exports = BinaryOptions;
 
 /***/ },
-/* 318 */
+/* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20490,47 +20536,6 @@
 	}();
 
 	module.exports = LoggedIn;
-
-/***/ },
-/* 319 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var getAppId = __webpack_require__(301).getAppId;
-	var getLanguage = __webpack_require__(303).getLanguage;
-	var Client = __webpack_require__(304);
-
-	var Login = function () {
-	    'use strict';
-
-	    var redirect_to_login = function redirect_to_login() {
-	        if (!Client.is_logged_in() && !is_login_pages()) {
-	            try {
-	                sessionStorage.setItem('redirect_url', window.location.href);
-	            } catch (e) {
-	                console.error('The website needs features which are not enabled on private mode browsing. Please use normal mode.');
-	            }
-	            window.location.href = login_url();
-	        }
-	    };
-
-	    var login_url = function login_url() {
-	        var server_url = localStorage.getItem('config.server_url');
-	        return server_url && /qa/.test(server_url) ? 'https://www.' + server_url.split('.')[1] + '.com/oauth2/authorize?app_id=' + getAppId() + '&l=' + getLanguage() : 'https://oauth.champion-fx.com/oauth2/authorize?app_id=' + getAppId() + '&l=' + getLanguage();
-	    };
-
-	    var is_login_pages = function is_login_pages() {
-	        return (/logged_inws|oauth2/.test(document.URL)
-	        );
-	    };
-
-	    return {
-	        redirect_to_login: redirect_to_login
-	    };
-	}();
-
-	module.exports = Login;
 
 /***/ }
 /******/ ]);
