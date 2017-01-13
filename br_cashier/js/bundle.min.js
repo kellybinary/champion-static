@@ -35774,19 +35774,28 @@
 	    'use strict';
 
 	    var load = function load() {
-	        switch (Client) {
-	            case Client.is_logged_in() && Client.is_virtual():
-	                console.log('logged in and is virtual');
-	                break;
-	            case Client.is_logged_in() && !Client.is_virtual():
-	                console.log('logged in and is real');
-	                break;
-	            case !Client.is_logged_in():
-	                console.log('logged out');
-	                break;
-	            default:
-	                break;
+	        // switch (Client) {
+	        //     case (Client.is_logged_in() && Client.is_virtual()):
+	        //         console.log('logged in and is virtual');
+	        //         break;
+	        //     case (Client.is_logged_in() && !Client.is_virtual()):
+	        //         console.log('logged in and is real');
+	        //         break;
+	        //     case (!Client.is_logged_in()):
+	        //         console.log('logged out');
+	        //         break;
+	        //     default:
+	        //         break;
+	        // }
+
+	        if (Client.is_logged_in() && Client.is_virtual()) {
+	            console.log('logged in and is virtual');
+	        } else if (Client.is_logged_in() && !Client.is_virtual()) {
+	            console.log('logged in and is real');
+	        } else {
+	            console.log('logged out');
 	        }
+
 	        //
 	        // if (Client.is_logged_in()) {
 	        //     if (Client.is_virtual()) {
