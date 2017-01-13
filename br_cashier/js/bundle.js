@@ -18465,8 +18465,9 @@
 	var ChampionEndpoint = __webpack_require__(428);
 	var ChangePassword = __webpack_require__(429);
 	var BinaryOptions = __webpack_require__(431);
+	var Cashier = __webpack_require__(432);
 	var Client = __webpack_require__(304);
-	var LoggedIn = __webpack_require__(432);
+	var LoggedIn = __webpack_require__(433);
 	var Login = __webpack_require__(430);
 	var Utility = __webpack_require__(308);
 
@@ -18510,7 +18511,8 @@
 	            endpoint: ChampionEndpoint,
 	            logged_inws: LoggedIn,
 	            'binary-options': BinaryOptions,
-	            change_password: ChangePassword
+	            change_password: ChangePassword,
+	            cashier: Cashier
 	        };
 	        if (page in pages_map) {
 	            _active_script = pages_map[page];
@@ -35762,6 +35764,48 @@
 
 /***/ },
 /* 432 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Client = __webpack_require__(304);
+
+	var Cashier = function () {
+	    'use strict';
+
+	    var load = function load() {
+	        if (Client.is_virtual()) {
+	            $('#deposit-btn').hide();
+	            $('#withdraw-btn').hide();
+	        } else {
+	            $('#fx-virtual').hide();
+	        }
+	    };
+
+	    var unload = function unload() {};
+
+	    // const topUp = () => {
+	    //     console.log('do topup');
+	    // };
+	    //
+	    // const deposit = () => {
+	    //     console.log('do deposit');
+	    // };
+	    //
+	    // const withdraw = () => {
+	    //     console.log('do withdraw');
+	    // };
+
+	    return {
+	        load: load,
+	        unload: unload
+	    };
+	}();
+
+	module.exports = Cashier;
+
+/***/ },
+/* 433 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

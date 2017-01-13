@@ -18,11 +18,11 @@
     <meta name="description" content="ChampionFX Static" />
     <link rel="icon" type="image/png" sizes="16x16" href="/champion-static/br_cashier/images/favicons/CFX_favicon16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/champion-static/br_cashier/images/favicons/CFX_favicon32.png" />
-     <link rel="stylesheet" href="/champion-static/br_cashier/css/flex.min.css?o8t371nr" />
-     <link rel="stylesheet" href="/champion-static/br_cashier/css/style.min.css?o8t371nr" />
-     <link rel="stylesheet" href="https://style.champion-fx.com/binary.css?o8t371nr" />
-      <script src="/champion-static/br_cashier/js/bundle.js?o8t371nr" type="text/javascript"></script>
-     <script src="https://style.champion-fx.com/binary.js?o8t371nr" type="text/javascript"></script>
+     <link rel="stylesheet" href="/champion-static/br_cashier/css/flex.min.css?tx6ifqsc" />
+     <link rel="stylesheet" href="/champion-static/br_cashier/css/style.min.css?tx6ifqsc" />
+     <link rel="stylesheet" href="https://style.champion-fx.com/binary.css?tx6ifqsc" />
+      <script src="/champion-static/br_cashier/js/bundle.js?tx6ifqsc" type="text/javascript"></script>
+     <script src="https://style.champion-fx.com/binary.js?tx6ifqsc" type="text/javascript"></script>
      
 </head>
 <body>
@@ -152,14 +152,18 @@
     <main class="page-content" aria-label="Content" id="champion-container">
         <div class="wrapper" id="champion-content">
             <div class="fx-section">
-    <div class="container">
+    <div class="fx-cashier container">
+
         <div class="row">
             <div class="col-sm">
                 <h1>Cashier</h1>
             </div>
         </div>
-        <div class="row">
-            <h2>Get more virtual money</h2>
+
+        <div class="fx-virtual row">
+            <div class="col-md-12">
+                <h2>Get more virtual money</h2>
+            </div>
             <div class="col-md-2">
                 <div class="fx-md fx-king"></div>
             </div>
@@ -167,9 +171,27 @@
                 <div>You can request more virtual money if your virtual balance falls below USD 1,000.00.</div>
             </div>
             <div class="col-md-4">
-                <button>Get USD 10,000.00</button>
+                <button id="topup-btn">Get USD 10,000.00</button>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Bank-wire, credit card, e-cash wallet</h2>
+            </div>
+            <div class="col-md-2">
+                <div class="fx-md fx-king"></div>
+            </div>
+            <div class="col-md-6">
+                <div>Deposit or withdraw to your account via bank-wire, credit card, or e-cash wallet.</div>
+                <a href="cashier/payment_methods">View available payment methods</a>
+            </div>
+            <div class="fx-real col-md-4">
+                <button id="deposit-btn">Deposit</button>
+                <button id="withdraw-btn">Withdraw</button>
+            </div>
+        </div>
+
     </div>
 </div>
         </div>
