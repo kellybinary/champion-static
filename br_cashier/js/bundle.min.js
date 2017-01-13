@@ -35777,8 +35777,10 @@
 	        if (Client.is_logged_in()) {
 	            if (Client.is_virtual()) {
 	                $('.fx-virtual').show();
+	                $('.fx-real').hide();
 	            } else {
 	                $('.fx-real').show();
+	                $('.fx-virtual').hide();
 	            }
 	        } else {
 	            $('.fx-virtual').hide();
