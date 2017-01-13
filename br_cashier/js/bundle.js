@@ -18514,7 +18514,7 @@
 	            'binary-options': BinaryOptions,
 	            change_password: ChangePassword,
 	            cashier: Cashier,
-	            topup_virtual: CashierTopUpVirtual
+	            top_up_virtual: CashierTopUpVirtual
 	        };
 	        if (page in pages_map) {
 	            _active_script = pages_map[page];
@@ -35838,9 +35838,9 @@
 	        if (Client.is_logged_in() && Client.is_virtual() === 1) {
 	            console.log('ds');
 	        } else if (Client.is_logged_in() && Client.is_virtual() !== 0) {
-	            $('#topup_virtual #viewError').removeClass('hidden').find('notice-msg').text('Sorry this feature is for virtual account only.');
+	            $('#topup_virtual').find('#viewError').removeClass('hidden').find('.notice-msg').text('Sorry, this feature is available to virtual accounts only.');
 	        } else {
-	            console.log('sd');
+	            $('#topup_virtual').find('#viewError').removeClass('hidden').find('.notice-msg').text('Please log in to view this page.');
 	        }
 	    };
 
