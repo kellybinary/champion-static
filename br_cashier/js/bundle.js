@@ -35834,13 +35834,21 @@
 	var CashierTopUpVirtual = function () {
 	    'use strict';
 
+	    var container = void 0,
+	        viewError = void 0,
+	        viewSuccess = void 0;
+
 	    var load = function load() {
+	        container = $('#topup_virtual');
+	        viewError = container.find('#viewError');
+	        viewSuccess = container.find('#viewSuccess');
+
 	        if (Client.is_logged_in() && Client.is_virtual() === 1) {
-	            console.log('ds');
+	            top_up_virtual();
 	        } else if (Client.is_logged_in() && Client.is_virtual() !== 0) {
-	            $('#topup_virtual').find('#viewError').removeClass('hidden').find('.notice-msg').text('Sorry, this feature is available to virtual accounts only.');
+	            viewError.removeClass('hidden').find('.notice-msg').text('Sorry, this feature is available to virtual accounts only.');
 	        } else {
-	            $('#topup_virtual').find('#viewError').removeClass('hidden').find('.notice-msg').text('Please log in to view this page.');
+	            viewError.removeClass('hidden').find('.notice-msg').text('Please log in to view this page.');
 	        }
 	    };
 
@@ -35852,9 +35860,9 @@
 	        };
 	        ChampionSocket.send(data, function (response) {
 	            if (response.error) {
-	                console.log('asd');
+	                viewError.removeClass('hidden').find('.notice-msg').text(response.error);
 	            } else {
-	                console.log('asd');
+	                viewSuccess.removeClass('hidden').find('.notice-msg').text(response.topup_virtual.currency, response.topup_virtual.amount, ' has been credited to your Virtual money account ', Client.get_value('loginid'));
 	            }
 	        });
 	    };
