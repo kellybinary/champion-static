@@ -35838,7 +35838,7 @@
 	        if (Client.is_logged_in() && Client.is_virtual() === 1) {
 	            console.log('ds');
 	        } else if (Client.is_logged_in() && Client.is_virtual() !== 0) {
-	            console.log('ds');
+	            $('#topup_virtual').find('notice-msg').text('Sorry this feature is for virtual account only.');
 	        } else {
 	            console.log('sd');
 	        }
