@@ -35774,21 +35774,35 @@
 	    'use strict';
 
 	    var load = function load() {
-	        if (Client.is_logged_in()) {
-	            if (Client.is_virtual()) {
-	                $('.fx-virtual').show();
-	                $('.fx-real').hide();
-	                if (Client.get_value('balance') > 100000) {
-	                    $('#topup-btn').addClass('button-disabled');
-	                }
-	            } else {
-	                $('.fx-real').show();
-	                $('.fx-virtual').hide();
-	            }
-	        } else {
-	            $('.fx-virtual').hide();
-	            $('.fx-real').hide();
+	        switch (Client) {
+	            case Client.is_logged_in() && Client.is_virtual():
+	                console.log('logged in and is virtual');
+	                break;
+	            case Client.is_logged_in() && !Client.is_virtual():
+	                console.log('logged in and is real');
+	                break;
+	            case !Client.is_logged_in():
+	                console.log('logged out');
+	                break;
+	            default:
+	                break;
 	        }
+	        //
+	        // if (Client.is_logged_in()) {
+	        //     if (Client.is_virtual()) {
+	        //         $('.fx-virtual').show();
+	        //         $('.fx-real').hide();
+	        //         if (Client.get_value('balance') > 100000) {
+	        //             $('#topup-btn').addClass('button-disabled');
+	        //         }
+	        //     } else {
+	        //         $('.fx-real').show();
+	        //         $('.fx-virtual').hide();
+	        //     }
+	        // } else {
+	        //     $('.fx-virtual').hide();
+	        //     $('.fx-real').hide();
+	        // }
 	    };
 
 	    var unload = function unload() {};
