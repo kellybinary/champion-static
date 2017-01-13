@@ -35788,9 +35788,9 @@
 	        //         break;
 	        // }
 
-	        if (Client.is_logged_in() && Client.is_virtual()) {
+	        if (Client.is_logged_in() && Client.is_virtual() === 1) {
 	            console.log('logged in and is virtual');
-	        } else if (Client.is_logged_in() && !Client.is_virtual()) {
+	        } else if (Client.is_logged_in() && Client.is_virtual() === 0) {
 	            console.log('logged in and is real');
 	        } else {
 	            console.log('logged out');
