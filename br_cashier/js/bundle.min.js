@@ -35776,29 +35776,16 @@
 	    var load = function load() {
 	        if (Client.is_logged_in()) {
 	            if (Client.is_virtual()) {
-	                $('#deposit-btn').hide();
-	                $('#withdraw-btn').hide();
+	                $('.fx-virtual').show();
 	            } else {
-	                $('#fx-virtual').hide();
+	                $('.fx-real').show();
 	            }
 	        } else {
-	            Client.redirect_if_login();
+	            $('.fx-loggedIn').hide();
 	        }
 	    };
 
 	    var unload = function unload() {};
-
-	    // const topUp = () => {
-	    //     console.log('do topup');
-	    // };
-	    //
-	    // const deposit = () => {
-	    //     console.log('do deposit');
-	    // };
-	    //
-	    // const withdraw = () => {
-	    //     console.log('do withdraw');
-	    // };
 
 	    return {
 	        load: load,
