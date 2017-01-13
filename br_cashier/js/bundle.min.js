@@ -35768,30 +35768,28 @@
 
 	'use strict';
 
+	// const ChampionSocket = require('../common/socket');
+	// const ChampionRouter = require('../common/router');
 	var Client = __webpack_require__(304);
-
-	/* Todo:
-	 * - deposit/withdraw
-	 * - virtual topup
-	 */
 
 	var Cashier = function () {
 	    'use strict';
 
 	    var load = function load() {
 	        if (Client.is_logged_in() && Client.is_virtual() === 1) {
-	            console.log('logged in and is virtual');
+	            // console.log('logged in and is virtual');
 	            $('.fx-virtual').show();
 	            $('.fx-real').hide();
 	            if (Client.get_value('balance') > 100000) {
 	                $('#topup-btn').addClass('button-disabled');
+	                $('#topup-btn').on('click', top_up_virtual);
 	            }
 	        } else if (Client.is_logged_in() && Client.is_virtual() !== 0) {
-	            console.log('logged in and is real');
+	            // console.log('logged in and is real');
 	            $('.fx-real').show();
 	            $('.fx-virtual').hide();
 	        } else {
-	            console.log('logged out');
+	            // console.log('logged out');
 	            $('.fx-virtual').hide();
 	            $('.fx-real').hide();
 	        }
@@ -35799,9 +35797,24 @@
 
 	    var unload = function unload() {};
 
+	    var top_up_virtual = function top_up_virtual() {
+	        console.log('top_up');
+	        // const data = {
+	        //     topup_virtual: '1',
+	        // };
+	        // ChampionSocket.send(data, (response) => {
+	        //     if (response.error) {
+	        //
+	        //     } else {
+	        //
+	        //     }
+	        // });
+	    };
+
 	    return {
 	        load: load,
-	        unload: unload
+	        unload: unload,
+	        top_up_virtual: top_up_virtual
 	    };
 	}();
 
