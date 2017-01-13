@@ -35781,7 +35781,8 @@
 	                $('.fx-real').show();
 	            }
 	        } else {
-	            $('.fx-loggedIn').hide();
+	            $('.fx-virtual').hide();
+	            $('.fx-real').hide();
 	        }
 	    };
 
