@@ -35860,9 +35860,13 @@
 	        };
 	        ChampionSocket.send(data, function (response) {
 	            if (response.error) {
-	                viewError.removeClass('hidden').find('.notice-msg').text(response.error);
+	                viewError.removeClass('hidden').find('.notice-msg').html(response.error);
 	            } else {
-	                viewSuccess.removeClass('hidden').find('.notice-msg').text(response.topup_virtual.currency, response.topup_virtual.amount, ' has been credited to your Virtual money account ', Client.get_value('loginid'));
+	                viewSuccess.removeClass('hidden').find('.notice-msg');
+	                // .text(response.topup_virtual.currency +
+	                //       response.topup_virtual.amount +
+	                //       ' has been credited to your Virtual money account ' +
+	                //       Client.get_value('loginid'));
 	            }
 	        });
 	    };
