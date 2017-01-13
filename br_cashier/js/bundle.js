@@ -35774,11 +35774,15 @@
 	    'use strict';
 
 	    var load = function load() {
-	        if (Client.is_virtual()) {
-	            $('#deposit-btn').hide();
-	            $('#withdraw-btn').hide();
+	        if (Client.is_logged_in()) {
+	            if (Client.is_virtual()) {
+	                $('#deposit-btn').hide();
+	                $('#withdraw-btn').hide();
+	            } else {
+	                $('#fx-virtual').hide();
+	            }
 	        } else {
-	            $('#fx-virtual').hide();
+	            Client.redirect_if_login();
 	        }
 	    };
 
