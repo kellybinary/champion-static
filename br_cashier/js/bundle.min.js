@@ -35770,6 +35770,11 @@
 
 	var Client = __webpack_require__(304);
 
+	/* Todo:
+	 * - deposit/withdraw
+	 * - virtual topup
+	 */
+
 	var Cashier = function () {
 	    'use strict';
 
