@@ -35778,6 +35778,9 @@
 	            if (Client.is_virtual()) {
 	                $('.fx-virtual').show();
 	                $('.fx-real').hide();
+	                if (Client.get_value('balance') > 100000) {
+	                    $('#topup-btn').addClass('button-disabled');
+	                }
 	            } else {
 	                $('.fx-real').show();
 	                $('.fx-virtual').hide();
