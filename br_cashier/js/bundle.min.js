@@ -18467,8 +18467,9 @@
 	var BinaryOptions = __webpack_require__(431);
 	var Cashier = __webpack_require__(432);
 	var CashierTopUpVirtual = __webpack_require__(433);
+	var CashierPaymentMethods = __webpack_require__(434);
 	var Client = __webpack_require__(304);
-	var LoggedIn = __webpack_require__(434);
+	var LoggedIn = __webpack_require__(435);
 	var Login = __webpack_require__(430);
 	var Utility = __webpack_require__(308);
 
@@ -18514,7 +18515,8 @@
 	            'binary-options': BinaryOptions,
 	            change_password: ChangePassword,
 	            cashier: Cashier,
-	            top_up_virtual: CashierTopUpVirtual
+	            top_up_virtual: CashierTopUpVirtual,
+	            payment_methods: CashierPaymentMethods
 	        };
 	        if (page in pages_map) {
 	            _active_script = pages_map[page];
@@ -35864,6 +35866,44 @@
 
 /***/ },
 /* 434 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Client = __webpack_require__(304);
+
+	var CashierPaymentMethods = function () {
+	    'use strict';
+
+	    var paymentMethodsContainer = void 0;
+
+	    var load = function load() {
+	        paymentMethodsContainer = $('.fx-payment-methods');
+
+	        if (Client.is_logged_in() && Client.is_virtual() === 1) {
+	            paymentMethodsContainer.find('.fx-real').hide();
+	            paymentMethodsContainer.find('.fx-logged-out').hide();
+	        } else if (Client.is_logged_in() && Client.is_virtual() !== 0) {
+	            paymentMethodsContainer.find('.fx-real').show();
+	            paymentMethodsContainer.find('.fx-logged-out').hide();
+	        } else {
+	            paymentMethodsContainer.find('.fx-real').hide();
+	            paymentMethodsContainer.find('.fx-logged-out').show();
+	        }
+	    };
+
+	    var unload = function unload() {};
+
+	    return {
+	        load: load,
+	        unload: unload
+	    };
+	}();
+
+	module.exports = CashierPaymentMethods;
+
+/***/ },
+/* 435 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
