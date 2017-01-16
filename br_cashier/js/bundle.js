@@ -36108,13 +36108,13 @@
 	    var load = function load() {
 	        cashierContainer = $('.fx-cashier');
 
-	        if (Client.is_logged_in() && Client.is_virtual() === 1) {
+	        if (Client.is_logged_in() && Client.is_virtual()) {
 	            cashierContainer.find('.fx-virtual').show();
 	            cashierContainer.find('.fx-real').hide();
 	            if (Client.get_value('balance') > 1000) {
 	                $('#VRT_topup_link').prop('href', 'javascript;:').addClass('button-disabled');
 	            }
-	        } else if (Client.is_logged_in() && Client.is_virtual() !== 0) {
+	        } else if (Client.is_logged_in() && !Client.is_virtual()) {
 	            cashierContainer.find('.fx-real').show();
 	            cashierContainer.find('.fx-virtual').hide();
 	        } else {
@@ -36152,9 +36152,9 @@
 	        viewError = container.find('#viewError');
 	        viewSuccess = container.find('#viewSuccess');
 
-	        if (Client.is_logged_in() && Client.is_virtual() === 1) {
+	        if (Client.is_logged_in() && Client.is_virtual()) {
 	            top_up_virtual();
-	        } else if (Client.is_logged_in() && Client.is_virtual() !== 0) {
+	        } else if (Client.is_logged_in() && !Client.is_virtual()) {
 	            viewError.removeClass('hidden').find('.notice-msg').text('Sorry, this feature is available to virtual accounts only.');
 	        } else {
 	            viewError.removeClass('hidden').find('.notice-msg').html('Please <a href="javascript:;">log in</a> to view this page.').find('a').on('click', function () {
@@ -36200,10 +36200,10 @@
 	    var load = function load() {
 	        paymentMethodsContainer = $('.fx-payment-methods');
 
-	        if (Client.is_logged_in() && Client.is_virtual() === 1) {
+	        if (Client.is_logged_in() && Client.is_virtual()) {
 	            paymentMethodsContainer.find('.fx-real').hide();
 	            paymentMethodsContainer.find('.fx-logged-out').hide();
-	        } else if (Client.is_logged_in() && Client.is_virtual() !== 0) {
+	        } else if (Client.is_logged_in() && !Client.is_virtual()) {
 	            paymentMethodsContainer.find('.fx-real').show();
 	            paymentMethodsContainer.find('.fx-logged-out').hide();
 	        } else {
