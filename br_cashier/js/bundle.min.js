@@ -35770,8 +35770,6 @@
 
 	'use strict';
 
-	// const ChampionSocket = require('../common/socket');
-	// const ChampionRouter = require('../common/router');
 	var Client = __webpack_require__(304);
 
 	var Cashier = function () {
@@ -35779,18 +35777,15 @@
 
 	    var load = function load() {
 	        if (Client.is_logged_in() && Client.is_virtual() === 1) {
-	            // console.log('logged in and is virtual');
 	            $('.fx-virtual').show();
 	            $('.fx-real').hide();
-	            if (Client.get_value('balance') > 100000) {
-	                $('#topup-btn').addClass('button-disabled');
+	            if (Client.get_value('balance') > 1000) {
+	                $('#VRT_topup_link').prop('href', 'javascript;:').addClass('button-disabled');
 	            }
 	        } else if (Client.is_logged_in() && Client.is_virtual() !== 0) {
-	            // console.log('logged in and is real');
 	            $('.fx-real').show();
 	            $('.fx-virtual').hide();
 	        } else {
-	            // console.log('logged out');
 	            $('.fx-virtual').hide();
 	            $('.fx-real').hide();
 	        }
