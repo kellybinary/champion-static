@@ -18464,14 +18464,16 @@
 	var ChampionContact = __webpack_require__(299);
 	var ChampionEndpoint = __webpack_require__(428);
 	var ChangePassword = __webpack_require__(429);
-	var BinaryOptions = __webpack_require__(431);
-	var Cashier = __webpack_require__(432);
-	var CashierTopUpVirtual = __webpack_require__(433);
-	var CashierPaymentMethods = __webpack_require__(434);
+	var LostPassword = __webpack_require__(431);
+	var ResetPassword = __webpack_require__(432);
+	var BinaryOptions = __webpack_require__(433);
 	var Client = __webpack_require__(304);
-	var LoggedIn = __webpack_require__(435);
+	var LoggedIn = __webpack_require__(434);
 	var Login = __webpack_require__(430);
 	var Utility = __webpack_require__(308);
+	var Cashier = __webpack_require__(435);
+	var CashierTopUpVirtual = __webpack_require__(436);
+	var CashierPaymentMethods = __webpack_require__(437);
 
 	var Champion = function () {
 	    'use strict';
@@ -18513,7 +18515,9 @@
 	            endpoint: ChampionEndpoint,
 	            logged_inws: LoggedIn,
 	            'binary-options': BinaryOptions,
-	            change_password: ChangePassword,
+	            'change-password': ChangePassword,
+	            'lost-password': LostPassword,
+	            'reset-password': ResetPassword,
 	            cashier: Cashier,
 	            top_up_virtual: CashierTopUpVirtual,
 	            payment_methods: CashierPaymentMethods
@@ -18951,7 +18955,7 @@
 	    var init = function init() {
 	        var loginid = Cookies.get('loginid');
 	        client_object.loginid_array = parseLoginIDList(Cookies.get('loginid_list') || '');
-	        var is_logged_in = !!(loginid && client_object.loginid_array.length > 0 && get_storage_value('tokens'));
+	        var is_logged_in = !!(loginid && client_object.loginid_array.length > 0 && get_storage_value('tokens') && Cookies.get('token'));
 
 	        set_storage_value('email', Cookies.get('email'));
 	        set_storage_value('loginid', loginid);
@@ -18993,6 +18997,10 @@
 	        set_storage_value('landing_company_fullname', authorize.landing_company_fullname);
 	        set_storage_value('currency', authorize.currency);
 	        client_object.values_set = true;
+
+	        if (authorize.is_virtual && !get_boolean('has_real')) {
+	            $('.upgrade-message').removeClass('hidden');
+	        }
 	    };
 
 	    var clear_storage_values = function clear_storage_values() {
@@ -19048,17 +19056,18 @@
 	        set_cookie('loginid', client_loginid);
 	        set_cookie('loginid_list', virtual_client ? client_loginid + ':V:E' : client_loginid + ':R:E+' + Cookies.get('loginid_list'));
 	        // set local storage
-	        localStorage.setItem('GTM_newaccount', '1');
-	        localStorage.setItem('active_loginid', client_loginid);
+	        set_storage_value('loginid', client_loginid);
 	        window.location.href = default_redirect_url();
 	    };
 
 	    var is_logged_in = function is_logged_in() {
 	        return get_boolean('is_logged_in');
 	    };
-
 	    var is_virtual = function is_virtual() {
 	        return get_boolean('is_virtual');
+	    };
+	    var has_real = function has_real() {
+	        return get_boolean('has_real');
 	    };
 
 	    var do_logout = function do_logout(response) {
@@ -19102,6 +19111,7 @@
 	        process_new_account: process_new_account,
 	        is_logged_in: is_logged_in,
 	        is_virtual: is_virtual,
+	        has_real: has_real,
 	        do_logout: do_logout
 	    };
 	}();
@@ -19190,7 +19200,7 @@
 	    this.initialized = false;
 	    this.cookie_name = cookie_name;
 	    var hostname = window.location.hostname;
-	    this.domain = cookie_domain || (/\.binary\.com/i.test(hostname) ? '.' + hostname.split('.').slice(-2).join('.') : hostname);
+	    this.domain = cookie_domain || (/\.champion-fx\.com/i.test(hostname) ? '.' + hostname.split('.').slice(-2).join('.') : hostname);
 	    this.path = '/';
 	    this.expires = new Date('Thu, 1 Jan 2037 12:00:00 GMT');
 	    this.value = {};
@@ -19260,6 +19270,29 @@
 	    }
 	}
 
+	// LocalStorage can be used as a means of communication among
+	// different windows. The problem that is solved here is what
+	// happens if the user logs out or switches loginid in one
+	// window while keeping another window or tab open. This can
+	// lead to unintended trades. The solution is to reload the
+	// page in all windows after switching loginid or after logout.
+	$(document).ready(function () {
+	    // Cookies is not always available.
+	    // So, fall back to a more basic solution.
+	    var match = document.cookie.match(/\bloginid=(\w+)/);
+	    match = match ? match[1] : '';
+	    $(window).on('storage', function (jq_event) {
+	        switch (jq_event.originalEvent.key) {
+	            case 'client.loginid':
+	                if (jq_event.originalEvent.newValue !== match && (jq_event.originalEvent.newValue === '' || !/logged_inws/i.test(window.location.pathname))) {
+	                    window.location.reload();
+	                }
+	                break;
+	            // no default
+	        }
+	    });
+	});
+
 	module.exports = {
 	    CookieStorage: CookieStorage,
 	    State: State,
@@ -19301,12 +19334,12 @@
 	        staticHost = window.staticHost;
 	    }
 	    if (!staticHost || staticHost.length === 0) {
-	        staticHost = $('script[src*="binary.min.js"],script[src*="binary.js"]').attr('src');
+	        staticHost = $('script[src*="bundle.min.js"],script[src*="bundle.js"]').attr('src');
 
 	        if (staticHost && staticHost.length > 0) {
 	            staticHost = staticHost.substr(0, staticHost.indexOf('/js/') + 1);
 	        } else {
-	            staticHost = 'https://www.binary.com/';
+	            staticHost = 'https://www.champion-fx.com/';
 	        }
 
 	        if (typeof window !== 'undefined') {
@@ -19395,7 +19428,8 @@
 	        // cleaning the previous values
 	        Client.clear_storage_values();
 	        sessionStorage.removeItem('client_status');
-	        // set cookies: loginid, login
+	        // set cookies: loginid, token
+	        Client.set_value('loginid', loginid);
 	        Client.set_cookie('loginid', loginid);
 	        Client.set_cookie('token', token);
 	        $('.login-id-list a').removeAttr('disabled');
@@ -19497,10 +19531,10 @@
 	    obj_array.forEach(function (obj) {
 	        var $option = $('<option/>', { text: obj.text, value: obj.value });
 	        if (default_value === obj.value) {
-	            $option.attr('selected', 'selected');
+	            $option.prop('selected', true);
 	        }
 	        if (obj.disabled) {
-	            $option.attr('disabled', '1');
+	            $option.attr('disabled', true);
 	        }
 	        $ddl.append($option);
 	    });
@@ -20086,12 +20120,7 @@
 	    };
 
 	    var getFieldType = function getFieldType($field) {
-	        if (!$field.length) return null;
-	        var type = $field.get(0).localName;
-	        if (type === 'input' && $field.attr('type') === 'checkbox') {
-	            type = 'checkbox';
-	        }
-	        return type;
+	        return $field.length ? $field.attr('type') === 'checkbox' ? 'checkbox' : $field.get(0).localName : null;
 	    };
 
 	    var getFieldValue = function getFieldValue($field) {
@@ -20163,13 +20192,18 @@
 	        return (options.min ? value.trim().length >= options.min : true) && (options.max ? value.trim().length <= options.max : true);
 	    };
 
+	    var validEmailToken = function validEmailToken(value) {
+	        return value.trim().length === 48;
+	    };
+
 	    var validators_map = {
 	        req: { func: validRequired, message: 'This field is required' },
 	        email: { func: validEmail, message: 'Invalid email address' },
 	        password: { func: validPassword, message: 'Password should have lower and uppercase letters with numbers.' },
-	        general: { func: validGeneral, message: 'Only letters, space, hyphen, period, apost are allowed.' },
-	        postcode: { func: validPostCode, message: 'Only letters, numbers, hyphen are allowed.' },
-	        phone: { func: validPhone, message: 'Only numbers, space are allowed.' },
+	        general: { func: validGeneral, message: 'Only letters, space, hyphen, period, and apostrophe are allowed.' },
+	        postcode: { func: validPostCode, message: 'Only letters, numbers, and hyphen are allowed.' },
+	        phone: { func: validPhone, message: 'Only numbers and spaces are allowed.' },
+	        email_token: { func: validEmailToken, message: 'Please submit a valid verification token.' },
 	        compare: { func: validCompare, message: 'The two passwords that you entered do not match.' },
 	        min: { func: validMin, message: 'Minimum of [_1] characters required.' },
 	        length: { func: validLength, message: 'You should enter [_1] characters.' }
@@ -20181,6 +20215,7 @@
 	    // ----- Validate -----
 	    // --------------------
 	    var checkField = function checkField(field) {
+	        if (!field.$.is(':Visible')) return true;
 	        var all_is_ok = true,
 	            message = void 0;
 
@@ -20280,26 +20315,34 @@
 
 	    var residences = null;
 
-	    var submit_btn = void 0,
-	        input_residence = void 0;
+	    var container = void 0,
+	        btn_submit = void 0,
+	        ddl_residence = void 0;
+
+	    var fields = {
+	        txt_verification_code: '#txt_verification_code',
+	        txt_password: '#txt_password',
+	        txt_re_password: '#txt_re_password',
+	        ddl_residence: '#ddl_residence',
+	        btn_submit: '#btn_submit'
+	    };
 
 	    var load = function load() {
 	        if (Client.redirect_if_login()) return;
-	        var container = $('#champion-container');
-	        input_residence = container.find('#residence');
-	        submit_btn = container.find('#btn-submit');
+	        container = $('#champion-container');
+	        btn_submit = container.find(fields.btn_submit);
+	        btn_submit.on('click dblclick', submit);
 
-	        submit_btn.on('click', submit);
-
-	        Validation.init(form_selector, [{ selector: '#verification-code', validations: ['req', ['length', { min: 48, max: 48, message: 'Please submit a valid verification token.' }]] }, { selector: '#password', validations: ['req', 'password'] }, { selector: '#r-password', validations: ['req', ['compare', { to: '#password' }]] }, { selector: '#residence', validations: ['req'] }]);
+	        Validation.init(form_selector, [{ selector: fields.txt_verification_code, validations: ['req', 'email_token'] }, { selector: fields.txt_password, validations: ['req', 'password'] }, { selector: fields.txt_re_password, validations: ['req', ['compare', { to: fields.txt_password }]] }, { selector: fields.ddl_residence, validations: ['req'] }]);
 
 	        populateResidence();
 	    };
 
 	    var populateResidence = function populateResidence() {
+	        ddl_residence = container.find(fields.ddl_residence);
 	        residences = State.get('response').residence_list;
 	        var renderResidence = function renderResidence() {
-	            Utility.dropDownFromObject(input_residence, residences);
+	            Utility.dropDownFromObject(ddl_residence, residences);
 	        };
 	        if (!residences) {
 	            ChampionSocket.send({ residence_list: 1 }, function (response) {
@@ -20312,21 +20355,25 @@
 	    };
 
 	    var unload = function unload() {
-	        submit_btn.off('click', submit);
+	        if (btn_submit) {
+	            btn_submit.off('click', submit);
+	        }
 	    };
 
 	    var submit = function submit(e) {
 	        e.preventDefault();
+	        btn_submit.attr('disabled', 'disabled');
 	        if (Validation.validate(form_selector)) {
 	            var data = {
 	                new_account_virtual: 1,
-	                verification_code: $('#verification-code').val(),
-	                client_password: $('#password').val(),
-	                residence: $('#residence').val()
+	                verification_code: $(fields.txt_verification_code).val(),
+	                client_password: $(fields.txt_password).val(),
+	                residence: $(fields.ddl_residence).val()
 	            };
 	            ChampionSocket.send(data, function (response) {
 	                if (response.error) {
 	                    $('#error-create-account').removeClass('hidden').text(response.error.message);
+	                    btn_submit.removeAttr('disabled');
 	                } else {
 	                    var acc_info = response.new_account_virtual;
 	                    Client.process_new_account(acc_info.email, acc_info.client_id, acc_info.oauth_token, true);
@@ -20374,6 +20421,7 @@
 	        ddl_state = void 0;
 
 	    var fields = {
+	        ddl_title: '#ddl_title',
 	        txt_fname: '#txt_fname',
 	        txt_lname: '#txt_lname',
 	        txt_birth_date: '#txt_birth_date',
@@ -20392,7 +20440,7 @@
 	    };
 
 	    var load = function load() {
-	        if (!Client.is_logged_in()) {
+	        if (!Client.is_logged_in() || Client.has_real()) {
 	            window.location.href = default_redirect_url();
 	            return;
 	        }
@@ -20404,19 +20452,21 @@
 	        attachDatePicker();
 
 	        btn_submit = container.find(fields.btn_submit);
-	        btn_submit.on('click', submit);
+	        btn_submit.on('click dblclick', submit);
 	    };
 
 	    var unload = function unload() {
-	        btn_submit.off('click', submit);
+	        if (btn_submit) {
+	            btn_submit.off('click', submit);
+	        }
 	    };
 
 	    var initValidation = function initValidation() {
-	        Validation.init(form_selector, [{ selector: fields.txt_fname, validations: ['req', 'general', ['min', { min: 2 }]] }, { selector: fields.txt_lname, validations: ['req', 'general', ['min', { min: 2 }]] }, { selector: fields.txt_birth_date, validations: ['req'] }, { selector: fields.ddl_residence, validations: ['req'] }, { selector: fields.txt_address1, validations: ['req', 'general'] }, { selector: fields.txt_address2, validations: ['general'] }, { selector: fields.txt_city, validations: ['req', 'general'] }, { selector: fields.ddl_state, validations: ['general'] }, { selector: fields.txt_state, validations: ['general'] }, { selector: fields.txt_postcode, validations: ['postcode'] }, { selector: fields.txt_phone, validations: ['req', 'phone', ['min', { min: 6 }]] }, { selector: fields.ddl_secret_question, validations: ['req'] }, { selector: fields.txt_secret_answer, validations: ['req', ['min', { min: 4 }]] }, { selector: fields.chk_tnc, validations: ['req'] }]);
+	        Validation.init(form_selector, [{ selector: fields.txt_fname, validations: ['req', 'general', ['min', { min: 2 }]] }, { selector: fields.txt_lname, validations: ['req', 'general', ['min', { min: 2 }]] }, { selector: fields.txt_birth_date, validations: ['req'] }, { selector: fields.ddl_residence, validations: ['req'] }, { selector: fields.txt_address1, validations: ['req', 'general'] }, { selector: fields.txt_address2, validations: ['general'] }, { selector: fields.txt_city, validations: ['req', 'general'] }, { selector: fields.txt_state, validations: ['general'] }, { selector: fields.txt_postcode, validations: ['postcode'] }, { selector: fields.txt_phone, validations: ['req', 'phone', ['min', { min: 6 }]] }, { selector: fields.ddl_secret_question, validations: ['req'] }, { selector: fields.txt_secret_answer, validations: ['req', ['min', { min: 4 }]] }, { selector: fields.chk_tnc, validations: ['req'] }]);
 	    };
 
 	    var populateResidence = function populateResidence() {
-	        ddl_residence = container.find('#ddl_residence');
+	        ddl_residence = container.find(fields.ddl_residence);
 	        residences = State.get('response').residence_list;
 	        var renderResidence = function renderResidence() {
 	            Utility.dropDownFromObject(ddl_residence, residences, client_residence);
@@ -20457,7 +20507,7 @@
 	        datePickerInst.hide();
 	        datePickerInst.show({
 	            minDate: -100 * 365,
-	            maxDate: -18 * 365,
+	            maxDate: -18 * 365 - 5,
 	            yearRange: '-100:-18'
 	        });
 	        $(fields.txt_birth_date).attr('data-value', Utility.toISOFormat(moment())).change(function () {
@@ -20467,6 +20517,7 @@
 
 	    var submit = function submit(e) {
 	        e.preventDefault();
+	        btn_submit.attr('disabled', 'disabled');
 	        if (Validation.validate(form_selector)) {
 	            var data = {
 	                new_account_real: 1,
@@ -20487,9 +20538,10 @@
 	            ChampionSocket.send(data, function (response) {
 	                if (response.error) {
 	                    $('#error-create-account').removeClass('hidden').text(response.error.message);
+	                    btn_submit.removeAttr('disabled');
 	                } else {
-	                    var acc_info = response.new_account_virtual;
-	                    Client.process_new_account(acc_info.email, acc_info.client_id, acc_info.oauth_token);
+	                    var acc_info = response.new_account_real;
+	                    Client.process_new_account(Client.get_value('email'), acc_info.client_id, acc_info.oauth_token);
 	                    window.location.href = default_redirect_url();
 	                }
 	            });
@@ -35638,7 +35690,14 @@
 	    var form_selector = '#frm_change_password';
 
 	    var $form = void 0,
-	        submit_btn = void 0;
+	        btn_submit = void 0;
+
+	    var fields = {
+	        txt_old_password: '#txt_old_password',
+	        txt_new_password: '#txt_new_password',
+	        txt_re_password: '#txt_re_password',
+	        btn_submit: '#btn_submit'
+	    };
 
 	    var load = function load() {
 	        $form = $(form_selector + ':visible');
@@ -35649,13 +35708,15 @@
 	            });
 	            return;
 	        }
-	        submit_btn = $form.find('#change_password_btn');
-	        submit_btn.on('click', submit);
-	        Validation.init(form_selector, [{ selector: '#old_password', validations: ['req', 'password'] }, { selector: '#new_password', validations: ['req', 'password'] }, { selector: '#repeat_password', validations: ['req', ['compare', { to: '#new_password' }]] }]);
+	        btn_submit = $form.find(fields.btn_submit);
+	        btn_submit.on('click', submit);
+	        Validation.init(form_selector, [{ selector: fields.txt_old_password, validations: ['req', 'password'] }, { selector: fields.txt_new_password, validations: ['req', 'password'] }, { selector: fields.txt_re_password, validations: ['req', ['compare', { to: fields.txt_new_password }]] }]);
 	    };
 
 	    var unload = function unload() {
-	        submit_btn.off('click', submit);
+	        if (btn_submit) {
+	            btn_submit.off('click', submit);
+	        }
 	    };
 
 	    var submit = function submit(e) {
@@ -35663,8 +35724,8 @@
 	        if (Validation.validate(form_selector)) {
 	            var data = {
 	                change_password: 1,
-	                old_password: $('#old_password').val(),
-	                new_password: $('#new_password').val()
+	                old_password: $(fields.txt_old_password).val(),
+	                new_password: $(fields.txt_new_password).val()
 	            };
 	            ChampionSocket.send(data, function (response) {
 	                if (response.error) {
@@ -35735,6 +35796,180 @@
 
 	'use strict';
 
+	var Client = __webpack_require__(304);
+	var Validation = __webpack_require__(313);
+	var ChampionSocket = __webpack_require__(301);
+	var url_for = __webpack_require__(306).url_for;
+
+	var LostPassword = function () {
+	    'use strict';
+
+	    var form_selector = '#frm_lost_password';
+	    var btn_submit = void 0;
+
+	    var fields = {
+	        txt_email: '#txt_email',
+	        btn_submit: '#btn_submit'
+	    };
+
+	    var load = function load() {
+	        if (Client.redirect_if_login()) return;
+	        btn_submit = $(form_selector).find(fields.btn_submit);
+
+	        btn_submit.on('click', submit);
+
+	        Validation.init(form_selector, [{ selector: fields.txt_email, validations: ['req', 'email'] }]);
+	    };
+
+	    var unload = function unload() {
+	        if (btn_submit) {
+	            btn_submit.off('click', submit);
+	        }
+	    };
+
+	    var submit = function submit(e) {
+	        e.preventDefault();
+	        if (Validation.validate(form_selector)) {
+	            var data = {
+	                verify_email: $(fields.txt_email).val(),
+	                type: 'reset_password'
+	            };
+	            ChampionSocket.send(data, function (response) {
+	                if (response.error) {
+	                    $('#error-lost-password').removeClass('invisible').text(response.error.message);
+	                } else {
+	                    window.location.href = url_for('reset-password');
+	                }
+	            });
+	        }
+	    };
+
+	    return {
+	        load: load,
+	        unload: unload
+	    };
+	}();
+
+	module.exports = LostPassword;
+
+/***/ },
+/* 432 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Client = __webpack_require__(304);
+	var Validation = __webpack_require__(313);
+	var ChampionSocket = __webpack_require__(301);
+	var Login = __webpack_require__(430);
+	var DatePicker = __webpack_require__(427).DatePicker;
+	var Utility = __webpack_require__(308);
+	var moment = __webpack_require__(316);
+
+	var ResetPassword = function () {
+	    'use strict';
+
+	    var form_selector = '#frm_reset_password',
+	        hiddenClass = 'invisible';
+
+	    var container = void 0,
+	        btn_submit = void 0,
+	        real_acc = void 0;
+
+	    var fields = {
+	        txt_verification_code: '#txt_verification_code',
+	        txt_password: '#txt_password',
+	        txt_re_password: '#txt_re_password',
+	        chk_has_real: '#chk_has_real',
+	        txt_birth_date: '#txt_birth_date',
+	        btn_submit: '#btn_submit'
+	    };
+
+	    var load = function load() {
+	        if (Client.redirect_if_login()) return;
+	        container = $(form_selector);
+	        btn_submit = container.find(fields.btn_submit);
+	        real_acc = container.find(fields.chk_has_real);
+
+	        real_acc.on('click', haveRealAccountHandler);
+	        btn_submit.on('click', submit);
+	        attachDatePicker();
+
+	        Validation.init(form_selector, [{ selector: fields.txt_verification_code, validations: ['req', 'email_token'] }, { selector: fields.txt_password, validations: ['req', 'password'] }, { selector: fields.txt_re_password, validations: ['req', ['compare', { to: fields.txt_password }]] }, { selector: fields.txt_birth_date, validations: ['req'] }]);
+	    };
+
+	    var haveRealAccountHandler = function haveRealAccountHandler() {
+	        container.find('#dob_row').toggleClass(hiddenClass);
+	    };
+
+	    var submit = function submit(e) {
+	        e.preventDefault();
+	        if (Validation.validate(form_selector)) {
+	            var data = {
+	                reset_password: 1,
+	                verification_code: $(fields.txt_verification_code).val(),
+	                new_password: $(fields.txt_password).val()
+	            };
+	            if (real_acc.is(':checked')) {
+	                data.date_of_birth = $(fields.txt_birth_date).val();
+	            }
+	            ChampionSocket.send(data, function (response) {
+	                btn_submit.prop('disabled', true);
+	                $(form_selector).addClass(hiddenClass);
+	                if (response.error) {
+	                    $('p.notice-msg').addClass(hiddenClass);
+	                    $('#reset-error').removeClass(hiddenClass);
+
+	                    var resetErrorTemplate = '[_1]' + ' Please click the link below to restart the password recovery process. ' + 'If you require further assistance, please contact our Customer Support.';
+
+	                    // special handling as backend returns inconsistent format
+	                    var errMsg = resetErrorTemplate.replace('[_1]', response.error.code === 'InputValidationFailed' ? 'Token has expired.' : response.error.message);
+
+	                    $('#reset-error-msg').text(errMsg);
+	                } else {
+	                    $('p.notice-msg').text('Your password has been successfully reset. ' + 'Please log into your account using your new password.');
+	                    window.setTimeout(function () {
+	                        Login.redirect_to_login();
+	                    }, 5000);
+	                }
+	            });
+	        }
+	    };
+
+	    var attachDatePicker = function attachDatePicker() {
+	        var datePickerInst = new DatePicker(fields.txt_birth_date);
+	        datePickerInst.hide();
+	        datePickerInst.show({
+	            minDate: -100 * 365,
+	            maxDate: -18 * 365 - 5,
+	            yearRange: '-100:-18'
+	        });
+	        $(fields.txt_birth_date).attr('data-value', Utility.toISOFormat(moment())).change(function () {
+	            return Utility.dateValueChanged(this, 'date');
+	        });
+	    };
+
+	    var unload = function unload() {
+	        if (btn_submit) {
+	            real_acc.off('click', haveRealAccountHandler);
+	            btn_submit.off('click', submit);
+	        }
+	    };
+
+	    return {
+	        load: load,
+	        unload: unload
+	    };
+	}();
+
+	module.exports = ResetPassword;
+
+/***/ },
+/* 433 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
 	__webpack_require__(309);
 	var Client = __webpack_require__(304);
 
@@ -35744,7 +35979,7 @@
 	    var load = function load() {
 	        if (Client.is_logged_in()) {
 	            $('#virtual-signup-button').hide();
-	            if (Client.get_boolean('has_real')) {
+	            if (Client.has_real()) {
 	                $('#real-signup-button').hide();
 	            }
 	        } else {
@@ -35767,7 +36002,98 @@
 	module.exports = BinaryOptions;
 
 /***/ },
-/* 432 */
+/* 434 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var isEmptyObject = __webpack_require__(308).isEmptyObject;
+	var getLanguage = __webpack_require__(303).getLanguage;
+	var Client = __webpack_require__(304);
+	var url_for = __webpack_require__(306).url_for;
+	var default_redirect_url = __webpack_require__(306).default_redirect_url;
+	var Cookies = __webpack_require__(302);
+
+	var LoggedIn = function () {
+	    'use strict';
+
+	    var load = function load() {
+	        var tokens = storeTokens();
+	        var loginid = Cookies.get('loginid'),
+	            redirect_url = void 0;
+
+	        if (!loginid) {
+	            (function () {
+	                // redirected to another domain (e.g. github.io) so those cookie are not accessible here
+	                var loginids = Object.keys(tokens);
+	                var loginid_list = '';
+	                loginids.map(function (id) {
+	                    loginid_list += '' + (loginid_list ? '+' : '') + id + ':' + (/^V/i.test(id) ? 'V' : 'R') + ':E'; // since there is not any data source to check, so assume all are enabled, disabled accounts will be handled on authorize
+	                });
+	                loginid = loginids[0];
+	                // set cookies
+	                Client.set_cookie('loginid', loginid);
+	                Client.set_cookie('loginid_list', loginid_list);
+	            })();
+	        }
+	        Client.set_cookie('token', tokens[loginid]);
+
+	        // redirect url
+	        redirect_url = sessionStorage.getItem('redirect_url');
+	        sessionStorage.removeItem('redirect_url');
+
+	        // redirect back
+	        var set_default = true;
+	        if (redirect_url) {
+	            var do_not_redirect = ['reset-password', 'lost-password', 'change-password', 'home'];
+	            var reg = new RegExp(do_not_redirect.join('|'), 'i');
+	            if (!reg.test(redirect_url) && url_for('') !== redirect_url) {
+	                set_default = false;
+	            }
+	        }
+	        if (set_default) {
+	            redirect_url = default_redirect_url();
+	            var lang_cookie = Cookies.get('language');
+	            var language = getLanguage();
+	            if (lang_cookie && lang_cookie !== language) {
+	                redirect_url = redirect_url.replace(new RegExp('/' + language + '/', 'i'), '/' + lang_cookie.toLowerCase() + '/');
+	            }
+	        }
+	        document.getElementById('loading_link').setAttribute('href', redirect_url);
+	        window.location.href = redirect_url;
+	    };
+
+	    var storeTokens = function storeTokens() {
+	        // Parse hash for loginids and tokens returned by OAuth
+	        var hash = (/acct1/i.test(window.location.hash) ? window.location.hash : window.location.search).substr(1).split('&');
+	        var tokens = {};
+	        for (var i = 0; i < hash.length; i += 2) {
+	            var loginid = getHashValue(hash[i], 'acct');
+	            var token = getHashValue(hash[i + 1], 'token');
+	            if (loginid && token) {
+	                tokens[loginid] = token;
+	            }
+	        }
+	        if (!isEmptyObject(tokens)) {
+	            Client.set_value('tokens', JSON.stringify(tokens));
+	        }
+	        return tokens;
+	    };
+
+	    var getHashValue = function getHashValue(source, key) {
+	        var match = new RegExp('^' + key);
+	        return source && source.length > 0 ? match.test(source.split('=')[0]) ? source.split('=')[1] : '' : '';
+	    };
+
+	    return {
+	        load: load
+	    };
+	}();
+
+	module.exports = LoggedIn;
+
+/***/ },
+/* 435 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35808,7 +36134,7 @@
 	module.exports = Cashier;
 
 /***/ },
-/* 433 */
+/* 436 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35865,7 +36191,7 @@
 	module.exports = CashierTopUpVirtual;
 
 /***/ },
-/* 434 */
+/* 437 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35901,97 +36227,6 @@
 	}();
 
 	module.exports = CashierPaymentMethods;
-
-/***/ },
-/* 435 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var isEmptyObject = __webpack_require__(308).isEmptyObject;
-	var getLanguage = __webpack_require__(303).getLanguage;
-	var Client = __webpack_require__(304);
-	var url_for = __webpack_require__(306).url_for;
-	var default_redirect_url = __webpack_require__(306).default_redirect_url;
-	var Cookies = __webpack_require__(302);
-
-	var LoggedIn = function () {
-	    'use strict';
-
-	    var load = function load() {
-	        var tokens = storeTokens();
-	        var loginid = Cookies.get('loginid'),
-	            redirect_url = void 0;
-
-	        if (!loginid) {
-	            (function () {
-	                // redirected to another domain (e.g. github.io) so those cookie are not accessible here
-	                var loginids = Object.keys(tokens);
-	                var loginid_list = '';
-	                loginids.map(function (id) {
-	                    loginid_list += '' + (loginid_list ? '+' : '') + id + ':' + (/^V/i.test(id) ? 'V' : 'R') + ':E'; // since there is not any data source to check, so assume all are enabled, disabled accounts will be handled on authorize
-	                });
-	                loginid = loginids[0];
-	                // set cookies
-	                Client.set_cookie('loginid', loginid);
-	                Client.set_cookie('loginid_list', loginid_list);
-	            })();
-	        }
-	        Client.set_cookie('token', tokens[loginid]);
-
-	        // redirect url
-	        redirect_url = sessionStorage.getItem('redirect_url');
-	        sessionStorage.removeItem('redirect_url');
-
-	        // redirect back
-	        var set_default = true;
-	        if (redirect_url) {
-	            var do_not_redirect = ['reset_passwordws', 'lost_passwordws', 'change_passwordws', 'home'];
-	            var reg = new RegExp(do_not_redirect.join('|'), 'i');
-	            if (!reg.test(redirect_url) && url_for('') !== redirect_url) {
-	                set_default = false;
-	            }
-	        }
-	        if (set_default) {
-	            redirect_url = default_redirect_url();
-	            var lang_cookie = Cookies.get('language');
-	            var language = getLanguage();
-	            if (lang_cookie && lang_cookie !== language) {
-	                redirect_url = redirect_url.replace(new RegExp('/' + language + '/', 'i'), '/' + lang_cookie.toLowerCase() + '/');
-	            }
-	        }
-	        document.getElementById('loading_link').setAttribute('href', redirect_url);
-	        window.location.href = redirect_url;
-	    };
-
-	    var storeTokens = function storeTokens() {
-	        // Parse hash for loginids and tokens returned by OAuth
-	        var hash = (/acct1/i.test(window.location.hash) ? window.location.hash : window.location.search).substr(1).split('&');
-	        var tokens = {};
-	        for (var i = 0; i < hash.length; i += 2) {
-	            var loginid = getHashValue(hash[i], 'acct');
-	            var token = getHashValue(hash[i + 1], 'token');
-	            if (loginid && token) {
-	                tokens[loginid] = token;
-	            }
-	        }
-	        if (!isEmptyObject(tokens)) {
-	            Client.set_value('tokens', JSON.stringify(tokens));
-	        }
-	        return tokens;
-	    };
-
-	    var getHashValue = function getHashValue(source, key) {
-	        var match = new RegExp('^' + key);
-	        return source && source.length > 0 ? match.test(source.split('=')[0]) ? source.split('=')[1] : '' : '';
-	    };
-
-	    return {
-	        load: load
-	    };
-	}();
-
-	module.exports = LoggedIn;
 
 /***/ }
 /******/ ]);
