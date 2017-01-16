@@ -496,14 +496,9 @@ select[disabled=disabled] {
   font-weight: normal;
 }
 
-.fx-payment-methods table {
-  padding: 0;
-}
 .fx-payment-methods table th, .fx-payment-methods table td {
+  padding: 10px 20px;
   text-align: left;
-}
-.fx-payment-methods table th:first-child, .fx-payment-methods table td:first-child {
-  width: 25%;
 }
 
 .fx-advisors {
