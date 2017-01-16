@@ -35775,19 +35775,23 @@
 	var Cashier = function () {
 	    'use strict';
 
+	    var cashierContainer = void 0;
+
 	    var load = function load() {
+	        cashierContainer = $('.fx-cashier');
+
 	        if (Client.is_logged_in() && Client.is_virtual() === 1) {
-	            $('.fx-virtual').show();
-	            $('.fx-real').hide();
+	            cashierContainer.find('.fx-virtual').show();
+	            cashierContainer.find('.fx-real').hide();
 	            if (Client.get_value('balance') > 1000) {
 	                $('#VRT_topup_link').prop('href', 'javascript;:').addClass('button-disabled');
 	            }
 	        } else if (Client.is_logged_in() && Client.is_virtual() !== 0) {
-	            $('.fx-real').show();
-	            $('.fx-virtual').hide();
+	            cashierContainer.find('.fx-real').show();
+	            cashierContainer.find('.fx-virtual').hide();
 	        } else {
-	            $('.fx-virtual').hide();
-	            $('.fx-real').hide();
+	            cashierContainer.find('.fx-virtual').hide();
+	            cashierContainer.find('.fx-real').hide();
 	        }
 	    };
 
@@ -35842,7 +35846,7 @@
 	        };
 	        ChampionSocket.send(data, function (response) {
 	            if (response.error) {
-	                viewError.removeClass('hidden').find('.notice-msg').html(response.error);
+	                viewError.removeClass('hidden').find('.notice-msg').text(response.error.message);
 	            } else {
 	                viewSuccess.removeClass('hidden').find('.notice-msg').text('[_1] [_2] has been credited to your Virtual money account [_3]', [response.topup_virtual.currency, response.topup_virtual.amount, Client.get_value('loginid')]);
 	            }
