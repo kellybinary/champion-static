@@ -499,16 +499,11 @@ select[disabled=disabled] {
 .fx-payment-methods table {
   padding: 0;
 }
-.fx-payment-methods table th {
+.fx-payment-methods table th, .fx-payment-methods table td {
   text-align: left;
-  width: 25%;
 }
-.fx-payment-methods table td:first-child {
+.fx-payment-methods table th:first-child, .fx-payment-methods table td:first-child {
   width: 25%;
-}
-.fx-payment-methods table td:nth-child(2), .fx-payment-methods table td:nth-child(3), .fx-payment-methods table td:last-child {
-  width: 25%;
-  text-align: center;
 }
 
 .fx-advisors {
