@@ -3,7 +3,7 @@
     </div>
     <div class="wrapper" id="champion-content">
         <div class="fx-section">
-    <div class="container">
+    <div class="fx-payment-methods container">
 
         <div class="row">
             <div class="col-sm">
@@ -11,8 +11,26 @@
             </div>
         </div>
 
+        <div class="row centered">
+            <div class="col-sm">
+                <div class="fx-logged-out">
+                    <a href="/champion-static/br_cashier/en/home.html" class="button button_large">
+                        <span>Open an account now</span>
+                    </a>
+                </div>
+                <div class="fx-real">
+                    <a href="/champion-static/br_cashier/en/home.html" class="button button_large">
+                        <span>Deposit</span>
+                    </a>
+                    <a href="/champion-static/br_cashier/en/home.html" class="button button_large">
+                        <span class="withdraw">Withdraw</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
-            <table align="left">
+            <table class="table">
                 <tr>
                     <th>Method</th>
                     <th>Currencies</th>
@@ -23,7 +41,7 @@
 
                 <!-- Bank wire / Money transfer section -->
                 <tr>
-                    <th colspan="5">Bank wire / Money transfer</th>
+                    <th class="fx-subheader" colspan="5">Bank wire / Money transfer</th>
                 </tr>
                 <tr>
                     <td id="int_bank_wire"></td>
@@ -56,7 +74,7 @@
 
                 <!-- Credit / Debit card section -->
                 <tr>
-                    <th colspan="5">Credit / Debit card</th>
+                    <th class="fx-subheader" colspan="5">Credit / Debit card</th>
                 </tr>
                 <tr>
                     <td id="visa"></td>
@@ -82,7 +100,7 @@
 
                 <!-- E-cash section -->
                 <tr>
-                    <th colspan="5">E-cash</th>
+                    <th class="fx-subheader" colspan="5">E-cash</th>
                 </tr>
                 <tr>
                     <td id="okpay"></td>

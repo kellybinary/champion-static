@@ -18,11 +18,11 @@
     <meta name="description" content="ChampionFX Static" />
     <link rel="icon" type="image/png" sizes="16x16" href="/champion-static/br_cashier/images/favicons/CFX_favicon16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/champion-static/br_cashier/images/favicons/CFX_favicon32.png" />
-     <link rel="stylesheet" href="/champion-static/br_cashier/css/flex.min.css?72rvvzv7" />
-     <link rel="stylesheet" href="/champion-static/br_cashier/css/style.min.css?72rvvzv7" />
-     <link rel="stylesheet" href="https://style.champion-fx.com/binary.css?72rvvzv7" />
-      <script src="/champion-static/br_cashier/js/bundle.js?72rvvzv7" type="text/javascript"></script>
-     <script src="https://style.champion-fx.com/binary.js?72rvvzv7" type="text/javascript"></script>
+     <link rel="stylesheet" href="/champion-static/br_cashier/css/flex.min.css?8uz0m586" />
+     <link rel="stylesheet" href="/champion-static/br_cashier/css/style.min.css?8uz0m586" />
+     <link rel="stylesheet" href="https://style.champion-fx.com/binary.css?8uz0m586" />
+      <script src="/champion-static/br_cashier/js/bundle.js?8uz0m586" type="text/javascript"></script>
+     <script src="https://style.champion-fx.com/binary.js?8uz0m586" type="text/javascript"></script>
      
 </head>
 <body>
@@ -30,6 +30,9 @@
     <div class="fx-container">
         <div class="row">
             <div class="col-sm-12 topbar-container flex-items-sm-middle">
+                <div class=" col-sm-3 upgrade-message hidden">
+                    <a href="/champion-static/br_cashier/en/new-account/real.html">Upgrade to a Real Account</a>
+                </div>
                 <div class="topbar-contacts">
                     <ul>
                         <li class="last"><a href="/champion-static/br_cashier/en/contact.html">Contact Us</a></li>
@@ -152,7 +155,7 @@
     <main class="page-content" aria-label="Content" id="champion-container">
         <div class="wrapper" id="champion-content">
             <div class="fx-section">
-    <div class="container">
+    <div class="fx-payment-methods container">
 
         <div class="row">
             <div class="col-sm">
@@ -160,8 +163,26 @@
             </div>
         </div>
 
+        <div class="row centered">
+            <div class="col-sm">
+                <div class="fx-logged-out">
+                    <a href="/champion-static/br_cashier/en/home.html" class="button button_large">
+                        <span>Open an account now</span>
+                    </a>
+                </div>
+                <div class="fx-real">
+                    <a href="/champion-static/br_cashier/en/home.html" class="button button_large">
+                        <span>Deposit</span>
+                    </a>
+                    <a href="/champion-static/br_cashier/en/home.html" class="button button_large">
+                        <span class="withdraw">Withdraw</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
-            <table align="left">
+            <table class="table">
                 <tr>
                     <th>Method</th>
                     <th>Currencies</th>
@@ -172,7 +193,7 @@
 
                 <!-- Bank wire / Money transfer section -->
                 <tr>
-                    <th colspan="5">Bank wire / Money transfer</th>
+                    <th class="fx-subheader" colspan="5">Bank wire / Money transfer</th>
                 </tr>
                 <tr>
                     <td id="int_bank_wire"></td>
@@ -205,7 +226,7 @@
 
                 <!-- Credit / Debit card section -->
                 <tr>
-                    <th colspan="5">Credit / Debit card</th>
+                    <th class="fx-subheader" colspan="5">Credit / Debit card</th>
                 </tr>
                 <tr>
                     <td id="visa"></td>
@@ -231,7 +252,7 @@
 
                 <!-- E-cash section -->
                 <tr>
-                    <th colspan="5">E-cash</th>
+                    <th class="fx-subheader" colspan="5">E-cash</th>
                 </tr>
                 <tr>
                     <td id="okpay"></td>
@@ -352,7 +373,7 @@
         <div class="container centered">
             <div class="row">
                 <div class="col-sm">
-                    &copy; 2016 Champion FX
+                    &copy; 2017 Champion FX
                 </div>
             </div>
         </div>

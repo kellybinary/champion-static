@@ -18519,8 +18519,8 @@
 	            'lost-password': LostPassword,
 	            'reset-password': ResetPassword,
 	            cashier: Cashier,
-	            top_up_virtual: CashierTopUpVirtual,
-	            payment_methods: CashierPaymentMethods
+	            'payment-methods': CashierPaymentMethods,
+	            'top-up-virtual': CashierTopUpVirtual
 	        };
 	        if (page in pages_map) {
 	            _active_script = pages_map[page];
@@ -36123,11 +36123,8 @@
 	        }
 	    };
 
-	    var unload = function unload() {};
-
 	    return {
-	        load: load,
-	        unload: unload
+	        load: load
 	    };
 	}();
 
@@ -36166,8 +36163,6 @@
 	        }
 	    };
 
-	    var unload = function unload() {};
-
 	    var top_up_virtual = function top_up_virtual() {
 	        var data = {
 	            topup_virtual: '1'
@@ -36183,7 +36178,6 @@
 
 	    return {
 	        load: load,
-	        unload: unload,
 	        top_up_virtual: top_up_virtual
 	    };
 	}();
@@ -36218,11 +36212,8 @@
 	        }
 	    };
 
-	    var unload = function unload() {};
-
 	    return {
-	        load: load,
-	        unload: unload
+	        load: load
 	    };
 	}();
 
