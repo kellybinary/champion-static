@@ -496,8 +496,12 @@ select[disabled=disabled] {
   font-weight: normal;
 }
 
+.fx-payment-methods table {
+  padding: 0;
+}
 .fx-payment-methods table th {
   text-align: left;
+  width: 25%;
 }
 .fx-payment-methods table td:first-child {
   width: 25%;
