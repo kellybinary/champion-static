@@ -496,7 +496,7 @@ select[disabled=disabled] {
   font-weight: normal;
 }
 
-.fx-payment-methods {
+.fx-payment-methods table {
   padding: 0;
 }
 
