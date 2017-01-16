@@ -497,7 +497,7 @@ select[disabled=disabled] {
 }
 
 .fx-payment-methods table th, .fx-payment-methods table td {
-  padding: 5px;
+  padding: 10px;
   text-align: left;
 }
 
