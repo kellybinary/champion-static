@@ -35784,7 +35784,6 @@
 	            $('.fx-real').hide();
 	            if (Client.get_value('balance') > 100000) {
 	                $('#topup-btn').addClass('button-disabled');
-	                $('#topup-btn').on('click', top_up_virtual);
 	            }
 	        } else if (Client.is_logged_in() && Client.is_virtual() !== 0) {
 	            // console.log('logged in and is real');
@@ -35799,24 +35798,9 @@
 
 	    var unload = function unload() {};
 
-	    var top_up_virtual = function top_up_virtual() {
-	        console.log('top_up');
-	        // const data = {
-	        //     topup_virtual: '1',
-	        // };
-	        // ChampionSocket.send(data, (response) => {
-	        //     if (response.error) {
-	        //
-	        //     } else {
-	        //
-	        //     }
-	        // });
-	    };
-
 	    return {
 	        load: load,
-	        unload: unload,
-	        top_up_virtual: top_up_virtual
+	        unload: unload
 	    };
 	}();
 
@@ -35830,6 +35814,7 @@
 
 	var ChampionSocket = __webpack_require__(301);
 	var Client = __webpack_require__(304);
+	var Login = __webpack_require__(430);
 
 	var CashierTopUpVirtual = function () {
 	    'use strict';
@@ -35848,7 +35833,9 @@
 	        } else if (Client.is_logged_in() && Client.is_virtual() !== 0) {
 	            viewError.removeClass('hidden').find('.notice-msg').text('Sorry, this feature is available to virtual accounts only.');
 	        } else {
-	            viewError.removeClass('hidden').find('.notice-msg').text('Please log in to view this page.');
+	            viewError.removeClass('hidden').find('.notice-msg').html('Please <a href="javascript:;">log in</a> to view this page.').find('a').on('click', function () {
+	                Login.redirect_to_login();
+	            });
 	        }
 	    };
 
@@ -35862,11 +35849,7 @@
 	            if (response.error) {
 	                viewError.removeClass('hidden').find('.notice-msg').html(response.error);
 	            } else {
-	                viewSuccess.removeClass('hidden').find('.notice-msg');
-	                // .text(response.topup_virtual.currency +
-	                //       response.topup_virtual.amount +
-	                //       ' has been credited to your Virtual money account ' +
-	                //       Client.get_value('loginid'));
+	                viewSuccess.removeClass('hidden').find('.notice-msg').text('[_1] [_2] has been credited to your Virtual money account [_3]', [response.topup_virtual.currency, response.topup_virtual.amount, Client.get_value('loginid')]);
 	            }
 	        });
 	    };
