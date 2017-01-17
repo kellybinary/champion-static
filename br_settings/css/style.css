@@ -672,6 +672,18 @@ select[disabled=disabled] {
   background: url("../images/symbols/lever_icon.svg");
 }
 
+.fx-account-password {
+  background: url("../images/symbols/account_password.svg");
+}
+
+.fx-manage-your-funds {
+  background: url("../images/symbols/cashier_password.svg");
+}
+
+.fx-webtrader {
+  background: url("../images/symbols/cashier_password.svg");
+}
+
 .fx-xlg, .fx-lg, .fx-md, .fx-sm, .fx-xs, .fx-xxs {
   margin-left: auto;
   margin-right: auto;
@@ -715,4 +727,19 @@ body .top-nav-menu li a {
 
 .main-nav > li > ul {
   box-sizing: content-box;
+}
+
+.app-store-badge, .google-play-badge {
+  background-repeat: no-repeat;
+  width: 135px;
+  height: 40px;
+  display: inline-block;
+}
+
+.app-store-badge {
+  background-image: url("../images/buttons/appstore.svg");
+}
+
+.google-play-badge {
+  background-image: url("../images/buttons/googleplay.svg");
 }
