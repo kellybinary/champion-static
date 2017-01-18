@@ -36420,15 +36420,8 @@
 	var CashierPassword = function () {
 	    'use strict';
 
-	    var form_selectors = {
-	        unlock: '#frm_unlock_cashier_password',
-	        lock: '#frm_lock_cashier_password'
-	    };
-
-	    var $form_unlock_cashier = void 0,
-	        $form_lock_cashier = void 0,
-	        btn_submit = void 0,
-	        current_state = void 0;
+	    var btn_submit = void 0,
+	        form_type = void 0;
 
 	    var fields = {
 	        txt_unlock_password: '#txt_unlock_password',
@@ -36440,18 +36433,12 @@
 	    var views = {
 	        logged_out: 'logged_out',
 	        virtual: 'virtual',
-	        real: 'real'
-	    };
-
-	    var cashier_states = {
-	        unlocked: 'UNLOCKED',
-	        locked: 'LOCKED'
+	        real: 'real',
+	        lock_cashier: 'lock',
+	        unlock_cashier: 'unlock'
 	    };
 
 	    var load = function load() {
-	        $form_lock_cashier = $(form_selectors.lock);
-	        $form_unlock_cashier = $(form_selectors.unlock);
-
 	        ChampionSocket.promise.then(function () {
 	            return checkCashierState();
 	        });
@@ -36469,26 +36456,41 @@
 	        ChampionSocket.send({ cashier_password: 1 }, function (response) {
 	            if (response.error) return;
 	            if (response.cashier_password === 1) {
-	                current_state = cashier_states.locked;
-	                renderView(views.real, cashier_states.locked);
-	                initForm(current_state);
+	                form_type = views.unlock_cashier;
 	            } else {
-	                current_state = cashier_states.unlocked;
-	                renderView(views.real, cashier_states.unlocked);
-	                initForm(current_state);
+	                form_type = views.lock_cashier;
 	            }
+	            renderView(views.real, form_type);
+	            initForm(form_type);
 	        });
 	    };
 
-	    var initForm = function initForm(state) {
-	        if (state === cashier_states.unlocked) {
-	            btn_submit = $form_lock_cashier.find(fields.btn_submit);
+	    var renderView = function renderView(view, form) {
+	        var $form = $('#form_' + form + '_cashier');
+
+	        if (view === views.logged_out) {
+	            $('#client_message').show().find('.notice-msg').html('Please <a href="javascript:;">log in</a> to view this page.').find('a').on('click', function () {
+	                Login.redirect_to_login();
+	            });
+	        } else if (view === views.virtual) {
+	            $('#client_message').show().find('.notice-msg').html('This feature is not relevant to virtual-money accounts.');
+	        } else if (view === views.real) {
+	            $form.show();
+	        }
+	    };
+
+	    var initForm = function initForm(form) {
+	        var form_selector = '#form_' + form_type + '_cashier',
+	            $form = $(form_selector);
+
+	        if (form === views.lock_cashier) {
+	            btn_submit = $form.find(fields.btn_submit);
 	            btn_submit.on('click', submit);
-	            Validation.init(form_selectors.lock, [{ selector: fields.txt_lock_password, validations: ['req', 'password'] }, { selector: fields.txt_re_password, validations: ['req', ['compare', { to: fields.txt_lock_password }]] }]);
+	            Validation.init(form_selector, [{ selector: fields.txt_lock_password, validations: ['req', 'password'] }, { selector: fields.txt_re_password, validations: ['req', ['compare', { to: fields.txt_lock_password }]] }]);
 	        } else {
-	            btn_submit = $form_unlock_cashier.find(fields.btn_submit);
+	            btn_submit = $form.find(fields.btn_submit);
 	            btn_submit.on('click', submit);
-	            Validation.init(form_selectors.unlock, [{ selector: fields.txt_unlock_password, validations: ['req', 'password'] }]);
+	            Validation.init(form_selector, [{ selector: fields.txt_unlock_password, validations: ['req', 'password'] }]);
 	        }
 	    };
 
@@ -36501,61 +36503,35 @@
 	    var submit = function submit(e) {
 	        e.preventDefault();
 
-	        var type = void 0;
+	        var form_selector = '#form_' + form_type + '_cashier',
+	            $form = $(form_selector);
 
-	        if (current_state === cashier_states.locked) {
-	            type = 'unlock';
-	        } else if (current_state === cashier_states.unlocked) {
-	            type = 'lock';
-	        }
+	        if (Validation.validate(form_selector)) {
+	            var req_key = form_type + '_password',
+	                req_val = $('#txt_' + form_type + '_password').val();
 
-	        if (Validation.validate('#frm_' + type + '_cashier_password')) {
-	            (function () {
-	                var $form = $('#frm_' + type + '_cashier_password'),
-	                    password = $('#txt_' + type + '_password').val();
+	            var data = _defineProperty({
+	                cashier_password: 1
+	            }, req_key, req_val);
 
-	                var data = _defineProperty({
-	                    cashier_password: 1
-	                }, type + '_password', password);
-
-	                ChampionSocket.send(data, function (response) {
-	                    if (response.error) {
-	                        $('#error-cashier-password').removeClass('hidden').text(response.error.message);
-	                    } else {
-	                        $form.hide();
-	                        $('#client_message').show().find('.notice-msg').text('Your settings have been updated successfully.');
-	                    }
-	                });
-	            })();
-	        }
-	    };
-
-	    var renderView = function renderView(view, param) {
-	        if (view === views.logged_out) {
-	            $('#client_message').show().find('.notice-msg').html('Please <a href="javascript:;">log in</a> to view this page.').find('a').on('click', function () {
-	                Login.redirect_to_login();
+	            ChampionSocket.send(data, function (response) {
+	                if (response.error) {
+	                    $('#error-cashier-password').removeClass('hidden').text(response.error.message);
+	                } else {
+	                    $form.hide();
+	                    $('#client_message').show().find('.notice-msg').text('Your settings have been updated successfully.');
+	                }
 	            });
-	        }
-	        if (view === views.virtual) {
-	            $('#client_message').show().find('.notice-msg').html('This feature is not relevant to virtual-money accounts.');
-	        }
-	        if (view === views.real && param === cashier_states.locked) {
-	            $form_lock_cashier.hide();
-	            $form_unlock_cashier.show();
-	        }
-	        if (view === views.real && param === cashier_states.unlocked) {
-	            $form_lock_cashier.show();
-	            $form_unlock_cashier.hide();
 	        }
 	    };
 
 	    return {
 	        load: load,
 	        unload: unload,
+	        checkCashierState: checkCashierState,
 	        renderView: renderView,
-	        submit: submit,
 	        initForm: initForm,
-	        checkCashierState: checkCashierState
+	        submit: submit
 	    };
 	}();
 
