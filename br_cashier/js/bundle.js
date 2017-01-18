@@ -18464,16 +18464,18 @@
 	var ChampionContact = __webpack_require__(299);
 	var ChampionEndpoint = __webpack_require__(428);
 	var ChangePassword = __webpack_require__(429);
-	var LostPassword = __webpack_require__(431);
-	var ResetPassword = __webpack_require__(432);
-	var BinaryOptions = __webpack_require__(433);
+	var TNCApproval = __webpack_require__(431);
+	var LostPassword = __webpack_require__(432);
+	var ResetPassword = __webpack_require__(433);
+	var BinaryOptions = __webpack_require__(434);
 	var Client = __webpack_require__(304);
-	var LoggedIn = __webpack_require__(434);
+	var LoggedIn = __webpack_require__(435);
 	var Login = __webpack_require__(430);
 	var Utility = __webpack_require__(308);
-	var Cashier = __webpack_require__(435);
-	var CashierTopUpVirtual = __webpack_require__(436);
-	var CashierPaymentMethods = __webpack_require__(437);
+	var Cashier = __webpack_require__(436);
+	var CashierTopUpVirtual = __webpack_require__(437);
+	var CashierPaymentMethods = __webpack_require__(438);
+	var CashierPassword = __webpack_require__(439);
 
 	var Champion = function () {
 	    'use strict';
@@ -18520,7 +18522,9 @@
 	            'reset-password': ResetPassword,
 	            cashier: Cashier,
 	            'payment-methods': CashierPaymentMethods,
-	            'top-up-virtual': CashierTopUpVirtual
+	            'top-up-virtual': CashierTopUpVirtual,
+	            'tnc-approval': TNCApproval,
+	            'cashier-password': CashierPassword
 	        };
 	        if (page in pages_map) {
 	            _active_script = pages_map[page];
@@ -18561,10 +18565,19 @@
 
 	    var socket = void 0,
 	        req_id = 0,
-	        message_callback = void 0;
+	        message_callback = void 0,
+	        socket_resolved = false,
+	        socketResolve = void 0,
+	        socketReject = void 0;
 
 	    var buffered = [],
-	        registered_callbacks = {};
+	        registered_callbacks = {},
+	        priority_requests = { authorize: false, balance: false, get_settings: false, website_status: false };
+
+	    var promise = new Promise(function (resolve, reject) {
+	        socketResolve = resolve;
+	        socketReject = reject;
+	    });
 
 	    var socketMessage = function socketMessage(message) {
 	        if (!message) {
@@ -18583,6 +18596,7 @@
 	                case 'authorize':
 	                    if (message.error || message.authorize.loginid !== Client.get_value('loginid')) {
 	                        ChampionSocket.send({ logout: '1' });
+	                        socketReject();
 	                    } else {
 	                        Client.response_authorize(message);
 	                        ChampionSocket.send({ balance: 1, subscribe: 1 });
@@ -18592,6 +18606,7 @@
 	                            // TODO: to be moved from here
 	                            ChampionSocket.send({ logout: 1 });
 	                        });
+	                        priority_requests.authorize = true;
 	                    }
 	                    break;
 	                case 'logout':
@@ -18599,16 +18614,30 @@
 	                    break;
 	                case 'balance':
 	                    Header.updateBalance(message);
+	                    priority_requests.balance = true;
 	                    break;
 	                case 'get_settings':
-	                    if (message.error) return;
+	                    if (message.error) {
+	                        socketReject();
+	                        return;
+	                    }
 	                    country_code = message.get_settings.country_code;
 	                    if (country_code) {
 	                        Client.set_value('residence', country_code);
 	                        ChampionSocket.send({ landing_company: country_code });
 	                    }
+	                    priority_requests.get_settings = true;
 	                    break;
+	                case 'website_status':
+	                    priority_requests.website_status = true;
 	                // no default
+	            }
+	            if (!socket_resolved && Object.keys(priority_requests).every(function (c) {
+	                return priority_requests[c];
+	            })) {
+	                socketResolve();
+	                Client.check_tnc();
+	                socket_resolved = true;
 	            }
 	        }
 	    };
@@ -18653,13 +18682,25 @@
 
 	    var send = function send(data, callback, subscribe) {
 	        if (typeof callback === 'function') {
+	            var msg_type = '';
+	            Object.keys(priority_requests).some(function (c) {
+	                if (c in data) {
+	                    msg_type = c;
+	                    return true;
+	                }
+	                return false;
+	            });
+	            var exist_in_state = State.get(['response', msg_type]);
+	            if (exist_in_state) {
+	                callback(exist_in_state);
+	                return;
+	            }
 	            registered_callbacks[++req_id] = {
 	                callback: callback,
 	                subscribe: subscribe
 	            };
 	            data.req_id = req_id;
 	        }
-
 	        if (isReady()) {
 	            socket.send(JSON.stringify(data));
 	        } else {
@@ -18700,7 +18741,8 @@
 	        init: init,
 	        send: send,
 	        getAppId: getAppId,
-	        getServer: getServer
+	        getServer: getServer,
+	        promise: promise
 	    };
 	}();
 
@@ -18931,7 +18973,9 @@
 
 	var CookieStorage = __webpack_require__(305).CookieStorage;
 	var LocalStore = __webpack_require__(305).LocalStore;
+	var State = __webpack_require__(305).State;
 	var default_redirect_url = __webpack_require__(306).default_redirect_url;
+	var url_for = __webpack_require__(306).url_for;
 	var Cookies = __webpack_require__(302);
 
 	var Client = function () {
@@ -19000,6 +19044,18 @@
 
 	        if (authorize.is_virtual && !get_boolean('has_real')) {
 	            $('.upgrade-message').removeClass('hidden');
+	        }
+	    };
+
+	    var check_tnc = function check_tnc() {
+	        if (/tnc-approval/.test(window.location.href) || /terms-and-conditions/.test(window.location.href) || get_boolean('is_virtual')) {
+	            return;
+	        }
+	        var client_tnc_status = State.get(['response', 'get_settings', 'get_settings', 'client_tnc_status']),
+	            terms_conditions_version = State.get(['response', 'website_status', 'website_status', 'terms_conditions_version']);
+	        if (client_tnc_status !== terms_conditions_version) {
+	            sessionStorage.setItem('tnc_redirect', window.location.href);
+	            window.location.href = url_for('user/tnc-approval');
 	        }
 	    };
 
@@ -19104,6 +19160,7 @@
 	        get_value: get_storage_value,
 	        get_boolean: get_boolean,
 	        response_authorize: response_authorize,
+	        check_tnc: check_tnc,
 	        clear_storage_values: clear_storage_values,
 	        get_token: get_token,
 	        add_token: add_token,
@@ -19168,7 +19225,20 @@
 
 	InScriptStore.prototype = {
 	    get: function get(key) {
-	        return this.store[key];
+	        var obj = this.store;
+	        var keys = key.slice(0);
+	        if (Array.isArray(keys)) {
+	            keys.some(function (k, idx) {
+	                if (k in obj && idx !== keys.length - 1) {
+	                    obj = obj[k];
+	                    key.shift();
+	                    return false;
+	                }
+	                key = k;
+	                return true;
+	            });
+	        }
+	        return obj[key];
 	    },
 	    set: function set(key, value) {
 	        var obj = this.store;
@@ -19467,6 +19537,10 @@
 
 	__webpack_require__(309);
 
+	function showLoadingImage(container) {
+	    container.empty().append('<div class="barspinner dark"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div>');
+	}
+
 	function isEmptyObject(obj) {
 	    var isEmpty = true;
 	    if (obj && obj instanceof Object) {
@@ -19574,7 +19648,14 @@
 	    return true;
 	}
 
+	function template(string, content) {
+	    return string.replace(/\[_(\d+)\]/g, function (s, index) {
+	        return content[+index - 1];
+	    });
+	}
+
 	module.exports = {
+	    showLoadingImage: showLoadingImage,
 	    isEmptyObject: isEmptyObject,
 	    animateAppear: animateAppear,
 	    animateDisappear: animateDisappear,
@@ -19584,7 +19665,8 @@
 	    padLeft: padLeft,
 	    toISOFormat: toISOFormat,
 	    checkInput: checkInput,
-	    dateValueChanged: dateValueChanged
+	    dateValueChanged: dateValueChanged,
+	    template: template
 	};
 
 /***/ },
@@ -20346,7 +20428,7 @@
 
 	    var populateResidence = function populateResidence() {
 	        ddl_residence = container.find(fields.ddl_residence);
-	        residences = State.get('response').residence_list;
+	        residences = State.get(['response', 'residence_list']);
 	        var renderResidence = function renderResidence() {
 	            Utility.dropDownFromObject(ddl_residence, residences);
 	        };
@@ -20473,7 +20555,7 @@
 
 	    var populateResidence = function populateResidence() {
 	        ddl_residence = container.find(fields.ddl_residence);
-	        residences = State.get('response').residence_list;
+	        residences = State.get(['response', 'residence_list']);
 	        var renderResidence = function renderResidence() {
 	            Utility.dropDownFromObject(ddl_residence, residences, client_residence);
 	        };
@@ -20489,7 +20571,7 @@
 
 	    var populateState = function populateState() {
 	        ddl_state = container.find(fields.ddl_state);
-	        states = State.get('response').states_list;
+	        states = State.get(['response', 'states_list']);
 	        var renderState = function renderState() {
 	            if (states && states.length) {
 	                Utility.dropDownFromObject(ddl_state, states);
@@ -35802,6 +35884,87 @@
 
 	'use strict';
 
+	var showLoadingImage = __webpack_require__(308).showLoadingImage;
+	var template = __webpack_require__(308).template;
+	var Client = __webpack_require__(304);
+	var url_for_static = __webpack_require__(306).url_for_static;
+	var url_for = __webpack_require__(306).url_for;
+	var default_redirect_url = __webpack_require__(306).default_redirect_url;
+	var ChampionSocket = __webpack_require__(301);
+
+	var TNCApproval = function () {
+	    'use strict';
+
+	    var hiddenClass = void 0,
+	        redirectUrl = void 0;
+
+	    var btn_accept = '#btn-accept';
+
+	    var load = function load() {
+	        hiddenClass = 'invisible';
+	        showLoadingImage($('#tnc-loading'));
+
+	        redirectUrl = sessionStorage.getItem('tnc_redirect');
+	        sessionStorage.removeItem('tnc_redirect');
+
+	        ChampionSocket.promise.then(function () {
+	            showTNC();
+	        });
+
+	        $(btn_accept).on('click', function (e) {
+	            approveTNC(e);
+	        });
+	    };
+
+	    var approveTNC = function approveTNC(e) {
+	        e.preventDefault();
+	        e.stopPropagation();
+	        ChampionSocket.send({ tnc_approval: '1' }, function (response) {
+	            if (!Object.prototype.hasOwnProperty.call(response, 'error')) {
+	                redirectBack();
+	            } else {
+	                $('#err_message').html(response.error.message).removeClass(hiddenClass);
+	            }
+	        });
+	    };
+
+	    var showTNC = function showTNC() {
+	        if (!Client.is_logged_in() || Client.is_virtual()) {
+	            redirectBack();
+	        }
+	        $('#tnc-loading').addClass(hiddenClass);
+	        $('#tnc_image').attr('src', url_for_static('images/protection-icon.svg'));
+	        $('#tnc_approval').removeClass(hiddenClass);
+	        var $tnc_msg = $('#tnc-message');
+	        var tnc_message = template($tnc_msg.html(), [Client.get_value('landing_company_fullname'), url_for('terms-and-conditions')]);
+	        $tnc_msg.html(tnc_message).removeClass(hiddenClass);
+	        $(btn_accept).text('OK');
+	    };
+
+	    var redirectBack = function redirectBack() {
+	        window.location.href = redirectUrl || default_redirect_url();
+	    };
+
+	    var unload = function unload() {
+	        $(btn_accept).off('click', function (e) {
+	            approveTNC(e);
+	        });
+	    };
+
+	    return {
+	        load: load,
+	        unload: unload
+	    };
+	}();
+
+	module.exports = TNCApproval;
+
+/***/ },
+/* 432 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
 	var Client = __webpack_require__(304);
 	var Validation = __webpack_require__(313);
 	var ChampionSocket = __webpack_require__(301);
@@ -35859,7 +36022,7 @@
 	module.exports = LostPassword;
 
 /***/ },
-/* 432 */
+/* 433 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35971,7 +36134,7 @@
 	module.exports = ResetPassword;
 
 /***/ },
-/* 433 */
+/* 434 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36008,7 +36171,7 @@
 	module.exports = BinaryOptions;
 
 /***/ },
-/* 434 */
+/* 435 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36099,7 +36262,7 @@
 	module.exports = LoggedIn;
 
 /***/ },
-/* 435 */
+/* 436 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36137,7 +36300,7 @@
 	module.exports = Cashier;
 
 /***/ },
-/* 436 */
+/* 437 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36191,7 +36354,7 @@
 	module.exports = CashierTopUpVirtual;
 
 /***/ },
-/* 437 */
+/* 438 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36224,6 +36387,183 @@
 	}();
 
 	module.exports = CashierPaymentMethods;
+
+/***/ },
+/* 439 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var ChampionSocket = __webpack_require__(301);
+	var Client = __webpack_require__(304);
+	var Validation = __webpack_require__(313);
+	var Login = __webpack_require__(430);
+
+	var CashierPassword = function () {
+	    'use strict';
+
+	    var form_selectors = {
+	        unlock: '#frm_unlock_cashier_password',
+	        lock: '#frm_lock_cashier_password'
+	    };
+
+	    var $form_unlock_cashier = void 0,
+	        $form_lock_cashier = void 0,
+	        formContainer = void 0,
+	        btn_submit = void 0,
+	        cashierState = void 0;
+
+	    var fields = {
+	        txt_old_password: '#txt_old_password',
+	        txt_re_password: '#txt_re_password',
+	        txt_password: '#txt_password',
+	        btn_submit: '#btn_submit'
+	    };
+
+	    var views = {
+	        logged_out: 'logged_out',
+	        virtual: 'virtual',
+	        real: 'real'
+	    };
+
+	    var states = {
+	        locked: 'locked',
+	        unlocked: 'unlocked'
+	    };
+
+	    var load = function load() {
+	        formContainer = $('#frm_cashier');
+	        $form_lock_cashier = $(form_selectors.lock);
+	        $form_unlock_cashier = $(form_selectors.unlock);
+
+	        ChampionSocket.promise.then(function () {
+	            return checkCashierState();
+	        });
+
+	        if (!Client.is_logged_in()) {
+	            renderView(views.logged_out);
+	        } else if (Client.is_logged_in()) {
+	            if (Client.is_virtual()) {
+	                renderView(views.virtual);
+	            }
+	        }
+	    };
+
+	    var checkCashierState = function checkCashierState() {
+	        ChampionSocket.send({ cashier_password: 1 }, function (response) {
+	            if (response.error) return;
+	            if (response.cashier_password === 1) {
+	                cashierState = states.locked;
+	                renderView(views.real, 'lock');
+	                initForm(cashierState);
+	            } else {
+	                cashierState = states.unlocked;
+	                renderView(views.real, 'unlock');
+	                initForm(cashierState);
+	            }
+	        });
+	    };
+
+	    var initForm = function initForm(state) {
+	        if (state === states.unlocked) {
+	            btn_submit = $form_lock_cashier.find(fields.btn_submit);
+	            btn_submit.on('click', submit);
+	            Validation.init(form_selectors.lock, [{ selector: fields.txt_old_password, validations: ['req', 'password'] }, { selector: fields.txt_re_password, validations: ['req', ['compare', { to: fields.txt_old_password }]] }]);
+	        } else {
+	            btn_submit = $form_unlock_cashier.find(fields.btn_submit);
+	            btn_submit.on('click', submit);
+	            Validation.init(form_selectors.unlock, [{ selector: fields.txt_password, validations: ['req', 'password'] }]);
+	        }
+	    };
+
+	    var unload = function unload() {
+	        if (btn_submit) {
+	            btn_submit.off('click', submit);
+	        }
+	    };
+
+	    var submit = function submit(e) {
+	        e.preventDefault();
+
+	        var lockCashier = function lockCashier() {
+	            if (Validation.validate(form_selectors.lock)) {
+	                var data = {
+	                    cashier_password: 1,
+	                    lock_password: $(fields.txt_old_password).val()
+	                };
+	                ChampionSocket.send(data, function (response) {
+	                    if (response.error) {
+	                        $('#error-cashier-password').removeClass('hidden').text(response.error.message);
+	                    } else {
+	                        setTimeout(function () {
+	                            ChampionSocket.send({ logout: 1 });
+	                        }, 5000);
+	                        $form_lock_cashier.addClass('hidden');
+	                        $('#client_message').show().find('.notice-msg').text('Your settings have been updated successfully.');
+	                    }
+	                });
+	            }
+	        };
+
+	        var unlockCashier = function unlockCashier() {
+	            if (Validation.validate(form_selectors.unlock)) {
+	                var data = {
+	                    cashier_password: 1,
+	                    unlock_password: $(fields.txt_password).val()
+	                };
+	                ChampionSocket.send(data, function (response) {
+	                    if (response.error) {
+	                        $('#error-cashier-password').removeClass('hidden').text(response.error.message);
+	                    } else {
+	                        setTimeout(function () {
+	                            ChampionSocket.send({ logout: 1 });
+	                        }, 5000);
+	                        $form_unlock_cashier.addClass('hidden');
+	                        $('#client_message').show().find('.notice-msg').text('Your settings have been updated successfully.');
+	                    }
+	                });
+	            }
+	        };
+
+	        if (cashierState === states.locked) {
+	            unlockCashier();
+	        } else if (cashierState === states.unlocked) {
+	            lockCashier();
+	        }
+	    };
+
+	    var renderView = function renderView(view, param) {
+	        if (view === 'logged_out') {
+	            formContainer.addClass('hidden');
+	            $('#client_message').show().find('.notice-msg').html('Please <a href="javascript:;">log in</a> to view this page.').find('a').on('click', function () {
+	                Login.redirect_to_login();
+	            });
+	        }
+	        if (view === 'virtual') {
+	            formContainer.addClass('hidden');
+	            $('#client_message').show().find('.notice-msg').html('This feature is not relevant to virtual-money accounts.');
+	        }
+	        if (view === 'real' && param === 'lock') {
+	            $form_lock_cashier.hide();
+	            $form_unlock_cashier.show();
+	        }
+	        if (view === 'real' && param === 'unlock') {
+	            $form_lock_cashier.show();
+	            $form_unlock_cashier.hide();
+	        }
+	    };
+
+	    return {
+	        load: load,
+	        unload: unload,
+	        renderView: renderView,
+	        submit: submit,
+	        initForm: initForm,
+	        checkCashierState: checkCashierState
+	    };
+	}();
+
+	module.exports = CashierPassword;
 
 /***/ }
 /******/ ]);
