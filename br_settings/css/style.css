@@ -496,6 +496,10 @@ select[disabled=disabled] {
   font-weight: normal;
 }
 
+a:hover {
+  text-decoration: none !important;
+}
+
 .fx-advisors {
   background: url("../images/symbols/advisors.svg");
 }
