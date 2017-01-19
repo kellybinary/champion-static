@@ -35805,7 +35805,7 @@
 	                settingsContainer.find('#fx-settings-content').show().find('.fx-real').show();
 	                return;
 	            }
-	            settingsContainer.find('#fx-settings-content').show().find('.fx-real').show();
+	            settingsContainer.find('#fx-settings-content').show();
 	        }
 	    };
 
