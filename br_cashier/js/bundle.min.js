@@ -36439,16 +36439,16 @@
 	    };
 
 	    var load = function load() {
-	        ChampionSocket.promise.then(function () {
-	            return checkCashierState();
-	        });
-
 	        if (!Client.is_logged_in()) {
 	            renderView(views.logged_out);
-	        } else if (Client.is_logged_in()) {
-	            if (Client.is_virtual()) {
-	                renderView(views.virtual);
-	            }
+	        } else {
+	            ChampionSocket.promise.then(function () {
+	                if (Client.is_virtual()) {
+	                    renderView(views.virtual);
+	                } else {
+	                    checkCashierState();
+	                }
+	            });
 	        }
 	    };
 
@@ -36483,13 +36483,12 @@
 	        var form_selector = '#form_' + form_type + '_cashier',
 	            $form = $(form_selector);
 
+	        btn_submit = $form.find(fields.btn_submit);
+	        btn_submit.on('click', submit);
+
 	        if (form === views.lock_cashier) {
-	            btn_submit = $form.find(fields.btn_submit);
-	            btn_submit.on('click', submit);
 	            Validation.init(form_selector, [{ selector: fields.txt_lock_password, validations: ['req', 'password'] }, { selector: fields.txt_re_password, validations: ['req', ['compare', { to: fields.txt_lock_password }]] }]);
 	        } else {
-	            btn_submit = $form.find(fields.btn_submit);
-	            btn_submit.on('click', submit);
 	            Validation.init(form_selector, [{ selector: fields.txt_unlock_password, validations: ['req', 'password'] }]);
 	        }
 	    };
@@ -36527,11 +36526,7 @@
 
 	    return {
 	        load: load,
-	        unload: unload,
-	        checkCashierState: checkCashierState,
-	        renderView: renderView,
-	        initForm: initForm,
-	        submit: submit
+	        unload: unload
 	    };
 	}();
 
