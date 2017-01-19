@@ -496,6 +496,9 @@ select[disabled=disabled] {
   font-weight: normal;
 }
 
+.fx-payment-methods table {
+  margin: 20px 0;
+}
 .fx-payment-methods table tr {
   height: 60px;
 }
