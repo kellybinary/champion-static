@@ -18477,6 +18477,7 @@
 	var CashierTopUpVirtual = __webpack_require__(438);
 	var CashierPaymentMethods = __webpack_require__(439);
 	var CashierPassword = __webpack_require__(440);
+	var FinancialAssessment = __webpack_require__(441);
 
 	var Champion = function () {
 	    'use strict';
@@ -18524,7 +18525,8 @@
 	            'payment-methods': CashierPaymentMethods,
 	            'top-up-virtual': CashierTopUpVirtual,
 	            'cashier-password': CashierPassword,
-	            'tnc-approval': TNCApproval
+	            'tnc-approval': TNCApproval,
+	            assessment: FinancialAssessment
 	        };
 	        if (page in pages_map) {
 	            _active_script = pages_map[page];
@@ -20321,7 +20323,7 @@
 	    // ----- Validate -----
 	    // --------------------
 	    var checkField = function checkField(field) {
-	        if (!field.$.is(':Visible')) return true;
+	        if (!field.$.is(':visible')) return true;
 	        var all_is_ok = true,
 	            message = void 0;
 
@@ -36379,7 +36381,7 @@
 	        if (Client.is_logged_in() && Client.is_virtual()) {
 	            top_up_virtual();
 	        } else if (Client.is_logged_in() && !Client.is_virtual()) {
-	            viewError.removeClass('hidden').find('.notice-msg').text('Sorry, this feature is available to virtual accounts only.');
+	            viewError.removeClass('hidden').find('.notice-msg').text('This feature is not relevant to virtual-money accounts.');
 	        } else {
 	            viewError.removeClass('hidden').find('.notice-msg').html('Please <a href="javascript:;">log in</a> to view this page.').find('a').on('click', function () {
 	                Login.redirect_to_login();
@@ -36570,6 +36572,136 @@
 	}();
 
 	module.exports = CashierPassword;
+
+/***/ },
+/* 441 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	var showLoadingImage = __webpack_require__(308).showLoadingImage;
+	var Client = __webpack_require__(304);
+	var ChampionSocket = __webpack_require__(301);
+	var Validation = __webpack_require__(313);
+
+	var FinancialAssessment = function () {
+	    'use strict';
+
+	    var form_selector = '#assessment_form';
+
+	    var financial_assessment = {},
+	        arr_validation = [];
+
+	    var load = function load() {
+	        showLoadingImage($('<div/>', { id: 'loading', class: 'center-text' }).insertAfter('#heading'));
+	        if (checkIsVirtual()) return;
+	        $(form_selector).on('submit', function (event) {
+	            event.preventDefault();
+	            submitForm();
+	            return false;
+	        });
+	        ChampionSocket.promise.then(function () {
+	            if (checkIsVirtual()) return;
+	            ChampionSocket.send({ get_financial_assessment: 1 }, function (response) {
+	                hideLoadingImg();
+	                financial_assessment = response.get_financial_assessment;
+	                Object.keys(response.get_financial_assessment).forEach(function (key) {
+	                    var val = response.get_financial_assessment[key];
+	                    $('#' + key).val(val);
+	                });
+	                arr_validation = [];
+	                var all_ids = $(form_selector).find('.form-input').find('>:first-child');
+	                for (var i = 0; i < all_ids.length; i++) {
+	                    arr_validation.push({ selector: '#' + all_ids[i].getAttribute('id'), validations: ['req'] });
+	                }
+	                Validation.init(form_selector, arr_validation);
+	            });
+	        });
+	    };
+
+	    var submitForm = function submitForm() {
+	        $('#submit').attr('disabled', 'disabled');
+
+	        if (Validation.validate(form_selector)) {
+	            var _ret = function () {
+	                var hasChanged = false;
+	                Object.keys(financial_assessment).forEach(function (key) {
+	                    var $key = $('#' + key);
+	                    if ($key.length && $key.val() !== financial_assessment[key]) {
+	                        hasChanged = true;
+	                    }
+	                });
+	                if (Object.keys(financial_assessment).length === 0) hasChanged = true;
+	                if (!hasChanged) {
+	                    showFormMessage('You did not change anything.', false);
+	                    setTimeout(function () {
+	                        $('#submit').removeAttr('disabled');
+	                    }, 1000);
+	                    return {
+	                        v: void 0
+	                    };
+	                }
+
+	                var data = { set_financial_assessment: 1 };
+	                showLoadingImage($('#form_message'));
+	                $('#assessment_form').find('select').each(function () {
+	                    financial_assessment[$(this).attr('id')] = data[$(this).attr('id')] = $(this).val();
+	                });
+	                ChampionSocket.send(data, function (response) {
+	                    $('#submit').removeAttr('disabled');
+	                    if ('error' in response) {
+	                        showFormMessage('Sorry, an error occurred while processing your request.', false);
+	                    } else {
+	                        showFormMessage('Your changes have been updated successfully.', true);
+	                    }
+	                });
+	            }();
+
+	            if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+	        } else {
+	            setTimeout(function () {
+	                $('#submit').removeAttr('disabled');
+	            }, 1000);
+	        }
+	    };
+
+	    var hideLoadingImg = function hideLoadingImg(show_form) {
+	        $('#loading').remove();
+	        if (typeof show_form === 'undefined') {
+	            show_form = true;
+	        }
+	        if (show_form) {
+	            $('#assessment_form').removeClass('invisible');
+	        }
+	    };
+
+	    var checkIsVirtual = function checkIsVirtual() {
+	        if (Client.get_boolean('is_virtual')) {
+	            $('#assessment_form').addClass('invisible');
+	            $('#response_on_success').addClass('notice-msg center-text').removeClass('invisible').text('This feature is not relevant to virtual-money accounts.');
+	            hideLoadingImg(false);
+	            return true;
+	        }
+	        return false;
+	    };
+
+	    var showFormMessage = function showFormMessage(msg, isSuccess) {
+	        $('#form_message').attr('class', isSuccess ? 'success-msg' : 'errorfield').html(isSuccess ? '<ul class="checked" style="display: inline-block;"><li>' + msg + '</li></ul>' : msg).css('display', 'block').delay(5000).fadeOut(1000);
+	    };
+
+	    var unload = function unload() {
+	        $(form_selector).off('submit');
+	    };
+
+	    return {
+	        load: load,
+	        unload: unload
+	    };
+	}();
+
+	module.exports = FinancialAssessment;
 
 /***/ }
 /******/ ]);
