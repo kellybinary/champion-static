@@ -36713,7 +36713,7 @@
 
 	var ChampionSocket = __webpack_require__(301);
 	var Client = __webpack_require__(304);
-	var Validation = __webpack_require__(313);
+	// const Validation     = require('./../../common/validation');
 	var Login = __webpack_require__(430);
 
 	var DepositWithdrawal = function () {
@@ -36760,8 +36760,7 @@
 	    var checkCashierCurrency = function checkCashierCurrency() {
 	        if (Client.get_value('currency')) {
 	            // init deposit / withdrawal
-	            form_type = views.deposit;
-	            initForm(form_type);
+	            initForm(form_type); // todo
 	        } else {
 	            ChampionSocket.send({ set_account_currency: 'USD' }); // set default
 	            form_type = 'currency';
@@ -36788,18 +36787,12 @@
 	        }
 	    };
 
-	    var initForm = function initForm(form) {
+	    var initForm = function initForm() {
 	        var form_selector = '#form_' + form_type + '_cashier',
 	            $form = $(form_selector);
 
 	        btn_submit = $form.find(fields.btn_submit);
 	        btn_submit.on('click', submit);
-
-	        if (form === views.deposit) {
-	            Validation.init(form_selector, [{ selector: fields.txt_lock_password, validations: ['req', 'password'] }, { selector: fields.txt_re_password, validations: ['req', ['compare', { to: fields.txt_lock_password }]] }]);
-	        } else {
-	            Validation.init(form_selector, [{ selector: fields.txt_unlock_password, validations: ['req', 'password'] }]);
-	        }
 	    };
 
 	    var unload = function unload() {
