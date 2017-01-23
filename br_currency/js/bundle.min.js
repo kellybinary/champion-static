@@ -36722,12 +36722,9 @@
 	    var btn_submit = void 0,
 	        form_type = void 0;
 
-	    // const fields = {
-	    //     txt_unlock_password: '#txt_unlock_password',
-	    //     txt_lock_password  : '#txt_lock_password',
-	    //     txt_re_password    : '#txt_re_password',
-	    //     btn_submit         : '#btn_submit',
-	    // };
+	    var fields = {
+	        btn_submit: '#btn_submit'
+	    };
 
 	    var views = {
 	        logged_out: 'logged_out',
@@ -36763,7 +36760,7 @@
 	            $('#select-currency').append($('<option></option>').attr('value', key).text(value));
 	        });
 	        renderView(views.real, form_type);
-	        btn_submit = $('#form_currency').find('#btn_submit');
+	        btn_submit = $('#form_currency').find(fields.btn_submit);
 	        btn_submit.on('click', submit);
 	    };
 
@@ -36805,7 +36802,11 @@
 	                $('#error-set-currency').removeClass('hidden').text(response.error.message);
 	            } else {
 	                $form.hide();
-	                $('#client_message').show().find('.notice-msg').text('Your settings have been updated successfully.');
+	                if (response.set_account_currency === 1) {
+	                    $('#client_message').show().find('.notice-msg').text('Your settings have been updated successfully.');
+	                    return;
+	                }
+	                $('#client_message').show().find('.notice-msg').text('You did not change anything.');
 	            }
 	        });
 	        // }
