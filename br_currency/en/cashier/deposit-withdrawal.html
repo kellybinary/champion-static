@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
 
-    <title>Change Password | Champion-FX.com</title>
+    <title>Deposit | Champion-FX.com</title>
     <meta name="description" content="ChampionFX Static" />
     <link rel="icon" type="image/png" sizes="16x16" href="/champion-static/br_currency/images/favicons/CFX_favicon16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/champion-static/br_currency/images/favicons/CFX_favicon32.png" />
@@ -160,68 +160,50 @@
         <div class="wrapper" id="champion-content">
             <div class="fx-section">
     <div class="container">
+
         <div class="row">
             <div class="col-sm">
-                <h1>Change Password</h1>
+                <h1>Deposit</h1> <!-- todo: deposit / withdrawal template -->
             </div>
         </div>
 
-        <form id="frm_change_password">
+        <form id="form_currency" style="display: none;">
             <fieldset>
+                <legend>Transaction Currency</legend>
+
                 <div class="row">
+                	<div class=col-xs-12>
+                		<p class="current-currency"></p>
+                		<p>Please choose which currency you would like to transact in.</p>
+                	</div>
                     <div class="col-xs-4">
                         <div class="form-label">
-                            <label for="txt_old_password">Current password</label>
+                            <label for="txt_cashier_currency">Transact in</label>
                         </div>
                     </div>
                     <div class="col-xs-8">
                         <div class="form-input">
-                            <input id="txt_old_password" type="password" maxlength="25" />
+                    		<select id="select-currency"></select>
                         </div>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-xs-4">
-                        <div class="form-label">
-                            <label for="txt_new_password">New password</label>
-                        </div>
-                    </div>
-                    <div class="col-xs-8">
-                        <div class="form-input">
-                            <input id="txt_new_password" type="password" maxlength="25" />
-                        </div>
-                        <div class="hint">Minimum of six lower and uppercase letters with numbers</div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xs-4">
-                        <div class="form-label">
-                            <label for="txt_re_password">Verify new password</label>
-                        </div>
-                    </div>
-                    <div class="col-xs-8">
-                        <div class="form-input">
-                            <input id="txt_re_password" type="password" maxlength="25" />
-                        </div>
-                    </div>
-                </div>
-
             </fieldset>
             <div class="submit-holder">
-                <p class="error-msg hidden" id="error-change-password"></p>
-                <button id="btn_submit" type="submit">Change Password</button>
+                <p class="error-msg hidden" id="error-set-currency"></p>
+                <button id="btn_submit" type="submit">Continue</button>
             </div>
         </form>
 
-        <div class="errorbox rbox centered" id="client_message" style="display:none">
+        <!-- TODO: Deposit and Withdrawal forms -->
+
+        <div class="errorbox rbox centered" id="client_message" style="display: none">
             <div class="rbox-wrap">
                 <div class="gr-12 rbox-content" id="client_message_content">
                     <p class="center notice-msg"></p>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
         </div>
