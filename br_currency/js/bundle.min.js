@@ -36751,37 +36751,14 @@
 	                if (Client.is_virtual()) {
 	                    renderView(views.virtual);
 	                } else {
-	                    ChampionSocket.send({ set_account_currency: 'USD' });
-	                    renderView(views.real);
+	                    if (!Client.get_value('currency')) {
+	                        ChampionSocket.send({ set_account_currency: 'USD' }); // set account currency to USD by default
+	                    }
+	                    renderView(views.real); // TODO: check for deposit / withdraw
 	                }
 	            });
 	        }
 	    };
-
-	    // const checkCashierCurrency = () => {
-	    //     // if (Client.get_value('currency')) {
-	    //         // init deposit / withdrawal
-	    //         // initForm(form_type); // todo
-	    //     // } else {
-	    //         // ChampionSocket.send({ set_account_currency: 'USD' }, (response) => { // set to USD by default
-	    //         //     if (response.error) {
-	    //         //         $('#error-set-currency').removeClass('hidden').text(response.error.message);
-	    //         //     } else {
-	    //         //         $('.current-currency').text('Your account currency is set to USD');
-	    //         //     }
-	    //     // });
-	    //     form_type = 'currency';
-	    //     $.each(currencies, function(key, value) {
-	    //         $('#select-currency')
-	    //             .append($('<option></option>')
-	    //                 .attr('value', key)
-	    //                 .text(value));
-	    //     });
-	    //     renderView(views.real, 'currency');
-	    //     btn_submit = $('#form_currency').find(fields.btn_submit);
-	    //     btn_submit.on('click', submit);
-	    //     // }
-	    // };
 
 	    var renderView = function renderView(view, form) {
 	        var $form = $('#form_' + form);
@@ -36828,7 +36805,7 @@
 	                $('#error-set-currency').removeClass('hidden').text(response.error.message);
 	            } else {
 	                $form.hide();
-	                $('#client_message').show().find('.notice-msg').text('You did not change anything.');
+	                $('#client_message').show().find('.notice-msg').text('Your account currency has been updated successfully.');
 	            }
 	        });
 	    };
