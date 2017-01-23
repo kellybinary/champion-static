@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
 
-    <title>Password Reset | Champion-FX.com</title>
+    <title>Withdraw | Champion-FX.com</title>
     <meta name="description" content="ChampionFX Static" />
     <link rel="icon" type="image/png" sizes="16x16" href="/champion-static/br_currency/images/favicons/CFX_favicon16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/champion-static/br_currency/images/favicons/CFX_favicon32.png" />
@@ -158,89 +158,52 @@
     </div>
     <main class="page-content" aria-label="Content" id="champion-container">
         <div class="wrapper" id="champion-content">
-            <div class="fx-section" id="reset_passwordws">
+            <div class="fx-section">
     <div class="container">
-        <h1>Password Reset</h1>
-        <p class="notice-msg">Please check your email to retrieve the token needed to reset your password.</p>
-        <div class="invisible" id="reset-error">
-            <p id="reset-error-msg"></p>
-            <a href="/champion-static/br_currency/en/lost-password.html">Click here to retry</a>
+
+        <div class="row">
+            <div class="col-sm">
+                <h1>Deposit</h1> <!-- todo: deposit / withdrawal template -->
+            </div>
         </div>
-        <form id="frm_reset_password">
+
+        <form id="form_currency" style="display: block;">
             <fieldset>
-                <legend>Details</legend>
+                <legend>Transaction Currency</legend>
+
                 <div class="row">
+                	<div class=col-xs-12>
+                		<p class="current-currency"></p>
+                		<p>Please choose which currency you would like to transact in.</p>
+                	</div>
                     <div class="col-xs-4">
                         <div class="form-label">
-                            <label for="txt_verification_code">Verification Token</label>
+                            <label for="txt_cashier_currency">Transact in</label>
                         </div>
                     </div>
                     <div class="col-xs-8">
                         <div class="form-input">
-                            <input id="txt_verification_code" type="text" autocomplete="off" maxlength="48" />
-                            <div class="hint">Please check your email for the value of this token</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
-                        <div class="form-label">
-                            <label for="txt_password">New Password</label>
-                        </div>
-                    </div>
-                    <div class="col-xs-8">
-                        <div class="form-input">
-                            <input id="txt_password" type="password" maxlength="25" />
-                            <p class="hint" id="password-hint">Minimum of six lower and uppercase letters with numbers</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
-                        <div class="form-label">
-                            <label for="txt_re_password">Confirm New Password</label>
-                        </div>
-                    </div>
-                    <div class="col-xs-8">
-                        <div class="form-input">
-                            <input id="txt_re_password" type="password" maxlength="25" />
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
-                        <div class="form-label">
-                            <label for="chk_has_real">I have a Real Money Account</label>
-                        </div>
-                    </div>
-                    <div class="col-xs-8">
-                        <div class="form-input">
-                            <input id="chk_has_real" type="checkbox" />
-                        </div>
-                    </div>
-                </div>
-                <div class="row invisible" id="dob_row">
-                    <div class="col-xs-4">
-                        <div class="form-label">
-                            <label for="txt_birth_date">Date of Birth</label>
-                        </div>
-                    </div>
-                    <div class="col-xs-8">
-                        <div class="form-input">
-                            <input id="txt_birth_date" type="text" class="text" size="12" readonly="readonly" />
+                    		<select id="select-currency"></select>
                         </div>
                     </div>
                 </div>
             </fieldset>
-            <div class="row">
-                <div class="col-xs-4"></div>
-                <div class="col-xs-8">
-                <span class="button">
-                    <button id="btn_submit" name="submit" type="button">Reset Password</button>
-                </span>
-                </div>
+            <div class="submit-holder">
+                <p class="error-msg hidden" id="error-set-currency"></p>
+                <button id="btn_submit" type="submit">Continue</button>
             </div>
         </form>
+
+        <!-- TODO: Deposit and Withdrawal forms -->
+
+        <div class="errorbox rbox centered" id="client_message" style="display: none">
+            <div class="rbox-wrap">
+                <div class="gr-12 rbox-content" id="client_message_content">
+                    <p class="center notice-msg"></p>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
         </div>

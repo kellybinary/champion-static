@@ -36722,9 +36722,9 @@
 	    var btn_submit = void 0,
 	        form_type = void 0;
 
-	    var fields = {
-	        btn_submit: '#btn_submit'
-	    };
+	    // const fields = {
+	    //     btn_submit: '#btn_submit',
+	    // };
 
 	    var views = {
 	        logged_out: 'logged_out',
@@ -36735,13 +36735,13 @@
 	        withdraw: 'withdraw'
 	    };
 
-	    var currencies = {
-	        USD: '$',
-	        GBP: '£',
-	        AUD: 'A$',
-	        EUR: '€',
-	        JPY: '¥'
-	    };
+	    // const currencies = {
+	    //     USD: '$',
+	    //     GBP: '£',
+	    //     AUD: 'A$',
+	    //     EUR: '€',
+	    //     JPY: '¥',
+	    // };
 
 	    var load = function load() {
 	        if (!Client.is_logged_in()) {
@@ -36751,27 +36751,37 @@
 	                if (Client.is_virtual()) {
 	                    renderView(views.virtual);
 	                } else {
-	                    checkCashierCurrency();
+	                    ChampionSocket.send({ set_account_currency: 'USD' });
+	                    renderView(views.real);
 	                }
 	            });
 	        }
 	    };
 
-	    var checkCashierCurrency = function checkCashierCurrency() {
-	        if (Client.get_value('currency')) {
-	            // init deposit / withdrawal
-	            initForm(form_type); // todo
-	        } else {
-	            ChampionSocket.send({ set_account_currency: 'USD' }); // set default
-	            form_type = 'currency';
-	            $.each(currencies, function (key, value) {
-	                $('#select-currency').append($('<option></option>').attr('value', key).text(value));
-	            });
-	            renderView(views.real, form_type);
-	            btn_submit = $('#form_currency').find(fields.btn_submit);
-	            btn_submit.on('click', submit);
-	        }
-	    };
+	    // const checkCashierCurrency = () => {
+	    //     // if (Client.get_value('currency')) {
+	    //         // init deposit / withdrawal
+	    //         // initForm(form_type); // todo
+	    //     // } else {
+	    //         // ChampionSocket.send({ set_account_currency: 'USD' }, (response) => { // set to USD by default
+	    //         //     if (response.error) {
+	    //         //         $('#error-set-currency').removeClass('hidden').text(response.error.message);
+	    //         //     } else {
+	    //         //         $('.current-currency').text('Your account currency is set to USD');
+	    //         //     }
+	    //     // });
+	    //     form_type = 'currency';
+	    //     $.each(currencies, function(key, value) {
+	    //         $('#select-currency')
+	    //             .append($('<option></option>')
+	    //                 .attr('value', key)
+	    //                 .text(value));
+	    //     });
+	    //     renderView(views.real, 'currency');
+	    //     btn_submit = $('#form_currency').find(fields.btn_submit);
+	    //     btn_submit.on('click', submit);
+	    //     // }
+	    // };
 
 	    var renderView = function renderView(view, form) {
 	        var $form = $('#form_' + form);
@@ -36787,13 +36797,13 @@
 	        }
 	    };
 
-	    var initForm = function initForm() {
-	        var form_selector = '#form_' + form_type + '_cashier',
-	            $form = $(form_selector);
+	    // const initForm = () => {
+	    //     const form_selector = `#form_${form_type}`,
+	    //         $form = $(form_selector);
 
-	        btn_submit = $form.find(fields.btn_submit);
-	        btn_submit.on('click', submit);
-	    };
+	    //     btn_submit = $form.find(fields.btn_submit);
+	    //     btn_submit.on('click', submit);
+	    // };
 
 	    var unload = function unload() {
 	        if (btn_submit) {
