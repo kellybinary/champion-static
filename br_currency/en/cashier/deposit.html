@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
 
-    <title>Endpoint | Champion-FX.com</title>
+    <title>Cashier Currency | Champion-FX.com</title>
     <meta name="description" content="ChampionFX Static" />
     <link rel="icon" type="image/png" sizes="16x16" href="/champion-static/br_currency/images/favicons/CFX_favicon16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/champion-static/br_currency/images/favicons/CFX_favicon32.png" />
@@ -160,43 +160,47 @@
         <div class="wrapper" id="champion-content">
             <div class="fx-section">
     <div class="container">
-        <h1>Change API Endpoint</h1>
-        <form id="frm_endpoint">
+
+        <div class="row">
+            <div class="col-sm">
+                <h1>Deposit</h1> <!-- todo: deposit / withdrawal template -->
+            </div>
+        </div>
+
+        <form id="form_currency" style="display: none;">
             <fieldset>
-                <legend>Details</legend>
+                <legend>Transaction Currency</legend>
+
                 <div class="row">
+                	<div class=col-xs-12>
+                		<p>Please choose which currency you would like to transact in.</p>
+                	</div>
                     <div class="col-xs-4">
                         <div class="form-label">
-                            <label for="txt_server_url">Server</label>
+                            <label for="txt_lock_password">Transact in</label>
                         </div>
                     </div>
                     <div class="col-xs-8">
                         <div class="form-input">
-                            <input type="text" class="form-control" id="txt_server_url" maxlength="30" />
-                            <div class="hint">e.g. ws.binaryws.com</div>
-                            <p class="errorfield" id="error-server_url" style="display:none"></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
-                        <div class="form-label">
-                            <label for="txt_app_id">OAuth App ID (Optional)</label>
-                        </div>
-                    </div>
-                    <div class="col-xs-8">
-                        <div class="form-input">
-                            <input type="text" class="form-control" id="txt_app_id" maxlength="5" />
-                            <p class="errorfield" id="error-app_id" style="display:none"></p>
+                    		<select id="select-currency"></select>
                         </div>
                     </div>
                 </div>
             </fieldset>
             <div class="submit-holder">
-                <button id="btn_set_endpoint" type="submit">Submit</button>
-                <button class="button-secondary" id="btn_reset_endpoint">Reset to Original Settings</button>
+                <p class="error-msg hidden" id="error-set-currency"></p>
+                <button id="btn_submit" type="submit">Continue</button>
             </div>
         </form>
+
+        <div class="errorbox rbox centered" id="client_message" style="display: none">
+            <div class="rbox-wrap">
+                <div class="gr-12 rbox-content" id="client_message_content">
+                    <p class="center notice-msg"></p>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
         </div>

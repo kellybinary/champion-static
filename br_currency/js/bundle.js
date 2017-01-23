@@ -18478,7 +18478,7 @@
 	var CashierPaymentMethods = __webpack_require__(439);
 	var CashierPassword = __webpack_require__(440);
 	var FinancialAssessment = __webpack_require__(441);
-	var CashierCurrency = __webpack_require__(442);
+	var DepositWithdrawal = __webpack_require__(442);
 
 	var Champion = function () {
 	    'use strict';
@@ -18528,7 +18528,7 @@
 	            'cashier-password': CashierPassword,
 	            'tnc-approval': TNCApproval,
 	            assessment: FinancialAssessment,
-	            'cashier-currency': CashierCurrency
+	            'deposit-withdrawal': DepositWithdrawal
 	        };
 	        if (page in pages_map) {
 	            _active_script = pages_map[page];
@@ -36713,10 +36713,10 @@
 
 	var ChampionSocket = __webpack_require__(301);
 	var Client = __webpack_require__(304);
-	// const Validation     = require('./../../common/validation');
+	var Validation = __webpack_require__(313);
 	var Login = __webpack_require__(430);
 
-	var CashierCurrency = function () {
+	var DepositWithdrawal = function () {
 	    'use strict';
 
 	    var btn_submit = void 0,
@@ -36729,7 +36729,10 @@
 	    var views = {
 	        logged_out: 'logged_out',
 	        virtual: 'virtual',
-	        real: 'real'
+	        real: 'real',
+	        currency: 'currency',
+	        deposit: 'deposit',
+	        withdraw: 'withdraw'
 	    };
 
 	    var currencies = {
@@ -36755,13 +36758,20 @@
 	    };
 
 	    var checkCashierCurrency = function checkCashierCurrency() {
-	        form_type = 'currency';
-	        $.each(currencies, function (key, value) {
-	            $('#select-currency').append($('<option></option>').attr('value', key).text(value));
-	        });
-	        renderView(views.real, form_type);
-	        btn_submit = $('#form_currency').find(fields.btn_submit);
-	        btn_submit.on('click', submit);
+	        if (Client.get_value('currency')) {
+	            // init deposit / withdrawal
+	            form_type = views.deposit;
+	            initForm(form_type);
+	        } else {
+	            ChampionSocket.send({ set_account_currency: 'USD' }); // set default
+	            form_type = 'currency';
+	            $.each(currencies, function (key, value) {
+	                $('#select-currency').append($('<option></option>').attr('value', key).text(value));
+	            });
+	            renderView(views.real, form_type);
+	            btn_submit = $('#form_currency').find(fields.btn_submit);
+	            btn_submit.on('click', submit);
+	        }
 	    };
 
 	    var renderView = function renderView(view, form) {
@@ -36778,6 +36788,20 @@
 	        }
 	    };
 
+	    var initForm = function initForm(form) {
+	        var form_selector = '#form_' + form_type + '_cashier',
+	            $form = $(form_selector);
+
+	        btn_submit = $form.find(fields.btn_submit);
+	        btn_submit.on('click', submit);
+
+	        if (form === views.deposit) {
+	            Validation.init(form_selector, [{ selector: fields.txt_lock_password, validations: ['req', 'password'] }, { selector: fields.txt_re_password, validations: ['req', ['compare', { to: fields.txt_lock_password }]] }]);
+	        } else {
+	            Validation.init(form_selector, [{ selector: fields.txt_unlock_password, validations: ['req', 'password'] }]);
+	        }
+	    };
+
 	    var unload = function unload() {
 	        if (btn_submit) {
 	            btn_submit.off('click', submit);
@@ -36790,7 +36814,6 @@
 	        var form_selector = '#form_' + form_type,
 	            $form = $(form_selector);
 
-	        // if (Validation.validate(form_selector)) {
 	        var req_val = $('#select-currency').val();
 
 	        var data = {
@@ -36802,14 +36825,9 @@
 	                $('#error-set-currency').removeClass('hidden').text(response.error.message);
 	            } else {
 	                $form.hide();
-	                if (response.set_account_currency === 1) {
-	                    $('#client_message').show().find('.notice-msg').text('Your settings have been updated successfully.');
-	                    return;
-	                }
 	                $('#client_message').show().find('.notice-msg').text('You did not change anything.');
 	            }
 	        });
-	        // }
 	    };
 
 	    return {
@@ -36818,7 +36836,7 @@
 	    };
 	}();
 
-	module.exports = CashierCurrency;
+	module.exports = DepositWithdrawal;
 
 /***/ }
 /******/ ]);
