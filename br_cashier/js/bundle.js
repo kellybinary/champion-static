@@ -37469,6 +37469,7 @@
 	// const Client         = require('../../common/client');
 	// const Login          = require('../../common/login');
 	var url_for = __webpack_require__(304).url_for;
+	// const Utility        = require('../../common/utility');
 
 	var CashierDeposit = function () {
 	    'use strict';
@@ -37513,10 +37514,10 @@
 	                        errorMessage.html('Your account is not fully authenticated.');
 	                        break;
 	                    case 'ASK_FINANCIAL_RISK_APPROVAL':
-	                        errorMessage.html('Financial Risk approval is required. Please contact <a href=[_1]>customer support</a> for more information.', [url_for('/contact')]);
+	                        errorMessage.html('Financial Risk approval is required. Please contact <a href="[_1]">customer support</a> for more information.', [url_for('/contact')]);
 	                        break;
 	                    case 'ASK_AGE_VERIFICATION':
-	                        errorMessage.html('Your account needs age verification. Please contact <a href=[_1]>customer support</a> for more information.', [url_for('/contact')]);
+	                        errorMessage.html('Your account needs age verification. Please contact <a href="[_1]">customer support</a> for more information.', [url_for('/contact')]);
 	                        break;
 	                    default:
 	                        errorMessage.html(response.error.message);
