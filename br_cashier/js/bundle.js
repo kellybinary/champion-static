@@ -37515,6 +37515,9 @@
 	                    case 'ASK_AGE_VERIFICATION':
 	                        errorMessage.html('Your account needs age verification. Please contact <a href="[_1]">customer support</a> for more information.', [url_for('/contact')]);
 	                        break;
+	                    case 'ASK_CURRENCY':
+	                        ChampionSocket.send({ set_account_currency: '$' });
+	                        break;
 	                    default:
 	                        errorMessage.html(response.error.message);
 	                }
