@@ -18545,7 +18545,7 @@
 	            'reset-password': { module: ResetPassword, not_authenticated: true },
 	            'tnc-approval': { module: TNCApproval, is_authenticated: true, only_real: true },
 	            'top-up-virtual': { module: CashierTopUpVirtual, is_authenticated: true, only_virtual: true },
-	            deposit: CashierDeposit
+	            deposit: { module: CashierDeposit }
 	        };
 	        if (page in pages_map) {
 	            loadHandler(pages_map[page]);
