@@ -37504,22 +37504,22 @@
 	                        // window.location.href = url_for('user/tnc_approvalws');
 	                        break;
 	                    case 'ASK_FIX_DETAILS':
-	                        errorMessage.text(response.error.details);
+	                        errorMessage.html(response.error.details);
 	                        break;
 	                    case 'ASK_UK_FUNDS_PROTECTION':
 	                        $('#ukgc_funds_protection').removeClass(hidden_class);
 	                        break;
 	                    case 'ASK_AUTHENTICATE':
-	                        errorMessage.text('Your account is not fully authenticated.');
+	                        errorMessage.html('Your account is not fully authenticated.');
 	                        break;
 	                    case 'ASK_FINANCIAL_RISK_APPROVAL':
 	                        errorMessage.html('Financial Risk approval is required. Please contact <a href="[_1]">customer support</a> for more information.', [url_for('/contact')]);
 	                        break;
 	                    case 'ASK_AGE_VERIFICATION':
-	                        errorMessage.html('Account needs age verification. Please contact <a href="[_1]">customer support</a> for more information.', [url_for('/contact')]);
+	                        errorMessage.html('Your account needs age verification. Please contact <a href="[_1]">customer support</a> for more information.', [url_for('/contact')]);
 	                        break;
 	                    default:
-	                        errorMessage.text(response.error.message);
+	                        errorMessage.html(response.error.message);
 	                }
 	            } else {
 	                switch (response.msg_type) {
