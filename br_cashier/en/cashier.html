@@ -18,11 +18,11 @@
     <meta name="description" content="ChampionFX Static" />
     <link rel="icon" type="image/png" sizes="16x16" href="/champion-static/br_cashier/images/favicons/CFX_favicon16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/champion-static/br_cashier/images/favicons/CFX_favicon32.png" />
-     <link rel="stylesheet" href="/champion-static/br_cashier/css/flex.min.css?sie54wl4" />
-     <link rel="stylesheet" href="/champion-static/br_cashier/css/style.min.css?sie54wl4" />
-     <link rel="stylesheet" href="https://style.champion-fx.com/binary.css?sie54wl4" />
-      <script src="/champion-static/br_cashier/js/bundle.js?sie54wl4" type="text/javascript"></script>
-     <script src="https://style.champion-fx.com/binary.js?sie54wl4" type="text/javascript"></script>
+     <link rel="stylesheet" href="/champion-static/br_cashier/css/flex.min.css?2u0qbu9s" />
+     <link rel="stylesheet" href="/champion-static/br_cashier/css/style.min.css?2u0qbu9s" />
+     <link rel="stylesheet" href="https://style.champion-fx.com/binary.css?2u0qbu9s" />
+      <script src="/champion-static/br_cashier/js/bundle.js?2u0qbu9s" type="text/javascript"></script>
+     <script src="https://style.champion-fx.com/binary.js?2u0qbu9s" type="text/javascript"></script>
      
 </head>
 <body>
@@ -113,6 +113,10 @@
                                 <div class="nav-caret"></div>
                             </a>
                             <ul>
+                                <a class="link" href="/champion-static/br_cashier/en/user/settings.html">
+                                    <li class="topMenuSettings">Settings</li>
+                                </a>
+                                <div class="separator-line-thin-gray"></div>
                                 <a class="link" href="/champion-static/br_cashier/en/cashier.html">
                                     <li class="topMenuCashier">Cashier</li>
                                 </a>
@@ -133,7 +137,7 @@
     </div>
 </div>
 
-    <div class="fill-bg-color centered hidden" id="signup">
+    <div class="fill-bg-color center-text hidden" id="signup">
         <div class="container">
             <div class="row">
                 <div class="col-sm flex-sm-middle">
@@ -142,7 +146,7 @@
         <div class="">
             <input class="clean-input" autocomplete="off" name="email" id="email" maxlength="50" placeholder="Enter your email">
         </div>
-        <div class="">
+        <div>
             <button class="button" id="btn-verify-email" type="submit">Create Free Account</button>
         </div>
         <span class="error-msg hint color-white center-text hidden" id="signup_error"></span>
@@ -163,7 +167,7 @@
             </div>
         </div>
 
-        <div class="fx-virtual row">
+        <div class="fx-virtual row hidden">
             <div class="col-md-12">
                 <h2>Get more virtual money</h2>
             </div>
@@ -192,8 +196,12 @@
                 <a href="/champion-static/br_cashier/en/cashier/payment-methods.html">View available payment methods</a>
             </div>
             <div class="fx-real col-md-4">
-                <button id="deposit-btn">Deposit</button>
-                <button id="withdraw-btn">Withdraw</button>
+                <a href="/champion-static/br_cashier/en/cashier/deposit.html" id="deposit-btn">
+                    <span>Deposit</span>
+                </a>
+                <a href="/cashier/withdraw" id="withdraw-btn">
+                    <span>Withdraw</span>
+                </a>
             </div>
         </div>
 
@@ -240,7 +248,7 @@
         </div>
     </div>
     <div id="footer-last" class="">
-        <div class="container centered">
+        <div class="container center-text">
             <div class="row">
                 <div class="col-sm">
                     &copy; 2017 Champion FX
@@ -248,6 +256,7 @@
             </div>
         </div>
     </div>
+    <div id="end_note" class="invisible"></div>
 </footer>
 </body>
 </html>
