@@ -37466,10 +37466,7 @@
 	'use strict';
 
 	var ChampionSocket = __webpack_require__(308);
-	// const Client         = require('../../common/client');
-	// const Login          = require('../../common/login');
 	var url_for = __webpack_require__(304).url_for;
-	// const Utility        = require('../../common/utility');
 
 	var CashierDeposit = function () {
 	    'use strict';
@@ -37483,7 +37480,7 @@
 	        depositContainer = $('#cashier_deposit');
 	        errorMessage = depositContainer.find('#error_msg');
 
-	        deposit();
+	        ChampionSocket.wait('authorize').then(deposit());
 	    };
 
 	    var deposit = function deposit() {
