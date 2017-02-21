@@ -37474,13 +37474,13 @@
 	    'use strict';
 
 	    var depositContainer = void 0,
-	        noticeMessage = void 0;
+	        messages = void 0;
 
 	    var hidden_class = 'hidden';
 
 	    var load = function load() {
 	        depositContainer = $('#cashier_deposit');
-	        noticeMessage = depositContainer.find('.notice-msg');
+	        messages = depositContainer.find('#main_msg');
 
 	        deposit();
 	    };
@@ -37498,28 +37498,28 @@
 	        };
 	        ChampionSocket.send(data).then(function (response) {
 	            if (response.error) {
-	                noticeMessage.removeClass(hidden_class);
+	                messages.removeClass(hidden_class);
 	                switch (response.error.code) {
 	                    case 'ASK_TNC_APPROVAL':
 	                        // window.location.href = url_for('user/tnc_approvalws');
 	                        break;
 	                    case 'ASK_FIX_DETAILS':
-	                        noticeMessage = response.error.details;
+	                        messages.find('.notice-msg').text(response.error.details);
 	                        break;
 	                    case 'ASK_UK_FUNDS_PROTECTION':
 	                        $('#ukgc_funds_protection').removeClass(hidden_class);
 	                        break;
 	                    case 'ASK_AUTHENTICATE':
-	                        noticeMessage.text('Your account is not fully authenticated.');
+	                        messages.find('.notice-msg').text('Your account is not fully authenticated.');
 	                        break;
 	                    case 'ASK_FINANCIAL_RISK_APPROVAL':
-	                        noticeMessage.text('Financial Risk approval is required. Please contact <a href="[_1]">customer support</a> for more information.', [url_for('/contact')]);
+	                        messages.find('.notice-msg').text('Financial Risk approval is required. Please contact <a href="[_1]">customer support</a> for more information.', [url_for('/contact')]);
 	                        break;
 	                    case 'ASK_AGE_VERIFICATION':
-	                        noticeMessage.text('Account needs age verification. Please contact <a href="[_1]">customer support</a> for more information.', [url_for('/contact')]);
+	                        messages.find('.notice-msg').text('Account needs age verification. Please contact <a href="[_1]">customer support</a> for more information.', [url_for('/contact')]);
 	                        break;
 	                    default:
-	                        noticeMessage.text(response.error.message);
+	                        messages.find('.notice-msg').text(response.error.message);
 	                }
 	            } else {
 	                switch (response.msg_type) {
