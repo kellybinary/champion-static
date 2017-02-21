@@ -37480,7 +37480,13 @@
 	        depositContainer = $('#cashier_deposit');
 	        errorMessage = depositContainer.find('#error_msg');
 
-	        ChampionSocket.wait('authorize').then(deposit());
+	        ChampionSocket.wait('authorize').then(function (response) {
+	            if (response.error) {
+	                console.log(response.error);
+	                return;
+	            }
+	            deposit();
+	        });
 	    };
 
 	    var deposit = function deposit() {
