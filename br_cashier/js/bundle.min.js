@@ -37466,48 +37466,84 @@
 	'use strict';
 
 	var ChampionSocket = __webpack_require__(308);
-	var Client = __webpack_require__(301);
-	var Login = __webpack_require__(312);
+	// const Client         = require('../../common/client');
+	// const Login          = require('../../common/login');
+	var url_for = __webpack_require__(304).url_for;
 
 	var CashierDeposit = function () {
 	    'use strict';
 
-	    var container = void 0,
-	        viewError = void 0,
-	        viewSuccess = void 0;
+	    var depositContainer = void 0,
+	        noticeMessage = void 0;
+
+	    var hidden_class = 'hidden';
 
 	    var load = function load() {
-	        container = $('#topup_virtual');
-	        viewError = container.find('#viewError');
-	        viewSuccess = container.find('#viewSuccess');
+	        depositContainer = $('#cashier_deposit');
+	        noticeMessage = depositContainer.find('.notice-msg');
 
-	        if (Client.is_logged_in() && Client.is_virtual()) {
-	            top_up_virtual();
-	        } else if (Client.is_logged_in() && !Client.is_virtual()) {
-	            viewError.removeClass('hidden').find('.notice-msg').text('Sorry, this feature is available to virtual accounts only.');
-	        } else {
-	            viewError.removeClass('hidden').find('.notice-msg').html('Please <a href="javascript:;">log in</a> to view this page.').find('a').on('click', function () {
-	                Login.redirect_to_login();
-	            });
-	        }
+	        deposit();
 	    };
 
-	    var top_up_virtual = function top_up_virtual() {
+	    // const getCashierURL = (verification_token) => {
+	    //     const req = { cashier: getCashierType() };
+	    //     if (verification_token) req.verification_code = verification_token;
+	    //     if (/epg/.test(window.location.pathname)) req.provider = 'epg';
+	    //     BinarySocket.send(req);
+	    // };
+
+	    var deposit = function deposit() {
 	        var data = {
-	            topup_virtual: '1'
+	            cashier: 'deposit'
 	        };
-	        ChampionSocket.send(data, function (response) {
+	        ChampionSocket.send(data).then(function (response) {
 	            if (response.error) {
-	                viewError.removeClass('hidden').find('.notice-msg').text(response.error.message);
+	                noticeMessage.removeClass(hidden_class);
+	                switch (response.error.code) {
+	                    case 'ASK_TNC_APPROVAL':
+	                        // window.location.href = url_for('user/tnc_approvalws');
+	                        break;
+	                    case 'ASK_FIX_DETAILS':
+	                        noticeMessage = response.error.details;
+	                        break;
+	                    case 'ASK_UK_FUNDS_PROTECTION':
+	                        $('#ukgc_funds_protection').removeClass(hidden_class);
+	                        break;
+	                    case 'ASK_AUTHENTICATE':
+	                        noticeMessage.text('Your account is not fully authenticated.');
+	                        break;
+	                    case 'ASK_FINANCIAL_RISK_APPROVAL':
+	                        noticeMessage.text('Financial Risk approval is required. Please contact <a href="[_1]">customer support</a> for more information.', [url_for('/contact')]);
+	                        break;
+	                    case 'ASK_AGE_VERIFICATION':
+	                        noticeMessage.text('Account needs age verification. Please contact <a href="[_1]">customer support</a> for more information.', [url_for('/contact')]);
+	                        break;
+	                    default:
+	                        noticeMessage.text(response.error.message);
+	                }
 	            } else {
-	                viewSuccess.removeClass('hidden').find('.notice-msg').text('[_1] [_2] has been credited to your Virtual money account [_3]', [response.topup_virtual.currency, response.topup_virtual.amount, Client.get_value('loginid')]);
+	                switch (response.msg_type) {
+	                    case 'cashier_password':
+	                        // ForwardWS.init(response.cashier_password);
+	                        break;
+	                    case 'cashier':
+	                        // ForwardWS.hideAll('#deposit-withdraw-message');
+	                        $('#deposit_iframe_container').removeClass(hidden_class).find('iframe').attr('src', response.cashier).end();
+	                        break;
+	                    case 'set_account_currency':
+	                    case 'tnc_approval':
+	                        // CashierDeposit.getCashierURL();
+	                        break;
+	                    default:
+	                        break;
+	                }
 	            }
 	        });
 	    };
 
 	    return {
 	        load: load,
-	        top_up_virtual: top_up_virtual
+	        deposit: deposit
 	    };
 	}();
 
