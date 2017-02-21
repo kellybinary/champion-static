@@ -37486,13 +37486,6 @@
 	        deposit();
 	    };
 
-	    // const getCashierURL = (verification_token) => {
-	    //     const req = { cashier: getCashierType() };
-	    //     if (verification_token) req.verification_code = verification_token;
-	    //     if (/epg/.test(window.location.pathname)) req.provider = 'epg';
-	    //     BinarySocket.send(req);
-	    // };
-
 	    var deposit = function deposit() {
 	        var data = {
 	            cashier: 'deposit'
@@ -37502,7 +37495,7 @@
 	                errorMessage.removeClass(hidden_class);
 	                switch (response.error.code) {
 	                    case 'ASK_TNC_APPROVAL':
-	                        // window.location.href = url_for('user/tnc_approvalws');
+	                        window.location.href = url_for('user/tnc_approval');
 	                        break;
 	                    case 'ASK_FIX_DETAILS':
 	                        errorMessage.html(response.error.details);
@@ -37523,12 +37516,15 @@
 	                        errorMessage.html(response.error.message);
 	                }
 	            } else {
+	                errorMessage.addClass(hidden_class);
+	                $('#ukgc_funds_protection').addClass(hidden_class);
 	                switch (response.msg_type) {
 	                    case 'cashier_password':
-	                        // ForwardWS.init(response.cashier_password);
+	                        if (response.cashier_password) {
+	                            errorMessage.removeClass(hidden_class).html('Your cashier is locked as per your request - to unlock it, please click <a class="pjaxload" href="[_1]">here</a>.', [url_for('/user/security/cashier_passwordws')]);
+	                        }
 	                        break;
 	                    case 'cashier':
-	                        // ForwardWS.hideAll('#deposit-withdraw-message');
 	                        $('#deposit_iframe_container').removeClass(hidden_class).find('iframe').attr('src', response.cashier).end();
 	                        break;
 	                    case 'set_account_currency':
