@@ -37516,7 +37516,7 @@
 	                        errorMessage.text('Financial Risk approval is required. Please contact <a href="[_1]">customer support</a> for more information.', [url_for('/contact')]);
 	                        break;
 	                    case 'ASK_AGE_VERIFICATION':
-	                        errorMessage.html('<p>Account needs age verification. Please contact <a href="[_1]">customer support</a> for more information.</p>', [url_for('/contact')]);
+	                        errorMessage.html('<p/>Account needs age verification. Please contact <a href="[_1]">customer support</a> for more information.', [url_for('/contact')]);
 	                        break;
 	                    default:
 	                        errorMessage.text(response.error.message);
