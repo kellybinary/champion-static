@@ -36331,6 +36331,7 @@
 	            ChampionSocket.wait('authorize').then(function () {
 	                cashierContainer.removeClass('hidden');
 	                if (Client.is_virtual()) {
+	                    cashierContainer.find('.fx-virtual').removeClass('hidden');
 	                    hideButton($('#deposit-btn, #withdraw-btn'));
 	                    if (Client.get('balance') > 1000) {
 	                        disableButton($('#VRT_topup_link'));
