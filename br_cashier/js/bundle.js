@@ -37465,72 +37465,83 @@
 	var CashierDepositWithdraw = function () {
 	    'use strict';
 
-	    var errorMessage = void 0;
+	    var container = void 0,
+	        cashier_type = void 0,
+	        error_msg = void 0;
 
 	    var load = function load() {
-	        var container = $('#cashier_deposit');
-	        errorMessage = container.find('#error_msg');
-	        $('.title').html(window.location.hash.substring(1));
+	        container = $('#cashier_deposit');
+	        error_msg = container.find('#error_msg');
+	        cashier_type = window.location.hash.substring(1);
+	        $('.title').html(cashier_type);
+	        if (cashier_type === 'withdraw') verify_email();
+
 	        ChampionSocket.send({ cashier_password: '1' }).then(function (response) {
 	            if (response.error) {
-	                errorMessage.removeClass('hidden').html(response.error.message);
+	                error_msg.removeClass('hidden').html(response.error.message);
 	            } else if (response.cashier_password) {
-	                errorMessage.removeClass('hidden').html('Your cashier is locked as per your request - to unlock it, please click <a href="[_1]">here</a>.'.replace('[_1]', url_for('/cashier/cashier-password')));
+	                error_msg.removeClass('hidden').html('Your cashier is locked as per your request - to unlock it, please click <a href="[_1]">here</a>.'.replace('[_1]', url_for('/cashier/cashier-password')));
 	            } else {
 	                deposit_withdraw();
 	            }
 	        });
 	    };
 
-	    var deposit_withdraw = function deposit_withdraw() {
-	        var type = window.location.hash.substring(1);
-
-	        ChampionSocket.send({ cashier: type }).then(function (response) {
+	    var deposit_withdraw = function deposit_withdraw(token) {
+	        var req = void 0;
+	        if (token) {
+	            req = {
+	                cashier: cashier_type,
+	                verification_code: token
+	            };
+	        } else req = { cashier: cashier_type };
+	        ChampionSocket.send(req).then(function (response) {
 	            if (response.error) {
-	                errorMessage.removeClass('hidden');
+	                error_msg.removeClass('hidden');
 	                switch (response.error.code) {
 	                    case 'ASK_TNC_APPROVAL':
 	                        window.location.href = url_for('user/tnc_approval');
 	                        break;
 	                    case 'ASK_FIX_DETAILS':
-	                        errorMessage.html(response.error.details);
+	                        error_msg.html(response.error.details);
 	                        break;
 	                    case 'ASK_UK_FUNDS_PROTECTION':
 	                        $('#ukgc_funds_protection').removeClass('hidden');
 	                        break;
 	                    case 'ASK_AUTHENTICATE':
-	                        errorMessage.html('Your account is not fully authenticated.');
+	                        error_msg.html('Your account is not fully authenticated.');
 	                        break;
 	                    case 'ASK_FINANCIAL_RISK_APPROVAL':
-	                        errorMessage.html('Financial Risk approval is required. Please contact <a href="[_1]">customer support</a> for more information.'.replace('[_1]', url_for('/contact')));
+	                        error_msg.html('Financial Risk approval is required. Please contact <a href="[_1]">customer support</a> for more information.'.replace('[_1]', url_for('/contact')));
 	                        break;
 	                    case 'ASK_AGE_VERIFICATION':
-	                        errorMessage.html('Your account needs age verification. Please contact <a href="[_1]">customer support</a> for more information.'.replace('[_1]', url_for('/contact')));
+	                        error_msg.html('Your account needs age verification. Please contact <a href="[_1]">customer support</a> for more information.'.replace('[_1]', url_for('/contact')));
 	                        break;
 	                    case 'ASK_CURRENCY':
 	                        // set account currency to USD if not set // TODO: remove this after currency set by default in backend
 	                        ChampionSocket.send({ set_account_currency: 'USD' }).then(function (res) {
-	                            if (res.error) errorMessage.html(res.error.message);
+	                            if (res.error) error_msg.html(res.error.message);
 	                            deposit_withdraw();
 	                        });
-	                        break; // TODO: handle more error messages
-	                    case 'ASK_EMAIL_VERIFY':
-	                        verifyEmail();
 	                        break;
 	                    default:
-	                        errorMessage.html(response.error.message);
+	                        error_msg.html(response.error.message);
 	                }
 	            } else {
 	                $('#error_msg, #ukgc_funds_protection').addClass('hidden'); // hide error messages row
-	                $('#' + type + '_iframe_container').removeClass('hidden').find('iframe').attr('src', response.cashier).end();
+	                $('#' + cashier_type + '_iframe_container').removeClass('hidden').find('iframe').attr('src', response.cashier).end();
 	            }
 	        });
 	    };
 
-	    var verifyEmail = function verifyEmail() {
+	    var verify_email = function verify_email() {
 	        ChampionSocket.send({
 	            verify_email: Client.get('email'),
 	            type: 'payment_withdraw'
+	        });
+	        $('#submit-verification').on('click', function () {
+	            var token = $('#verification-token').val();
+	            deposit_withdraw(token);
 	        });
 	        $('#withdraw-form').removeClass('hidden');
 	    };
