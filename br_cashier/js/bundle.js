@@ -18529,7 +18529,7 @@
 	        var page = content.getAttribute('data-page');
 	        var pages_map = {
 	            assessment: { module: FinancialAssessment, is_authenticated: true, only_real: true },
-	            cashier: { module: Cashier },
+	            cashier: { module: Cashier, not_authenticated: true },
 	            contact: { module: ChampionContact },
 	            endpoint: { module: ChampionEndpoint },
 	            logged_inws: { module: LoggedIn },
@@ -18545,7 +18545,7 @@
 	            'reset-password': { module: ResetPassword, not_authenticated: true },
 	            'tnc-approval': { module: TNCApproval, is_authenticated: true, only_real: true },
 	            'top-up-virtual': { module: CashierTopUpVirtual, is_authenticated: true, only_virtual: true },
-	            deposit: { module: CashierDeposit }
+	            deposit: { module: CashierDeposit, is_authenticated: true }
 	        };
 	        if (page in pages_map) {
 	            loadHandler(pages_map[page]);
