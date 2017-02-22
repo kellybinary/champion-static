@@ -37476,6 +37476,12 @@
 
 	    var hidden_class = 'hidden';
 
+	    var errorMessages = {
+	        cashier_locked: function cashier_locked() {
+	            return 'Your cashier is locked as per your request - to unlock it, please click <a href="[_1]">here</a>.'.replace('[_1]', url_for('/cashier/cashier-password'));
+	        }
+	    };
+
 	    var load = function load() {
 	        depositContainer = $('#cashier_deposit');
 	        errorMessage = depositContainer.find('#error_msg');
@@ -37487,9 +37493,9 @@
 	        // const data = { cashier: 'deposit' };
 	        ChampionSocket.send({ cashier_password: '1' }).then(function (response) {
 	            if (response.error) {
-	                errorMessage.removeClass(hidden_class).text(response.error.message);
+	                errorMessage.removeClass(hidden_class).html(response.error.message);
 	            } else if (response.cashier_password) {
-	                errorMessage.removeClass(hidden_class).html('Your cashier is locked as per your request - to unlock it, please click <a href="[_1]">here</a>.'.replace('[_1]', url_for('/user/security/cashier_password')));
+	                errorMessage.removeClass(hidden_class).html(errorMessages.cashier_locked());
 	            }
 	        });
 	    };
