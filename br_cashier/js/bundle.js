@@ -18482,7 +18482,7 @@
 	var MetaTrader = __webpack_require__(442);
 	var ChampionSettings = __webpack_require__(445);
 	var TNCApproval = __webpack_require__(446);
-	var CashierDeposit = __webpack_require__(447);
+	var CashierDepositWithdraw = __webpack_require__(447);
 
 	var Champion = function () {
 	    'use strict';
@@ -18545,7 +18545,7 @@
 	            'reset-password': { module: ResetPassword, not_authenticated: true },
 	            'tnc-approval': { module: TNCApproval, is_authenticated: true, only_real: true },
 	            'top-up-virtual': { module: CashierTopUpVirtual, is_authenticated: true, only_virtual: true },
-	            deposit: { module: CashierDeposit, is_authenticated: true }
+	            deposit_withdraw: { module: CashierDepositWithdraw, is_authenticated: true }
 	        };
 	        if (page in pages_map) {
 	            loadHandler(pages_map[page]);
@@ -37459,7 +37459,7 @@
 	var ChampionSocket = __webpack_require__(308);
 	var url_for = __webpack_require__(304).url_for;
 
-	var CashierDeposit = function () {
+	var CashierDepositWithdraw = function () {
 	    'use strict';
 
 	    var errorMessage = void 0;
@@ -37473,16 +37473,15 @@
 	            } else if (response.cashier_password) {
 	                errorMessage.removeClass('hidden').html('Your cashier is locked as per your request - to unlock it, please click <a href="[_1]">here</a>.'.replace('[_1]', url_for('/cashier/cashier-password')));
 	            } else {
-	                if (window.location.hash === '#deposit') deposit();else withdraw();
+	                deposit_withdraw();
 	            }
 	        });
 	    };
 
-	    var deposit = function deposit() {
-	        var data = {
-	            cashier: 'deposit'
-	        };
-	        ChampionSocket.send(data).then(function (response) {
+	    var deposit_withdraw = function deposit_withdraw() {
+	        var type = window.location.hash.substring(1);
+
+	        ChampionSocket.send({ cashier: type }).then(function (response) {
 	            if (response.error) {
 	                errorMessage.removeClass('hidden');
 	                switch (response.error.code) {
@@ -37508,34 +37507,26 @@
 	                        // set account currency to USD if not set // TODO: remove this after currency set by default in backend
 	                        ChampionSocket.send({ set_account_currency: 'USD' }).then(function (res) {
 	                            if (res.error) errorMessage.html(res.error.message);
-	                            deposit();
+	                            deposit_withdraw();
 	                        });
 	                        break;
 	                    default:
 	                        errorMessage.html(response.error.message);
 	                }
 	            } else {
-	                $('#error_msg, #ukgc_funds_protection').addClass('hidden');
-	                $('#deposit_iframe_container').removeClass('hidden').find('iframe').attr('src', response.cashier).end();
+	                $('#error_msg, #ukgc_funds_protection').addClass('hidden'); // hide error messages row
+	                $('#' + type + '_iframe_container').removeClass('hidden').find('iframe').attr('src', response.cashier).end();
 	            }
 	        });
 	    };
 
-	    var withdraw = function withdraw() {
-	        // const data = {
-	        //     cashier: 'withdraw',
-	        // };
-	        $('#withdraw-form').removeClass('hidden');
-	    };
-
 	    return {
 	        load: load,
-	        deposit: deposit,
-	        withdraw: withdraw
+	        deposit_withdraw: deposit_withdraw
 	    };
 	}();
 
-	module.exports = CashierDeposit;
+	module.exports = CashierDepositWithdraw;
 
 /***/ }
 /******/ ]);
