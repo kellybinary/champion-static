@@ -37521,8 +37521,7 @@
 	                        errorMessage.html(response.error.message);
 	                }
 	            } else {
-	                errorMessage.addClass('hidden');
-	                $('#ukgc_funds_protection').addClass('hidden');
+	                $('#error_msg, #ukgc_funds_protection').addClass('hidden');
 	                $('#deposit_iframe_container').removeClass('hidden').find('iframe').attr('src', response.cashier).end();
 	            }
 	        });
