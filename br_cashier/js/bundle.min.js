@@ -36466,15 +36466,13 @@
 	var CashierPaymentMethods = function () {
 	    'use strict';
 
-	    var hidden_class = 'hidden';
-
 	    var load = function load() {
 	        ChampionSocket.wait('authorize').then(function () {
 	            var container = $('.fx-payment-methods');
 	            if (!Client.is_logged_in()) {
-	                container.find('#btn-open-account').removeClass(hidden_class);
+	                container.find('#btn-open-account').removeClass('hidden');
 	            } else if (!Client.is_virtual()) {
-	                container.find('#btn-deposit, #btn-withdraw').removeClass(hidden_class);
+	                container.find('#btn-deposit, #btn-withdraw').removeClass('hidden');
 	                ChampionSocket.send({ cashier_password: 1 }).then(function (response) {
 	                    if (!response.error && response.cashier_password === 1) {
 	                        container.find('#btn-deposit, #btn-withdraw').addClass('button-disabled');
@@ -36503,16 +36501,13 @@
 	var CashierTopUpVirtual = function () {
 	    'use strict';
 
-	    var topUpContainer = void 0,
-	        viewError = void 0,
+	    var viewError = void 0,
 	        viewSuccess = void 0;
 
-	    var hidden_class = 'hidden';
-
 	    var load = function load() {
-	        topUpContainer = $('#topup_virtual');
-	        viewError = topUpContainer.find('#viewError');
-	        viewSuccess = topUpContainer.find('#viewSuccess');
+	        var container = $('#topup_virtual');
+	        viewError = container.find('#viewError');
+	        viewSuccess = container.find('#viewSuccess');
 
 	        top_up_virtual();
 	    };
@@ -36523,9 +36518,9 @@
 	        };
 	        ChampionSocket.send(data).then(function (response) {
 	            if (response.error) {
-	                viewError.removeClass(hidden_class).find('.notice-msg').text(response.error.message);
+	                viewError.removeClass('hidden').find('.notice-msg').text(response.error.message);
 	            } else {
-	                viewSuccess.removeClass(hidden_class).find('.notice-msg').text('[_1] [_2] has been credited to your Virtual money account [_3]', [response.topup_virtual.currency, response.topup_virtual.amount, Client.get('loginid')]);
+	                viewSuccess.removeClass('hidden').find('.notice-msg').text('[_1] [_2] has been credited to your Virtual money account [_3]', [response.topup_virtual.currency, response.topup_virtual.amount, Client.get('loginid')]);
 	            }
 	        });
 	    };
@@ -37467,12 +37462,11 @@
 	var CashierDeposit = function () {
 	    'use strict';
 
-	    var depositContainer = void 0,
-	        errorMessage = void 0;
+	    var errorMessage = void 0;
 
 	    var load = function load() {
-	        depositContainer = $('#cashier_deposit');
-	        errorMessage = depositContainer.find('#error_msg');
+	        var container = $('#cashier_deposit');
+	        errorMessage = container.find('#error_msg');
 	        ChampionSocket.send({ cashier_password: '1' }).then(function (response) {
 	            if (response.error) {
 	                errorMessage.removeClass('hidden').html(response.error.message);
@@ -37485,7 +37479,10 @@
 	    };
 
 	    var deposit = function deposit() {
-	        ChampionSocket.send({ cashier: 'deposit' }).then(function (response) {
+	        var data = {
+	            cashier: 'deposit'
+	        };
+	        ChampionSocket.send(data).then(function (response) {
 	            if (response.error) {
 	                errorMessage.removeClass('hidden');
 	                switch (response.error.code) {
