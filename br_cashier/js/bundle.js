@@ -37479,9 +37479,13 @@
 	    };
 
 	    var load = function load() {
-	        if (window.location.hash === null) url_for('/home');
-
-	        if (/withdraw/.test(window.location.hash.substring(1))) cashier_type = 'withdraw';else if (/deposit/.test(window.location.hash.substring(1))) cashier_type = 'deposit';else url_for('/home');
+	        if (/withdraw/.test(window.location.hash.substring(1))) {
+	            cashier_type = 'withdraw';
+	        } else if (/deposit/.test(window.location.hash.substring(1))) {
+	            cashier_type = 'deposit';
+	        } else {
+	            window.location.href = url_for('/home');
+	        }
 
 	        var container = $('#cashier_deposit');
 	        form_withdraw = $('#form_withdraw');
