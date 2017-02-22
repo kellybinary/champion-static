@@ -37460,6 +37460,7 @@
 
 	var ChampionSocket = __webpack_require__(308);
 	var url_for = __webpack_require__(304).url_for;
+	var Client = __webpack_require__(301);
 
 	var CashierDepositWithdraw = function () {
 	    'use strict';
@@ -37513,6 +37514,9 @@
 	                            deposit_withdraw();
 	                        });
 	                        break; // TODO: handle more error messages
+	                    case 'ASK_EMAIL_VERIFY':
+	                        verifyEmail();
+	                        break;
 	                    default:
 	                        errorMessage.html(response.error.message);
 	                }
@@ -37521,6 +37525,14 @@
 	                $('#' + type + '_iframe_container').removeClass('hidden').find('iframe').attr('src', response.cashier).end();
 	            }
 	        });
+	    };
+
+	    var verifyEmail = function verifyEmail() {
+	        ChampionSocket.send({
+	            verify_email: Client.get('email'),
+	            type: 'payment_withdraw'
+	        });
+	        $('#withdraw-form').removeClass('hidden');
 	    };
 
 	    return {
