@@ -36329,12 +36329,13 @@
 	            var cashierContainer = $('.fx-cashier');
 	            if (Client.is_logged_in() && Client.is_virtual()) {
 	                cashierContainer.find('#fx-virtual').removeClass('hidden');
-	                hideButton($('#deposit-btn, #withdraw-btn'));
+	                $('#deposit-btn, #withdraw-btn').addClass('hidden');
 	                if (Client.get('balance') > 1000) {
 	                    disableButton($('#VRT_topup_link'));
 	                }
 	            } else {
 	                cashierContainer.find('#fx-virtual').addClass('hidden');
+	                $('#deposit-btn, #withdraw-btn').removeClass('hidden');
 	                ChampionSocket.send({ cashier_password: 1 }).then(function (response) {
 	                    if (!response.error && response.cashier_password === 1) {
 	                        disableButton($('#deposit-btn, #withdraw-btn'));
@@ -36346,10 +36347,6 @@
 
 	    var disableButton = function disableButton($btn) {
 	        $btn.attr('href', 'javascr' + 'ipt:;').addClass('button-disabled');
-	    };
-
-	    var hideButton = function hideButton($btn) {
-	        $btn.attr('href', 'javascr' + 'ipt:;').addClass('hidden');
 	    };
 
 	    return {
