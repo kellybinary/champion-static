@@ -36324,7 +36324,7 @@
 	var Cashier = function () {
 	    'use strict';
 
-	    var cashierContainer = void 0;
+	    var cashierContainer = $('.fx-cashier');
 
 	    var load = function load() {
 	        if (Client.is_logged_in()) {
