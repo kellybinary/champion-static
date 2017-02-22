@@ -37475,7 +37475,10 @@
 	        cashier_type = window.location.hash.substring(1);
 	        $('.title').html(cashier_type);
 	        if (cashier_type === 'withdraw') verify_email();
-
+	        $('#submit-verification').on('click', function () {
+	            var token = $('#verification-token').val();
+	            deposit_withdraw(token);
+	        });
 	        ChampionSocket.send({ cashier_password: '1' }).then(function (response) {
 	            if (response.error) {
 	                error_msg.removeClass('hidden').html(response.error.message);
@@ -37535,15 +37538,11 @@
 	    };
 
 	    var verify_email = function verify_email() {
+	        $('#withdraw-form').removeClass('hidden');
 	        ChampionSocket.send({
 	            verify_email: Client.get('email'),
 	            type: 'payment_withdraw'
 	        });
-	        $('#submit-verification').on('click', function () {
-	            var token = $('#verification-token').val();
-	            deposit_withdraw(token);
-	        });
-	        $('#withdraw-form').removeClass('hidden');
 	    };
 
 	    return {
