@@ -37468,9 +37468,8 @@
 
 	    var error_msg = void 0,
 	        btn_submit = void 0,
-	        cashier_type = void 0;
-
-	    var form_withdraw = $('#form_withdraw');
+	        cashier_type = void 0,
+	        form_withdraw = void 0;
 
 	    var fields = {
 	        cashier_title: '#cashier_title',
@@ -37481,6 +37480,7 @@
 
 	    var load = function load() {
 	        var container = $('#cashier_deposit');
+	        form_withdraw = $('#form_withdraw');
 	        cashier_type = window.location.hash.substring(1);
 	        error_msg = container.find(fields.error_msg);
 
