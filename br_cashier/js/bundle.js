@@ -36483,6 +36483,11 @@
 	                container.find('#btn-open-account').removeClass(hidden_class);
 	            } else if (!Client.is_virtual()) {
 	                container.find('#btn-deposit, #btn-withdraw').removeClass(hidden_class);
+	                ChampionSocket.send({ cashier_password: 1 }).then(function (response) {
+	                    if (!response.error && response.cashier_password === 1) {
+	                        container.find('#btn-deposit, #btn-withdraw').addClass('button-disabled');
+	                    }
+	                });
 	            }
 	        });
 	    };
