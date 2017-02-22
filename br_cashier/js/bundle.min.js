@@ -36329,13 +36329,14 @@
 	    var load = function load() {
 	        if (Client.is_logged_in()) {
 	            ChampionSocket.wait('authorize').then(function () {
+	                cashierContainer.removeClass('hidden');
 	                if (Client.is_virtual()) {
-	                    cashierContainer.removeClass('hidden');
 	                    hideButton($('#deposit-btn, #withdraw-btn'));
 	                    if (Client.get('balance') > 1000) {
 	                        disableButton($('#VRT_topup_link'));
 	                    }
 	                } else {
+	                    cashierContainer.find('.fx-virtual').addClass('hidden');
 	                    ChampionSocket.send({ cashier_password: 1 }).then(function (response) {
 	                        if (!response.error && response.cashier_password === 1) {
 	                            disableButton($('#deposit-btn, #withdraw-btn'));
