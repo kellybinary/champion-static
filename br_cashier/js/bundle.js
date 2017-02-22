@@ -37489,7 +37489,7 @@
 	            if (response.error) {
 	                errorMessage.removeClass(hidden_class).text(response.error.message);
 	            } else if (response.cashier_password) {
-	                errorMessage.removeClass(hidden_class).text('Your cashier is locked as per your request - to unlock it, please click <a class="pjaxload" href="[_1]">here</a>.'.replace('[_1]', url_for('/user/security/cashier_password')));
+	                errorMessage.removeClass(hidden_class).html('Your cashier is locked as per your request - to unlock it, please click <a href="[_1]">here</a>.'.replace('[_1]', url_for('/user/security/cashier_password')));
 	            }
 	        });
 	    };
