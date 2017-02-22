@@ -37477,6 +37477,7 @@
 	        if (cashier_type === 'withdraw') verify_email();
 	        $('#submit-verification').on('click', function () {
 	            var token = $('#verification-token').val();
+	            $('#withdraw-form').addClass('hidden');
 	            deposit_withdraw(token);
 	        });
 	        ChampionSocket.send({ cashier_password: '1' }).then(function (response) {
@@ -37487,6 +37488,14 @@
 	            } else {
 	                deposit_withdraw();
 	            }
+	        });
+	    };
+
+	    var verify_email = function verify_email() {
+	        $('#withdraw-form').removeClass('hidden');
+	        ChampionSocket.send({
+	            verify_email: Client.get('email'),
+	            type: 'payment_withdraw'
 	        });
 	    };
 
@@ -37534,14 +37543,6 @@
 	                $('#error_msg, #ukgc_funds_protection').addClass('hidden'); // hide error messages row
 	                $('#' + cashier_type + '_iframe_container').removeClass('hidden').find('iframe').attr('src', response.cashier).end();
 	            }
-	        });
-	    };
-
-	    var verify_email = function verify_email() {
-	        $('#withdraw-form').removeClass('hidden');
-	        ChampionSocket.send({
-	            verify_email: Client.get('email'),
-	            type: 'payment_withdraw'
 	        });
 	    };
 
