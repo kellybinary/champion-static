@@ -36324,29 +36324,24 @@
 	var Cashier = function () {
 	    'use strict';
 
-	    var cashierContainer = void 0;
-
 	    var load = function load() {
-	        cashierContainer = $('.fx-cashier');
-	        if (Client.is_logged_in()) {
-	            ChampionSocket.wait('authorize').then(function () {
-	                cashierContainer.find('#fx-real').removeClass('hidden');
-	                if (Client.is_virtual()) {
-	                    cashierContainer.find('#fx-virtual').removeClass('hidden');
-	                    hideButton($('#deposit-btn, #withdraw-btn'));
-	                    if (Client.get('balance') > 1000) {
-	                        disableButton($('#VRT_topup_link'));
-	                    }
-	                } else {
-	                    cashierContainer.find('#fx-virtual').addClass('hidden');
-	                    ChampionSocket.send({ cashier_password: 1 }).then(function (response) {
-	                        if (!response.error && response.cashier_password === 1) {
-	                            disableButton($('#deposit-btn, #withdraw-btn'));
-	                        }
-	                    });
+	        ChampionSocket.wait('authorize').then(function () {
+	            var cashierContainer = $('.fx-cashier');
+	            if (Client.is_logged_in() && Client.is_virtual()) {
+	                cashierContainer.find('#fx-virtual').removeClass('hidden');
+	                hideButton($('#deposit-btn, #withdraw-btn'));
+	                if (Client.get('balance') > 1000) {
+	                    disableButton($('#VRT_topup_link'));
 	                }
-	            });
-	        }
+	            } else {
+	                cashierContainer.find('#fx-virtual').addClass('hidden');
+	                ChampionSocket.send({ cashier_password: 1 }).then(function (response) {
+	                    if (!response.error && response.cashier_password === 1) {
+	                        disableButton($('#deposit-btn, #withdraw-btn'));
+	                    }
+	                });
+	            }
+	        });
 	    };
 
 	    var disableButton = function disableButton($btn) {
