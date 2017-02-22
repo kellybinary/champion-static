@@ -37461,26 +37461,31 @@
 	var ChampionSocket = __webpack_require__(308);
 	var url_for = __webpack_require__(304).url_for;
 	var Client = __webpack_require__(301);
+	var Validation = __webpack_require__(317);
 
 	var CashierDepositWithdraw = function () {
 	    'use strict';
 
-	    var container = void 0,
-	        cashier_type = void 0,
-	        error_msg = void 0;
+	    var error_msg = void 0,
+	        btn_submit = void 0,
+	        cashier_type = void 0;
+
+	    var form_withdraw = $('#form_withdraw');
+
+	    var fields = {
+	        cashier_title: '#cashier_title',
+	        error_msg: '#error_msg',
+	        btn_submit: '#btn_submit',
+	        token: '#verification_token'
+	    };
 
 	    var load = function load() {
-	        container = $('#cashier_deposit');
-	        error_msg = container.find('#error_msg');
-	        $('#submit-verification').on('click', function () {
-	            var token = $('#verification-token').val();
-	            $('#withdraw-form').addClass('hidden');
-	            deposit_withdraw(token);
-	        });
-
+	        var container = $('#cashier_deposit');
 	        cashier_type = window.location.hash.substring(1);
-	        $('.title').html(cashier_type);
-	        if (cashier_type === 'withdraw') verify_email();
+	        error_msg = container.find(fields.error_msg);
+
+	        $(fields.cashier_title).html(cashier_type);
+	        if (cashier_type === 'withdraw') initForm();
 
 	        ChampionSocket.send({ cashier_password: '1' }).then(function (response) {
 	            if (response.error) {
@@ -37493,12 +37498,32 @@
 	        });
 	    };
 
+	    var initForm = function initForm() {
+	        var form_selector = '#form_withdraw';
+	        btn_submit = form_withdraw.find(fields.btn_submit);
+	        btn_submit.on('click', submit);
+	        Validation.init(form_selector, [{ selector: fields.token, validations: ['req', 'password'] }]);
+	        verify_email();
+	    };
+
+	    var unload = function unload() {
+	        if (btn_submit) {
+	            btn_submit.off('click', submit);
+	        }
+	    };
+
 	    var verify_email = function verify_email() {
-	        $('#withdraw-form').removeClass('hidden');
+	        form_withdraw.removeClass('hidden');
 	        ChampionSocket.send({
 	            verify_email: Client.get('email'),
 	            type: 'payment_withdraw'
 	        });
+	    };
+
+	    var submit = function submit(e) {
+	        e.preventDefault();
+	        form_withdraw.addClass('hidden');
+	        deposit_withdraw($(fields.token).val());
 	    };
 
 	    var deposit_withdraw = function deposit_withdraw(token) {
@@ -37509,6 +37534,7 @@
 	                verification_code: token
 	            };
 	        } else req = { cashier: cashier_type };
+
 	        ChampionSocket.send(req).then(function (response) {
 	            if (response.error) {
 	                error_msg.removeClass('hidden');
@@ -37550,6 +37576,7 @@
 
 	    return {
 	        load: load,
+	        unload: unload,
 	        deposit_withdraw: deposit_withdraw
 	    };
 	}();
