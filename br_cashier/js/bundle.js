@@ -37502,7 +37502,7 @@
 	        var form_selector = '#form_withdraw';
 	        btn_submit = form_withdraw.find(fields.btn_submit);
 	        btn_submit.on('click', submit);
-	        Validation.init(form_selector, [{ selector: fields.token, validations: ['req', 'password'] }]);
+	        Validation.init(form_selector, [{ selector: fields.token, validations: ['req', 'email_token'] }]);
 	        verify_email();
 	    };
 
