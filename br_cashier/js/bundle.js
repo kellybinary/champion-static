@@ -37472,14 +37472,16 @@
 	    var load = function load() {
 	        container = $('#cashier_deposit');
 	        error_msg = container.find('#error_msg');
-	        cashier_type = window.location.hash.substring(1);
-	        $('.title').html(cashier_type);
-	        if (cashier_type === 'withdraw') verify_email();
 	        $('#submit-verification').on('click', function () {
 	            var token = $('#verification-token').val();
 	            $('#withdraw-form').addClass('hidden');
 	            deposit_withdraw(token);
 	        });
+
+	        cashier_type = window.location.hash.substring(1);
+	        $('.title').html(cashier_type);
+	        if (cashier_type === 'withdraw') verify_email();
+
 	        ChampionSocket.send({ cashier_password: '1' }).then(function (response) {
 	            if (response.error) {
 	                error_msg.removeClass('hidden').html(response.error.message);
