@@ -37480,9 +37480,11 @@
 
 	    var load = function load() {
 	        if (window.location.hash === '') url_for('/home');
+
+	        if (/withdraw/.test(window.location.hash.substring(1))) cashier_type = 'withdraw';else if (/deposit/.test(window.location.hash.substring(1))) cashier_type = 'deposit';else return;
+
 	        var container = $('#cashier_deposit');
 	        form_withdraw = $('#form_withdraw');
-	        cashier_type = window.location.hash.substring(1).test('withdraw' || 'deposit');
 	        error_msg = container.find(fields.error_msg);
 
 	        $(fields.cashier_title).html(cashier_type);
