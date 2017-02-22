@@ -36326,16 +36326,14 @@
 
 	    var cashierContainer = void 0;
 
-	    var hidden_class = 'hidden';
-
 	    var load = function load() {
 	        cashierContainer = $('.fx-cashier');
 
 	        if (Client.is_logged_in()) {
 	            ChampionSocket.wait('authorize').then(function () {
 	                if (Client.is_virtual()) {
-	                    cashierContainer.find('.fx-virtual-account').removeClass(hidden_class);
-	                    disableButton($('#deposit-btn, #withdraw-btn'));
+	                    cashierContainer.find('.fx-virtual-account').removeClass('hidden');
+	                    hideButton($('#deposit-btn, #withdraw-btn'));
 	                    if (Client.get('balance') > 1000) {
 	                        disableButton($('#VRT_topup_link'));
 	                    }
@@ -36352,6 +36350,10 @@
 
 	    var disableButton = function disableButton($btn) {
 	        $btn.attr('href', 'javascr' + 'ipt:;').addClass('button-disabled');
+	    };
+
+	    var hideButton = function hideButton($btn) {
+	        $btn.attr('href', 'javascr' + 'ipt:;').addClass('hidden');
 	    };
 
 	    return {
