@@ -36324,21 +36324,18 @@
 	var Cashier = function () {
 	    'use strict';
 
-	    var cashierContainer = void 0,
-	        viewVirtual = void 0,
-	        viewReal = void 0;
+	    var cashierContainer = void 0;
 
 	    var hidden_class = 'hidden';
 
 	    var load = function load() {
 	        cashierContainer = $('.fx-cashier');
-	        viewVirtual = cashierContainer.find('.fx-virtual-account');
-	        viewReal = cashierContainer.find('.fx-real-account');
 
 	        if (Client.is_logged_in()) {
 	            ChampionSocket.wait('authorize').then(function () {
 	                if (Client.is_virtual()) {
-	                    viewVirtual.removeClass(hidden_class);
+	                    cashierContainer.find('.fx-virtual-account').removeClass(hidden_class);
+	                    disableButton($('#deposit-btn, #withdraw-btn'));
 	                    if (Client.get('balance') > 1000) {
 	                        disableButton($('#VRT_topup_link'));
 	                    }
@@ -36347,7 +36344,6 @@
 	                        if (!response.error && response.cashier_password === 1) {
 	                            disableButton($('#deposit-btn, #withdraw-btn'));
 	                        }
-	                        viewReal.removeClass(hidden_class);
 	                    });
 	                }
 	            });
