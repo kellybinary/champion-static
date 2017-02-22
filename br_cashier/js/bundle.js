@@ -18529,7 +18529,7 @@
 	        var page = content.getAttribute('data-page');
 	        var pages_map = {
 	            assessment: { module: FinancialAssessment, is_authenticated: true, only_real: true },
-	            cashier: { module: Cashier, not_authenticated: true },
+	            cashier: { module: Cashier },
 	            contact: { module: ChampionContact },
 	            endpoint: { module: ChampionEndpoint },
 	            logged_inws: { module: LoggedIn },
