@@ -36314,12 +36314,12 @@
 
 /***/ },
 /* 434 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	'use strict';
 
-	var ChampionSocket = __webpack_require__(308);
-	var Client = __webpack_require__(301);
+	// const ChampionSocket = require('./../../common/socket');
+	// const Client         = require('../../common/client');
 
 	var Cashier = function () {
 	    'use strict';
@@ -36328,34 +36328,35 @@
 
 	    var load = function load() {
 	        cashierContainer = $('.fx-cashier');
-	        if (Client.is_logged_in()) {
-	            ChampionSocket.wait('authorize').then(function () {
-	                cashierContainer.find('#fx-real').removeClass('hidden');
-	                if (Client.is_virtual()) {
-	                    cashierContainer.find('#fx-virtual').removeClass('hidden');
-	                    hideButton($('#deposit-btn, #withdraw-btn'));
-	                    if (Client.get('balance') > 1000) {
-	                        disableButton($('#VRT_topup_link'));
-	                    }
-	                } else {
-	                    cashierContainer.find('#fx-virtual').addClass('hidden');
-	                    ChampionSocket.send({ cashier_password: 1 }).then(function (response) {
-	                        if (!response.error && response.cashier_password === 1) {
-	                            disableButton($('#deposit-btn, #withdraw-btn'));
-	                        }
-	                    });
-	                }
-	            });
-	        }
+	        cashierContainer.removeClass('hidden');
+	        // if (Client.is_logged_in()) {
+	        //     ChampionSocket.wait('authorize').then(() => {
+	        //         cashierContainer.find('#fx-real').removeClass('hidden');
+	        //         if (Client.is_virtual()) {
+	        //             cashierContainer.find('#fx-virtual').removeClass('hidden');
+	        //             hideButton($('#deposit-btn, #withdraw-btn'));
+	        //             if (Client.get('balance') > 1000) {
+	        //                 disableButton($('#VRT_topup_link'));
+	        //             }
+	        //         } else {
+	        //             cashierContainer.find('#fx-virtual').addClass('hidden');
+	        //             ChampionSocket.send({ cashier_password: 1 }).then((response) => {
+	        //                 if (!response.error && response.cashier_password === 1) {
+	        //                     disableButton($('#deposit-btn, #withdraw-btn'));
+	        //                 }
+	        //             });
+	        //         }
+	        //     });
+	        // }
 	    };
 
-	    var disableButton = function disableButton($btn) {
-	        $btn.attr('href', 'javascr' + 'ipt:;').addClass('button-disabled');
-	    };
-
-	    var hideButton = function hideButton($btn) {
-	        $btn.attr('href', 'javascr' + 'ipt:;').addClass('hidden');
-	    };
+	    // const disableButton = ($btn) => {
+	    //     $btn.attr('href', `${'javascr'}${'ipt:;'}`).addClass('button-disabled');
+	    // };
+	    //
+	    // const hideButton = ($btn) => {
+	    //     $btn.attr('href', `${'javascr'}${'ipt:;'}`).addClass('hidden');
+	    // };
 
 	    return {
 	        load: load
