@@ -37509,7 +37509,7 @@
 	                            if (res.error) errorMessage.html(res.error.message);
 	                            deposit_withdraw();
 	                        });
-	                        break;
+	                        break; // TODO: handle more error messages
 	                    default:
 	                        errorMessage.html(response.error.message);
 	                }
