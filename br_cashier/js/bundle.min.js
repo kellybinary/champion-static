@@ -36329,6 +36329,7 @@
 	    var load = function load() {
 	        cashierContainer = $('.fx-cashier');
 	        if (Client.is_logged_in()) {
+	            cashierContainer.find('#fx-real').removeClass('hidden');
 	            ChampionSocket.wait('authorize').then(function () {
 	                if (Client.is_virtual()) {
 	                    cashierContainer.find('#fx-virtual').removeClass('hidden');
