@@ -37469,6 +37469,7 @@
 	    var load = function load() {
 	        var container = $('#cashier_deposit');
 	        errorMessage = container.find('#error_msg');
+	        $('.title').html(window.location.hash.substring(1));
 	        ChampionSocket.send({ cashier_password: '1' }).then(function (response) {
 	            if (response.error) {
 	                errorMessage.removeClass('hidden').html(response.error.message);
