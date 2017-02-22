@@ -37473,7 +37473,7 @@
 	            } else if (response.cashier_password) {
 	                errorMessage.removeClass('hidden').html('Your cashier is locked as per your request - to unlock it, please click <a href="[_1]">here</a>.'.replace('[_1]', url_for('/cashier/cashier-password')));
 	            } else {
-	                deposit();
+	                if (window.location.hash === '#deposit') deposit();else withdraw();
 	            }
 	        });
 	    };
@@ -37521,9 +37521,17 @@
 	        });
 	    };
 
+	    var withdraw = function withdraw() {
+	        // const data = {
+	        //     cashier: 'withdraw',
+	        // };
+	        $('#withdraw-form').removeClass('hidden');
+	    };
+
 	    return {
 	        load: load,
-	        deposit: deposit
+	        deposit: deposit,
+	        withdraw: withdraw
 	    };
 	}();
 

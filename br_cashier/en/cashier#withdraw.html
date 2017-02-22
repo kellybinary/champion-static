@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
 
-    <title>Password Reset | Champion-FX.com</title>
+    <title>Withdraw Money | Champion-FX.com</title>
     <meta name="description" content="ChampionFX Static" />
     <link rel="icon" type="image/png" sizes="16x16" href="/champion-static/br_cashier/images/favicons/CFX_favicon16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/champion-static/br_cashier/images/favicons/CFX_favicon32.png" />
@@ -158,71 +158,67 @@
     </div>
     <main class="page-content" aria-label="Content" id="champion-container">
         <div class="wrapper" id="champion-content">
-            <div class="fx-section" id="reset_passwordws">
-    <div class="container">
-        <h1>Password Reset</h1>
-        <p class="notice-msg">Please check your email to retrieve the token needed to reset your password.</p>
-        <div class="invisible" id="reset-error">
-            <p id="reset-error-msg"></p>
-            <a href="/champion-static/br_cashier/en/lost-password.html">Click here to retry</a>
+            <div class="fx-section">
+    <div id="cashier_deposit" class="container">
+        <div class="row">
+            <div class="col-sm">
+                <h1>Deposit</h1>
+            </div>
         </div>
-        <form id="frm_reset_password">
-            <fieldset>
-                <legend>Details</legend>
-                <div class="row form-row">
-                    <div class="col-xs-4">
-                        <label for="txt_verification_code">Verification Token</label>
-                    </div>
-                    <div class="col-xs-8">
-                        <input id="txt_verification_code" type="text" autocomplete="off" maxlength="48" />
-                        <div class="hint">Please check your email for the value of this token</div>
-                    </div>
-                </div>
 
-                <div class="row form-row">
-                    <div class="col-xs-4">
-                        <label for="txt_password">New Password</label>
-                    </div>
-                    <div class="col-xs-8">
-                        <input id="txt_password" type="password" maxlength="25" />
-                        <p class="hint" id="password-hint">Minimum of six lower and uppercase letters with numbers</p>
-                    </div>
+        <div class="row">
+            <div id="error_msg" class="col-md-12 notice-msg center-text hidden"></div>
+            <div id="ukgc_funds_protection" class="hidden">
+                <div class="col-md-2 col-sm-6 gr-centered-m">
+                    <p>
+                        <img class="responsive" src="/champion-static/br_cashier/images/pages/cashier/protection-icon.svg" />
+                    </p>
                 </div>
-
-                <div class="row form-row">
-                    <div class="col-xs-4">
-                        <label for="txt_re_password">Confirm New Password</label>
+                <div class="col-md-10 col-sm-12">
+                    <p>
+                        We are required by our license to inform you about what happens to funds which we hold on account for you, and the extent to which funds are protected in the event of insolvency <a href='http://www.gamblingcommission.gov.uk/Consumers/Protection-of-customer-funds.aspx' target='_blank'>http://www.gamblingcommission.gov.uk/Consumers/Protection-of-customer-funds.aspx</a>.
+                    </p>
+                    <p>
+                        The company holds customer funds in separate bank accounts to the operational accounts which would not, in the event of insolvency, form part of the Company's assets. This meets the Gambling Commission's requirements for the segregation of customer
+                funds at the level: <strong>medium protection</strong>.
+                    </p>
+                    <div class='col-md-3 col-sm-6 gr-centered'>
+                <span class="button">
+                      <button id="submit-ukgc-funds-protection" class="button" value="ok" type="submit">Proceed</button>
+                  </span>
                     </div>
-                    <div class="col-xs-8">
-                        <input id="txt_re_password" type="password" maxlength="25" />
-                    </div>
-                </div>
-
-                <div class="row form-row">
-                    <div class="col-xs-4">
-                        <label for="chk_has_real">I have a Real Money Account</label>
-                    </div>
-                    <div class="col-xs-8">
-                        <input id="chk_has_real" type="checkbox" />
-                    </div>
-                </div>
-
-                <div class="row form-row invisible" id="dob_row">
-                    <div class="col-xs-4">
-                        <label for="txt_birth_date">Date of Birth</label>
-                    </div>
-                    <div class="col-xs-8">
-                        <input id="txt_birth_date" type="text" class="text" size="12" readonly="readonly" />
-                    </div>
-                </div>
-            </fieldset>
-
-            <div class="row">
-                <div class="col-xs-8 offset-md-4">
-                    <button id="btn_submit" type="submit">Reset Password</button>
                 </div>
             </div>
-        </form>
+        </div>
+
+        <div id="withdraw-form" class="row hidden">
+            <fieldset>
+                <div class="gr-row gr-parent gr-padding-10">
+                    <div class="form_label gr-4">
+                        <label for="verification-token">Verification token</label>
+                    </div>
+                    <div class="gr-8">
+                        <input id="verification-token" type="text" maxlength="48" autocomplete="off" />
+                        <div class="hint">Please check your email for the value of this token</div>
+                        <p class="errorfield invisible" id="verification-error"></p>
+                    </div>
+                </div>
+                <div class="gr-12 gr-parent gr-centered center-text">
+                <span class="button">
+                    <button class="button" id="submit-verification" type="button">Submit</button>
+                </span>
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="row">
+            <div id="deposit_iframe_container" class="hidden">
+                <iframe src="" frameborder="0" width="100%" height="1500" scrolling="auto" style="padding:0;margin:0;"></iframe>
+            </div>
+            <div id="withdraw_iframe_container" class="hidden">
+                <iframe src="" frameborder="0" width="100%" height="1500" scrolling="auto" style="padding:0;margin:0;"></iframe>
+            </div>
+        </div>
     </div>
 </div>
         </div>
