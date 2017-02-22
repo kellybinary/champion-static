@@ -36314,12 +36314,12 @@
 
 /***/ },
 /* 434 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	// const ChampionSocket = require('./../../common/socket');
-	// const Client         = require('../../common/client');
+	var ChampionSocket = __webpack_require__(308);
+	var Client = __webpack_require__(301);
 
 	var Cashier = function () {
 	    'use strict';
@@ -36328,35 +36328,34 @@
 
 	    var load = function load() {
 	        cashierContainer = $('.fx-cashier');
-	        cashierContainer.removeClass('hidden');
-	        // if (Client.is_logged_in()) {
-	        //     ChampionSocket.wait('authorize').then(() => {
-	        //         cashierContainer.find('#fx-real').removeClass('hidden');
-	        //         if (Client.is_virtual()) {
-	        //             cashierContainer.find('#fx-virtual').removeClass('hidden');
-	        //             hideButton($('#deposit-btn, #withdraw-btn'));
-	        //             if (Client.get('balance') > 1000) {
-	        //                 disableButton($('#VRT_topup_link'));
-	        //             }
-	        //         } else {
-	        //             cashierContainer.find('#fx-virtual').addClass('hidden');
-	        //             ChampionSocket.send({ cashier_password: 1 }).then((response) => {
-	        //                 if (!response.error && response.cashier_password === 1) {
-	        //                     disableButton($('#deposit-btn, #withdraw-btn'));
-	        //                 }
-	        //             });
-	        //         }
-	        //     });
-	        // }
+	        if (Client.is_logged_in()) {
+	            showButton($('#deposit-btn, #withdraw-btn, #VRT_topup_link'));
+	            ChampionSocket.wait('authorize').then(function () {
+	                cashierContainer.find('#fx-real').removeClass('hidden');
+	                if (Client.is_virtual()) {
+	                    cashierContainer.find('#fx-virtual').removeClass('hidden');
+	                    if (Client.get('balance') > 1000) {
+	                        disableButton($('#VRT_topup_link'));
+	                    }
+	                } else {
+	                    cashierContainer.find('#fx-virtual').addClass('hidden');
+	                    ChampionSocket.send({ cashier_password: 1 }).then(function (response) {
+	                        if (!response.error && response.cashier_password === 1) {
+	                            disableButton($('#deposit-btn, #withdraw-btn'));
+	                        }
+	                    });
+	                }
+	            });
+	        }
 	    };
 
-	    // const disableButton = ($btn) => {
-	    //     $btn.attr('href', `${'javascr'}${'ipt:;'}`).addClass('button-disabled');
-	    // };
-	    //
-	    // const hideButton = ($btn) => {
-	    //     $btn.attr('href', `${'javascr'}${'ipt:;'}`).addClass('hidden');
-	    // };
+	    var disableButton = function disableButton($btn) {
+	        $btn.attr('href', 'javascr' + 'ipt:;').addClass('button-disabled');
+	    };
+
+	    var showButton = function showButton($btn) {
+	        $btn.attr('href', 'javascr' + 'ipt:;').removeClass('hidden');
+	    };
 
 	    return {
 	        load: load
