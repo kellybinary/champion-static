@@ -18532,6 +18532,7 @@
 	            cashier: { module: Cashier },
 	            contact: { module: ChampionContact },
 	            endpoint: { module: ChampionEndpoint },
+	            forward: { module: CashierDepositWithdraw, is_authenticated: true, only_real: true },
 	            logged_inws: { module: LoggedIn },
 	            metatrader: { module: MetaTrader, is_authenticated: true },
 	            real: { module: ChampionNewReal, is_authenticated: true, only_virtual: true },
@@ -18544,8 +18545,7 @@
 	            'payment-methods': { module: CashierPaymentMethods },
 	            'reset-password': { module: ResetPassword, not_authenticated: true },
 	            'tnc-approval': { module: TNCApproval, is_authenticated: true, only_real: true },
-	            'top-up-virtual': { module: CashierTopUpVirtual, is_authenticated: true, only_virtual: true },
-	            forward: { module: CashierDepositWithdraw, is_authenticated: true }
+	            'top-up-virtual': { module: CashierTopUpVirtual, is_authenticated: true, only_virtual: true }
 	        };
 	        if (page in pages_map) {
 	            loadHandler(pages_map[page]);
@@ -37484,7 +37484,7 @@
 	        } else if (/deposit/.test(window.location.hash.substring(1))) {
 	            cashier_type = 'deposit';
 	        } else {
-	            window.location.href = url_for('/home');
+	            window.location.href = url_for('/cashier');
 	        }
 
 	        var container = $('#cashier_deposit');
@@ -37567,8 +37567,11 @@
 	                    case 'ASK_CURRENCY':
 	                        // set account currency to USD if not set // TODO: remove this after currency set by default in backend
 	                        ChampionSocket.send({ set_account_currency: 'USD' }).then(function (res) {
-	                            if (res.error) error_msg.html(res.error.message);
-	                            deposit_withdraw();
+	                            if (res.error) {
+	                                error_msg.html(res.error.message);
+	                            } else {
+	                                deposit_withdraw();
+	                            }
 	                        });
 	                        break;
 	                    default:
