@@ -37547,7 +37547,7 @@
 	                error_msg.removeClass('hidden');
 	                switch (response.error.code) {
 	                    case 'ASK_TNC_APPROVAL':
-	                        window.location.href = url_for('user/tnc_approval');
+	                        window.location.href = url_for('user/tnc-approval');
 	                        break;
 	                    case 'ASK_FIX_DETAILS':
 	                        error_msg.html(response.error.details);
