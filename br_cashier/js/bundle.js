@@ -37552,9 +37552,6 @@
 	                    case 'ASK_FIX_DETAILS':
 	                        error_msg.html(response.error.details);
 	                        break;
-	                    case 'ASK_UK_FUNDS_PROTECTION':
-	                        $('#ukgc_funds_protection').removeClass('hidden');
-	                        break;
 	                    case 'ASK_AUTHENTICATE':
 	                        error_msg.html('Your account is not fully authenticated.');
 	                        break;
