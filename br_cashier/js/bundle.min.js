@@ -18533,7 +18533,6 @@
 	            contact: { module: ChampionContact },
 	            endpoint: { module: ChampionEndpoint },
 	            forward: { module: CashierDepositWithdraw, is_authenticated: true, only_real: true },
-	            epg_forward: { module: CashierDepositWithdraw, is_authenticated: true, only_real: true },
 	            logged_inws: { module: LoggedIn },
 	            metatrader: { module: MetaTrader, is_authenticated: true },
 	            real: { module: ChampionNewReal, is_authenticated: true, only_virtual: true },
@@ -37535,8 +37534,7 @@
 	    };
 
 	    var deposit_withdraw = function deposit_withdraw(token) {
-	        var req = { cashier: cashier_type };
-	        if (/epg/.test(window.location.pathname)) req.provider = 'epg';
+	        var req = { cashier: cashier_type, provider: 'epg' };
 	        if (token) req.verification_code = token;
 
 	        ChampionSocket.send(req).then(function (response) {
