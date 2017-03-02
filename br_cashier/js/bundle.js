@@ -37538,9 +37538,15 @@
 	        if (token) {
 	            req = {
 	                cashier: cashier_type,
-	                verification_code: token
+	                verification_code: token,
+	                provider: 'epg'
 	            };
-	        } else req = { cashier: cashier_type };
+	        } else {
+	            req = {
+	                cashier: cashier_type,
+	                provider: 'epg'
+	            };
+	        }
 
 	        ChampionSocket.send(req).then(function (response) {
 	            if (response.error) {
