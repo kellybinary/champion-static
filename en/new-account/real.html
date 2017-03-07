@@ -18,11 +18,11 @@
     <meta name="description" content="ChampionFX Static" />
     <link rel="icon" type="image/png" sizes="16x16" href="/champion-static/images/favicons/CFX_favicon16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/champion-static/images/favicons/CFX_favicon32.png" />
-     <link rel="stylesheet" href="/champion-static/css/flex.min.css?35a7p222" />
-     <link rel="stylesheet" href="/champion-static/css/style.min.css?35a7p222" />
-     <link rel="stylesheet" href="https://style.champion-fx.com/binary.css?35a7p222" />
-      <script src="/champion-static/js/bundle.js?35a7p222" type="text/javascript"></script>
-     <script src="https://style.champion-fx.com/binary.js?35a7p222" type="text/javascript"></script>
+     <link rel="stylesheet" href="/champion-static/css/flex.min.css?yz4yhm6q" />
+     <link rel="stylesheet" href="/champion-static/css/style.min.css?yz4yhm6q" />
+     <link rel="stylesheet" href="https://style.champion-fx.com/binary.css?yz4yhm6q" />
+      <script src="/champion-static/js/bundle.js?yz4yhm6q" type="text/javascript"></script>
+     <script src="https://style.champion-fx.com/binary.js?yz4yhm6q" type="text/javascript"></script>
      
 </head>
 <body>
@@ -216,8 +216,14 @@
                         <label for="ddl_residence">Country of residence</label>
                     </div>
                     <div class="col-xs-8">
-                        <span id="move-residence-back"></span>
-                        <select id="ddl_residence" disabled="disabled"></select>
+                        <div id="residence_loading" class="small-spinner"><div class="barspinner dark">
+    <div class="rect1"></div>
+    <div class="rect2"></div>
+    <div class="rect3"></div>
+    <div class="rect4"></div>
+    <div class="rect5"></div>
+</div></div>
+                        <select id="ddl_residence" class="hidden" disabled="disabled"></select>
                     </div>
                 </div>
             </fieldset>
@@ -257,7 +263,14 @@
                         <label for="ddl_state">State/Province</label>
                     </div>
                     <div class="col-xs-8">
-                        <select id="ddl_state"></select>
+                        <div id="state_loading" class="small-spinner"><div class="barspinner dark">
+    <div class="rect1"></div>
+    <div class="rect2"></div>
+    <div class="rect3"></div>
+    <div class="rect4"></div>
+    <div class="rect5"></div>
+</div></div>
+                        <select id="ddl_state" class="hidden"></select>
                     </div>
                 </div>
 
@@ -388,6 +401,7 @@
             </div>
         </div>
     </div>
+    <div id="end_note" class="invisible"></div>
 </footer>
 </body>
 </html>

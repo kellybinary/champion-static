@@ -18,11 +18,11 @@
     <meta name="description" content="ChampionFX Static" />
     <link rel="icon" type="image/png" sizes="16x16" href="/champion-static/images/favicons/CFX_favicon16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/champion-static/images/favicons/CFX_favicon32.png" />
-     <link rel="stylesheet" href="/champion-static/css/flex.min.css?35a7p222" />
-     <link rel="stylesheet" href="/champion-static/css/style.min.css?35a7p222" />
-     <link rel="stylesheet" href="https://style.champion-fx.com/binary.css?35a7p222" />
-      <script src="/champion-static/js/bundle.js?35a7p222" type="text/javascript"></script>
-     <script src="https://style.champion-fx.com/binary.js?35a7p222" type="text/javascript"></script>
+     <link rel="stylesheet" href="/champion-static/css/flex.min.css?yz4yhm6q" />
+     <link rel="stylesheet" href="/champion-static/css/style.min.css?yz4yhm6q" />
+     <link rel="stylesheet" href="https://style.champion-fx.com/binary.css?yz4yhm6q" />
+      <script src="/champion-static/js/bundle.js?yz4yhm6q" type="text/javascript"></script>
+     <script src="https://style.champion-fx.com/binary.js?yz4yhm6q" type="text/javascript"></script>
      
 </head>
 <body>
@@ -169,19 +169,15 @@
 
         <div class="row center-text">
             <div class="col-sm">
-                <div class="fx-logged-out">
-                    <a href="/champion-static/en/home.html" class="button button_large">
-                        <span>Open an account now</span>
-                    </a>
-                </div>
-                <div class="fx-real">
-                    <a href="/champion-static/en/home.html" class="button button_large">
-                        <span>Deposit</span>
-                    </a>
-                    <a href="/champion-static/en/home.html" class="button button_large">
-                        <span class="withdraw">Withdraw</span>
-                    </a>
-                </div>
+                <a class="button button_large hidden" href="/champion-static/en/home.html" id="btn-open-account">
+                    <span>Open an account now</span>
+                </a>
+                <a class="button button_large hidden" href="/champion-static/en/cashier/forward.html#deposit" id="btn-deposit">
+                    <span>Deposit</span>
+                </a>
+                <a class="button button_large hidden" href="/champion-static/en/cashier/forward.html#withdraw" id="btn-withdraw">
+                    <span>Withdraw</span>
+                </a>
             </div>
         </div>
 
@@ -382,6 +378,7 @@
             </div>
         </div>
     </div>
+    <div id="end_note" class="invisible"></div>
 </footer>
 </body>
 </html>

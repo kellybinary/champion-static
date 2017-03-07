@@ -1,0 +1,136 @@
+<div id="page_info" style="display:none;">
+        <title>Personal Details | Champion-FX.com</title>
+    </div>
+    <div class="wrapper" id="champion-content">
+        <div class="fx-section">
+    <div class="container">
+        <h1 id="heading">Personal Details</h1>
+
+        <form id="frm_personal_details" class="hidden">
+            <fieldset>
+                <legend>Details</legend>
+                <div class="row form-row fx-real-acc">
+                    <div class="col-xs-4">
+                        <label for="txt_name">Name</label>
+                    </div>
+                    <div class="col-xs-8">
+                        <span id="txt_name"></span>
+                    </div>
+                </div>
+                <div class="row form-row fx-real-acc">
+                    <div class="col-xs-4">
+                        <label for="txt_date_of_birth">Date of birth</label>
+                    </div>
+                    <div class="col-xs-8">
+                        <span id="txt_date_of_birth"></span>
+                    </div>
+                </div>
+                <div class="row form-row fx-real-acc">
+                    <div class="col-xs-4">
+                        <label for="place_of_birth">Place of birth</label>
+                    </div>
+                    <div class="col-xs-8">
+                        <select id="place_of_birth"></select>
+                    </div>
+                </div>
+                <div class="row form-row">
+                    <div class="col-xs-4">
+                        <label for="txt_country">Country of residence</label>
+                    </div>
+                    <div class="col-xs-8">
+                        <span id="txt_country"></span>
+                    </div>
+                </div>
+                <div class="row form-row">
+                    <div class="col-xs-4">
+                        <label for="txt_email">Email address</label>
+                    </div>
+                    <div class="col-xs-8">
+                        <span id="txt_email"></span>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="fx-real-acc">
+                <legend>Tax Information</legend>
+                <div class="row form-row">
+                    <div class="col-xs-4">
+                        <label for="tax_residence">Tax residence</label>
+                    </div>
+                    <div class="col-xs-8">
+                        <select id="tax_residence" class="invisible" multiple="multiple"></select>
+                    </div>
+                </div>
+                <div class="row form-row">
+                    <div class="col-xs-4">
+                        <label for="tax_information_number">Tax information number</label>
+                    </div>
+                    <div class="col-xs-8">
+                        <input id="tax_information_number" type="text" maxlength="20" />
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="fx-real-acc">
+                <legend>Address</legend>
+                <div class="row form-row">
+                    <div class="col-xs-4">
+                        <label for="address_line_1">First line of home address</label>
+                    </div>
+                    <div class="col-xs-8">
+                        <input id="address_line_1" type="text" maxlength="70" />
+                    </div>
+                </div>
+                <div class="row form-row">
+                    <div class="col-xs-4">
+                        <label for="address_line_2">Second line of home address</label>
+                    </div>
+                    <div class="col-xs-8">
+                        <input id="address_line_2" type="text" maxlength="70" />
+                    </div>
+                </div>
+                <div class="row form-row">
+                    <div class="col-xs-4">
+                        <label for="address_city">Town / City</label>
+                    </div>
+                    <div class="col-xs-8">
+                        <input id="address_city" type="text" maxlength="35" />
+                    </div>
+                </div>
+                <div class="row form-row">
+                    <div class="col-xs-4">
+                        <label for="address_state">State / Province</label>
+                    </div>
+                    <div class="col-xs-8">
+                        <select id="address_state"></select>
+                    </div>
+                </div>
+                <div class="row form-row">
+                    <div class="col-xs-4">
+                        <label for="address_postcode">Postal Code / ZIP</label>
+                    </div>
+                    <div class="col-xs-8">
+                        <input id="address_postcode" type="text" maxlength="20" />
+                    </div>
+                </div>
+                <div class="row form-row">
+                    <div class="col-xs-4">
+                        <label for="phone">Telephone</label>
+                    </div>
+                    <div class="col-xs-8">
+                        <input id="phone" type="text" maxlength="35" />
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="row fx-real-acc">
+                <div class="col-xs-8 offset-md-4">
+                    <p class="error-msg hidden" id="error-update-details"></p>
+                    <button id="btn_submit" type="submit">Update</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+    </div>

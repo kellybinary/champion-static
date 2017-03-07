@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
 
-    <title>Password Reset | Champion-FX.com</title>
+    <title>Personal Details | Champion-FX.com</title>
     <meta name="description" content="ChampionFX Static" />
     <link rel="icon" type="image/png" sizes="16x16" href="/champion-static/images/favicons/CFX_favicon16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/champion-static/images/favicons/CFX_favicon32.png" />
@@ -158,71 +158,135 @@
     </div>
     <main class="page-content" aria-label="Content" id="champion-container">
         <div class="wrapper" id="champion-content">
-            <div class="fx-section" id="reset_passwordws">
+            <div class="fx-section">
     <div class="container">
-        <h1>Password Reset</h1>
-        <p class="notice-msg">Please check your email to retrieve the token needed to reset your password.</p>
-        <div class="invisible" id="reset-error">
-            <p id="reset-error-msg"></p>
-            <a href="/champion-static/en/lost-password.html">Click here to retry</a>
-        </div>
-        <form id="frm_reset_password">
+        <h1 id="heading">Personal Details</h1>
+
+        <form id="frm_personal_details" class="hidden">
             <fieldset>
                 <legend>Details</legend>
-                <div class="row form-row">
+                <div class="row form-row fx-real-acc">
                     <div class="col-xs-4">
-                        <label for="txt_verification_code">Verification Token</label>
+                        <label for="txt_name">Name</label>
                     </div>
                     <div class="col-xs-8">
-                        <input id="txt_verification_code" type="text" autocomplete="off" maxlength="48" />
-                        <div class="hint">Please check your email for the value of this token</div>
+                        <span id="txt_name"></span>
                     </div>
                 </div>
-
-                <div class="row form-row">
+                <div class="row form-row fx-real-acc">
                     <div class="col-xs-4">
-                        <label for="txt_password">New Password</label>
+                        <label for="txt_date_of_birth">Date of birth</label>
                     </div>
                     <div class="col-xs-8">
-                        <input id="txt_password" type="password" maxlength="25" />
-                        <p class="hint" id="password-hint">Minimum of six lower and uppercase letters with numbers</p>
+                        <span id="txt_date_of_birth"></span>
                     </div>
                 </div>
-
-                <div class="row form-row">
+                <div class="row form-row fx-real-acc">
                     <div class="col-xs-4">
-                        <label for="txt_re_password">Confirm New Password</label>
+                        <label for="place_of_birth">Place of birth</label>
                     </div>
                     <div class="col-xs-8">
-                        <input id="txt_re_password" type="password" maxlength="25" />
+                        <select id="place_of_birth"></select>
                     </div>
                 </div>
-
                 <div class="row form-row">
                     <div class="col-xs-4">
-                        <label for="chk_has_real">I have a Real Money Account</label>
+                        <label for="txt_country">Country of residence</label>
                     </div>
                     <div class="col-xs-8">
-                        <input id="chk_has_real" type="checkbox" />
+                        <span id="txt_country"></span>
                     </div>
                 </div>
-
-                <div class="row form-row invisible" id="dob_row">
+                <div class="row form-row">
                     <div class="col-xs-4">
-                        <label for="txt_birth_date">Date of Birth</label>
+                        <label for="txt_email">Email address</label>
                     </div>
                     <div class="col-xs-8">
-                        <input id="txt_birth_date" type="text" class="text" size="12" readonly="readonly" />
+                        <span id="txt_email"></span>
                     </div>
                 </div>
             </fieldset>
 
-            <div class="row">
+            <fieldset class="fx-real-acc">
+                <legend>Tax Information</legend>
+                <div class="row form-row">
+                    <div class="col-xs-4">
+                        <label for="tax_residence">Tax residence</label>
+                    </div>
+                    <div class="col-xs-8">
+                        <select id="tax_residence" class="invisible" multiple="multiple"></select>
+                    </div>
+                </div>
+                <div class="row form-row">
+                    <div class="col-xs-4">
+                        <label for="tax_information_number">Tax information number</label>
+                    </div>
+                    <div class="col-xs-8">
+                        <input id="tax_information_number" type="text" maxlength="20" />
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="fx-real-acc">
+                <legend>Address</legend>
+                <div class="row form-row">
+                    <div class="col-xs-4">
+                        <label for="address_line_1">First line of home address</label>
+                    </div>
+                    <div class="col-xs-8">
+                        <input id="address_line_1" type="text" maxlength="70" />
+                    </div>
+                </div>
+                <div class="row form-row">
+                    <div class="col-xs-4">
+                        <label for="address_line_2">Second line of home address</label>
+                    </div>
+                    <div class="col-xs-8">
+                        <input id="address_line_2" type="text" maxlength="70" />
+                    </div>
+                </div>
+                <div class="row form-row">
+                    <div class="col-xs-4">
+                        <label for="address_city">Town / City</label>
+                    </div>
+                    <div class="col-xs-8">
+                        <input id="address_city" type="text" maxlength="35" />
+                    </div>
+                </div>
+                <div class="row form-row">
+                    <div class="col-xs-4">
+                        <label for="address_state">State / Province</label>
+                    </div>
+                    <div class="col-xs-8">
+                        <select id="address_state"></select>
+                    </div>
+                </div>
+                <div class="row form-row">
+                    <div class="col-xs-4">
+                        <label for="address_postcode">Postal Code / ZIP</label>
+                    </div>
+                    <div class="col-xs-8">
+                        <input id="address_postcode" type="text" maxlength="20" />
+                    </div>
+                </div>
+                <div class="row form-row">
+                    <div class="col-xs-4">
+                        <label for="phone">Telephone</label>
+                    </div>
+                    <div class="col-xs-8">
+                        <input id="phone" type="text" maxlength="35" />
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="row fx-real-acc">
                 <div class="col-xs-8 offset-md-4">
-                    <button id="btn_submit" type="submit">Reset Password</button>
+                    <p class="error-msg hidden" id="error-update-details"></p>
+                    <button id="btn_submit" type="submit">Update</button>
                 </div>
             </div>
         </form>
+
     </div>
 </div>
         </div>
