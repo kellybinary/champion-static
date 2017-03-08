@@ -37690,7 +37690,9 @@
 	        if (residence_list && residence_list.length > 0) {
 	            var option = '';
 	            Object.keys(residence_list).forEach(function (res) {
-	                option += '<option value=' + res.value + '>' + res.text + '</option>';
+	                var value = residence_list[res].value;
+	                var text = residence_list[res].text;
+	                option += '<option value=' + value + '>' + text + '</option>';
 	            });
 	            $place_of_birth.append(option);
 	            $tax_residence.append(option);
@@ -37707,7 +37709,9 @@
 	        if (states_list && states_list.length > 0) {
 	            var option = '<option value=\'\'>Please select</option>';
 	            Object.keys(states_list).forEach(function (state) {
-	                option += '<option value=' + state.value + '>' + state.text + '</option>';
+	                var value = states_list[state].value;
+	                var text = states_list[state].text;
+	                option += '<option value=' + value + '>' + text + '</option>';
 	            });
 	            $address_state.append(option);
 	        } else {
