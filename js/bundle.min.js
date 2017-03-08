@@ -37628,7 +37628,10 @@
 	                        populateStates(states_list_response);
 	                    });
 	                }
-	            } else $('.fx-real-acc').addClass('hidden');
+	            } else $('.fx-real-acc').addClass(hidden_class);
+
+	            $(form_selector).removeClass(hidden_class);
+	            $('.barspinner').addClass(hidden_class);
 	        });
 	    };
 
@@ -37637,14 +37640,11 @@
 	        get_settings.name = get_settings.salutation + ' ' + get_settings.first_name + ' ' + get_settings.last_name;
 	        get_settings.date_of_birth = get_settings.date_of_birth ? moment.utc(new Date(get_settings.date_of_birth * 1000)).format('YYYY-MM-DD') : '';
 
-	        displayGetSettingsData(get_settings);
+	        return displayGetSettingsData(get_settings);
 	    };
 
 	    var displayGetSettingsData = function displayGetSettingsData(data) {
 	        var populate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-
-	        $('.barspinner').addClass(hidden_class);
-	        $(form_selector).removeClass(hidden_class);
 
 	        if (data.tax_residence) {
 	            tax_residence_values = data.tax_residence.split(',');
@@ -37659,7 +37659,7 @@
 	            has_key = void 0,
 	            has_lbl_key = void 0;
 
-	        $.each(data, function (key) {
+	        Object.keys(data).forEach(function (key) {
 	            $key = $(form_selector + ' #' + key);
 	            $lbl_key = $('#txt_' + key);
 	            has_key = $key.length > 0;
@@ -37688,10 +37688,12 @@
 	            $tax_residence = $(form_selector + ' #tax_residence');
 
 	        if (residence_list && residence_list.length > 0) {
-	            $.each(residence_list, function (idx) {
-	                $place_of_birth.append($('<option/>', { value: residence_list[idx].value, text: residence_list[idx].text }));
-	                $tax_residence.append($('<option/>', { value: residence_list[idx].value, text: residence_list[idx].text }));
+	            var option = '';
+	            Object.keys(residence_list).forEach(function (res) {
+	                option += '<option value=' + res.value + '>' + res.text + '</option>';
 	            });
+	            $place_of_birth.append(option);
+	            $tax_residence.append(option);
 	            $place_of_birth.val(place_of_birth_value || residence);
 	        }
 
@@ -37703,10 +37705,11 @@
 	            $address_state = $(form_selector + ' #address_state');
 
 	        if (states_list && states_list.length > 0) {
-	            $address_state.append($('<option/>', { value: '', text: 'Please select' }));
-	            $.each(states_list, function (idx) {
-	                $address_state.append($('<option/>', { value: states_list[idx].value, text: states_list[idx].text }));
+	            var option = '<option value=\'\'>Please select</option>';
+	            Object.keys(states_list).forEach(function (state) {
+	                option += '<option value=' + state.value + '>' + state.text + '</option>';
 	            });
+	            $address_state.append(option);
 	        } else {
 	            $address_state.replaceWith('<input/>', { id: '#address_state'.replace('#', ''), name: 'address_state', type: 'text', maxlength: '35' });
 	        }
@@ -37734,13 +37737,12 @@
 	        if (Validation.validate(form_selector)) {
 	            (function () {
 	                var req = { set_settings: 1 };
-	                $.each(get_settings_data, function (key) {
+	                Object.keys(get_settings_data).forEach(function (key) {
 	                    var $frm_el = $(form_selector + ' #' + key);
 	                    if (/(SELECT|INPUT)/.test($frm_el.prop('nodeName'))) {
 	                        req[key] = $frm_el.val();
 	                    }
 	                });
-
 	                ChampionSocket.send(req).then(function (response) {
 	                    if (response.error) {
 	                        $('#error-update-details').removeClass('hidden').html(response.error.message);
