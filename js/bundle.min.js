@@ -20689,10 +20689,10 @@
 	        );
 	    };
 	    var validLetterSymbol = function validLetterSymbol(value) {
-	        return !/[`~!@#$%^&*)(_=+\[}{\]\\\/";:\?><,|\d]+/.test(value);
+	        return !/[`~!@#$%^&*)(_=+\[}{\]\\\/";:\?><|\d]+/.test(value);
 	    };
 	    var validGeneral = function validGeneral(value) {
-	        return !/[`~!@#$%^&*)(_=+\[}{\]\\\/";:\?><,|]+/.test(value);
+	        return !/[`~!@#$%^&*)(_=+\[}{\]\\\/";:\?><|]+/.test(value);
 	    };
 	    var validPostCode = function validPostCode(value) {
 	        return (/^[a-zA-Z\d-]*$/.test(value)
