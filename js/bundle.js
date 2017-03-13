@@ -18534,7 +18534,7 @@
 	            assessment: { module: FinancialAssessment, is_authenticated: true, only_real: true },
 	            cashier: { module: Cashier },
 	            contact: { module: ChampionContact },
-	            profile: { module: Profile },
+	            profile: { module: Profile, is_authenticated: true },
 	            endpoint: { module: ChampionEndpoint },
 	            forward: { module: CashierDepositWithdraw, is_authenticated: true, only_real: true },
 	            logged_inws: { module: LoggedIn },
@@ -40303,7 +40303,7 @@
 	var Profile = function () {
 	    'use strict';
 
-	    var form_selector = '#personalDetails_form';
+	    var form_selector = '#details_form';
 	    var hidden_class = 'invisible';
 	    var editable_fields = {};
 
@@ -40318,7 +40318,7 @@
 	        $('.tabs-vertical').tabs();
 	        $('.tabs-vertical li').on('click', function () {
 	            var active_tab = $('.ui-tabs-active').attr('id');
-	            if (/fa_tab/.test(active_tab)) {
+	            if (/assessment_tab/.test(active_tab)) {
 	                Profile.unload();
 	                if (!Client.is_virtual()) FinancialAssessment.load();
 	            } else {
