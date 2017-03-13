@@ -18484,7 +18484,7 @@
 	var ChampionSettings = __webpack_require__(447);
 	var TNCApproval = __webpack_require__(448);
 	var CashierDepositWithdraw = __webpack_require__(449);
-	var Details = __webpack_require__(450);
+	var Profile = __webpack_require__(450);
 
 	var Champion = function () {
 	    'use strict';
@@ -18534,7 +18534,7 @@
 	            assessment: { module: FinancialAssessment, is_authenticated: true, only_real: true },
 	            cashier: { module: Cashier },
 	            contact: { module: ChampionContact },
-	            details: { module: Details },
+	            profile: { module: Profile },
 	            endpoint: { module: ChampionEndpoint },
 	            forward: { module: CashierDepositWithdraw, is_authenticated: true, only_real: true },
 	            logged_inws: { module: LoggedIn },
@@ -20826,7 +20826,7 @@
 	            if (!checkField(field)) {
 	                if (form.is_ok) {
 	                    // first error
-	                    $.scrollTo(field.$, 500, { offset: -10 });
+	                    $.scrollTo(field.$.parent('div'), 500, { offset: -10 });
 	                }
 	                form.is_ok = false;
 	            }
@@ -38822,7 +38822,7 @@
 	            }
 	            ChampionSocket.send(data).then(function (response) {
 	                if (response.error) {
-	                    $('#error-create-account').removeClass('hidden').text(response.error.message);
+	                    $('#msg_form').removeClass('hidden').text(response.error.message);
 	                    btn_submit.removeAttr('disabled');
 	                } else {
 	                    var acc_info = response.new_account_virtual;
@@ -39478,7 +39478,7 @@
 	                }
 
 	                var data = { set_financial_assessment: 1 };
-	                showLoadingImage($('#form_message'));
+	                showLoadingImage($('#msg_form'));
 	                $('#assessment_form').find('select').each(function () {
 	                    financial_assessment[$(this).attr('id')] = data[$(this).attr('id')] = $(this).val();
 	                });
@@ -39522,7 +39522,7 @@
 	                }
 	            });
 	        } else {
-	            $('#form_message').html(msg).delay(5000).fadeOut(1000);
+	            $('#msg_form').html(msg).delay(5000).fadeOut(1000);
 	        }
 	    };
 
@@ -40295,25 +40295,44 @@
 	var ChampionSocket = __webpack_require__(308);
 	var Validation = __webpack_require__(317);
 	var showLoadingImage = __webpack_require__(306).showLoadingImage;
+	var FinancialAssessment = __webpack_require__(443);
+
 	var moment = __webpack_require__(321);
 	__webpack_require__(451);
 
-	var Details = function () {
+	var Profile = function () {
 	    'use strict';
+
+	    var form_selector = '#personalDetails_form';
+	    var hidden_class = 'invisible';
+	    var editable_fields = {};
 
 	    var residence = void 0,
 	        get_settings_data = void 0,
-	        place_of_birth_value = void 0,
-	        tax_residence_values = void 0;
-
-	    var form_selector = '#frm_personal_details',
-	        editable_fields = {},
-	        hidden_class = 'hidden';
+	        place_of_birth_value = void 0;
+	    // tax_residence_values;
 
 	    var load = function load() {
 	        showLoadingImage($('<div/>', { id: 'loading', class: 'center-text' }).insertAfter('#heading'));
 
-	        $(form_selector).on('submit', onSubmit);
+	        $('.tabs-vertical').tabs();
+	        $('.tabs-vertical li').on('click', function () {
+	            var active_tab = $('.ui-tabs-active').attr('id');
+	            if (/fa_tab/.test(active_tab)) {
+	                Profile.unload();
+	                if (!Client.is_virtual()) FinancialAssessment.load();
+	            } else {
+	                Profile.load();
+	                if (!Client.is_virtual()) FinancialAssessment.unload();
+	            }
+	        });
+
+	        $(form_selector).on('submit', function (event) {
+	            event.preventDefault();
+	            submitForm();
+	            return false;
+	        });
+
 	        ChampionSocket.send({ get_settings: 1 }).then(function (response) {
 	            get_settings_data = response.get_settings;
 	            residence = response.get_settings.country_code;
@@ -40329,9 +40348,11 @@
 	                        populateStates(states_list_response);
 	                    });
 	                }
-	            } else $('.fx-real-acc').addClass(hidden_class);
+	            } else {
+	                $('.is-real').addClass(hidden_class);
+	            }
 
-	            $(form_selector).removeClass(hidden_class);
+	            $('#fx-profile').removeClass(hidden_class);
 	            $('.barspinner').addClass(hidden_class);
 	        });
 	    };
@@ -40347,9 +40368,9 @@
 	    var displayGetSettingsData = function displayGetSettingsData(data) {
 	        var populate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
-	        if (data.tax_residence) {
-	            tax_residence_values = data.tax_residence.split(',');
-	        }
+	        // if (data.tax_residence) {
+	        //     tax_residence_values = data.tax_residence.split(',');
+	        // }
 	        if (data.place_of_birth) {
 	            place_of_birth_value = data.place_of_birth;
 	        }
@@ -40362,7 +40383,7 @@
 
 	        Object.keys(data).forEach(function (key) {
 	            $key = $(form_selector + ' #' + key);
-	            $lbl_key = $('#txt_' + key);
+	            $lbl_key = $('#' + key);
 	            has_key = $key.length > 0;
 	            has_lbl_key = $lbl_key.length > 0;
 
@@ -40400,7 +40421,9 @@
 	            $place_of_birth.val(place_of_birth_value || residence);
 	        }
 
-	        $tax_residence.select2().val(tax_residence_values).trigger('change').removeClass('invisible');
+	        // $tax_residence.select2()
+	        //     .val(tax_residence_values).trigger('change')
+	        //     .removeClass('invisible');
 	    };
 
 	    var populateStates = function populateStates(response) {
@@ -40425,20 +40448,19 @@
 	    var getValidations = function getValidations() {
 	        var validations = [];
 
-	        validations = [{ selector: '#address_line_1', validations: ['req', 'general'] }, { selector: '#address_line_2', validations: ['general'] }, { selector: '#address_city', validations: ['req', 'letter_symbol'] }, { selector: '#address_state', validations: $('#address_state').prop('nodeName') === 'SELECT' ? '' : ['letter_symbol'] }, { selector: '#address_postcode', validations: ['postcode', ['length', { min: 0, max: 20 }]] }, { selector: '#phone', validations: ['phone', ['length', { min: 6, max: 35 }]] }, { selector: '#place_of_birth', validations: '' }, { selector: '#tax_residence', validations: '' }];
-	        var tax_id_validation = { selector: '#tax_identification_number', validations: ['postcode', ['length', { min: 0, max: 20 }]] };
+	        validations = [{ selector: '#address_line_1', validations: ['req', 'general'] }, { selector: '#address_line_2', validations: ['general'] }, { selector: '#address_city', validations: ['req', 'letter_symbol'] }, { selector: '#address_state', validations: $('#address_state').prop('nodeName') === 'SELECT' ? '' : ['letter_symbol'] }, { selector: '#address_postcode', validations: ['postcode', ['length', { min: 0, max: 20 }]] }, { selector: '#phone', validations: ['phone', ['length', { min: 6, max: 35 }]] }];
+	        // const tax_id_validation = { selector: '#tax_identification_number',
+	        // validations: ['postcode', ['length', { min: 0, max: 20 }]] };
 	        // if (Client.is_financial()) {
 	        //     tax_id_validation.validations[1][1].min = 1;
 	        //     tax_id_validation.validations.unshift('req');
 	        // }
-	        validations.push(tax_id_validation);
+	        // validations.push(tax_id_validation);
 
 	        return validations;
 	    };
 
-	    var onSubmit = function onSubmit(e) {
-	        e.preventDefault();
-
+	    var submitForm = function submitForm() {
 	        if (Validation.validate(form_selector)) {
 	            (function () {
 	                var req = { set_settings: 1 };
@@ -40460,7 +40482,7 @@
 	    };
 
 	    var unload = function unload() {
-	        $(form_selector).off('submit', onSubmit);
+	        $(form_selector).off('submit', submitForm);
 	    };
 
 	    return {
@@ -40469,7 +40491,7 @@
 	    };
 	}();
 
-	module.exports = Details;
+	module.exports = Profile;
 
 /***/ },
 /* 451 */

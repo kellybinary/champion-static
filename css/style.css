@@ -32,6 +32,16 @@ button {
   color: #fff;
 }
 
+h1.main-title {
+  border-bottom: 2px solid #F2F2F2;
+  padding-bottom: 20px;
+  margin-bottom: 40px;
+}
+
+.separator.fill-bg-color {
+  margin: 40px 0;
+}
+
 .topbar-container div {
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -112,8 +122,11 @@ button {
   margin: 0;
 }
 
-.signup-button {
-  text-align: right;
+#main-signup {
+  margin-left: auto;
+}
+#main-signup .signup-button {
+  margin: auto;
 }
 
 .license-box {
@@ -236,7 +249,7 @@ button {
   }
 }
 .fx-section {
-  padding: 50px 0;
+  padding: 20px 0 40px;
 }
 .fx-section .fx-features-title {
   margin-bottom: 50px;
@@ -473,22 +486,22 @@ button {
 }
 
 fieldset {
-  border: 1px solid #DEDEDE;
+  border: none !important;
   padding: 5px;
   margin-bottom: 10px;
 }
 
 .form-row {
-  padding: 10px 0;
+  width: 350px;
+  max-width: 100%;
+  margin-bottom: 20px;
 }
-.form-row label {
-  display: block;
-  text-align: right;
+.form-row select, .form-row input, .form-row textarea {
+  width: 100%;
 }
 
-.left-label .form-row label {
-  text-align: left;
-  margin-left: 30px;
+.submit-row {
+  margin: 40px 0;
 }
 
 .hidden {
@@ -574,14 +587,6 @@ fieldset {
 .logo-parent {
   padding: 0;
   margin: 0;
-}
-
-.binary-logo-text {
-  padding: 0;
-}
-.binary-logo-text div {
-  width: 150px !important;
-  margin-top: 8px;
 }
 
 .test {
@@ -697,9 +702,10 @@ ol ol ol ol li:before {
   counter-increment: item4;
 }
 
-.fx-side-nav {
-  border-right: #004385 2px solid;
-  padding: 0;
+/* Vertical tab */
+#fx-profile ul li {
+  white-space: normal !important;
+  margin-bottom: 30px;
 }
 
 .fx-advisors {
@@ -969,10 +975,6 @@ body .top-nav-menu li a {
   height: 45px;
 }
 
-.binary-logo-text > div {
-  height: 45px;
-}
-
 .logo, .logo-dark {
   height: 45px;
 }
@@ -980,6 +982,11 @@ body .top-nav-menu li a {
 @media screen and (max-width: 796px) {
   .top-nav-menu {
     float: left;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .container {
+    width: 1200px;
   }
 }
 /* stylelint-disable selector-list-comma-newline-after, selector-list-comma-space-after */
