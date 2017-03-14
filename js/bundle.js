@@ -40488,14 +40488,13 @@
 	    var getValidations = function getValidations() {
 	        var validations = [];
 
-	        validations = [{ selector: '#address_line_1', validations: ['req', 'general'] }, { selector: '#address_line_2', validations: ['general'] }, { selector: '#address_city', validations: ['req', 'letter_symbol'] }, { selector: '#address_state', validations: $('#address_state').prop('nodeName') === 'SELECT' ? '' : ['letter_symbol'] }, { selector: '#address_postcode', validations: ['postcode', ['length', { min: 0, max: 20 }]] }, { selector: '#phone', validations: ['phone', ['length', { min: 6, max: 35 }]] }, { selector: '#place_of_birth', validations: '' }];
-	        // const tax_id_validation = { selector: '#tax_identification_number',
-	        // validations: ['postcode', ['length', { min: 0, max: 20 }]] };
-	        // if (Client.is_financial()) {
-	        //     tax_id_validation.validations[1][1].min = 1;
-	        //     tax_id_validation.validations.unshift('req');
-	        // }
-	        // validations.push(tax_id_validation);
+	        validations = [{ selector: '#address_line_1', validations: ['req', 'general', ['length', { min: 1, max: 70 }]] }, { selector: '#address_line_2', validations: ['general', ['length', { min: 0, max: 70 }]] }, { selector: '#address_city', validations: ['req', 'letter_symbol', ['length', { min: 1, max: 35 }]] }, { selector: '#address_state', validations: $('#address_state').prop('nodeName') === 'SELECT' ? '' : ['letter_symbol'] }, { selector: '#address_postcode', validations: ['postcode', ['length', { min: 0, max: 20 }]] }, { selector: '#phone', validations: ['phone', ['length', { min: 6, max: 35 }]] }, { selector: '#place_of_birth', validations: '' }, { selector: '#tax_residence', validations: '' }];
+	        var tax_id_validation = { selector: '#tax_identification_number', validations: ['postcode', ['length', { min: 0, max: 20 }]] };
+
+	        tax_id_validation.validations[1][1].min = 1;
+	        tax_id_validation.validations.unshift('req');
+
+	        validations.push(tax_id_validation);
 
 	        return validations;
 	    };
@@ -40508,6 +40507,9 @@
 	                    var $frm_el = $(form_selector + ' #' + key);
 	                    if (/(SELECT|INPUT)/.test($frm_el.prop('nodeName'))) {
 	                        req[key] = $frm_el.val();
+	                        if (/tax_residence/.test(key)) {
+	                            req[key] = $frm_el.val().join();
+	                        }
 	                    }
 	                });
 	                ChampionSocket.send(req).then(function (response) {
