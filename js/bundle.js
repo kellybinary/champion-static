@@ -36571,7 +36571,7 @@
 	        btn_submit = void 0;
 
 	    var form_selector = '#frm_change_password',
-	        hidden_class = 'hidden';
+	        hidden_class = 'invisible';
 
 	    var fields = {
 	        txt_old_password: '#txt_old_password',
@@ -36603,7 +36603,7 @@
 	            };
 	            ChampionSocket.send(data).then(function (response) {
 	                if (response.error) {
-	                    $('#error-change-password').removeClass('hidden').text(response.error.message);
+	                    $('#msg_form').removeClass(hidden_class).text(response.error.message);
 	                } else {
 	                    setTimeout(function () {
 	                        ChampionSocket.send({ logout: 1 });
