@@ -36461,7 +36461,7 @@
 
 	            ChampionSocket.send(data).then(function (response) {
 	                if (response.error) {
-	                    $('#msg_form').removeClass(hidden_class).text(response.error.message);
+	                    $(form_selector + ' #msg_form').removeClass(hidden_class).text(response.error.message);
 	                } else {
 	                    $form.addClass(hidden_class);
 	                    $('.notice-msg').removeClass(hidden_class).text('Your settings have been updated successfully.');
