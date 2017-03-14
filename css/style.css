@@ -24,6 +24,19 @@ html body #champion-container {
           flex: 1 1 auto;
 }
 
+.page-title {
+  border-bottom: 1px solid #DEDEDE;
+  padding-bottom: 10px;
+}
+
+.section-title {
+  padding-bottom: 5px;
+  color: #fff;
+  border-bottom: 2px solid #DEDEDE;
+  display: inline-block;
+  width: auto;
+}
+
 button {
   white-space: nowrap;
 }
@@ -108,7 +121,6 @@ h1.main-title {
   padding: 0;
 }
 .signup-box input {
-  padding: 5px 15px;
   margin-right: 5px;
   margin-bottom: 5px;
 }
@@ -127,6 +139,11 @@ h1.main-title {
 }
 #main-signup .signup-button {
   margin: auto;
+  text-align: right;
+  padding: 0;
+}
+#main-signup .signup-button li {
+  padding: 10px 0;
 }
 
 .license-box {
@@ -207,7 +224,6 @@ h1.main-title {
 
 .fx-panel-container {
   background: #fff;
-  border: 1px solid #DEDEDE;
 }
 
 .fx-panel {
@@ -299,10 +315,6 @@ h1.main-title {
   padding: 10px;
 }
 
-.p-title {
-  padding-bottom: 40px;
-}
-
 .fx-feature-box {
   text-align: center;
   margin-top: 30px;
@@ -365,14 +377,25 @@ h1.main-title {
   margin-bottom: 10px;
 }
 
-#cs_telephone_number {
-  width: 90%;
-}
-
 #phone-result {
-  padding-left: 10px;
   text-align: left;
   margin: 20px 0;
+}
+
+#contacts-emails-container {
+  padding: 0;
+  background: url("../images/c_img.png");
+}
+#contacts-emails-container .contacts-emails {
+  padding-bottom: 30px;
+  color: #fff;
+}
+#contacts-emails-container .contacts-emails .row {
+  padding: 25px 0 0;
+}
+#contacts-emails-container .contacts-emails .row.emails {
+  padding: 25px 0;
+  border-bottom: 1px solid #DEDEDE;
 }
 
 .phone-note {
@@ -589,6 +612,10 @@ fieldset {
 
 .top-nav-menu a {
   color: #FFF !important;
+}
+.top-nav-menu a li {
+  border-bottom: 3px solid #004385;
+  margin-bottom: -4px;
 }
 
 .logo-parent {
@@ -977,6 +1004,7 @@ ol ol ol ol li:before {
 body .top-nav-menu li a {
   height: auto;
   padding: 25px 15px;
+  margin-bottom: -4px;
 }
 
 .main-nav > li > ul {
@@ -985,6 +1013,10 @@ body .top-nav-menu li a {
 
 .top-nav-menu > li > ul {
   z-index: 10;
+}
+
+.top-nav-menu a.active {
+  border-bottom: 4px solid #DEDEDE;
 }
 
 .top-nav-menu {
@@ -999,9 +1031,9 @@ body .top-nav-menu li a {
   height: 45px;
 }
 
-@media screen and (max-width: 796px) {
+@media screen and (max-width: 991px) {
   .top-nav-menu {
-    float: left;
+    float: left !important;
   }
 }
 @media screen and (min-width: 1200px) {
@@ -1893,9 +1925,32 @@ body .top-nav-menu li a {
 
 .slider-text {
   padding: 30px;
+  display: table;
+}
+.slider-text .center-items {
+  display: table-cell;
+  vertical-align: middle;
 }
 .slider-text .container, .slider-text .container .row {
   height: 100%;
+}
+.slider-text .container h3, .slider-text .container p, .slider-text .container .row, .slider-text .container .row h3, .slider-text .container .row p, .slider-text .container .row .row {
+  padding: 10px;
+}
+.slider-text .slide-list li {
+  height: auto !important;
+  font-size: 14px;
+}
+
+.large-slider-text {
+  display: block;
+  height: 100%;
+}
+.large-slider-text .container, .large-slider-text .container .row {
+  height: 100%;
+}
+.large-slider-text .container h3, .large-slider-text .container p, .large-slider-text .container .row, .large-slider-text .container .row h3, .large-slider-text .container .row p, .large-slider-text .container .row .row {
+  padding: 0;
 }
 
 .license-box-icon {
@@ -1907,6 +1962,7 @@ body .top-nav-menu li a {
   height: 100%;
   margin: 0;
   background-position: center center;
+  max-width: 80px;
 }
 
 #slide-1 {
@@ -1920,6 +1976,41 @@ body .top-nav-menu li a {
 }
 
 #slide-2 {
+  background: url("../images/about-2.jpg") no-repeat center center;
+  background-size: cover;
+  height: 500px;
+  width: 100%;
+}
+
+#slide-3 {
+  background: url("../images/about-2.jpg") no-repeat center center;
+  background-size: cover;
+  height: 500px;
+  width: 100%;
+}
+
+#slide-4 {
+  background: url("../images/about-2.jpg") no-repeat center center;
+  background-size: cover;
+  height: 500px;
+  width: 100%;
+}
+
+#slide-5 {
+  background: url("../images/image1.jpg") no-repeat center center;
+  background-size: cover;
+  height: 500px;
+  width: 100%;
+}
+
+#slide-6 {
+  background: url("../images/about-2.jpg") no-repeat center center;
+  background-size: cover;
+  height: 500px;
+  width: 100%;
+}
+
+#slide-7 {
   background: url("../images/about-2.jpg") no-repeat center center;
   background-size: cover;
   height: 500px;
