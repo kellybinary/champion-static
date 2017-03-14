@@ -40303,19 +40303,32 @@
 
 	    var load = function load() {
 	        showLoadingImage($('<div/>', { id: 'loading', class: 'center-text' }).insertAfter('#heading'));
+
 	        $('.tabs-vertical').tabs();
 
 	        var hash = window.location.hash.substring(1);
-	        loadContent(hash);
+	        if (Client.is_virtual()) {
+	            hash = '#details';
+	            $('a[href="' + hash + '"]').click();
+	            loadContent(hash);
+	        } else {
+	            (function () {
+	                loadContent(hash);
+	                var active_tab = $('.ui-tabs-active a').attr('href');
+
+	                $('.tabs-vertical li').on('click', function () {
+	                    active_tab = $('.ui-tabs-active a').attr('href');
+	                    loadContent(active_tab);
+	                });
+	            })();
+	        }
 	    };
 
 	    var loadContent = function loadContent(hash) {
-	        if (Client.is_virtual()) {
-	            $('is-real').addClass('invisible');
-	        } else if (/assessment/.test(hash)) {
+	        if (/assessment/.test(hash)) {
 	            PersonalDetails.unload();
 	            FinancialAssessment.load();
-	        } else if (/details/.test(hash)) {
+	        } else {
 	            PersonalDetails.load();
 	            FinancialAssessment.unload();
 	        }
@@ -40343,7 +40356,6 @@
 	var Client = __webpack_require__(301);
 	var ChampionSocket = __webpack_require__(308);
 	var Validation = __webpack_require__(317);
-	// const showLoadingImage = require('../../common/utility').showLoadingImage;
 	var moment = __webpack_require__(321);
 	__webpack_require__(452);
 
@@ -40360,8 +40372,6 @@
 	        tax_residence_values = void 0;
 
 	    var load = function load() {
-	        // showLoadingImage($('<div/>', { id: 'loading', class: 'center-text' }).insertAfter('#heading'));
-
 	        $(form_selector).on('submit', function (event) {
 	            event.preventDefault();
 	            submitForm();
@@ -40386,7 +40396,6 @@
 	            } else {
 	                $('.is-real').addClass(hidden_class);
 	            }
-	            // $('.barspinner').addClass(hidden_class);
 	        });
 	    };
 

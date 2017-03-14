@@ -3,10 +3,10 @@
     </div>
     <div class="wrapper" id="champion-content">
         <div class="fx-section container">
-    <h1 class="main-title" id="heading">ChampionFX account settings</h1>
+    <h1 class="main-title" id="heading">Profile</h1>
 
     <div id="fx-profile" class="has-tabs tabs-vertical ui-tabs-vertical invisible">
-        <ul>
+        <ul id="profile-tabs">
             <li>
                 <a href="#details">
                     <h4>Personal details</h4>
@@ -24,10 +24,9 @@
         </ul>
 
         <div id="details">
-            <h1 class="main-title" id="heading">Personal details</h1>
-
+            <h2>Personal details</h2>
 <form class="formObject" id="details_form" name="details_form">
-    <h2>Personal information</h2>
+    <h3 class="underline-title">Personal information</h3>
 
     <div class="form-row is-real">
     <label for="">Name</label>
@@ -95,7 +94,7 @@
     
 </div>
 
-    <h2 class="is-real">Tax information</h2>
+    <h3 class="is-real underline-title">Tax information</h3>
     <div class="form-row is-real">
     <label for="tax_residence">Tax residence</label>
     
@@ -109,7 +108,7 @@
     
 </div>
 
-    <h2 class="is-real">Contact information</h2>
+    <h3 class="is-real underline-title">Contact information</h3>
 
     <div class="form-row is-real">
     <label for="address_line_1">Address</label>
@@ -164,7 +163,8 @@
         </div>
 
         <div id="assessment" class="is-real">
-            <h1 class="main-title" id="heading">Financial Assessment</h1>
+            <div class="">
+    <h2>Financial assessments</h2>
     <div id="msg_success" class="invisible">
         <p>Thank you for completing the Financial Assessment and registering your Financial Account. You can now deposit funds and trade Forex with real money on MT5.</p>
         <div id="msg_authenticate" class="invisible">
@@ -183,11 +183,11 @@
     </div>
 
     <form class="formObject invisible" id="assessment_form" name="assessment_form">
-        <h1 id="heading_risk" class="invisible">Financial Assessment</h1>
+        <h2 id="heading_risk" class="invisible">Financial Assessment</h2>
         <p class="invisible" id="high_risk_classification">
             Due to recent changes in the regulations, we are required to ask our clients to complete the following Financial Assessment. Please note that you will not be able to continue trading until this is completed.
         </p>
-        <h2>Financial information</h2>
+        <h3>Financial information</h3>
 
         <div class="form-row ">
     <label for="forex_trading_experience">Forex trading experience</label>
@@ -431,6 +431,7 @@
     <button id="submit" type="submit">Update</button>
 </div>
     </form>
+</div>
         </div>
     </div>
 
