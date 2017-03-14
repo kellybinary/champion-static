@@ -39980,8 +39980,8 @@
 	            if (formValues) formValues(_$form, acc_type, action);
 	            _$form.find('#btn_submit').attr({ acc_type: acc_type, action: action }).on('click dblclick', submit);
 
-	            // update legend, append form
-	            $action.find('legend').text(types_info[acc_type].title + ': ' + actions_info[action].title).end().find('#frm_action').html(_$form).end().removeClass(hidden_class);
+	            // update title, append form
+	            $action.find('h4').text(types_info[acc_type].title + ': ' + actions_info[action].title).end().find('#frm_action').html(_$form).end().removeClass(hidden_class);
 	            $.scrollTo($action, 500, { offset: -7 });
 	            Validation.init('#frm_' + action, validations[action]);
 	        });
