@@ -18,11 +18,11 @@
     <meta name="description" content="ChampionFX Static" />
     <link rel="icon" type="image/png" sizes="16x16" href="/champion-static/images/favicons/CFX_favicon16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/champion-static/images/favicons/CFX_favicon32.png" />
-     <link rel="stylesheet" href="/champion-static/css/flex.min.css?1g0s0tah" />
-     <link rel="stylesheet" href="/champion-static/css/style.min.css?1g0s0tah" />
-     <link rel="stylesheet" href="https://style.champion-fx.com/binary.css?1g0s0tah" />
-      <script src="/champion-static/js/bundle.js?1g0s0tah" type="text/javascript"></script>
-     <script src="https://style.champion-fx.com/binary.js?1g0s0tah" type="text/javascript"></script>
+     <link rel="stylesheet" href="/champion-static/css/flex.min.css?uhfwmnw1" />
+     <link rel="stylesheet" href="/champion-static/css/style.min.css?uhfwmnw1" />
+     <link rel="stylesheet" href="https://style.champion-fx.com/binary.css?uhfwmnw1" />
+      <script src="/champion-static/js/bundle.js?uhfwmnw1" type="text/javascript"></script>
+     <script src="https://style.champion-fx.com/binary.js?uhfwmnw1" type="text/javascript"></script>
      
 </head>
 <body>
@@ -156,15 +156,15 @@
 
     <div id="fx-profile" class="has-tabs tabs-vertical ui-tabs-vertical invisible">
         <ul>
-            <li id="details_tab">
-                <a href="#details_tab_content">
+            <li>
+                <a href="#details">
                     <h4>Personal details</h4>
                     <div class="separator primary-color"></div>
                     <p>View and edit your personal information.</p>
                 </a>
             </li>
-            <li id="assessment_tab" class="is-real">
-                <a href="#assessment_tab_content">
+            <li class="is-real">
+                <a href="#assessment">
                     <h4>Financial assessments</h4>
                     <div class="separator primary-color"></div>
                     <p>View and edit your financial information.</p>
@@ -172,7 +172,7 @@
             </li>
         </ul>
 
-        <div id="details_tab_content">
+        <div id="details">
             <h1 class="main-title" id="heading">Personal details</h1>
 
 <form class="formObject" id="details_form" name="details_form">
@@ -244,6 +244,20 @@
     
 </div>
 
+    <h2 class="is-real">Tax information</h2>
+    <div class="form-row is-real">
+    <label for="tax_residence">Tax residence</label>
+    
+                <select id="tax_residence" multiple="multiple">             </select>
+    
+</div>
+    <div class="form-row is-real">
+    <label for="tax_identification_number">Tax identification number</label>
+    
+                <input type="text" id="tax_identification_number"  />
+    
+</div>
+
     <h2 class="is-real">Contact information</h2>
 
     <div class="form-row is-real">
@@ -298,7 +312,7 @@
 </form>
         </div>
 
-        <div id="assessment_tab_content" class="is-real">
+        <div id="assessment" class="is-real">
             <h1 class="main-title" id="heading">Financial Assessment</h1>
     <div id="msg_success" class="invisible">
         <p>Thank you for completing the Financial Assessment and registering your Financial Account. You can now deposit funds and trade Forex with real money on MT5.</p>
