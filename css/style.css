@@ -503,6 +503,10 @@ fieldset {
   display: inline;
 }
 
+.center-text .form-row {
+  width: auto;
+}
+
 .submit-row {
   margin: 40px 0;
 }
@@ -1089,7 +1093,6 @@ body .top-nav-menu li a {
 }
 
 #mt_account_management #accounts_list .acc-box {
-  padding: 0 10px 0 0;
   margin-bottom: 10px;
 }
 #mt_account_management #accounts_list .acc-box > div {
@@ -1100,9 +1103,10 @@ body .top-nav-menu li a {
   -webkit-flex-direction: column;
       -ms-flex-direction: column;
           flex-direction: column;
+  border-bottom: 2px solid transparent;
 }
 #mt_account_management #accounts_list .acc-box > div:hover, #mt_account_management #accounts_list .acc-box > div.active {
-  border-bottom: 2px solid #004385;
+  border-bottom-color: #004385;
 }
 #mt_account_management #accounts_list .acc-box > div .no-account {
   margin-bottom: 20px;
@@ -1121,16 +1125,17 @@ body .top-nav-menu li a {
 #mt_account_management #accounts_list .acc-box > div .loading {
   margin: 75px 0;
 }
+#mt_account_management #accounts_list .acc-box > div .acc-info {
+  padding-top: 10px;
+}
 #mt_account_management #accounts_list .acc-box > div .acc-info div {
   font-size: 0.9rem;
-  padding: 0 0 0 25px;
   line-height: 1.6em;
   word-break: break-all;
 }
 #mt_account_management #accounts_list .acc-box > div .acc-actions {
   margin-top: auto;
-  padding: 10px;
-  border-top: 1px solid #DEDEDE;
+  padding: 10px 0;
   font-size: 0.8rem;
 }
 #mt_account_management #accounts_list .acc-box > div .acc-actions a {

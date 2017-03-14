@@ -18484,8 +18484,9 @@
 	var ChampionSettings = __webpack_require__(447);
 	var TNCApproval = __webpack_require__(448);
 	var CashierDepositWithdraw = __webpack_require__(449);
-	var Profile = __webpack_require__(450);
-	var PersonalDetails = __webpack_require__(451);
+	var PersonalDetails = __webpack_require__(450);
+	var ChampionProfile = __webpack_require__(452);
+	var ChampionSecurity = __webpack_require__(453);
 
 	var Champion = function () {
 	    'use strict';
@@ -18540,9 +18541,10 @@
 	            forward: { module: CashierDepositWithdraw, is_authenticated: true, only_real: true },
 	            logged_inws: { module: LoggedIn },
 	            metatrader: { module: MetaTrader, is_authenticated: true },
-	            profile: { module: Profile, is_authenticated: true },
+	            profile: { module: ChampionProfile, is_authenticated: true },
 	            real: { module: ChampionNewReal, is_authenticated: true, only_virtual: true },
 	            settings: { module: ChampionSettings, is_authenticated: true },
+	            security: { module: ChampionSecurity, is_authenticated: true },
 	            virtual: { module: ChampionNewVirtual, not_authenticated: true },
 	            'binary-options': { module: BinaryOptions },
 	            'cashier-password': { module: CashierPassword, is_authenticated: true, only_real: true },
@@ -23682,7 +23684,7 @@
 	            }
 	            ChampionSocket.send(data).then(function (response) {
 	                if (response.error) {
-	                    $('#error-create-account').removeClass('hidden').text(response.error.message);
+	                    $('#msg_form').removeClass('hidden').text(response.error.message);
 	                    btn_submit.removeAttr('disabled');
 	                } else {
 	                    var acc_info = response.new_account_real;
@@ -39936,7 +39938,7 @@
 
 	    var displayLoadingAccount = function displayLoadingAccount(acc_type) {
 	        var $acc_item = $list.find('#' + acc_type);
-	        $acc_item.find('> div > div[class!="title"]').addClass(hidden_class);
+	        $acc_item.find('> div > div:not(.title, .separator)').addClass(hidden_class);
 	        $acc_item.find('.loading').removeClass(hidden_class);
 	    };
 
@@ -40294,70 +40296,10 @@
 	'use strict';
 
 	var Client = __webpack_require__(301);
-	var showLoadingImage = __webpack_require__(306).showLoadingImage;
-	var FinancialAssessment = __webpack_require__(443);
-	var PersonalDetails = __webpack_require__(451);
-
-	var Profile = function () {
-	    'use strict';
-
-	    var load = function load() {
-	        showLoadingImage($('<div/>', { id: 'loading', class: 'center-text' }).insertAfter('#heading'));
-
-	        $('.tabs-vertical').tabs();
-
-	        var hash = window.location.hash.substring(1);
-	        if (Client.is_virtual()) {
-	            hash = '#details';
-	            $('a[href="' + hash + '"]').click();
-	            loadContent(hash);
-	        } else {
-	            (function () {
-	                loadContent(hash);
-	                var active_tab = $('.ui-tabs-active a').attr('href');
-
-	                $('.tabs-vertical li').on('click', function () {
-	                    active_tab = $('.ui-tabs-active a').attr('href');
-	                    loadContent(active_tab);
-	                });
-	            })();
-	        }
-	    };
-
-	    var loadContent = function loadContent(hash) {
-	        if (/assessment/.test(hash)) {
-	            PersonalDetails.unload();
-	            FinancialAssessment.load();
-	        } else {
-	            PersonalDetails.load();
-	            FinancialAssessment.unload();
-	        }
-
-	        $('.barspinner').addClass('invisible');
-	        $('#fx-profile').removeClass('invisible');
-	    };
-
-	    var unload = function unload() {};
-
-	    return {
-	        load: load,
-	        unload: unload
-	    };
-	}();
-
-	module.exports = Profile;
-
-/***/ },
-/* 451 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var Client = __webpack_require__(301);
 	var ChampionSocket = __webpack_require__(308);
 	var Validation = __webpack_require__(317);
 	var moment = __webpack_require__(321);
-	__webpack_require__(452);
+	__webpack_require__(451);
 
 	var PersonalDetails = function () {
 	    'use strict';
@@ -40536,7 +40478,7 @@
 	module.exports = PersonalDetails;
 
 /***/ },
-/* 452 */
+/* 451 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var require;var require;/*!
@@ -46265,6 +46207,94 @@
 	  return select2;
 	}));
 
+
+/***/ },
+/* 452 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Client = __webpack_require__(301);
+	var showLoadingImage = __webpack_require__(306).showLoadingImage;
+	var FinancialAssessment = __webpack_require__(443);
+	var PersonalDetails = __webpack_require__(450);
+
+	var Profile = function () {
+	    'use strict';
+
+	    var load = function load() {
+	        showLoadingImage($('<div/>', { id: 'loading', class: 'center-text' }).insertAfter('#heading'));
+
+	        $('.tabs-vertical').tabs();
+
+	        var hash = window.location.hash.substring(1);
+	        if (Client.is_virtual()) {
+	            hash = '#details';
+	            $('a[href="' + hash + '"]').click();
+	            loadContent(hash);
+	        } else {
+	            (function () {
+	                loadContent(hash);
+	                var active_tab = $('.ui-tabs-active a').attr('href');
+
+	                $('.tabs-vertical li').on('click', function () {
+	                    active_tab = $('.ui-tabs-active a').attr('href');
+	                    loadContent(active_tab);
+	                });
+	            })();
+	        }
+	    };
+
+	    var loadContent = function loadContent(hash) {
+	        if (/assessment/.test(hash)) {
+	            PersonalDetails.unload();
+	            FinancialAssessment.load();
+	        } else {
+	            PersonalDetails.load();
+	            FinancialAssessment.unload();
+	        }
+
+	        $('.barspinner').addClass('invisible');
+	        $('#fx-profile').removeClass('invisible');
+	    };
+
+	    var unload = function unload() {};
+
+	    return {
+	        load: load,
+	        unload: unload
+	    };
+	}();
+
+	module.exports = Profile;
+
+/***/ },
+/* 453 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Client = __webpack_require__(301);
+
+	var ChampionSettings = function () {
+	    'use strict';
+
+	    var securityContainer = void 0;
+
+	    var load = function load() {
+	        securityContainer = $('.fx-security');
+	        securityContainer.find('#fx-security-content').show();
+	        if (!Client.is_virtual()) {
+	            securityContainer.find('.fx-real').show();
+	        }
+	    };
+
+	    return {
+	        load: load
+	    };
+	}();
+
+	module.exports = ChampionSettings;
 
 /***/ }
 /******/ ]);
