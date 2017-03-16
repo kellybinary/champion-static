@@ -46363,8 +46363,10 @@
 	var LoginHistory = function () {
 	    'use strict';
 
+	    var hidden_class = 'invisible';
+
 	    var load = function load() {
-	        showLoadingImage($('<div/>', { id: 'loading', class: 'center-text' }).insertAfter('#heading'));
+	        showLoadingImage($('<div/>', { id: 'loading', class: 'center-text' }).insertAfter('.main-title'));
 
 	        var req = {
 	            login_history: 1,
@@ -46372,15 +46374,20 @@
 	        };
 
 	        ChampionSocket.send(req).then(function (response) {
-	            handleResponse(response);
+	            $('.barspinner').addClass(hidden_class);
+	            if (response.error) {
+	                $('#error-msg').html(response.error.message);
+	            } else {
+	                handleResponse(response);
+	            }
 	        });
 	    };
 
 	    var handleResponse = function handleResponse(response) {
 	        var login_histories = response.login_history;
-	        var len = login_histories.length;
+	        var length = login_histories.length;
 	        var parsed_data = [];
-	        for (var i = 0; i < len; i++) {
+	        for (var i = 0; i < length; i++) {
 	            var data = parse(login_histories[i]);
 	            parsed_data.push(data);
 	        }
@@ -46434,7 +46441,7 @@
 	    };
 
 	    var unload = function unload() {
-	        $('fx-login-history').empty(); // clean domtree
+	        $('#fx-login-history').empty(); // cleanup
 	    };
 
 	    return {
