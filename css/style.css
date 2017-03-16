@@ -101,6 +101,10 @@ h1.main-title {
           flex-grow: 1;
   height: 100%;
 }
+#verify-email-form #email {
+  text-align: center;
+  width: 280px;
+}
 
 .signup-box {
   display: -webkit-flex;
@@ -143,7 +147,7 @@ h1.main-title {
   padding: 0;
 }
 #main-signup .signup-button li {
-  padding: 10px 0;
+  margin-top: 0;
 }
 
 .license-box {
@@ -339,11 +343,15 @@ h1.main-title {
 }
 
 .fx-about-header {
-  width: 100%;
-  /* for IE 6 */
-  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url("../images/about-background.png");
+  background: url("../images/about-background.png") no-repeat center center;
   background-size: cover;
+  height: 400px;
   padding: 0 20px;
+}
+
+.fx-about-image {
+  width: 100%;
+  height: auto;
 }
 
 .contact-phone {
@@ -588,14 +596,6 @@ fieldset {
   padding: 0 5px;
 }
 
-.top-nav-menu a {
-  color: #FFF !important;
-}
-.top-nav-menu a li {
-  border-bottom: 3px solid #004385;
-  margin-bottom: -4px;
-}
-
 .logo-parent {
   padding: 0;
   margin: 0;
@@ -728,6 +728,61 @@ ul.no-padding, ul.no-padding li {
   border-bottom: 2px solid #004385;
   padding-bottom: 10px;
   width: 350px;
+}
+
+.no-margin-top {
+  margin-top: 0;
+}
+
+.has-tabs * {
+  outline: none;
+}
+.has-tabs li.col-sm {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-width: 1vw;
+}
+.has-tabs li.col-sm a {
+  white-space: normal;
+  text-align: center;
+  width: 100%;
+}
+
+img.float-right {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: auto;
+  padding: 10px 0;
+}
+
+.separator-vertical {
+  width: 2px;
+}
+
+.center-align {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.no-gutters {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.fx-cashier .button {
+  margin-right: 20px;
+}
+
+#msg_notification {
+  font-size: 13px;
+  padding: 3px 0;
+  line-height: 20px;
+  display: none;
 }
 
 .fx-advisors {
@@ -976,26 +1031,33 @@ ul.no-padding, ul.no-padding li {
   height: 30px;
 }
 
-body .top-nav-menu li a {
+#header {
+  border: 0 !important;
+}
+#header .top-nav-menu {
+  float: right;
+  margin-left: auto;
+}
+#header .top-nav-menu li a {
   height: auto;
   padding: 25px 15px;
+  border-bottom: 4px solid transparent;
+  color: #FFF !important;
+}
+#header .top-nav-menu li a.active {
+  border-bottom-color: #DEDEDE;
+}
+#header .top-nav-menu li a li {
+  border-bottom: 3px solid #004385;
   margin-bottom: -4px;
+}
+#header .top-nav-menu li ul {
+  z-index: 10;
 }
 
 .main-nav > li > ul {
   box-sizing: content-box;
-}
-
-.top-nav-menu > li > ul {
-  z-index: 10;
-}
-
-.top-nav-menu a.active {
-  border-bottom: 4px solid #DEDEDE;
-}
-
-.top-nav-menu {
-  float: right;
+  margin-top: 0 !important;
 }
 
 .logo > div {
@@ -1006,16 +1068,6 @@ body .top-nav-menu li a {
   height: 45px;
 }
 
-@media screen and (max-width: 991px) {
-  .top-nav-menu {
-    float: left !important;
-  }
-}
-@media screen and (min-width: 1200px) {
-  .container {
-    width: 1200px;
-  }
-}
 /* stylelint-disable selector-list-comma-newline-after, selector-list-comma-space-after */
 #int_bank_wire, #local_bank_transfer, #western_union, #citadel, #visa,
 #mastercard, #cuo-credit-card, #moneybrokers, #neteller, #moneta,
@@ -1941,7 +1993,7 @@ body .top-nav-menu li a {
 }
 
 #slide-1 {
-  background: url("../images/img_fx_2@2x.jpg") no-repeat center center;
+  background: url("../images/slider/banner1.jpg") no-repeat center center;
   background-size: cover;
   height: 500px;
   width: 100%;
@@ -1951,48 +2003,48 @@ body .top-nav-menu li a {
 }
 
 #slide-2 {
-  background: url("../images/about-2.jpg") no-repeat center center;
+  background: url("../images/slider/banner2.png") no-repeat center center;
   background-size: cover;
   height: 500px;
   width: 100%;
 }
 
 #slide-3 {
-  background: url("../images/about-2.jpg") no-repeat center center;
+  background: url("../images/slider/banner3.png") no-repeat center center;
   background-size: cover;
   height: 500px;
   width: 100%;
 }
 
 #slide-4 {
-  background: url("../images/about-2.jpg") no-repeat center center;
+  background: url("../images/slider/banner4.png") no-repeat center center;
   background-size: cover;
   height: 500px;
   width: 100%;
 }
 
 #slide-5 {
-  background: url("../images/image1.jpg") no-repeat center center;
+  background: url("../images/slider/banner5.png") no-repeat center center;
   background-size: cover;
   height: 500px;
   width: 100%;
 }
 
 #slide-6 {
-  background: url("../images/about-2.jpg") no-repeat center center;
+  background: url("../images/slider/banner6.jpg") no-repeat center center;
   background-size: cover;
   height: 500px;
   width: 100%;
 }
 
 #slide-7 {
-  background: url("../images/about-2.jpg") no-repeat center center;
+  background: url("../images/slider/banner7.jpg") no-repeat center center;
   background-size: cover;
   height: 500px;
   width: 100%;
 }
 
-@media screen and (max-width: 796px) {
+@media screen and (max-width: 767px) {
   .slider-footer {
     position: relative;
     background: #F2F2F2;
@@ -2002,7 +2054,7 @@ body .top-nav-menu li a {
     color: #000;
   }
 }
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 575px) {
   .slider-footer {
     position: relative;
     background: #F2F2F2;
@@ -2027,10 +2079,6 @@ body .top-nav-menu li a {
 
   .signup-box input {
     margin: 15px 0;
-  }
-
-  #end_note, #license-box-container {
-    display: none;
   }
 }
 @media (max-width: 767px) {
@@ -2073,5 +2121,10 @@ body .top-nav-menu li a {
 @media (max-width: 1199px) {
   .hidden-lg-down {
     display: none !important;
+  }
+}
+@media screen and (min-width: 1100px) {
+  .container {
+    width: 1100px;
   }
 }
