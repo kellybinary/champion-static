@@ -46385,7 +46385,7 @@
 
 	var Client = __webpack_require__(301);
 
-	var ChampionSettings = function () {
+	var ChampionSecurity = function () {
 	    'use strict';
 
 	    var securityContainer = void 0;
@@ -46403,7 +46403,7 @@
 	    };
 	}();
 
-	module.exports = ChampionSettings;
+	module.exports = ChampionSecurity;
 
 /***/ },
 /* 455 */
