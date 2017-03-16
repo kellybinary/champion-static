@@ -18485,6 +18485,7 @@
 	var Home = __webpack_require__(448);
 	var ChampionProfile = __webpack_require__(451);
 	var ChampionSecurity = __webpack_require__(454);
+	var LoginHistory = __webpack_require__(455);
 
 	var Champion = function () {
 	    'use strict';
@@ -18545,6 +18546,7 @@
 	            'binary-options': { module: BinaryOptions },
 	            'cashier-password': { module: CashierPassword, is_authenticated: true, only_real: true },
 	            'change-password': { module: ChangePassword, is_authenticated: true },
+	            'login-history': { module: LoginHistory, is_authenticated: true },
 	            'lost-password': { module: LostPassword, not_authenticated: true },
 	            'payment-methods': { module: CashierPaymentMethods },
 	            'reset-password': { module: ResetPassword, not_authenticated: true },
@@ -46347,6 +46349,101 @@
 	}();
 
 	module.exports = ChampionSettings;
+
+/***/ },
+/* 455 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var showLoadingImage = __webpack_require__(306).showLoadingImage;
+	var ChampionSocket = __webpack_require__(308);
+	var moment = __webpack_require__(319);
+
+	var LoginHistory = function () {
+	    'use strict';
+
+	    var load = function load() {
+	        showLoadingImage($('<div/>', { id: 'loading', class: 'center-text' }).insertAfter('#heading'));
+
+	        var req = {
+	            login_history: 1,
+	            limit: 50
+	        };
+
+	        ChampionSocket.send(req).then(function (response) {
+	            handleResponse(response);
+	        });
+	    };
+
+	    var handleResponse = function handleResponse(response) {
+	        var login_histories = response.login_history;
+	        var len = login_histories.length;
+	        var parsed_data = [];
+	        for (var i = 0; i < len; i++) {
+	            var data = parse(login_histories[i]);
+	            parsed_data.push(data);
+	        }
+	        render(parsed_data);
+	    };
+
+	    var render = function render(data) {
+	        var rows = data.map(function (history) {
+	            return '<tr><td>' + history.time + '</td>\n                 <td>' + history.action + '</td>\n                 <td>' + history.browser.name + ' ' + history.browser.version + '</td>\n                 <td>' + history.ip_addr + '</td>\n                 <td>' + history.status + '</td></tr>';
+	        }).join('');
+
+	        var header = '<th>Date and time</th>\n                        <th>Action</th>\n                        <th>Browser</th>\n                        <th>IP Address</th>\n                        <th>Status</th>';
+
+	        var table = '<table><tr>' + header + '</tr>' + rows + '</table>';
+
+	        $('#fx-login-history').append(table);
+	    };
+
+	    var parseUA = function parseUA(user_agent) {
+	        // Table of UA-values (and precedences) from:
+	        //  https://developer.mozilla.org/en-US/docs/Browser_detection_using_the_user_agent
+	        // Regexes stolen from:
+	        //  https://github.com/biggora/express-useragent/blob/master/lib/express-useragent.js
+	        var lookup = [{ name: 'Edge', regex: /Edge\/([\d\w\.\-]+)/i }, { name: 'SeaMonkey', regex: /seamonkey\/([\d\w\.\-]+)/i }, { name: 'Opera', regex: /(?:opera|opr)\/([\d\w\.\-]+)/i }, { name: 'Chromium', regex: /(?:chromium|crios)\/([\d\w\.\-]+)/i }, { name: 'Chrome', regex: /chrome\/([\d\w\.\-]+)/i }, { name: 'Safari', regex: /version\/([\d\w\.\-]+)/i }, { name: 'IE', regex: /msie\s([\d\.]+[\d])/i }, { name: 'IE', regex: /trident\/\d+\.\d+;.*[rv:]+(\d+\.\d)/i }, { name: 'Firefox', regex: /firefox\/([\d\w\.\-]+)/i }];
+	        for (var i = 0; i < lookup.length; i++) {
+	            var info = lookup[i];
+	            var match = user_agent.match(info.regex);
+	            if (match !== null) {
+	                return {
+	                    name: info.name,
+	                    version: match[1]
+	                };
+	            }
+	        }
+	        return null;
+	    };
+
+	    var parse = function parse(response) {
+	        var env = response.environment;
+	        var ip_address = env.split(' ')[2].split('=')[1];
+	        var user_agent = env.match('User_AGENT=(.+) LANG')[1];
+	        var utc_time = moment.unix(response.time).utc().format('YYYY-MM-DD HH:mm:ss').replace(' ', '\n');
+	        var status = response.status === 1 ? 'Successful' : 'Failed';
+	        return {
+	            time: utc_time + ' GMT',
+	            action: response.action,
+	            status: status,
+	            browser: parseUA(user_agent),
+	            ip_addr: ip_address
+	        };
+	    };
+
+	    var unload = function unload() {
+	        $('fx-login-history').empty(); // clean domtree
+	    };
+
+	    return {
+	        load: load,
+	        unload: unload
+	    };
+	}();
+
+	module.exports = LoginHistory;
 
 /***/ }
 /******/ ]);
