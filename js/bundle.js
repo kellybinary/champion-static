@@ -46399,7 +46399,7 @@
 	            return '<tr><td>' + history.time + '</td>\n                 <td>' + history.action + '</td>\n                 <td>' + history.browser.name + ' ' + history.browser.version + '</td>\n                 <td>' + history.ip_addr + '</td>\n                 <td>' + history.status + '</td></tr>';
 	        }).join('');
 
-	        var header = '<th>Date and time</th>\n                        <th>Action</th>\n                        <th>Browser</th>\n                        <th>IP Address</th>\n                        <th>Status</th>';
+	        var header = '<th>Date and time</th>\n                        <th>Action</th>\n                        <th>Browser</th>\n                        <th>IP address</th>\n                        <th>Status</th>';
 
 	        var table = '<table><tr>' + header + '</tr>' + rows + '</table>';
 
