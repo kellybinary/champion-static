@@ -46513,48 +46513,111 @@
 	'use strict';
 
 	var ChampionSocket = __webpack_require__(308);
+	var DatePicker = __webpack_require__(431).DatePicker;
+	var moment = __webpack_require__(320);
 
 	var TradingTimes = function () {
+	    'use strict';
+
+	    var today = moment.utc().format('YYYY-MM-DD'),
+	        hidden_class = 'invisible';
+
+	    var active_symbols = void 0;
+
 	    var load = function load() {
-	        ChampionSocket.send({ trading_times: 'today' }).then(function (response) {
-	            handleResponse(response.trading_times);
+	        var date_picker = new DatePicker('#trading-date'); // init datepicker
+	        date_picker.show({
+	            minDate: 'today',
+	            maxDate: 365
+	        });
+
+	        var $date = $('#trading-date').val(today);
+	        $date.change(function () {
+	            unload();
+	            getTradingTimes($date.val());
+	        });
+
+	        ChampionSocket.send({ active_symbols: 'brief' }).then(function (response) {
+	            if (response.error) {
+	                console.log(response.error.message);
+	            } else {
+	                active_symbols = response.active_symbols;
+	                getTradingTimes('today');
+	            }
 	        });
 	    };
 
-	    var handleResponse = function handleResponse(data) {
-	        console.time('te');
-	        var subheader = '<tr><th>Asset</th>\n                               <th>Opens</th>\n                               <th>Closes</th>\n                               <th>Settles</th>\n                               <th>Upcoming events</th></tr>';
-
-	        var market_tabs = data.markets.map(function (market) {
-	            return '<li><a href="#' + market.name + '">' + market.name + '</a></li>';
-	        }).join('');
-	        var market_contents = data.markets.map(function (market) {
-	            var submarkets_row = market.submarkets.map(function (submarket) {
-	                var submarket_row = '<tr><th colspan="5">' + submarket.name + '</th></tr>';
-	                var symbols_row = submarket.symbols.map(function (symbol) {
-	                    return '<tr><td class="asset">' + symbol.name + '</td>\n                          <td class="opens">-</td>\n                          <td class="closes">-</td>\n                          <td class="settles">-</td>\n                          <td class="upcomingevents">-</td></tr>';
-	                }).join('');
-	                return '' + submarket_row + subheader + symbols_row;
-	            }).join('');
-	            return '<div id="' + market.name + '"><table>' + submarkets_row + '</table></div>';
-	        }).join('');
-
-	        $('#fx-trading-times').append('<ul>' + market_tabs + '</ul>' + market_contents);
-	        $('#fx-trading-times').tabs();
-	        console.timeEnd('te');
+	    var getTradingTimes = function getTradingTimes(date) {
+	        ChampionSocket.send({ trading_times: date || 'today' }).then(function (response) {
+	            if (response.error) {
+	                console.log(response.error.message);
+	            } else {
+	                createTable(response.trading_times);
+	            }
+	        });
 	    };
 
-	    // const getSubmarketInfo = (active_symbols, submarket_display_name) =>
-	    //     active_symbols.filter(sy => (sy.submarket_display_name === submarket_display_name));
-	    //
-	    // const getSymbolInfo = (qSymbol, active_symbols) =>
-	    //     active_symbols.filter(sy => (sy.symbol === qSymbol));
-	    //
-	    // const handleTradingTimes = (trading_time) => {
-	    //
-	    // };
+	    var createTable = function createTable(data) {
+	        var subheader = '<tr><th class="asset">Asset</th> \n                               <th class="opens">Opens</th>\n                               <th class="closes">Closes</th>\n                               <th class="settles">Settles</th>\n                               <th class="upcomingevents">Upcoming events</th></tr>'; // default subheader
 
-	    var unload = function unload() {};
+	        var j = 0;
+	        var markets = data.markets;
+	        var market_tabs = '<ul>' + createTabs(markets) + '</ul>'; // create market tabs
+	        var market_contents = markets.map(function (market) {
+	            // create market contents, wrap in <div>
+	            var submarkets = market.submarkets;
+	            var submarket_row = submarkets.map(function (submarket) {
+	                var header = createTableHeader(submarket.name); // create submarket header row
+	                var symbols_row = createTableRow(submarket.symbols); // create symbol rows
+	                return '' + header + subheader + symbols_row; // group headers & symbol rows, create submarket rows
+	            }).join('');
+	            var market_table = '<table>' + submarket_row + '</table>'; // create market tables
+	            return '<div id="market_' + j++ + '">' + market_table + '</div>';
+	        }).join('');
+
+	        $('#fx-trading-times').html('' + market_tabs + market_contents).tabs();
+	        $('.barspinner').addClass(hidden_class);
+	    };
+
+	    var createTabs = function createTabs(tabs) {
+	        var i = 0;
+	        return tabs.map(function (tab) {
+	            return '<li><a href="#market_' + i++ + '">' + tab.name + '</a></li>';
+	        }).join('');
+	    };
+
+	    var createTableHeader = function createTableHeader(name) {
+	        return '<tr><th colspan="5" class="center-text">' + name + '</th></tr>';
+	    };
+
+	    var createTableRow = function createTableRow(symbols) {
+	        return symbols.map(function (symbol) {
+	            if (getSymbolInfo(symbol, active_symbols)) {
+	                return '<tr><td class="asset">' + symbol.name + '</td>\n                            <td class="opens">' + symbol.times.open.join('<br />') + '</td>\n                            <td class="closes">' + symbol.times.close.join('<br />') + '</td>\n                            <td class="settles">' + symbol.times.settlement + '</td>\n                            <td class="upcomingevents">' + createEventsText(symbol.events) + '</td></tr>';
+	            }
+	            return '';
+	        }).join('');
+	    };
+
+	    var createEventsText = function createEventsText(events) {
+	        var result = '';
+	        for (var i = 0; i < events.length; i++) {
+	            if (i) result += '<br>';
+	            result += events[i].descrip + ': ' + events[i].dates;
+	        }
+	        return result.length > 0 ? result : '--';
+	    };
+
+	    var getSymbolInfo = function getSymbolInfo(symbol) {
+	        return active_symbols.filter(function (obj) {
+	            return obj.symbol === symbol;
+	        });
+	    };
+
+	    var unload = function unload() {
+	        $('#fx-trading-times').empty().tabs('destroy');
+	        $('.barspinner').removeClass(hidden_class);
+	    };
 
 	    return {
 	        load: load,
