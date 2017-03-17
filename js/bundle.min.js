@@ -18487,6 +18487,7 @@
 	var ChampionProfile = __webpack_require__(450);
 	var ChampionSecurity = __webpack_require__(454);
 	var LoginHistory = __webpack_require__(455);
+	var TradingTimes = __webpack_require__(456);
 
 	var Champion = function () {
 	    'use strict';
@@ -18555,6 +18556,7 @@
 	            'reset-password': { module: ResetPassword, not_authenticated: true },
 	            'tnc-approval': { module: TNCApproval, is_authenticated: true, only_real: true },
 	            'top-up-virtual': { module: CashierTopUpVirtual, is_authenticated: true, only_virtual: true },
+	            'trading-times': { module: TradingTimes },
 	            'types-of-accounts': { module: ClientType }
 	        };
 	        if (page in pages_map) {
@@ -46503,6 +46505,64 @@
 	}();
 
 	module.exports = LoginHistory;
+
+/***/ },
+/* 456 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var ChampionSocket = __webpack_require__(308);
+
+	var TradingTimes = function () {
+	    var load = function load() {
+	        ChampionSocket.send({ trading_times: 'today' }).then(function (response) {
+	            handleResponse(response.trading_times);
+	        });
+	    };
+
+	    var handleResponse = function handleResponse(data) {
+	        console.time('te');
+	        var subheader = '<tr><th>Asset</th>\n                               <th>Opens</th>\n                               <th>Closes</th>\n                               <th>Settles</th>\n                               <th>Upcoming events</th></tr>';
+
+	        var market_tabs = data.markets.map(function (market) {
+	            return '<li><a href="#' + market.name + '">' + market.name + '</a></li>';
+	        }).join('');
+	        var market_contents = data.markets.map(function (market) {
+	            var submarkets_row = market.submarkets.map(function (submarket) {
+	                var submarket_row = '<tr><th colspan="5">' + submarket.name + '</th></tr>';
+	                var symbols_row = submarket.symbols.map(function (symbol) {
+	                    return '<tr><td class="asset">' + symbol.name + '</td>\n                          <td class="opens">-</td>\n                          <td class="closes">-</td>\n                          <td class="settles">-</td>\n                          <td class="upcomingevents">-</td></tr>';
+	                }).join('');
+	                return '' + submarket_row + subheader + symbols_row;
+	            }).join('');
+	            return '<div id="' + market.name + '"><table>' + submarkets_row + '</table></div>';
+	        }).join('');
+
+	        $('#fx-trading-times').append('<ul>' + market_tabs + '</ul>' + market_contents);
+	        $('#fx-trading-times').tabs();
+	        console.timeEnd('te');
+	    };
+
+	    // const getSubmarketInfo = (active_symbols, submarket_display_name) =>
+	    //     active_symbols.filter(sy => (sy.submarket_display_name === submarket_display_name));
+	    //
+	    // const getSymbolInfo = (qSymbol, active_symbols) =>
+	    //     active_symbols.filter(sy => (sy.symbol === qSymbol));
+	    //
+	    // const handleTradingTimes = (trading_time) => {
+	    //
+	    // };
+
+	    var unload = function unload() {};
+
+	    return {
+	        load: load,
+	        unload: unload
+	    };
+	}();
+
+	module.exports = TradingTimes;
 
 /***/ }
 /******/ ]);
