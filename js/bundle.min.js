@@ -46551,9 +46551,9 @@
 	        });
 
 	        ChampionSocket.send({ active_symbols: 'brief' }).then(function (response) {
+	            $('.barspinner').addClass(hidden_class);
 	            if (response.error) {
 	                $('#error-msg').html(response.error.message);
-	                $('.barspinner').addClass(hidden_class);
 	            } else {
 	                active_symbols = response.active_symbols.slice(0);
 	                getTradingTimes('today');
@@ -46563,6 +46563,7 @@
 
 	    var getTradingTimes = function getTradingTimes(date) {
 	        ChampionSocket.send({ trading_times: date || 'today' }).then(function (response) {
+	            $('.barspinner').addClass(hidden_class);
 	            if (response.error) {
 	                $('#error-msg').html(response.error.message);
 	            } else {
@@ -46587,7 +46588,6 @@
 	        }).join('');
 
 	        $('#fx-trading-times').html('' + market_tabs + market_contents).tabs();
-	        $('.barspinner').addClass(hidden_class);
 	    };
 
 	    var createTabs = function createTabs(tabs) {
