@@ -46539,21 +46539,23 @@
 
 	        ChampionSocket.send({ active_symbols: 'brief' }).then(function (response) {
 	            if (response.error) {
-	                console.log(response.error.message);
+	                $('#error-msg').html(response.error.message);
 	            } else {
 	                active_symbols = response.active_symbols.slice(0);
 	                getTradingTimes('today');
 	            }
+	            $('.barspinner').addClass(hidden_class);
 	        });
 	    };
 
 	    var getTradingTimes = function getTradingTimes(date) {
 	        ChampionSocket.send({ trading_times: date || 'today' }).then(function (response) {
 	            if (response.error) {
-	                console.log(response.error.message);
+	                $('#error-msg').html(response.error.message);
 	            } else {
 	                createTable(response.trading_times);
 	            }
+	            $('.barspinner').addClass(hidden_class);
 	        });
 	    };
 
