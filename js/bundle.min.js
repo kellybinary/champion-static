@@ -18557,7 +18557,10 @@
 	            'tnc-approval': { module: TNCApproval, is_authenticated: true, only_real: true },
 	            'top-up-virtual': { module: CashierTopUpVirtual, is_authenticated: true, only_virtual: true },
 	            'trading-times': { module: TradingTimes },
-	            'types-of-accounts': { module: ClientType }
+	            'types-of-accounts': { module: ClientType },
+	            'trading-platform': { module: ClientType },
+	            'metatrader-5': { module: ClientType },
+	            'champion-trader': { module: ClientType }
 	        };
 	        if (page in pages_map) {
 	            loadHandler(pages_map[page]);
@@ -20539,6 +20542,7 @@
 
 	__webpack_require__(307);
 	var Client = __webpack_require__(301);
+	var Login = __webpack_require__(312);
 
 	var ClientType = function () {
 	    'use strict';
@@ -20549,11 +20553,20 @@
 	            if (Client.has_real()) {
 	                $('.real-signup').hide();
 	            }
+	        } else {
+	            $('#login-link').find('a').on('click', function () {
+	                Login.redirect_to_login();
+	            });
 	        }
 	    };
 
+	    var unload = function unload() {
+	        $('#login-link').find('a').off('click');
+	    };
+
 	    return {
-	        load: load
+	        load: load,
+	        unload: unload
 	    };
 	}();
 
@@ -46540,11 +46553,11 @@
 	        ChampionSocket.send({ active_symbols: 'brief' }).then(function (response) {
 	            if (response.error) {
 	                $('#error-msg').html(response.error.message);
+	                $('.barspinner').addClass(hidden_class);
 	            } else {
 	                active_symbols = response.active_symbols.slice(0);
 	                getTradingTimes('today');
 	            }
-	            $('.barspinner').addClass(hidden_class);
 	        });
 	    };
 
@@ -46555,7 +46568,6 @@
 	            } else {
 	                createTable(response.trading_times);
 	            }
-	            $('.barspinner').addClass(hidden_class);
 	        });
 	    };
 

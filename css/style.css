@@ -730,6 +730,16 @@ ul.no-padding, ul.no-padding li {
   width: 350px;
 }
 
+.icon-ok {
+  color: #1ec522;
+  font-size: 18px;
+}
+
+.icon-remove {
+  color: #ea202d;
+  font-size: 18px;
+}
+
 .no-margin-top {
   margin-top: 0;
 }
