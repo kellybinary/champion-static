@@ -18,11 +18,11 @@
     <meta name="description" content="ChampionFX Static" />
     <link rel="icon" type="image/png" sizes="16x16" href="/champion-static/images/favicons/CFX_favicon16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/champion-static/images/favicons/CFX_favicon32.png" />
-     <link rel="stylesheet" href="/champion-static/css/flex.min.css?yzv1od1r" />
-     <link rel="stylesheet" href="/champion-static/css/style.min.css?yzv1od1r" />
-     <link rel="stylesheet" href="https://style.champion-fx.com/binary.css?yzv1od1r" />
-      <script src="/champion-static/js/bundle.js?yzv1od1r" type="text/javascript"></script>
-     <script src="https://style.champion-fx.com/binary.js?yzv1od1r" type="text/javascript"></script>
+     <link rel="stylesheet" href="/champion-static/css/flex.min.css?g8pir4d5" />
+     <link rel="stylesheet" href="/champion-static/css/style.min.css?g8pir4d5" />
+     <link rel="stylesheet" href="https://style.champion-fx.com/binary.css?g8pir4d5" />
+      <script src="/champion-static/js/bundle.js?g8pir4d5" type="text/javascript"></script>
+     <script src="https://style.champion-fx.com/binary.js?g8pir4d5" type="text/javascript"></script>
      
 </head>
 <body>
@@ -34,10 +34,10 @@
                 <div class="topbar-contacts">
                     <ul>
                         <li class="last"><a href="/champion-static/en/contact.html">Contact Us</a></li>
-                        <li id="main-login" class="FX__Header__cta hidden"><a class="button-secondary" href="javascript:;">Log In</a></li>
+                        <li id="main-login" class="FX__Header__cta invisible"><a class="button-secondary" href="javascript:;">Log In</a></li>
                     </ul>
                 </div>
-                <div class="upgrade-message hidden">
+                <div class="upgrade-message invisible">
                     <a href="/champion-static/en/new-account/real.html">Upgrade to a Real Account</a>
                 </div>
                 <div class="invisible">
@@ -82,7 +82,7 @@
                 </div>
             </div>
             <div class="col-md-2 push-md-7 col-sm-6 col-xs-6 vertical-center">
-                <div id="main-logout" class="hidden">
+                <div id="main-logout" class="invisible">
                     <ul id="main-account" class="nav-menu main-nav">
                         <li class="account">
                             <a href="javascript:;">
@@ -135,7 +135,7 @@
                         </li>
                     </ul>
                 </div>
-                <div id="main-signup" class="hidden">
+                <div id="main-signup" class="invisible">
                     <ul class="signup-button">
                         <li class="">
                             <a class="button-secondary" href="/champion-static/en/home.html#signup"><span>Sign Up</span></a>
@@ -170,41 +170,28 @@
         <div class="wrapper" id="champion-content">
             <div class="fx-section">
     <div id="cashier_deposit" class="container">
-        <div class="row">
-            <div class="col-sm">
-                <h1 id="cashier_title" style="text-transform: capitalize"></h1>
-            </div>
+        <h1 class="main-title" id="cashier_title" style="text-transform: capitalize">Complete your ChampionFX virtual account signup</h1>
+
+        <p id="error_msg" class="notice-msg center-text invisible"></p>
+
+        <div id="form_withdraw" class="invisible">
+            <div class="form-row ">
+    <label for="verification_token">Verification token</label>
+    
+                <input type="text" id="verification_token" maxlength="48" autocomplete="off" />
+    <p class="hint">Please check your email for the token</p>
+</div>
+
+            <div class="submit-row ">
+    <p id="msg_form" class="error-msg invisible"></p>
+    <button id="btn_submit" type="submit">Submit</button> </div>
         </div>
 
         <div class="row">
-            <div id="error_msg" class="col-xs-12 notice-msg center-text hidden"></div>
-        </div>
-
-        <div id="form_withdraw" class="hidden">
-            <fieldset>
-                <div class="row form-row">
-                    <div class="col-xs-4">
-                        <label for="verification-token">Verification token</label>
-                    </div>
-                    <div class="col-xs-8">
-                        <input id="verification_token" type="text" maxlength="48" autocomplete="off" />
-                        <div class="hint">Please check your email for the value of this token</div>
-                        <p class="hint" id="verification_error"></p>
-                    </div>
-                    <div class="col-xs-12 center-text">
-                        <span class="button">
-                            <button class="button" id="btn_submit" type="button">Submit</button>
-                        </span>
-                    </div>
-                </div>
-            </fieldset>
-        </div>
-
-        <div class="row">
-            <div id="deposit_iframe_container" class="hidden">
+            <div id="deposit_iframe_container" class="invisible">
                 <iframe src="" frameborder="0" width="100%" height="1500" scrolling="auto" style="padding:0;margin:0;"></iframe>
             </div>
-            <div id="withdraw_iframe_container" class="hidden">
+            <div id="withdraw_iframe_container" class="invisible">
                 <iframe src="" frameborder="0" width="100%" height="1500" scrolling="auto" style="padding:0;margin:0;"></iframe>
             </div>
         </div>

@@ -17,6 +17,7 @@ html body {
       -ms-flex-direction: column;
           flex-direction: column;
   overflow-x: hidden;
+  position: inherit;
 }
 html body #champion-container {
   -webkit-flex: 1 1 auto;
@@ -265,6 +266,10 @@ h1.main-title {
   padding: 25px 0;
 }
 
+.mt5-header {
+  background-image: url("../images/forex.png");
+}
+
 .fx-home-header {
   width: 100%;
   /* for IE 6 */
@@ -509,10 +514,6 @@ fieldset {
 
 .submit-row {
   margin: 40px 0;
-}
-
-.hidden {
-  display: none !important;
 }
 
 .champion-accounts th {
@@ -1200,6 +1201,8 @@ img.float-right {
 #mt_account_management #accounts_list .acc-box > div .acc-info div {
   font-size: 0.9rem;
   line-height: 1.6em;
+}
+#mt_account_management #accounts_list .acc-box > div .acc-info div:nth-child(even) {
   word-break: break-all;
 }
 #mt_account_management #accounts_list .acc-box > div .acc-actions {
@@ -1900,6 +1903,12 @@ img.float-right {
   display: none;
 }
 
+#slider_wrapper.loading-state {
+  visibility: hidden;
+  height: 200px;
+  overflow: hidden !important;
+}
+
 .slick-slide {
   height: 500px;
   margin: 0;
@@ -1976,7 +1985,6 @@ img.float-right {
 }
 .slider-text .slide-list li {
   height: auto !important;
-  font-size: 14px;
 }
 
 .large-slider-text {
@@ -2162,4 +2170,15 @@ img.float-right {
 }
 #fx-trading-times td.asset {
   font-weight: 700;
+}
+
+#fx-limits th {
+  width: 80%;
+}
+#fx-limits td.market {
+  text-transform: capitalize;
+  font-weight: bold;
+}
+#fx-limits td.submarket {
+  padding-left: 50px;
 }
