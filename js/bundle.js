@@ -18463,6 +18463,7 @@
 	var ChampionRouter = __webpack_require__(313);
 	var ChampionSocket = __webpack_require__(308);
 	var default_redirect_url = __webpack_require__(306).default_redirect_url;
+	var url_for = __webpack_require__(306).url_for;
 	var Utility = __webpack_require__(303);
 	var ClientType = __webpack_require__(314);
 	var ChampionContact = __webpack_require__(299);
@@ -18575,8 +18576,8 @@
 	    };
 
 	    var errorMessages = {
-	        login: function login() {
-	            return Utility.template('Please <a href="[_1]">log in</a> to view this page.', [Login.login_url()]);
+	        login: function login(module) {
+	            return module === MetaTrader ? Utility.template('To register an MT5 account, please <a href="[_1]">log in</a> to your ChampionFX account<br />\n                Don\'t have a ChampionFX account? <a href="[_2]">Create one</a> now', [Login.login_url(), url_for('/')]) : Utility.template('Please <a href="[_1]">log in</a> to view this page.', [Login.login_url()]);
 	        },
 	        only_virtual: 'Sorry, this feature is available to virtual accounts only.',
 	        only_real: 'This feature is not relevant to virtual-money accounts.'
@@ -18586,7 +18587,7 @@
 	        active_script = config.module;
 	        if (config.is_authenticated) {
 	            if (!Client.is_logged_in()) {
-	                displayMessage(errorMessages.login());
+	                displayMessage(errorMessages.login(config.module));
 	            } else {
 	                ChampionSocket.wait('authorize').then(function (response) {
 	                    if (response.error) {
@@ -20841,7 +20842,7 @@
 	        );
 	    };
 	    var validEmailToken = function validEmailToken(value) {
-	        return value.trim().length === 48;
+	        return value.trim().length === 8;
 	    };
 
 	    var validCompare = function validCompare(value, options) {
