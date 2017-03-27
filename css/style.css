@@ -56,18 +56,6 @@ h1.main-title {
   margin: 40px 0;
 }
 
-.gray-bg-color {
-  background: #DEDEDE;
-}
-
-.image-small {
-  max-width: 150px;
-}
-
-.image-medium {
-  max-width: 250px;
-}
-
 .topbar-container div {
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -101,33 +89,6 @@ h1.main-title {
 
 .menu-container {
   margin: 0 15px;
-}
-
-@keyframes pulsing {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-@-webkit-keyframes pulsing {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-.pulser {
-  -webkit-animation: pulsing 3s infinite ease;
-  animation: pulsing 3s infinite ease;
 }
 
 #verify-email-form {
@@ -213,24 +174,9 @@ h1.main-title {
 #footer #footer-menu {
   padding: 10px 0;
 }
-#footer #footer-menu h4 {
-  color: #FFF;
-  margin-bottom: 0.4em;
-  font-weight: 700;
-  font-size: 13px;
-}
 #footer #footer-menu ul {
-  margin: 0 0 30px;
+  margin-bottom: 10px;
   padding: 0;
-}
-#footer #footer-menu ul li {
-  margin-top: 0.3em;
-}
-#footer #footer-menu ul li a {
-  font-size: 13px;
-}
-#footer #footer-menu ul li a:hover {
-  text-decoration: underline !important;
 }
 #footer #footer-menu ul.social-network {
   text-align: right;
@@ -239,7 +185,8 @@ h1.main-title {
 }
 #footer #footer-menu ul.social-network li {
   display: inline-block;
-  margin: 0 0 5px 5px;
+  margin-left: 5px;
+  margin-top: 0;
 }
 #footer #footer-menu ul.social-network li img {
   width: 30px;
@@ -248,6 +195,10 @@ h1.main-title {
   padding: 25px 0 0;
   font-size: 10px;
   text-align: justify;
+}
+#footer #footer-regulatory .container {
+  border-bottom: 1px solid #DEDEDE;
+  padding-bottom: 25px;
 }
 #footer #footer-last {
   padding: 10px 0;
@@ -991,6 +942,22 @@ img.float-right {
 
 .fx-unbeatable {
   background: url("../images/symbols/unbeatable.svg");
+}
+
+.fx-step-one {
+  background: url("../images/binary_options/step_one.svg");
+}
+
+.fx-step-two {
+  background: url("../images/binary_options/step_two.svg");
+}
+
+.fx-step-three {
+  background: url("../images/binary_options/step_three.svg");
+}
+
+.fx-define-position {
+  background: url("../images/binary_options/define_position.svg");
 }
 
 .fx-245-icon {
