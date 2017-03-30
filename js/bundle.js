@@ -40490,7 +40490,7 @@
 	    var load = function load() {
 	        showLoadingImage($('<div/>', { id: 'loading', class: 'center-text' }).insertAfter('#heading'));
 
-	        $('.tabs-vertical').tabs();
+	        // $('.tabs-vertical').tabs();
 
 	        var hash = window.location.hash.substring(1);
 	        if (Client.is_virtual()) {
@@ -40514,9 +40514,13 @@
 	        if (/assessment/.test(hash)) {
 	            PersonalDetails.unload();
 	            FinancialAssessment.load();
+	            $('#details').addClass('invisible');
+	            $('#assessment').removeClass('invisible');
 	        } else {
 	            PersonalDetails.load();
 	            FinancialAssessment.unload();
+	            $('#details').removeClass('invisible');
+	            $('#assessment').addClass('invisible');
 	        }
 
 	        $('.barspinner').addClass('invisible');
