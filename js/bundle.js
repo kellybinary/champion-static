@@ -40487,9 +40487,6 @@
 	var Profile = function () {
 	    'use strict';
 
-	    var $details = $('#details'),
-	        $assessment = $('#assessment');
-
 	    var load = function load() {
 	        showLoadingImage($('<div/>', { id: 'loading', class: 'center-text' }).insertAfter('#heading'));
 	        // $('.tabs-vertical').tabs();
@@ -40503,7 +40500,7 @@
 	                loadContent(hash);
 	                var active_tab = $('.ui-tabs-active a').attr('href');
 
-	                $('.tabs-vertical li').on('click', function () {
+	                $('#profile-tabs li').on('click', function () {
 	                    active_tab = $('.ui-tabs-active a').attr('href');
 	                    loadContent(active_tab);
 	                });
@@ -40515,13 +40512,13 @@
 	        if (/assessment/.test(hash)) {
 	            PersonalDetails.unload();
 	            FinancialAssessment.load();
-	            $details.addClass('invisible');
-	            $assessment.removeClass('invisible');
+	            $('#details').addClass('invisible');
+	            $('#assessment').removeClass('invisible');
 	        } else {
 	            PersonalDetails.load();
 	            FinancialAssessment.unload();
-	            $details.removeClass('invisible');
-	            $assessment.addClass('invisible');
+	            $('#details').removeClass('invisible');
+	            $('#assessment').addClass('invisible');
 	        }
 
 	        $('.barspinner').addClass('invisible');
