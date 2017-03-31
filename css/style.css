@@ -1094,6 +1094,14 @@ iframe {
   margin-left: 0 !important;
 }
 
+.fx-no-deposit {
+  background: url("../images/symbols/nd_icon.svg");
+}
+
+.fx-test-platform {
+  background: url("../images/symbols/tp_icon.svg");
+}
+
 .fx-earn {
   background: url("../images/symbols/earn.svg");
   margin-top: 10px;
@@ -1221,6 +1229,14 @@ body .has-tabs .ui-tabs-panel {
 button .barspinner.white {
   height: 13px;
   margin: 3px auto;
+}
+
+.slick-slide ul.bullet {
+  padding: 1.25em 0 1.25em 1.25em;
+  margin: 0;
+}
+.slick-slide a:focus {
+  outline: none;
 }
 
 /* stylelint-disable selector-list-comma-newline-after, selector-list-comma-space-after */
