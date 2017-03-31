@@ -894,11 +894,12 @@ iframe {
   top: 0;
   left: 0;
   z-index: 1;
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   background: #004385;
   color: #fff;
   padding: 10px;
+  font-size: 22px;
 }
 .fx-refer-a-friend .number:hover {
   background-color: #013365;
