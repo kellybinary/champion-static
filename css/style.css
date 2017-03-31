@@ -889,7 +889,6 @@ iframe {
   position: relative;
 }
 .fx-refer-a-friend .number {
-  cursor: pointer;
   position: absolute;
   top: 0;
   left: 0;
@@ -900,9 +899,6 @@ iframe {
   color: #fff;
   padding: 10px;
   font-size: 22px;
-}
-.fx-refer-a-friend .number:hover {
-  background-color: #013365;
 }
 
 .fx-advisors {
