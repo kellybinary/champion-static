@@ -817,11 +817,17 @@ ul.no-padding, ul.no-padding li {
       -ms-flex-align: center;
           align-items: center;
   min-width: 1vw;
+  margin-top: 1px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
 }
 .has-tabs li.col-sm a {
   white-space: normal;
   text-align: center;
   width: 100%;
+}
+.has-tabs li.col-sm.ui-tabs-active a {
+  padding-bottom: 1px !important;
 }
 
 img.float-right {
@@ -1159,6 +1165,31 @@ body .has-tabs .ui-tabs-panel {
 
 #indices-cfd-contract-specs table th {
   max-width: 180px;
+}
+
+#fx-profile .ui-tabs-nav, #fx-profile .ui-tabs-panel {
+  width: auto;
+  float: none;
+}
+
+#ui-timepicker-div, #ui-timepicker-div:before, #ui-timepicker-div:after, #ui-datepicker-div, #ui-datepicker-div:before, #ui-datepicker-div:after {
+  transition: none;
+}
+
+.ui-datepicker.ui-widget-content, .ui-timepicker-table.ui-widget-content {
+  border: 0;
+}
+.ui-datepicker.ui-corner-all, .ui-datepicker .ui-corner-all, .ui-timepicker-table.ui-corner-all, .ui-timepicker-table .ui-corner-all {
+  border-radius: 0;
+}
+
+#ui-timepicker-div .ui-state-default, #ui-timepicker-div .ui-widget-content .ui-state-default {
+  width: 80%;
+}
+
+button .barspinner.white {
+  height: 13px;
+  margin: 3px auto;
 }
 
 /* stylelint-disable selector-list-comma-newline-after, selector-list-comma-space-after */
@@ -2038,6 +2069,9 @@ body .has-tabs .ui-tabs-panel {
   border-radius: 100%;
   background: #F2F2F2;
 }
+.slick-dots li.slick-active button {
+  background: #004385;
+}
 
 .slider-footer {
   position: absolute;
@@ -2086,7 +2120,10 @@ body .has-tabs .ui-tabs-panel {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  height: 100%;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  height: 100px;
   margin: 0;
   background-position: center center;
   max-width: 80px;
