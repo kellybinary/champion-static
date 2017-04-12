@@ -126,7 +126,15 @@ h1.main-title {
   padding: 0;
 }
 .menu-container #all-accounts li.has-sub ul a {
-  background: #DEDEDE;
+  background: #fff;
+}
+.menu-container .main-nav-menu {
+  box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.1);
+}
+.menu-container .nav-caret-inverse {
+  color: #fff;
+  border-bottom: 4px dashed;
+  border-top: none;
 }
 .menu-container .fx-menu-item {
   display: block;
@@ -138,6 +146,13 @@ h1.main-title {
   float: left;
   margin-left: 10px;
 }
+.menu-container .fx-menu-item .fx-menu-icon-right {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  float: right;
+  margin-right: 10px;
+}
 .menu-container .fx-menu-item .fx-menu-text {
   display: inline-block;
 }
@@ -146,7 +161,6 @@ h1.main-title {
 }
 .menu-container .fx-menu-item .fx-submenu-text li a {
   margin-left: 10px !important;
-  background: #fff !important;
 }
 
 @keyframes pulsing {
@@ -1231,7 +1245,7 @@ iframe {
 }
 
 .main-nav {
-  width: 180px;
+  width: 200px !important;
 }
 
 .main-nav > li > ul {
@@ -1296,6 +1310,22 @@ button .barspinner.white {
   background-color: #004385 !important;
   border: none !important;
   height: 75px;
+  width: 200px !important;
+  /* ul:after {
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-bottom: 20px solid $white;
+      bottom: 0;
+      content: '';
+      position: absolute;
+      left: 50%;
+      margin-left: -21px;
+      width: 0;
+      height: 0;
+      &:first-child:hover {
+          background-color: $borderColor;
+      }
+  } */
 }
 #all-accounts ul {
   background-color: #fff;

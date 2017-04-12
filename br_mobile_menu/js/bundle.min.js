@@ -35139,7 +35139,8 @@
 	                    $('.account-type').html(type);
 	                    $('.account-id').html(curr_id);
 	                } else {
-	                    loginid_select += '<a href="#" value="' + curr_id + '"><li>' + type + '<div>' + curr_id + '</div>\n                        </li></a><div class="separator-line-thin-gray"></div>';
+	                    var src = login.real ? url_for('images/menuicons/Real.svg') : url_for('images/menuicons/Virtual.svg');
+	                    loginid_select += '<a href="#" value="' + curr_id + '">\n                                        <li class="fx-menu-item">\n                                            <img class="fx-menu-icon" src="' + src + '">\n                                            <span class="fx-menu-text">' + curr_id + '</span>\n                                        </li></a><div class="separator-line-thin-gray"></div>';
 	                }
 	            }
 	        }
