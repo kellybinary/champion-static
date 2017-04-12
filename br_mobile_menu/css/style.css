@@ -140,10 +140,8 @@ h1.main-title {
 }
 .menu-container .fx-menu-item .fx-menu-text {
   display: inline-block;
-  font-size: 13px;
 }
 .menu-container .fx-menu-item .fx-submenu-text {
-  font-size: 13px;
   text-align: left;
 }
 .menu-container .fx-menu-item .fx-submenu-text li a {
