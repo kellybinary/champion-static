@@ -1211,7 +1211,7 @@ iframe {
   height: 30px;
 }
 
-.fx-menu-icons {
+.fx-icon {
   width: 16px;
   height: 16px;
   display: inline-block;
@@ -1219,17 +1219,22 @@ iframe {
 }
 
 .fx-contact {
-  background: url("../images/menu_icons/Contact.svg");
+  background: url("../images/menu_icons/Contact.svg") no-repeat;
+  background-size: contain;
+}
+
+.fx-log-in {
+  background: url("../images/menu_icons/Log In.svg") no-repeat;
   background-size: contain;
 }
 
 .fx-globe {
-  background: url("../images/menu_icons/Language.svg");
+  background: url("../images/menu_icons/Language.svg") no-repeat;
   background-size: contain;
 }
 
 .fx-globe-white {
-  background: url("../images/menu_icons/Language-white.svg");
+  background: url("../images/menu_icons/Language-white.svg") no-repeat;
   background-size: contain;
 }
 
