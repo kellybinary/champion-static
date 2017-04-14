@@ -103,15 +103,14 @@ h1.main-title {
   margin: 0 15px;
 }
 .menu-container #mobile_menu_icon span {
-  background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 12' width='32' height='32'%3E%3Cg fill='white'%3E%3Cpath d='M0 0h18v2h-18zM0 5h18v2h-18zM0 10h18v2h-18z'/%3E%3C/g%3E%3C/svg%3E") no-repeat;
+  background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 12' width='32' height='32'%3E%3Cg fill='white'%3E%3Cpath d='M0 0h18v2h-18zM0 5h18v2h-18zM0 10h18v2h-18z'/%3E%3C/g%3E%3C/svg%3E") no-repeat left;
   width: 32px;
   height: 32px;
   display: inline-block;
-  margin-left: auto;
   margin-right: 10px;
 }
 .menu-container .menu-icon {
-  background: url("../images/menu_icons/Arrow.svg") no-repeat right;
+  background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 12' width='32' height='32'%3E%3Cg fill='white'%3E%3Cpath d='M0 0h18v2h-18zM0 5h18v2h-18zM0 10h18v2h-18z'/%3E%3C/g%3E%3C/svg%3E") no-repeat left;
   height: 75px;
   margin-right: 10px !important;
 }
@@ -128,37 +127,89 @@ h1.main-title {
 .menu-container #all-accounts li.has-sub ul a {
   background: #fff;
 }
-.menu-container .nav-caret-inverse {
-  color: #fff;
-  border-bottom: 4px dashed;
-  border-top: none;
+
+.nav-menu ul, .nav-menu li ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }
-.menu-container .fx-menu-item {
+.nav-menu .nav-menu-dropdown {
+  margin: 0 -20px;
+  position: absolute;
   display: block;
+  opacity: 0;
+  z-index: 999;
+  background-color: #fff;
+  width: 200px;
+  border: 1px solid #DEDEDE;
 }
-.menu-container .fx-menu-item .fx-menu-icon, .menu-container .fx-menu-item .fx-menu-icon-right {
+.nav-menu .nav-menu-dropdown a {
+  display: block;
+  color: #000 !important;
+  text-align: center;
+  padding: 5px 0;
+}
+.nav-menu .nav-menu-dropdown a .nav-menu-icon {
   display: inline-block;
   width: 20px;
   height: 20px;
 }
-.menu-container .fx-menu-item .fx-menu-icon {
-  float: left;
+.nav-menu .nav-menu-dropdown .submenu a {
+  text-align: left;
   margin-left: 10px;
 }
-.menu-container .fx-menu-item .fx-menu-icon-right {
+.nav-menu .pull-right {
   float: right;
   margin-right: 10px;
 }
-.menu-container .fx-menu-item .fx-menu-text {
-  display: inline-block;
-}
-.menu-container .fx-menu-item .fx-submenu-text {
-  text-align: left;
-}
-.menu-container .fx-menu-item .fx-submenu-text li a {
-  margin-left: 10px !important;
+.nav-menu .pull-left {
+  float: left;
+  margin-left: 10px;
 }
 
+.slide-in {
+  -webkit-animation: slide-in 0.5s forwards;
+          animation: slide-in 0.5s forwards;
+}
+
+.slide-out {
+  -webkit-animation: slide-out 0.5s forwards;
+          animation: slide-out 0.5s forwards;
+}
+
+@-webkit-keyframes slide-in {
+  100% {
+    -webkit-transform: translateX(0%);
+            transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in {
+  100% {
+    -webkit-transform: translateX(0%);
+            transform: translateX(0%);
+    opacity: 1;
+  }
+}
+@-webkit-keyframes slide-out {
+  0% {
+    -webkit-transform: translateX(0%);
+            transform: translateX(0%);
+  }
+  100% {
+    transfrom: translateX(-100%);
+  }
+}
+@keyframes slide-out {
+  0% {
+    -webkit-transform: translateX(0%);
+            transform: translateX(0%);
+  }
+  100% {
+    transfrom: translateX(-100%);
+  }
+}
 @keyframes pulsing {
   0% {
     opacity: 1;
@@ -244,6 +295,10 @@ h1.main-title {
 }
 #main-signup .signup-button li {
   margin-top: 0;
+}
+#main-signup .signup-button li span {
+  width: 100px;
+  font-size: 12px;
 }
 
 .license-box {
@@ -1324,10 +1379,6 @@ iframe {
   border-bottom: none;
 }
 
-.main-nav {
-  width: 200px !important;
-}
-
 .main-nav > li > ul {
   box-sizing: content-box;
   margin-top: 0 !important;
@@ -1386,16 +1437,8 @@ button .barspinner.white {
   outline: none;
 }
 
-#all-accounts {
-  background-color: #004385 !important;
-  border: 1px solid #004385 !important;
-  width: 200px !important;
-}
-#all-accounts .main-account {
-  color: #fff;
-}
-#all-accounts ul {
-  background-color: #fff;
+.button span, .button-secondary span {
+  padding: 7px 20px !important;
 }
 
 #payment_methods h3 {
@@ -2474,6 +2517,15 @@ button .barspinner.white {
 
   .fx-panel, .fx-panel-item {
     height: auto;
+  }
+
+  .logo-wrapper {
+    margin: 0 auto;
+  }
+
+  .nav-menu-dropdown {
+    -webkit-transform: translateX(-150%);
+            transform: translateX(-150%);
   }
 }
 @media (max-width: 1199px) {

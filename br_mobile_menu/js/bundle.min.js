@@ -35099,11 +35099,21 @@
 	    };
 
 	    var userMenu = function userMenu() {
-	        var $all_accounts = $('#all-accounts');
+	        var $all_accounts = $('.nav-menu-dropdown');
 	        $all_accounts.find('li.has-sub > a').off('click').on('click', function (e) {
 	            e.stopPropagation();
 	            $(this).siblings('ul').toggleClass(hidden_class);
 	        });
+
+	        // $('#more_mt5_btn').click(function(e) {
+	        //     e.stopPropagation();
+	        //     $(this).next().toggleClass(hidden_class);
+	        // });
+	        //
+	        // $('#more_btn').click(function(e) {
+	        //     e.stopPropagation();
+	        //     $(this).next().toggleClass(hidden_class);
+	        // });
 
 	        if (!Client.is_logged_in()) {
 	            $('#main-login, #header .logged-out').removeClass(hidden_class);
@@ -35115,15 +35125,18 @@
 	        }
 	        $('#main-logout').removeAttr('class');
 	        $('#header .logged-in').removeClass(hidden_class);
-	        $all_accounts.find('.account > a').removeClass('menu-icon');
+	        // $all_accounts.find('.account > a').removeClass('menu-icon');
 	        var language = $('#select_language');
+	        var $menu_dropdown = $('.nav-menu-dropdown');
 	        $('.nav-menu').unbind('click').on('click', function (e) {
 	            e.stopPropagation();
 	            Utility.animateDisappear(language);
-	            if (+$all_accounts.css('opacity') === 1) {
-	                Utility.animateDisappear($all_accounts);
+	            if (+$menu_dropdown.css('opacity') === 1) {
+	                $menu_dropdown.addClass('slide-out').removeClass('slide-in');
+	                Utility.animateDisappear($menu_dropdown);
 	            } else {
-	                Utility.animateAppear($all_accounts);
+	                Utility.animateAppear($menu_dropdown);
+	                $menu_dropdown.addClass('slide-in').removeClass('slide-out');
 	            }
 	        });
 	        var loginid_select = '';
@@ -35139,7 +35152,7 @@
 	                    $('.account-type').html(type);
 	                    $('.account-id').html(curr_id);
 	                } else {
-	                    var src = login.real ? url_for('images/menuicons/Real.svg') : url_for('images/menuicons/Virtual.svg');
+	                    var src = login.real ? url_for('images/menu_icons/Real.svg') : url_for('images/menu_icons/Virtual.svg');
 	                    loginid_select += '<a href="#" value="' + curr_id + '">\n                                        <li class="fx-menu-item">\n                                            <img class="fx-menu-icon" src="' + src + '">\n                                            <span class="fx-menu-text">' + curr_id + '</span>\n                                        </li></a><div class="separator-line-thin-gray"></div>';
 	                }
 	            }
