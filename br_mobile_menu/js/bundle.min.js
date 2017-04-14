@@ -35070,6 +35070,7 @@
 	var ChampionSocket = __webpack_require__(413);
 	var State = __webpack_require__(416).State;
 	var url_for = __webpack_require__(419).url_for;
+	var url_for_static = __webpack_require__(419).url_for_static;
 	var Utility = __webpack_require__(417);
 	var isEmptyObject = __webpack_require__(417).isEmptyObject;
 	var template = __webpack_require__(417).template;
@@ -35099,21 +35100,10 @@
 	    };
 
 	    var userMenu = function userMenu() {
-	        var $all_accounts = $('.nav-menu-dropdown');
-	        $all_accounts.find('li.has-sub > a').off('click').on('click', function (e) {
+	        $('.nav-dropdown-toggle').off('click').on('click', function (e) {
 	            e.stopPropagation();
-	            $(this).siblings('ul').toggleClass(hidden_class);
+	            $(this).next().toggleClass(hidden_class);
 	        });
-
-	        // $('#more_mt5_btn').click(function(e) {
-	        //     e.stopPropagation();
-	        //     $(this).next().toggleClass(hidden_class);
-	        // });
-	        //
-	        // $('#more_btn').click(function(e) {
-	        //     e.stopPropagation();
-	        //     $(this).next().toggleClass(hidden_class);
-	        // });
 
 	        if (!Client.is_logged_in()) {
 	            $('#main-login, #header .logged-out').removeClass(hidden_class);
@@ -35125,7 +35115,6 @@
 	        }
 	        $('#main-logout').removeAttr('class');
 	        $('#header .logged-in').removeClass(hidden_class);
-	        // $all_accounts.find('.account > a').removeClass('menu-icon');
 	        var language = $('#select_language');
 	        var $menu_dropdown = $('.nav-menu-dropdown');
 	        $('.nav-menu').unbind('click').on('click', function (e) {
@@ -35146,14 +35135,15 @@
 	            if (!login.disabled) {
 	                var curr_id = login.id;
 	                var type = (login.real ? 'Real' : 'Virtual') + ' Account';
+	                var img_src = login.real ? url_for_static('images/menu_icons/Real.svg') : url_for_static('images/menu_icons/Virtual.svg');
 
 	                // default account
 	                if (curr_id === Client.get('loginid')) {
 	                    $('.account-type').html(type);
 	                    $('.account-id').html(curr_id);
+	                    loginid_select += '<a class="selected-account"href="#" value="' + curr_id + '">\n                                        <li><img class="nav-menu-icon pull-left" src="' + img_src + '">' + curr_id + '</li>\n                                       </a>\n                                       <div class="separator-line-thin-gray"></div>';
 	                } else {
-	                    var src = login.real ? url_for('images/menu_icons/Real.svg') : url_for('images/menu_icons/Virtual.svg');
-	                    loginid_select += '<a href="#" value="' + curr_id + '">\n                                        <li class="fx-menu-item">\n                                            <img class="fx-menu-icon" src="' + src + '">\n                                            <span class="fx-menu-text">' + curr_id + '</span>\n                                        </li></a><div class="separator-line-thin-gray"></div>';
+	                    loginid_select += '<a href="#" value="' + curr_id + '">\n                                        <li><img class="nav-menu-icon pull-left" src="' + img_src + '">' + curr_id + '</li>\n                                       </a>\n                                       <div class="separator-line-thin-gray"></div>';
 	                }
 	            }
 	        }
@@ -41156,9 +41146,7 @@
 
 	    var load = function load() {
 	        showLoadingImage($('<div/>', { id: 'loading', class: 'center-text' }).insertAfter('#heading'));
-
-	        $('.tabs-vertical').tabs();
-
+	        // $('.tabs-vertical').tabs();
 	        var hash = window.location.hash.substring(1);
 	        if (Client.is_virtual()) {
 	            hash = '#details';
@@ -41169,7 +41157,7 @@
 	                loadContent(hash);
 	                var active_tab = $('.ui-tabs-active a').attr('href');
 
-	                $('.tabs-vertical li').on('click', function () {
+	                $('#profile-tabs li').on('click', function () {
 	                    active_tab = $('.ui-tabs-active a').attr('href');
 	                    loadContent(active_tab);
 	                });
@@ -41181,9 +41169,13 @@
 	        if (/assessment/.test(hash)) {
 	            PersonalDetails.unload();
 	            FinancialAssessment.load();
+	            $('#details').addClass('invisible');
+	            $('#assessment').removeClass('invisible');
 	        } else {
 	            PersonalDetails.load();
 	            FinancialAssessment.unload();
+	            $('#details').removeClass('invisible');
+	            $('#assessment').addClass('invisible');
 	        }
 
 	        $('.barspinner').addClass('invisible');
