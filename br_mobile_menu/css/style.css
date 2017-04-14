@@ -127,13 +127,12 @@ h1.main-title {
 .menu-container #all-accounts li.has-sub ul a {
   background: #fff;
 }
-
-.nav-menu ul, .nav-menu li ul {
+.menu-container .nav-menu ul, .menu-container .nav-menu li ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
-.nav-menu .nav-menu-dropdown {
+.menu-container .nav-menu .nav-menu-dropdown {
   margin: 0 -20px;
   position: absolute;
   display: block;
@@ -143,49 +142,47 @@ h1.main-title {
   width: 200px;
   border: 1px solid #DEDEDE;
 }
-.nav-menu .nav-menu-dropdown li {
+.menu-container .nav-menu .nav-menu-dropdown li {
   padding: 0;
   margin: 0;
 }
-.nav-menu .nav-menu-dropdown a {
+.menu-container .nav-menu .nav-menu-dropdown a {
   display: block;
   color: #000 !important;
   text-align: center;
   padding: 10px 0;
 }
-.nav-menu .nav-menu-dropdown a .nav-menu-icon {
+.menu-container .nav-menu .nav-menu-dropdown a .nav-menu-icon {
   display: inline-block;
   width: 22px;
   height: 22px;
 }
-.nav-menu .nav-menu-dropdown a:hover {
+.menu-container .nav-menu .nav-menu-dropdown a:hover {
   background-color: #DEDEDE;
 }
-.nav-menu .nav-menu-dropdown .submenu a {
+.menu-container .nav-menu .nav-menu-dropdown .submenu a {
   text-align: left;
   margin-left: 10px;
 }
-.nav-menu .selected-account {
+.menu-container .nav-menu .selected-account {
   background-color: #DEDEDE;
   color: #fff;
 }
-.nav-menu .pull-right {
+.menu-container .nav-menu .pull-right {
   float: right;
   margin-right: 15px;
 }
-.nav-menu .pull-left {
+.menu-container .nav-menu .pull-left {
   float: left;
   margin-left: 15px;
 }
-
-#account-info {
+.menu-container #account-info {
   text-align: center;
 }
-#account-info:hover {
+.menu-container #account-info:hover {
   color: #DEDEDE;
 }
-
-.pull-right {
+.menu-container .pull-right {
   width: 100%;
   float: right;
   margin-right: 10px;
