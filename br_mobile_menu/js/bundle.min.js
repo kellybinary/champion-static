@@ -35105,14 +35105,6 @@
 	            $(this).next().toggleClass(hidden_class);
 	        });
 
-	        if (!Client.is_logged_in()) {
-	            $('#main-login, #header .logged-out').removeClass(hidden_class);
-	            return;
-	        }
-
-	        if (!Client.is_virtual()) {
-	            displayAccountStatus();
-	        }
 	        $('#main-logout').removeAttr('class');
 	        $('#header .logged-in').removeClass(hidden_class);
 	        var language = $('#select_language');
@@ -35128,6 +35120,16 @@
 	                $menu_dropdown.addClass('slide-in').removeClass('slide-out');
 	            }
 	        });
+
+	        if (!Client.is_logged_in()) {
+	            $('#main-login, #header .logged-out').removeClass(hidden_class);
+	            return;
+	        }
+
+	        if (!Client.is_virtual()) {
+	            displayAccountStatus();
+	        }
+
 	        var loginid_select = '';
 	        var loginid_array = Client.get('loginid_array');
 	        for (var i = 0; i < loginid_array.length; i++) {
