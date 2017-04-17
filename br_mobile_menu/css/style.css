@@ -182,7 +182,7 @@ h1.main-title {
 .menu-container #account-info:hover {
   color: #DEDEDE;
 }
-.menu-container .pull-right {
+.menu-container .right-align {
   width: 100%;
   float: right;
   margin-right: 10px;
