@@ -35070,7 +35070,6 @@
 	var ChampionSocket = __webpack_require__(413);
 	var State = __webpack_require__(416).State;
 	var url_for = __webpack_require__(419).url_for;
-	var url_for_static = __webpack_require__(419).url_for_static;
 	var Utility = __webpack_require__(417);
 	var isEmptyObject = __webpack_require__(417).isEmptyObject;
 	var template = __webpack_require__(417).template;
@@ -35137,15 +35136,15 @@
 	            if (!login.disabled) {
 	                var curr_id = login.id;
 	                var type = (login.real ? 'Real' : 'Virtual') + ' Account';
-	                var img_src = login.real ? url_for_static('images/menu_icons/Real.svg') : url_for_static('images/menu_icons/Virtual.svg');
+	                var icon = login.real ? 'fx-real-icon' : 'fx-virtual-icon';
 
 	                // default account
 	                if (curr_id === Client.get('loginid')) {
 	                    $('.account-type').html(type);
 	                    $('.account-id').html(curr_id);
-	                    loginid_select += '<a class="selected-account"href="#" value="' + curr_id + '">\n                                        <li><img class="nav-menu-icon pull-left" src="' + img_src + '">' + curr_id + '</li>\n                                       </a>\n                                       <div class="separator-line-thin-gray"></div>';
+	                    loginid_select += '<a class="selected-account"href="#" value="' + curr_id + '">\n                                        <li><span class="nav-menu-icon pull-left ' + icon + '"></span>' + curr_id + '</li>\n                                       </a>\n                                       <div class="separator-line-thin-gray"></div>';
 	                } else {
-	                    loginid_select += '<a href="#" value="' + curr_id + '">\n                                        <li><img class="nav-menu-icon pull-left" src="' + img_src + '">' + curr_id + '</li>\n                                       </a>\n                                       <div class="separator-line-thin-gray"></div>';
+	                    loginid_select += '<a href="#" value="' + curr_id + '">\n                                        <li><span class="nav-menu-icon pull-left ' + icon + '"></span>' + curr_id + '</li>\n                                       </a>\n                                       <div class="separator-line-thin-gray"></div>';
 	                }
 	            }
 	        }
