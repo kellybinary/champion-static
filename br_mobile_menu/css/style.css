@@ -164,6 +164,9 @@ h1.main-title {
 .menu-container .nav-menu .nav-menu-dropdown a:hover, .menu-container .nav-menu .nav-menu-dropdown span:hover {
   background-color: #DEDEDE;
 }
+.menu-container .nav-menu .nav-menu-dropdown .has-sub {
+  background-color: #F2F2F2;
+}
 .menu-container .nav-menu .nav-menu-dropdown .submenu a {
   text-align: left;
   margin-left: 10px;
