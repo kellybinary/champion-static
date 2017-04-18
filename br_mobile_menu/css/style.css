@@ -179,7 +179,7 @@ h1.main-title {
   float: left;
   margin-left: 15px;
 }
-.menu-container #account-info {
+.menu-container #mobile-account-info, .menu-container #account-info {
   text-align: center;
 }
 .menu-container #account-info:hover {
@@ -2599,6 +2599,14 @@ button .barspinner.white {
     -webkit-transform: translateX(-100%);
             transform: translateX(-100%);
   }
+
+  #account-info {
+    display: none;
+  }
+
+  #mobile-account-info {
+    display: block;
+  }
 }
 @media (max-width: 1199px) {
   .hidden-lg-down {
@@ -2613,6 +2621,14 @@ button .barspinner.white {
 @media screen and (min-width: 1100px) {
   .container {
     width: 1100px;
+  }
+
+  #account-info {
+    display: block;
+  }
+
+  #mobile-account-info {
+    display: none;
   }
 }
 #fx-trading-times table {
