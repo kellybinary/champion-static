@@ -34593,6 +34593,14 @@
 	    return typeof n === 'number' ? String(n) : n;
 	}
 
+	function slideIn(element) {
+	    element.addClass('slide-in').removeClass('slide-out');
+	}
+
+	function slideOut(element) {
+	    element.addClass('slide-out').removeClass('slide-in');
+	}
+
 	module.exports = {
 	    showLoadingImage: showLoadingImage,
 	    isEmptyObject: isEmptyObject,
@@ -34607,6 +34615,8 @@
 	    dateValueChanged: dateValueChanged,
 	    template: template,
 	    getPropertyValue: getPropertyValue,
+	    slideIn: slideIn,
+	    slideOut: slideOut,
 
 	    compareBigUnsignedInt: compareBigUnsignedInt
 	};
@@ -35104,31 +35114,31 @@
 	            $(this).next().toggleClass(hidden_class);
 	        });
 
-	        $('#main-logout').removeAttr('class');
-	        $('#header .logged-in').removeClass(hidden_class);
+	        // $('#main-logout').removeAttr('class');
 	        var language = $('#select_language');
 
 	        var $menu_dropdown = $('.nav-menu-dropdown');
 	        $(document).unbind('click').on('click', function (e) {
 	            e.stopPropagation();
-	            $menu_dropdown.addClass('slide-out').removeClass('slide-in');
+	            Utility.slideOut($menu_dropdown);
 	            Utility.animateDisappear($menu_dropdown);
 	        });
 	        $('.nav-menu').unbind('click').on('click', function (e) {
 	            e.stopPropagation();
 	            Utility.animateDisappear(language);
 	            if (+$menu_dropdown.css('opacity') === 1) {
-	                $menu_dropdown.addClass('slide-out').removeClass('slide-in');
+	                Utility.slideOut($menu_dropdown);
 	                Utility.animateDisappear($menu_dropdown);
 	            } else {
 	                Utility.animateAppear($menu_dropdown);
-	                $menu_dropdown.addClass('slide-in').removeClass('slide-out');
+	                Utility.slideIn($menu_dropdown);
 	            }
 	        });
 
-	        if (!Client.is_logged_in()) {
+	        if (Client.is_logged_in()) {
+	            $('#header .logged-in').removeClass(hidden_class);
+	        } else {
 	            $('#main-login, #header .logged-out').removeClass(hidden_class);
-	            $('.logged-in').addClass(hidden_class);
 	            return;
 	        }
 
@@ -36225,6 +36235,7 @@
 	        txt_phone: '#txt_phone',
 	        ddl_secret_question: '#ddl_secret_question',
 	        txt_secret_answer: '#txt_secret_answer',
+	        chk_not_pep: '#chk_not_pep',
 	        chk_tnc: '#chk_tnc',
 	        btn_submit: '#btn_submit'
 	    };
@@ -36255,7 +36266,7 @@
 	    };
 
 	    var initValidation = function initValidation() {
-	        Validation.init(form_selector, [{ selector: fields.txt_fname, validations: ['req', 'letter_symbol', ['min', { min: 2 }]] }, { selector: fields.txt_lname, validations: ['req', 'letter_symbol', ['min', { min: 2 }]] }, { selector: fields.txt_birth_date, validations: ['req'] }, { selector: fields.txt_address1, validations: ['req', 'address', ['length', { min: 1, max: 70 }]] }, { selector: fields.txt_address2, validations: ['address', ['length', { min: 0, max: 70 }]] }, { selector: fields.txt_city, validations: ['req', 'letter_symbol', ['length', { min: 1, max: 35 }]] }, { selector: fields.txt_state, validations: ['letter_symbol'] }, { selector: fields.txt_postcode, validations: ['postcode', ['length', { min: 0, max: 20 }]] }, { selector: fields.txt_phone, validations: ['req', 'phone', ['length', { min: 6, max: 35, exclude: /^\+/ }]] }, { selector: fields.ddl_secret_question, validations: ['req'] }, { selector: fields.txt_secret_answer, validations: ['req', 'general', ['length', { min: 4, max: 50 }]] }, { selector: fields.chk_tnc, validations: ['req'] }]);
+	        Validation.init(form_selector, [{ selector: fields.txt_fname, validations: ['req', 'letter_symbol', ['min', { min: 2 }]] }, { selector: fields.txt_lname, validations: ['req', 'letter_symbol', ['min', { min: 2 }]] }, { selector: fields.txt_birth_date, validations: ['req'] }, { selector: fields.txt_address1, validations: ['req', 'address', ['length', { min: 1, max: 70 }]] }, { selector: fields.txt_address2, validations: ['address', ['length', { min: 0, max: 70 }]] }, { selector: fields.txt_city, validations: ['req', 'letter_symbol', ['length', { min: 1, max: 35 }]] }, { selector: fields.txt_state, validations: ['letter_symbol'] }, { selector: fields.txt_postcode, validations: ['postcode', ['length', { min: 0, max: 20 }]] }, { selector: fields.txt_phone, validations: ['req', 'phone', ['length', { min: 6, max: 35, exclude: /^\+/ }]] }, { selector: fields.ddl_secret_question, validations: ['req'] }, { selector: fields.txt_secret_answer, validations: ['req', 'general', ['length', { min: 4, max: 50 }]] }, { selector: fields.chk_tnc, validations: ['req'] }, { selector: fields.chk_not_pep, validations: ['req'] }]);
 	    };
 
 	    var displayResidence = function displayResidence() {
