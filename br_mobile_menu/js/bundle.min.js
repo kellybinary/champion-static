@@ -35123,7 +35123,7 @@
 	            Utility.slideOut($menu_dropdown);
 	            Utility.animateDisappear($menu_dropdown);
 	        });
-	        $('.nav-menu').unbind('click').on('click', function (e) {
+	        $('.nav-menu:not(.selected-account)').unbind('click').on('click', function (e) {
 	            e.stopPropagation();
 	            Utility.animateDisappear(language);
 	            if (+$menu_dropdown.css('opacity') === 1) {
@@ -35159,7 +35159,7 @@
 	                if (curr_id === Client.get('loginid')) {
 	                    $('.account-type').html(type);
 	                    $('.account-id').html(curr_id);
-	                    loginid_select += '<a class="selected-account" href="javascript:;" value="' + curr_id + '">\n                                        <li><span class="nav-menu-icon pull-left ' + icon + '"></span>' + curr_id + '</li>\n                                       </a>\n                                       <div class="separator-line-thin-gray"></div>';
+	                    loginid_select += '<span class="selected-account" href="javascript:;" value="' + curr_id + '">\n                                        <li><span class="nav-menu-icon pull-left ' + icon + '"></span>' + curr_id + '</li>\n                                       </span>\n                                       <div class="separator-line-thin-gray"></div>';
 	                } else {
 	                    loginid_select += '<a href="javascript:;" value="' + curr_id + '">\n                                        <li><span class="nav-menu-icon pull-left ' + icon + '"></span>' + curr_id + '</li>\n                                       </a>\n                                       <div class="separator-line-thin-gray"></div>';
 	                }
