@@ -169,13 +169,11 @@ h1.main-title {
 }
 .menu-container .nav-menu .nav-menu-dropdown .submenu a {
   text-align: left;
-  margin-left: 10px;
+  padding-left: 10px;
 }
-.menu-container .nav-menu .selected-account {
+.menu-container .nav-menu .selected {
   background-color: #DEDEDE;
   color: #fff;
-  text-decoration: none;
-  cursor: default;
 }
 .menu-container .nav-menu .pull-right {
   float: right;
