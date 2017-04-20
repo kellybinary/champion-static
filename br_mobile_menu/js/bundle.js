@@ -35154,7 +35154,7 @@
 	        });
 
 	        if (Client.is_logged_in()) {
-	            $('#header .logged-in').removeClass(hidden_class);
+	            $('.logged-in').removeClass(hidden_class);
 	        } else {
 	            $('#main-login, #header .logged-out').removeClass(hidden_class);
 	            return;
