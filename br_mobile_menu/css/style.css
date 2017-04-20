@@ -192,6 +192,11 @@ h1.main-title {
   margin-right: 10px;
 }
 
+.position-fixed {
+  position: fixed !important;
+  width: 100%;
+}
+
 .slide-in {
   -webkit-animation: slide-in 0.5s forwards;
   animation: slide-in 0.5s forwards;
@@ -2604,15 +2609,14 @@ button .barspinner.white {
   .nav-menu-dropdown {
     -webkit-transform: translateX(-100%);
             transform: translateX(-100%);
+    height: 100vh;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    /* mobile safari */
   }
 
   #account-info {
     text-align: right !important;
-  }
-
-  body {
-    position: fixed !important;
-    width: 100%;
   }
 }
 @media (min-width: 1200px) {

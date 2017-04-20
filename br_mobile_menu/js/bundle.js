@@ -35129,9 +35129,11 @@
 	            if (+$menu_dropdown.css('opacity') === 1) {
 	                Utility.slideOut($menu_dropdown);
 	                Utility.animateDisappear($menu_dropdown);
+	                $('body').removeClass('position-fixed');
 	            } else {
 	                Utility.animateAppear($menu_dropdown);
 	                Utility.slideIn($menu_dropdown);
+	                $('body').addClass('position-fixed');
 	            }
 	        });
 
