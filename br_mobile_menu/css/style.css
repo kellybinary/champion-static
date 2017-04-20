@@ -201,8 +201,8 @@ h1.main-title {
 }
 
 .slide-out {
-  -webkit-animation: slide-out 0.5s forwards;
-  animation: slide-out 0.5s forwards;
+  -webkit-animation: slide-out 0.5s backwards;
+  animation: slide-out 0.5s backwards;
 }
 
 @keyframes slide-in {

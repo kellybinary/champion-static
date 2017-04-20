@@ -34600,6 +34600,7 @@
 
 	function widthChange(mq) {
 	    if (mq.matches && $('.nav-menu-dropdown.slide-in').length) {
+	        // on active mobile menu
 	        setPosition($('body'), 'fixed');
 	    } else {
 	        setPosition($('body'), 'relative');
@@ -34607,7 +34608,7 @@
 	}
 
 	function slideIn(element) {
-	    element.addClass('slide-in').removeClass('slide-out');
+	    element.addClass('slide-in').removeClass('slide-out').animate({ opacity: 1 }, 100);
 	    if (media_query.matches) setPosition($('body'), 'fixed');
 	}
 
@@ -34636,6 +34637,7 @@
 	    getPropertyValue: getPropertyValue,
 	    slideIn: slideIn,
 	    slideOut: slideOut,
+	    mediaQuery: media_query,
 
 	    compareBigUnsignedInt: compareBigUnsignedInt
 	};
@@ -35133,23 +35135,33 @@
 	            $(this).next().toggleClass(hidden_class);
 	        });
 
-	        var language = $('#select_language');
-
+	        // const language = $('#select_language');
+	        var is_mobile_menu = Utility.mediaQuery.matches;
 	        var $menu_dropdown = $('.nav-menu-dropdown');
+
 	        $(document).unbind('click').on('click', function (e) {
 	            e.stopPropagation();
-	            Utility.slideOut($menu_dropdown);
-	            Utility.animateDisappear($menu_dropdown);
+	            if (is_mobile_menu) {
+	                Utility.slideOut($menu_dropdown);
+	            } else {
+	                Utility.animateDisappear($menu_dropdown);
+	            }
 	        });
 	        $('.nav-menu:not(.selected-account)').unbind('click').on('click', function (e) {
 	            e.stopPropagation();
-	            Utility.animateDisappear(language);
-	            if (+$menu_dropdown.css('opacity') === 1) {
-	                Utility.slideOut($menu_dropdown);
-	                Utility.animateDisappear($menu_dropdown);
-	            } else {
-	                Utility.animateAppear($menu_dropdown);
-	                Utility.slideIn($menu_dropdown);
+	            // Utility.animateDisappear(language);
+	            if (is_mobile_menu) {
+	                if ($('.nav-menu-dropdown.slide-in').length) {
+	                    Utility.slideOut($menu_dropdown);
+	                } else {
+	                    Utility.slideIn($menu_dropdown);
+	                }
+	            } else if (!is_mobile_menu) {
+	                if (+$menu_dropdown.css('opacity') === 1) {
+	                    Utility.animateDisappear($menu_dropdown);
+	                } else {
+	                    Utility.animateAppear($menu_dropdown);
+	                }
 	            }
 	        });
 
