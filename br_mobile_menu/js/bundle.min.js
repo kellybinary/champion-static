@@ -34608,7 +34608,8 @@
 	}
 
 	function slideIn(element) {
-	    element.addClass('slide-in').removeClass('slide-out').animate({ opacity: 1 }, 100);
+	    element.removeAttr('style').addClass('slide-in').removeClass('slide-out').animate({ opacity: 1 }, 100);
+
 	    if (media_query.matches) setPosition($('body'), 'fixed');
 	}
 
@@ -34619,6 +34620,10 @@
 
 	function setPosition(element, type) {
 	    element.css({ position: type });
+	}
+
+	function getMediaQuery() {
+	    return media_query;
 	}
 
 	module.exports = {
@@ -34637,7 +34642,7 @@
 	    getPropertyValue: getPropertyValue,
 	    slideIn: slideIn,
 	    slideOut: slideOut,
-	    mediaQuery: media_query,
+	    getMediaQuery: getMediaQuery,
 
 	    compareBigUnsignedInt: compareBigUnsignedInt
 	};
@@ -35136,12 +35141,11 @@
 	        });
 
 	        // const language = $('#select_language');
-	        var is_mobile_menu = Utility.mediaQuery.matches;
 	        var $menu_dropdown = $('.nav-menu-dropdown');
-
+	        var mq = Utility.getMediaQuery();
 	        $(document).unbind('click').on('click', function (e) {
 	            e.stopPropagation();
-	            if (is_mobile_menu) {
+	            if (mq.matches) {
 	                Utility.slideOut($menu_dropdown);
 	            } else {
 	                Utility.animateDisappear($menu_dropdown);
@@ -35150,13 +35154,13 @@
 	        $('.nav-menu:not(.selected-account)').unbind('click').on('click', function (e) {
 	            e.stopPropagation();
 	            // Utility.animateDisappear(language);
-	            if (is_mobile_menu) {
+	            if (mq.matches) {
 	                if ($('.nav-menu-dropdown.slide-in').length) {
 	                    Utility.slideOut($menu_dropdown);
 	                } else {
 	                    Utility.slideIn($menu_dropdown);
 	                }
-	            } else if (!is_mobile_menu) {
+	            } else if (!mq.matches) {
 	                if (+$menu_dropdown.css('opacity') === 1) {
 	                    Utility.animateDisappear($menu_dropdown);
 	                } else {
