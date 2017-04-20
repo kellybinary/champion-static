@@ -35111,7 +35111,6 @@
 	    var userMenu = function userMenu() {
 	        $('.nav-dropdown-toggle').off('click').on('click', function (e) {
 	            e.stopPropagation();
-	            $(this).toggleClass('selected');
 	            $(this).next().toggleClass(hidden_class);
 	        });
 
@@ -35160,9 +35159,9 @@
 	                if (curr_id === Client.get('loginid')) {
 	                    $('.account-type').html(type);
 	                    $('.account-id').html(curr_id);
-	                    loginid_select += '<span class="selected" href="javascript:;" value="' + curr_id + '">\n                                        <li><span class="nav-menu-icon pull-left ' + icon + '"></span>' + curr_id + '</li>\n                                       </span>';
+	                    loginid_select += '<span class="selected" href="javascript:;" value="' + curr_id + '">\n                                        <li><span class="nav-menu-icon pull-left ' + icon + '"></span>' + curr_id + '</li>\n                                       </span>\n                                       <div class="separator-line-thin-gray"></div>';
 	                } else {
-	                    loginid_select += '<a href="javascript:;" value="' + curr_id + '">\n                                        <li><span class="nav-menu-icon pull-left ' + icon + '"></span>' + curr_id + '</li>\n                                       </a>';
+	                    loginid_select += '<a href="javascript:;" value="' + curr_id + '">\n                                        <li><span class="nav-menu-icon pull-left ' + icon + '"></span>' + curr_id + '</li>\n                                       </a>\n                                        <div class="separator-line-thin-gray"></div>';
 	                }
 	            }
 	        }

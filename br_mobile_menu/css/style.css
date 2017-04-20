@@ -139,7 +139,7 @@ h1.main-title {
   opacity: 0;
   z-index: 999;
   background-color: #fff;
-  width: 200px;
+  width: 250px;
   border: 1px solid #DEDEDE;
 }
 .menu-container .nav-menu .nav-menu-dropdown li {
@@ -163,9 +163,6 @@ h1.main-title {
 }
 .menu-container .nav-menu .nav-menu-dropdown a:hover, .menu-container .nav-menu .nav-menu-dropdown span:hover {
   background-color: #DEDEDE;
-}
-.menu-container .nav-menu .nav-menu-dropdown .has-sub {
-  background-color: #F2F2F2;
 }
 .menu-container .nav-menu .nav-menu-dropdown .submenu a {
   text-align: left;
@@ -2611,6 +2608,11 @@ button .barspinner.white {
 
   #account-info {
     text-align: right !important;
+  }
+
+  body {
+    position: fixed !important;
+    width: 100%;
   }
 }
 @media (min-width: 1200px) {
