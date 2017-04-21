@@ -128,17 +128,16 @@ h1.main-title {
 .menu-container #all-accounts li.has-sub ul a {
   background: #DEDEDE;
 }
-.menu-container #mobile-menu.nav-menu {
-  position: absolute;
-}
 .menu-container #mobile-menu.nav-menu ul, .menu-container #mobile-menu.nav-menu li ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
 .menu-container #mobile-menu.nav-menu .nav-menu-dropdown {
-  margin: 0 -20px;
-  position: relative;
+  margin: 0;
+  top: 0;
+  left: 0;
+  position: absolute;
   display: block;
   opacity: 0;
   z-index: 999;
@@ -2615,7 +2614,7 @@ button .barspinner.white {
   .nav-menu-dropdown {
     -webkit-transform: translateX(-100%);
             transform: translateX(-100%);
-    height: calc(100vh - 95px);
+    height: 100vh;
     width: initial;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
