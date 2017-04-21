@@ -35142,13 +35142,6 @@
 	    };
 
 	    var mobileMenu = function mobileMenu() {
-	        if (Client.is_logged_in()) {
-	            $('.logged-in').removeClass(hidden_class);
-	        } else {
-	            $('#main-login, #header .logged-out').removeClass(hidden_class);
-	            return;
-	        }
-
 	        var $menu_dropdown = $('.nav-menu-dropdown');
 
 	        $('#mobile-menu #btn_logout').unbind('click').on('click', function (e) {
@@ -35181,6 +35174,12 @@
 	            e.stopPropagation();
 	            $(this).next().toggleClass(hidden_class);
 	        });
+
+	        if (Client.is_logged_in()) {
+	            $('.logged-in').removeClass(hidden_class);
+	        } else {
+	            $('#main-login, #header .logged-out').removeClass(hidden_class);
+	        }
 	    };
 
 	    var desktopMenu = function desktopMenu() {
