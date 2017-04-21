@@ -128,6 +128,9 @@ h1.main-title {
 .menu-container #all-accounts li.has-sub ul a {
   background: #DEDEDE;
 }
+.menu-container #mobile-menu.nav-menu {
+  position: absolute;
+}
 .menu-container #mobile-menu.nav-menu ul, .menu-container #mobile-menu.nav-menu li ul {
   margin: 0;
   padding: 0;
@@ -135,7 +138,7 @@ h1.main-title {
 }
 .menu-container #mobile-menu.nav-menu .nav-menu-dropdown {
   margin: 0 -20px;
-  position: absolute;
+  position: relative;
   display: block;
   opacity: 0;
   z-index: 999;
