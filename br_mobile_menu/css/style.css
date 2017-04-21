@@ -126,37 +126,37 @@ h1.main-title {
   padding: 0;
 }
 .menu-container #all-accounts li.has-sub ul a {
-  background: #fff;
+  background: #DEDEDE;
 }
-.menu-container .nav-menu ul, .menu-container .nav-menu li ul {
+.menu-container #mobile-menu.nav-menu ul, .menu-container #mobile-menu.nav-menu li ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
-.menu-container .nav-menu .nav-menu-dropdown {
+.menu-container #mobile-menu.nav-menu .nav-menu-dropdown {
   margin: 0 -20px;
   position: absolute;
   display: block;
   opacity: 0;
   z-index: 999;
   background-color: #fff;
-  width: 200px;
+  width: 300px;
   border: 1px solid #DEDEDE;
   border-top: none;
   box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.1);
 }
-.menu-container .nav-menu .nav-menu-dropdown li {
+.menu-container #mobile-menu.nav-menu .nav-menu-dropdown li {
   padding: 0;
   margin: 0;
 }
-.menu-container .nav-menu .nav-menu-dropdown a, .menu-container .nav-menu .nav-menu-dropdown span {
+.menu-container #mobile-menu.nav-menu .nav-menu-dropdown a, .menu-container #mobile-menu.nav-menu .nav-menu-dropdown span {
   display: block;
   color: #000 !important;
   text-align: center;
   padding: 10px 0;
   font-weight: 600;
 }
-.menu-container .nav-menu .nav-menu-dropdown a .nav-menu-icon, .menu-container .nav-menu .nav-menu-dropdown span .nav-menu-icon {
+.menu-container #mobile-menu.nav-menu .nav-menu-dropdown a .nav-menu-icon, .menu-container #mobile-menu.nav-menu .nav-menu-dropdown span .nav-menu-icon {
   display: inline-block;
   background-repeat: no-repeat;
   background-size: contain;
@@ -164,22 +164,22 @@ h1.main-title {
   width: 22px;
   height: 22px;
 }
-.menu-container .nav-menu .nav-menu-dropdown a:hover, .menu-container .nav-menu .nav-menu-dropdown span:hover {
+.menu-container #mobile-menu.nav-menu .nav-menu-dropdown a:hover, .menu-container #mobile-menu.nav-menu .nav-menu-dropdown span:hover {
   background-color: #DEDEDE;
 }
-.menu-container .nav-menu .nav-menu-dropdown .submenu a {
+.menu-container #mobile-menu.nav-menu .nav-menu-dropdown .submenu a {
   text-align: left;
   padding-left: 10px;
 }
-.menu-container .nav-menu .selected {
+.menu-container #mobile-menu.nav-menu .selected {
   background-color: #DEDEDE;
   color: #fff;
 }
-.menu-container .nav-menu .pull-right {
+.menu-container #mobile-menu.nav-menu .pull-right {
   float: right;
   margin-right: 15px;
 }
-.menu-container .nav-menu .pull-left {
+.menu-container #mobile-menu.nav-menu .pull-left {
   float: left;
   margin-left: 15px;
 }
@@ -2554,6 +2554,10 @@ button .barspinner.white {
   .signup-box input {
     margin: 15px 0;
   }
+
+  .nav-menu-dropdown {
+    width: 80vw !important;
+  }
 }
 @media (max-width: 767px) {
   .hidden-sm-down {
@@ -2609,6 +2613,7 @@ button .barspinner.white {
     -webkit-transform: translateX(-100%);
             transform: translateX(-100%);
     height: calc(100vh - 93px);
+    width: initial;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
     /* mobile safari */
