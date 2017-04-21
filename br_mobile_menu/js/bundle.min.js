@@ -35155,17 +35155,16 @@
 	            e.stopPropagation();
 	            Utility.animateDisappear(language);
 	            if (mq.matches) {
+	                // if mobile
 	                if ($('.nav-menu-dropdown.slide-in').length) {
 	                    Utility.slideOut($menu_dropdown);
 	                } else {
 	                    Utility.slideIn($menu_dropdown);
 	                }
-	            } else if (!mq.matches) {
-	                if (+$menu_dropdown.css('opacity') === 1) {
-	                    Utility.animateDisappear($menu_dropdown);
-	                } else {
-	                    Utility.animateAppear($menu_dropdown);
-	                }
+	            } else if (+$menu_dropdown.css('opacity') === 1) {
+	                Utility.animateDisappear($menu_dropdown);
+	            } else {
+	                Utility.animateAppear($menu_dropdown);
 	            }
 	        });
 
