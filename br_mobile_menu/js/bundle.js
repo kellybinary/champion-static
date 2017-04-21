@@ -35140,7 +35140,7 @@
 	            $(this).next().toggleClass(hidden_class);
 	        });
 
-	        // const language = $('#select_language');
+	        var language = $('#select_language');
 	        var $menu_dropdown = $('.nav-menu-dropdown');
 	        var mq = Utility.getMediaQuery();
 	        $(document).unbind('click').on('click', function (e) {
@@ -35153,7 +35153,7 @@
 	        });
 	        $('.nav-menu:not(.selected-account)').unbind('click').on('click', function (e) {
 	            e.stopPropagation();
-	            // Utility.animateDisappear(language);
+	            Utility.animateDisappear(language);
 	            if (mq.matches) {
 	                if ($('.nav-menu-dropdown.slide-in').length) {
 	                    Utility.slideOut($menu_dropdown);
