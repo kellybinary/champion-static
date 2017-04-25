@@ -35127,10 +35127,6 @@
 	    };
 
 	    var mobileMenu = function mobileMenu() {
-	        console.log($(window).innerHeight());
-
-	        console.log($(window).height());
-	        window.scrollTo(0, 1); // fake full screen
 	        var $menu_dropdown = $('.nav-menu-dropdown');
 
 	        $('#mobile-menu #btn_logout').unbind('click').on('click', function (e) {
