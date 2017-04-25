@@ -18731,6 +18731,7 @@
 	        ChampionSocket.send({ get_settings: 1 });
 	        ChampionSocket.send({ get_account_status: 1 });
 	        ChampionSocket.send({ get_financial_assessment: 1 });
+	        ChampionSocket.send({ mt5_login_list: 1 });
 	        if (!authorize.is_virtual) ChampionSocket.send({ get_self_exclusion: 1 });
 	        var country_code = response.authorize.country;
 	        if (country_code) {
@@ -18878,6 +18879,10 @@
 	        return true;
 	    };
 
+	    var getMT5AccountType = function getMT5AccountType(group) {
+	        return group ? /demo/.test(group) ? 'demo' : group.split('\\')[1] || '' : '';
+	    };
+
 	    return {
 	        init: init,
 	        redirect_if_login: redirect_if_login,
@@ -18897,7 +18902,8 @@
 	        has_real: function has_real() {
 	            return get('has_real');
 	        },
-	        do_logout: do_logout
+	        do_logout: do_logout,
+	        getMT5AccountType: getMT5AccountType
 	    };
 	}();
 
@@ -33962,7 +33968,8 @@
 	        if (isReady()) {
 	            var token = Cookies.get('token');
 	            if (token) {
-	                send({ authorize: token });
+	                State.set(['response', 'authorize'], undefined);
+	                send({ authorize: token }, true);
 	            }
 	            send({ website_status: 1 });
 
@@ -34586,6 +34593,35 @@
 	    return typeof n === 'number' ? String(n) : n;
 	}
 
+	/* media queries */
+	var media_query = window.matchMedia('(max-width: 1199px)');
+	media_query.addListener(widthChange);
+	widthChange(media_query);
+
+	function widthChange(mq) {
+	    if (mq.matches && $('.nav-menu-dropdown.slide-in').length) {
+	        // on active mobile menu
+	        setPosition($('body'), 'fixed');
+	    } else {
+	        setPosition($('body'), 'relative');
+	    }
+	}
+
+	function slideIn(element) {
+	    element.removeAttr('style').addClass('slide-in').removeClass('slide-out').animate({ opacity: 1 }, 100);
+
+	    if (media_query.matches) setPosition($('body'), 'fixed');
+	}
+
+	function slideOut(element) {
+	    element.addClass('slide-out').removeClass('slide-in');
+	    setPosition($('body'), 'relative');
+	}
+
+	function setPosition(element, type) {
+	    element.css({ position: type });
+	}
+
 	module.exports = {
 	    showLoadingImage: showLoadingImage,
 	    isEmptyObject: isEmptyObject,
@@ -34600,6 +34636,9 @@
 	    dateValueChanged: dateValueChanged,
 	    template: template,
 	    getPropertyValue: getPropertyValue,
+	    slideIn: slideIn,
+	    slideOut: slideOut,
+	    widthChange: widthChange,
 
 	    compareBigUnsignedInt: compareBigUnsignedInt
 	};
@@ -34902,7 +34941,7 @@
 	var Client = __webpack_require__(301);
 	var getLanguage = __webpack_require__(415).getLanguage;
 	var Login = __webpack_require__(421);
-	var getAppId = __webpack_require__(413).getAppId;
+	var ChampionSocket = __webpack_require__(413);
 	var State = __webpack_require__(416).State;
 	var Cookies = __webpack_require__(414);
 
@@ -34910,7 +34949,7 @@
 	    'use strict';
 
 	    var isGtmApplicable = function isGtmApplicable() {
-	        return (/^(2472|2586)$/.test(getAppId())
+	        return (/^(2472|2586)$/.test(ChampionSocket.getAppId())
 	        );
 	    };
 
@@ -34981,7 +35020,20 @@
 	            data.bom_lastname = get_settings.last_name;
 	            data.bom_phone = get_settings.phone;
 	        }
-	        pushDataLayer(data);
+
+	        if (is_login) {
+	            ChampionSocket.wait('mt5_login_list').then(function (response) {
+	                (response.mt5_login_list || []).forEach(function (obj) {
+	                    var acc_type = Client.getMT5AccountType(obj.group);
+	                    if (acc_type) {
+	                        data['mt5_' + acc_type.replace('champion_', '') + '_id'] = obj.login;
+	                    }
+	                });
+	                pushDataLayer(data);
+	            });
+	        } else {
+	            pushDataLayer(data);
+	        }
 	    };
 
 	    return {
@@ -35058,10 +35110,11 @@
 	    'use strict';
 
 	    var hidden_class = 'invisible';
+	    var media_query = window.matchMedia('(max-width: 1199px)');
 
 	    var init = function init() {
 	        ChampionSocket.wait('authorize').then(function () {
-	            userMenu();
+	            widthChange(media_query);
 	        });
 	        $(function () {
 	            var window_path = window.location.pathname;
@@ -35075,30 +35128,97 @@
 	                    $(this).removeClass('active');
 	                }
 	            });
+	            media_query.addListener(widthChange);
 	        });
 	    };
 
-	    var userMenu = function userMenu() {
+	    var widthChange = function widthChange(mq) {
+	        if (mq.matches) {
+	            mobileMenu();
+	        } else {
+	            desktopMenu();
+	        }
+	        userMenu();
+	    };
+
+	    var mobileMenu = function mobileMenu() {
+	        window.scrollTo(0, 1); // fake full screen
+	        var $menu_dropdown = $('.nav-menu-dropdown');
+
+	        $('#mobile-menu #btn_logout').unbind('click').on('click', function (e) {
+	            e.stopPropagation();
+	            $('#all-accounts #btn_logout').trigger('click');
+	        });
+
+	        $('#header #main-login').unbind('click').on('click', function (e) {
+	            e.stopPropagation();
+	            $('#main-login').find('a').trigger('click');
+	        });
+
+	        $('.nav-menu:not(.selected-account)').unbind('click').on('click', function (e) {
+	            e.stopPropagation();
+	            if ($('.nav-menu-dropdown.slide-in').length) {
+	                Utility.slideOut($menu_dropdown);
+	            } else {
+	                Utility.slideIn($menu_dropdown);
+	            }
+	        });
+
+	        $(document).unbind('click').on('click', function (e) {
+	            e.stopPropagation();
+	            if ($('.nav-menu-dropdown.slide-in').length) {
+	                Utility.slideOut($menu_dropdown);
+	            }
+	        });
+
+	        $('.nav-dropdown-toggle').off('click').on('click', function (e) {
+	            e.stopPropagation();
+	            $(this).next().toggleClass(hidden_class);
+	        });
+
+	        if (Client.is_logged_in()) {
+	            $('.logged-in').removeClass(hidden_class);
+	        } else {
+	            $('#main-login, #header .logged-out').removeClass(hidden_class);
+	        }
+	    };
+
+	    var desktopMenu = function desktopMenu() {
+	        var $all_accounts = $('#all-accounts');
+	        $all_accounts.find('li.has-sub > a').off('click').on('click', function (e) {
+	            e.stopPropagation();
+	            $(this).siblings('ul').toggleClass(hidden_class);
+	        });
+
 	        if (!Client.is_logged_in()) {
-	            $('#main-login, #main-signup').removeClass(hidden_class);
+	            $('#main-login, #header .logged-out').removeClass(hidden_class);
 	            return;
 	        }
-	        if (!Client.is_virtual()) {
-	            displayAccountStatus();
-	        }
-	        $('#main-logout').removeClass(hidden_class);
-	        $('#main-signup').addClass(hidden_class);
-	        var all_accounts = $('#all-accounts');
+
+	        $('#header .logged-in').removeClass(hidden_class);
+	        $all_accounts.find('.account > a').removeClass('menu-icon');
 	        var language = $('#select_language');
 	        $('.nav-menu').unbind('click').on('click', function (e) {
 	            e.stopPropagation();
 	            Utility.animateDisappear(language);
-	            if (+all_accounts.css('opacity') === 1) {
-	                Utility.animateDisappear(all_accounts);
+	            if (+$all_accounts.css('opacity') === 1) {
+	                Utility.animateDisappear($all_accounts);
 	            } else {
-	                Utility.animateAppear(all_accounts);
+	                Utility.animateAppear($all_accounts);
 	            }
 	        });
+
+	        $(document).unbind('click').on('click', function (e) {
+	            e.stopPropagation();
+	            Utility.animateDisappear($all_accounts);
+	        });
+	    };
+
+	    var userMenu = function userMenu() {
+	        if (!Client.is_virtual()) {
+	            displayAccountStatus();
+	        }
+
 	        var loginid_select = '';
 	        var loginid_array = Client.get('loginid_array');
 	        for (var i = 0; i < loginid_array.length; i++) {
@@ -35106,13 +35226,15 @@
 	            if (!login.disabled) {
 	                var curr_id = login.id;
 	                var type = (login.real ? 'Real' : 'Virtual') + ' Account';
+	                var icon = login.real ? 'fx-real-icon' : 'fx-virtual-icon';
 
 	                // default account
 	                if (curr_id === Client.get('loginid')) {
 	                    $('.account-type').html(type);
 	                    $('.account-id').html(curr_id);
+	                    loginid_select += '<div class="hidden-lg-up">\n                                        <span class="selected" href="javascript:;" value="' + curr_id + '">\n                                        <li><span class="nav-menu-icon pull-left ' + icon + '"></span>' + curr_id + '</li>\n                                        </span>\n                                       <div class="separator-line-thin-gray"></div></div>';
 	                } else {
-	                    loginid_select += '<a href="#" value="' + curr_id + '"><li>' + type + '<div>' + curr_id + '</div>\n                        </li></a><div class="separator-line-thin-gray"></div>';
+	                    loginid_select += '<a href="javascript:;" value="' + curr_id + '">\n                                        <li>\n                                            <span class="hidden-lg-up nav-menu-icon pull-left ' + icon + '"></span>\n                                            <div class="hidden-lg-down">' + type + '</div>\n                                            <div>' + curr_id + '</div>\n                                        </li>\n                                       </a>\n                                        <div class="separator-line-thin-gray"></div>';
 	                }
 	            }
 	        }
@@ -36186,6 +36308,7 @@
 	        txt_phone: '#txt_phone',
 	        ddl_secret_question: '#ddl_secret_question',
 	        txt_secret_answer: '#txt_secret_answer',
+	        chk_not_pep: '#chk_not_pep',
 	        chk_tnc: '#chk_tnc',
 	        btn_submit: '#btn_submit'
 	    };
@@ -36216,7 +36339,7 @@
 	    };
 
 	    var initValidation = function initValidation() {
-	        Validation.init(form_selector, [{ selector: fields.txt_fname, validations: ['req', 'letter_symbol', ['min', { min: 2 }]] }, { selector: fields.txt_lname, validations: ['req', 'letter_symbol', ['min', { min: 2 }]] }, { selector: fields.txt_birth_date, validations: ['req'] }, { selector: fields.txt_address1, validations: ['req', 'address', ['length', { min: 1, max: 70 }]] }, { selector: fields.txt_address2, validations: ['address', ['length', { min: 0, max: 70 }]] }, { selector: fields.txt_city, validations: ['req', 'letter_symbol', ['length', { min: 1, max: 35 }]] }, { selector: fields.txt_state, validations: ['letter_symbol'] }, { selector: fields.txt_postcode, validations: ['postcode', ['length', { min: 0, max: 20 }]] }, { selector: fields.txt_phone, validations: ['req', 'phone', ['length', { min: 6, max: 35, exclude: /^\+/ }]] }, { selector: fields.ddl_secret_question, validations: ['req'] }, { selector: fields.txt_secret_answer, validations: ['req', 'general', ['length', { min: 4, max: 50 }]] }, { selector: fields.chk_tnc, validations: ['req'] }]);
+	        Validation.init(form_selector, [{ selector: fields.txt_fname, validations: ['req', 'letter_symbol', ['min', { min: 2 }]] }, { selector: fields.txt_lname, validations: ['req', 'letter_symbol', ['min', { min: 2 }]] }, { selector: fields.txt_birth_date, validations: ['req'] }, { selector: fields.txt_address1, validations: ['req', 'address', ['length', { min: 1, max: 70 }]] }, { selector: fields.txt_address2, validations: ['address', ['length', { min: 0, max: 70 }]] }, { selector: fields.txt_city, validations: ['req', 'letter_symbol', ['length', { min: 1, max: 35 }]] }, { selector: fields.txt_state, validations: ['letter_symbol'] }, { selector: fields.txt_postcode, validations: ['postcode', ['length', { min: 0, max: 20 }]] }, { selector: fields.txt_phone, validations: ['req', 'phone', ['length', { min: 6, max: 35, exclude: /^\+/ }]] }, { selector: fields.ddl_secret_question, validations: ['req'] }, { selector: fields.txt_secret_answer, validations: ['req', 'general', ['length', { min: 4, max: 50 }]] }, { selector: fields.chk_tnc, validations: ['req'] }, { selector: fields.chk_not_pep, validations: ['req'] }]);
 	    };
 
 	    var displayResidence = function displayResidence() {
@@ -37081,6 +37204,7 @@
 
 	var MetaTraderConfig = __webpack_require__(444);
 	var MetaTraderUI = __webpack_require__(445);
+	var Client = __webpack_require__(301);
 	var ChampionSocket = __webpack_require__(413);
 	var Validation = __webpack_require__(431);
 
@@ -37092,23 +37216,21 @@
 	    var fields = MetaTraderConfig.fields;
 
 	    var load = function load() {
-	        ChampionSocket.send({ mt5_login_list: 1 }).then(function (response) {
+	        ChampionSocket.wait('mt5_login_list').then(function (response) {
 	            responseLoginList(response);
 	        });
 	        MetaTraderUI.init(submit);
 	    };
 
 	    var responseLoginList = function responseLoginList(response) {
-	        if (response.mt5_login_list && response.mt5_login_list.length > 0) {
-	            response.mt5_login_list.map(function (obj) {
-	                var acc_type = getAccountType(obj.group);
-	                if (acc_type) {
-	                    // ignore old accounts which are not linked to any group
-	                    types_info[acc_type].account_info = { login: obj.login };
-	                    getAccountDetails(obj.login, acc_type);
-	                }
-	            });
-	        }
+	        (response.mt5_login_list || []).forEach(function (obj) {
+	            var acc_type = Client.getMT5AccountType(obj.group);
+	            if (acc_type) {
+	                // ignore old accounts which are not linked to any group
+	                types_info[acc_type].account_info = { login: obj.login };
+	                getAccountDetails(obj.login, acc_type);
+	            }
+	        });
 
 	        // Update types with no account
 	        Object.keys(types_info).forEach(function (acc_type) {
@@ -37129,10 +37251,6 @@
 	                MetaTraderUI.updateAccount(acc_type);
 	            }
 	        });
-	    };
-
-	    var getAccountType = function getAccountType(group) {
-	        return group ? /demo/.test(group) ? 'demo' : group.split('\\')[1] || '' : '';
 	    };
 
 	    var makeRequestObject = function makeRequestObject(acc_type, action) {
@@ -37257,12 +37375,14 @@
 	                });
 	            },
 	            onSuccess: function onSuccess(response, acc_type) {
+	                var type = types_info[acc_type].mt5_account_type || 'demo';
 	                var gtm_data = {
 	                    event: 'mt5_new_account',
 	                    bom_email: Client.get('email'),
-	                    bom_country: State.get(['response', 'get_settings', 'get_settings', 'country'])
+	                    bom_country: State.get(['response', 'get_settings', 'get_settings', 'country']),
+	                    mt5_last_signup: type
 	                };
-	                gtm_data['mt5_' + (types_info[acc_type].mt5_account_type || 'demo') + '_id'] = response.mt5_new_account.login;
+	                gtm_data['mt5_' + type + '_id'] = response.mt5_new_account.login;
 	                if (acc_type === 'demo' && !Client.is_virtual()) {
 	                    gtm_data.visitorId = Client.get('loginid_array').find(function (login) {
 	                        return !login.real;
