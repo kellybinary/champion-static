@@ -34593,24 +34593,10 @@
 	    return typeof n === 'number' ? String(n) : n;
 	}
 
-	/* media queries */
-	var media_query = window.matchMedia('(max-width: 1199px)');
-	media_query.addListener(widthChange);
-	widthChange(media_query);
-
-	function widthChange(mq) {
-	    if (mq.matches && $('.nav-menu-dropdown.slide-in').length) {
-	        // on active mobile menu
-	        setPosition($('body'), 'fixed');
-	    } else {
-	        setPosition($('body'), 'relative');
-	    }
-	}
-
 	function slideIn(element) {
 	    element.removeAttr('style').addClass('slide-in').removeClass('slide-out').animate({ opacity: 1 }, 100);
 
-	    if (media_query.matches) setPosition($('body'), 'fixed');
+	    setPosition($('body'), 'fixed');
 	}
 
 	function slideOut(element) {
@@ -34638,7 +34624,6 @@
 	    getPropertyValue: getPropertyValue,
 	    slideIn: slideIn,
 	    slideOut: slideOut,
-	    widthChange: widthChange,
 
 	    compareBigUnsignedInt: compareBigUnsignedInt
 	};

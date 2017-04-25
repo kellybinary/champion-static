@@ -128,12 +128,13 @@ h1.main-title {
 .menu-container #all-accounts li.has-sub ul a {
   background: #DEDEDE;
 }
-.menu-container #mobile-menu.nav-menu ul, .menu-container #mobile-menu.nav-menu li ul {
+
+#mobile-menu.nav-menu ul, #mobile-menu.nav-menu li ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
-.menu-container #mobile-menu.nav-menu .nav-menu-dropdown {
+#mobile-menu.nav-menu .nav-menu-dropdown {
   margin: 0;
   top: 0;
   left: 0;
@@ -141,23 +142,24 @@ h1.main-title {
   display: block;
   opacity: 0;
   z-index: 999;
+  height: 100%;
   width: 300px;
   background-color: #fff;
   border-right: 1px solid #DEDEDE;
   box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.1);
 }
-.menu-container #mobile-menu.nav-menu .nav-menu-dropdown li {
+#mobile-menu.nav-menu .nav-menu-dropdown li {
   padding: 0;
   margin: 0;
 }
-.menu-container #mobile-menu.nav-menu .nav-menu-dropdown a, .menu-container #mobile-menu.nav-menu .nav-menu-dropdown span {
+#mobile-menu.nav-menu .nav-menu-dropdown a, #mobile-menu.nav-menu .nav-menu-dropdown span {
   display: block;
   color: #000 !important;
   text-align: center;
   padding: 10px 0;
   font-weight: 600;
 }
-.menu-container #mobile-menu.nav-menu .nav-menu-dropdown a .nav-menu-icon, .menu-container #mobile-menu.nav-menu .nav-menu-dropdown span .nav-menu-icon {
+#mobile-menu.nav-menu .nav-menu-dropdown a .nav-menu-icon, #mobile-menu.nav-menu .nav-menu-dropdown span .nav-menu-icon {
   display: inline-block;
   background-repeat: no-repeat;
   background-size: contain;
@@ -165,32 +167,34 @@ h1.main-title {
   width: 22px;
   height: 22px;
 }
-.menu-container #mobile-menu.nav-menu .nav-menu-dropdown a:hover, .menu-container #mobile-menu.nav-menu .nav-menu-dropdown span:hover {
+#mobile-menu.nav-menu .nav-menu-dropdown a:hover, #mobile-menu.nav-menu .nav-menu-dropdown span:hover {
   background-color: #DEDEDE;
 }
-.menu-container #mobile-menu.nav-menu .nav-menu-dropdown .submenu a {
+#mobile-menu.nav-menu .nav-menu-dropdown .submenu a {
   text-align: left;
   padding-left: 10px;
 }
-.menu-container #mobile-menu.nav-menu .selected {
+#mobile-menu.nav-menu .selected {
   background-color: #DEDEDE;
   color: #fff;
 }
-.menu-container #mobile-menu.nav-menu .pull-right {
+#mobile-menu.nav-menu .pull-right {
   float: right;
   margin-right: 15px;
 }
-.menu-container #mobile-menu.nav-menu .pull-left {
+#mobile-menu.nav-menu .pull-left {
   float: left;
   margin-left: 15px;
 }
-.menu-container #account-info {
+
+#account-info {
   text-align: center;
 }
-.menu-container #account-info:hover {
+#account-info:hover {
   color: #DEDEDE;
 }
-.menu-container .right-align {
+
+.right-align {
   width: 100%;
   float: right;
   margin-right: 10px;
