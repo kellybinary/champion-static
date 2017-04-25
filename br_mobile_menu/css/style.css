@@ -143,6 +143,9 @@ h1.main-title {
   opacity: 0;
   z-index: 999;
   width: 300px;
+  overflow-y: scroll !important;
+  -webkit-overflow-scrolling: touch;
+  /* mobile safari */
   background-color: #fff;
   border-right: 1px solid #DEDEDE;
   box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.1);
@@ -2562,9 +2565,6 @@ button .barspinner.white {
   .nav-menu-dropdown {
     width: 85vw !important;
     height: 100vh !important;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
-    /* mobile safari */
   }
 }
 @media (max-width: 767px) {
