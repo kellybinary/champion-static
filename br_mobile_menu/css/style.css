@@ -143,12 +143,12 @@ h1.main-title {
   z-index: 999;
   height: 100vh;
   width: 300px;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-  /* mobile safari */
   background-color: #fff;
   border-right: 1px solid #DEDEDE;
   box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.1);
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  /* mobile safari */
 }
 #mobile-menu.nav-menu .nav-menu-dropdown li {
   padding: 0;
