@@ -34594,7 +34594,7 @@
 	}
 
 	function slideIn(element) {
-	    element.removeAttr('style').addClass('slide-in').removeClass('slide-out').animate({ opacity: 1 }, 100);
+	    element.addClass('slide-in').removeClass('slide-out').animate({ opacity: 1 }, 100);
 
 	    setPosition($('body'), 'fixed');
 	}
