@@ -35129,6 +35129,7 @@
 	    var mobileMenu = function mobileMenu() {
 	        var $menu_dropdown = $('.nav-menu-dropdown');
 
+	        $('#mobile-menu > ul').height($(window).innerHeight());
 	        $(window).on('orientationchange resize', function () {
 	            $('#mobile-menu > ul').height($(window).innerHeight());
 	        });
