@@ -18525,7 +18525,7 @@
 	        }, Client.is_logged_in());
 	        ChampionRouter.init(container, '#champion-content');
 	        if (!Client.is_logged_in()) {
-	            $('#main-login').find('a').on('click', function () {
+	            $('.btn-login').on('click', function () {
 	                Login.redirect_to_login();
 	            });
 	        } else {
@@ -18739,7 +18739,7 @@
 	            ChampionSocket.send({ landing_company: country_code });
 	        }
 
-	        $('#btn_logout').click(function () {
+	        $('.btn-logout').click(function () {
 	            request_logout();
 	        });
 	    };
@@ -35134,11 +35134,6 @@
 	            $('#mobile-menu > ul').height($(window).innerHeight());
 	        });
 
-	        $('#mobile-menu #btn_logout').unbind('click').on('click', function (e) {
-	            e.stopPropagation();
-	            $('#all-accounts #btn_logout').trigger('click');
-	        });
-
 	        $('#header #main-login').unbind('click').on('click', function (e) {
 	            e.stopPropagation();
 	            $('#main-login').find('a').trigger('click');
@@ -35165,11 +35160,11 @@
 	            $(this).next().toggleClass(hidden_class);
 	        });
 
-	        if (Client.is_logged_in()) {
-	            $('.logged-in').removeClass(hidden_class);
-	        } else {
-	            $('#main-login, #header .logged-out').removeClass(hidden_class);
+	        if (!Client.is_logged_in()) {
+	            $('#topbar, #header').find('.logged-out').removeClass(hidden_class);
+	            return;
 	        }
+	        $('#topbar, #header').find('.logged-in').removeClass(hidden_class);
 	    };
 
 	    var desktopMenu = function desktopMenu() {
@@ -35180,7 +35175,7 @@
 	        });
 
 	        if (!Client.is_logged_in()) {
-	            $('#main-login, #header .logged-out').removeClass(hidden_class);
+	            $('#topbar, #header').find('.logged-out').removeClass(hidden_class);
 	            return;
 	        }
 
@@ -35560,7 +35555,7 @@
 	            params.container.trigger('champion:after', content);
 	        }
 
-	        $(document).find('#header a, .topbar a').on('click', handleClick);
+	        $(document).find('#header a, #topbar a').on('click', handleClick);
 	        $(document).on('click', 'a', handleClick);
 	        $(window).on('popstate', handlePopstate);
 	    };

@@ -773,14 +773,14 @@ fieldset {
   background: none !important;
 }
 
-.topbar {
+#topbar {
   padding: 0 !important;
   height: 30px;
 }
-.topbar .menu-container {
+#topbar .menu-container {
   line-height: 30px;
 }
-.topbar .upgrade-message a {
+#topbar .upgrade-message a {
   padding: 0 10px;
   background: #FFF;
   color: #013365;

@@ -18,16 +18,16 @@
     <meta name="description" content="ChampionFX Static" />
     <link rel="icon" type="image/png" sizes="16x16" href="/champion-static/br_mobile_menu/images/favicons/CFX_favicon16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/champion-static/br_mobile_menu/images/favicons/CFX_favicon32.png" />
-     <link rel="stylesheet" href="/champion-static/br_mobile_menu/css/flex.min.css?7b1kl86r" />
-     <link rel="stylesheet" href="/champion-static/br_mobile_menu/css/style.min.css?7b1kl86r" />
-     <link rel="stylesheet" href="https://style.champion-fx.com/binary.css?7b1kl86r" />
-      <script src="/champion-static/br_mobile_menu/js/bundle.js?7b1kl86r" type="text/javascript"></script>
-     <script src="https://style.champion-fx.com/binary.js?7b1kl86r" type="text/javascript"></script>
+     <link rel="stylesheet" href="/champion-static/br_mobile_menu/css/flex.min.css?624fodgi" />
+     <link rel="stylesheet" href="/champion-static/br_mobile_menu/css/style.min.css?624fodgi" />
+     <link rel="stylesheet" href="https://style.champion-fx.com/binary.css?624fodgi" />
+      <script src="/champion-static/br_mobile_menu/js/bundle.js?624fodgi" type="text/javascript"></script>
+     <script src="https://style.champion-fx.com/binary.js?624fodgi" type="text/javascript"></script>
      
 </head>
 <body>
     <div id="msg_notification" class="notice-msg center-text"></div>
-<div class="topbar primary-color-dark">
+<div id="topbar" class="primary-color-dark">
     <div class="menu-container">
         <div class="row">
             <div class="col-sm-12 topbar-container flex-items-sm-middle">
@@ -44,8 +44,8 @@
                         <li class="last hidden-lg-down">
                             <a href="/champion-static/br_mobile_menu/en/contact.html">Contact Us</a>
                         </li>
-                        <li id="main-login" class="FX__Header__cta invisible hidden-lg-down">
-                            <a class="button-secondary" href="javascript:;">Log In</a>
+                        <li class="FX__Header__cta invisible logged-out hidden-lg-down">
+                            <a class="btn-login button-secondary" href="javascript:;">Log In</a>
                         </li>
                     </ul>
                 </div>
@@ -161,7 +161,7 @@
                     </li>
                     <div class="separator-line-thin-gray"></div>
                     <li class="invisible logged-in">
-                        <a id="btn_logout" class="logout invisible logged-in" href="javascript:;">
+                        <a class="btn-logout logout invisible logged-in" href="javascript:;">
                             <span class="nav-menu-icon pull-left fx-signout-icon"></span>
                             Sign out
                         </a>
@@ -217,7 +217,7 @@
                     <div class="logged-out invisible">
                         <div id="main-login" class="hidden-lg-up">
                             <ul class="login-button">
-                                <li><a class="button" href="javascript:;"><span>Log In</span></a></li>
+                                <li><a class="btn-login button" href="javascript:;"><span>Log In</span></a></li>
                             </ul>
                         </div>
                         <div id="main-signup">
@@ -289,7 +289,7 @@
                                     </a>
                                     <div class="separator-line-thin-gray hidden-lg-up invisible logged-in"></div>
                                     <div class="login-id-list"></div>
-                                    <a href="javascript:;" id="btn_logout" class="logout invisible logged-in">
+                                    <a href="javascript:;" class="btn-logout logout invisible logged-in">
                                         <li>Sign out</li>
                                     </a>
                                 </ul>
