@@ -2564,7 +2564,6 @@ button .barspinner.white {
 
   .nav-menu-dropdown {
     width: 85vw !important;
-    height: 100vh !important;
   }
 }
 @media (max-width: 767px) {
@@ -2618,8 +2617,8 @@ button .barspinner.white {
   }
 
   .nav-menu-dropdown {
-    -webkit-transform: translateX(-100%);
-            transform: translateX(-100%);
+    -webkit-transform: translateX(-120%);
+            transform: translateX(-120%);
     width: initial;
   }
 
