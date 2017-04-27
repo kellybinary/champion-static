@@ -1520,7 +1520,7 @@ button .barspinner.white {
   outline: none;
 }
 
-.button span, .button-secondary span {
+#header .button span, .button-secondary span {
   padding: 7px 20px !important;
 }
 
