@@ -16,24 +16,27 @@
 
     <title>Logging in... | Champion-FX.com</title>
     <meta name="description" content="ChampionFX Static" />
+
+    <meta property="og:title" content="Champion-FX.com" />
+    <meta property="og:type"  content="website" />
+    <meta property="og:image" content="https://style.champion-fx.com/images/logo/cfx_logo.png" />
+
     <link rel="icon" type="image/png" sizes="16x16" href="/champion-static/br_fix/images/favicons/CFX_favicon16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/champion-static/br_fix/images/favicons/CFX_favicon32.png" />
-     <link rel="stylesheet" href="/champion-static/br_fix/css/flex.min.css?9sosgp16" />
-     <link rel="stylesheet" href="/champion-static/br_fix/css/style.min.css?9sosgp16" />
-     <link rel="stylesheet" href="https://style.champion-fx.com/binary.css?9sosgp16" />
-      <script src="/champion-static/br_fix/js/bundle.js?9sosgp16" type="text/javascript"></script>
-     <script src="https://style.champion-fx.com/binary.js?9sosgp16" type="text/javascript"></script>
+     <link rel="stylesheet" href="/champion-static/br_fix/css/style.min.css?h3c9czqt" />
+     <link rel="stylesheet" href="https://style.champion-fx.com/binary.css?h3c9czqt" />
+      <script src="/champion-static/br_fix/js/bundle.js?h3c9czqt" type="text/javascript"></script>
+     <script src="https://style.champion-fx.com/binary.js?h3c9czqt" type="text/javascript"></script>
      
 </head>
 <body>
-    <div id="msg_notification" class="notice-msg center-text"></div>
-<div id="topbar" class="primary-color-dark">
+    <!--email_off-->
+    <div id="top_group" class="logged-in">
+        <div id="msg_notification" class="notice-msg center-text"></div>
+<div id="topbar" class="primary-color-dark logged-in">
     <div class="menu-container">
         <div class="row">
             <div class="col-sm-12 topbar-container flex-items-sm-middle">
-                <div class="upgrade-message pulser invisible">
-                    <a href="/champion-static/br_fix/en/new-account/real.html">Upgrade to a Real Account</a>
-                </div>
                 <div class="topbar-contacts">
                     <ul>
                         <li class="last hidden-lg-up">
@@ -75,7 +78,7 @@
         </div>
     </div>
 </div>
-    <div id="header" class="dark-blue header">
+        <div id="header" class="dark-blue header">
     <div class="menu-container">
         <div class="row">
             <!-- Mobile menu toggle -->
@@ -183,32 +186,88 @@
                 </div>
             </div>
 
+
             <div class="col-lg-7 hidden-lg-down vertical-center">
-                <ul class="top-nav-menu">
-                    <li>
-                        <a href="/champion-static/br_fix/en/about-us.html" class="nav-dropdown-toggle">About</a>
-                    </li>
-                    <li>
-                        <a href="javascript:;" class="nav-dropdown-toggle">
-                            MT5
-                            <span class="nav-caret"></span>
-                        </a>
-                        <ul>
-                            <li><a href="/champion-static/br_fix/en/forex.html">Forex</a></li>
-                            <li><a href="/champion-static/br_fix/en/cfd.html">CFDs</a></li>
-                            <li><a href="/champion-static/br_fix/en/metals.html">Metals</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="/champion-static/br_fix/en/binary-options.html" class="nav-dropdown-toggle">Binary Options</a>
-                    </li>
-                    <li>
-                        <a href="/champion-static/br_fix/en/trading-platform.html" class="nav-dropdown-toggle">Trading Platforms</a>
-                    </li>
-                    <li>
-                        <a href="/champion-static/br_fix/en/partnerships.html" class="nav-dropdown-toggle">Partnerships</a>
-                    </li>
-                </ul>
+                <ul class="top-nav-menu invisible logged-out">
+    
+        <li>
+            <a href="/champion-static/br_fix/en/about-us.html" class="nav-dropdown-toggle">About</a>
+            
+        </li>
+    
+        <li>
+            <a href="javascript:;" class="nav-dropdown-toggle">MT5<span class="nav-caret"></span></a>
+            
+                <ul class="top-nav-menu invisible logged-out">
+    
+        <li>
+            <a href="/champion-static/br_fix/en/forex.html" class="nav-dropdown-toggle">Forex</a>
+            
+        </li>
+    
+        <li>
+            <a href="/champion-static/br_fix/en/cfd.html" class="nav-dropdown-toggle">CFDs</a>
+            
+        </li>
+    
+        <li>
+            <a href="/champion-static/br_fix/en/metals.html" class="nav-dropdown-toggle">Metals</a>
+            
+        </li>
+    
+    </ul>
+            
+        </li>
+    
+        <li>
+            <a href="/champion-static/br_fix/en/binary-options.html" class="nav-dropdown-toggle">Binary Options</a>
+            
+        </li>
+    
+        <li>
+            <a href="/champion-static/br_fix/en/trading-platform.html" class="nav-dropdown-toggle">Trading platforms</a>
+            
+        </li>
+    
+        <li>
+            <a href="/champion-static/br_fix/en/partnerships.html" class="nav-dropdown-toggle">Partnerships</a>
+            
+        </li>
+    
+    </ul>
+                <ul class="top-nav-menu invisible logged-in">
+    
+        <li class="mt-hide">
+            <a href="/champion-static/br_fix/en/user/settings.html" class="nav-dropdown-toggle">Settings</a>
+            
+        </li>
+    
+        <li class="mt-show">
+            <a href="/champion-static/br_fix/en/user/metatrader.html" class="nav-dropdown-toggle">Settings</a>
+            
+        </li>
+    
+        <li class="mt-hide">
+            <a href="/champion-static/br_fix/en/cashier.html" class="nav-dropdown-toggle">Cashier</a>
+            
+        </li>
+    
+        <li class="mt-hide">
+            <a href="/champion-static/br_fix/en/trading-platform/champion-trader.html" class="nav-dropdown-toggle">Trading platforms</a>
+            
+        </li>
+    
+        <li class="mt-show">
+            <a href="/champion-static/br_fix/en/trading-platform/metatrader-5.html" class="nav-dropdown-toggle">Trading platforms</a>
+            
+        </li>
+    
+        <li>
+            <a href="https://academy.champion-fx.com/" target="_blank" class="nav-dropdown-toggle">Academy</a>
+            
+        </li>
+    
+    </ul>
             </div>
 
             <div class="col-lg-2 col-sm-4 col-xs-5 vertical-center">
@@ -226,20 +285,24 @@
                         </div>
                     </div>
                     <!-- Desktop menu -->
+
                     <div class="logged-in invisible hidden-lg-up">
-                        <a id="account-info" href="javascript:;" class="nav-menu nav-toggle-dropdown">
-                            <div class="account-id"></div>
-                            <div class="topMenuBalance"></div>
+                        <a id="account-info" href="javascript:;" class="main-account nav-menu nav-toggle-dropdown">
+                            <div class="account-id mt-hide"></div>
+    <span class="account-balance mt-hide"></span>
+    <span class="account-type mt-hide"></span>
+    <div class="mt-show invisible">MetaTrader 5</div>
                         </a>
                     </div>
-                    <div id="main-logout" class="invisible logged-in hidden-lg-down">
+                    <div id="main-logout" class="logged-in invisible hidden-lg-down">
                         <ul id="main-account" class="nav-menu main-nav hidden-lg-down">
-                            <li class="account logged-in invisible">
+                            <li class="account">
                                 <a href="javascript:;">
                                     <div class="main-account">
-                                        <div class="account-type"></div>
-                                        <div class="account-id"></div>
-                                        <div class="topMenuBalance"></div>
+                                        <div class="account-id mt-hide"></div>
+    <span class="account-balance mt-hide"></span>
+    <span class="account-type mt-hide"></span>
+    <div class="mt-show invisible">MetaTrader 5</div>
                                     </div>
                                     <div class="nav-caret"></div>
                                 </a>
@@ -249,47 +312,24 @@
                             <li class="account">
                                 <a href="javascript:;" class="menu-icon">
                                     <div class="main-account">
-                                        <div class="account-type"></div>
-                                        <div class="account-id"></div>
-                                        <div class="topMenuBalance">&nbsp;</div>
+                                        <div class="account-id mt-hide"></div>
+    <span class="account-balance mt-hide"></span>
+    <span class="account-type mt-hide"></span>
+    <div class="mt-show invisible">MetaTrader 5</div>
                                     </div>
                                     <div class="nav-caret"></div>
                                 </a>
                                 <ul>
-                                    <a class="link invisible logged-out" href="/champion-static/br_fix/en/home.html#signup">
-                                        <li>Sign Up</li>
-                                    </a>
-                                    <a class="link invisible logged-in" href="/champion-static/br_fix/en/user/settings.html">
-                                        <li class="topMenuSettings">Settings</li>
-                                    </a>
-                                    <div class="separator-line-thin-gray"></div>
-                                    <a class="link invisible logged-in" href="/champion-static/br_fix/en/cashier.html">
-                                        <li class="topMenuCashier">Cashier</li>
-                                    </a>
-                                    <div class="separator-line-thin-gray invisible logged-in"></div>
-                                    <a href="/champion-static/br_fix/en/about-us.html" class="hidden-lg-up">
-                                        <li>About</li>
-                                    </a>
-                                    <li class="hidden-lg-up has-sub">
-                                        <a href="javascript:;">MT5</a>
-                                        <ul class="invisible">
-                                            <li><a href="/champion-static/br_fix/en/forex.html">Forex</a></li>
-                                            <li><a href="/champion-static/br_fix/en/cfd.html">CFDs</a></li>
-                                            <li><a href="/champion-static/br_fix/en/metals.html">Metals</a></li>
-                                        </ul>
-                                    </li>
-                                    <a href="/champion-static/br_fix/en/binary-options.html" class="hidden-lg-up">
-                                        <li>Binary Options</li>
-                                    </a>
-                                    <a href="/champion-static/br_fix/en/trading-platform.html" class="hidden-lg-up">
-                                        <li>Trading Platforms</li>
-                                    </a>
-                                    <a href="/champion-static/br_fix/en/partnerships.html" class="hidden-lg-up">
-                                        <li>Partnerships</li>
-                                    </a>
-                                    <div class="separator-line-thin-gray hidden-lg-up invisible logged-in"></div>
                                     <div class="login-id-list"></div>
-                                    <a href="javascript:;" class="btn-logout logout invisible logged-in">
+                                    <a href="/champion-static/br_fix/en/new-account/real.html" class="upgrade invisible">
+                                        <li>Upgrade to<br />Real Account</li>
+                                    </a>
+                                    <div class="separator-line-thin-gray upgrade invisible"></div>
+                                    <a href="/champion-static/br_fix/en/user/metatrader.html" class="mt-hide">
+                                        <li>MetaTrader 5</li>
+                                    </a>
+                                    <div class="separator-line-thin-gray mt-hide"></div>
+                                    <a href="javascript:;" class="btn-logout logout">
                                         <li>Sign out</li>
                                     </a>
                                 </ul>
@@ -301,6 +341,7 @@
         </div>
     </div>
 </div>
+    </div>
     <!-- Google Tag Manager -->
 <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-K79SQVR"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -337,77 +378,102 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <div class="col-sm-10 col-xs-12">
                     <div class="row">
                         <div class="col-xs-6 col-md-3">
-                            <h4>ChampionFX</h4>
-    <div class="separator-line-thin-gray"></div>
-    <ul>
-        
-            <li><a href="/champion-static/br_fix/en/about-us.html">About</a></li>
-        
-            <li><a href="/champion-static/br_fix/en/licensing.html">License</a></li>
-        
-    </ul>
-                            <h4>Partnerships</h4>
-    <div class="separator-line-thin-gray"></div>
-    <ul>
-        
-            <li><a href="/champion-static/br_fix/en/partnerships-ib.html">Introducing Broker (IB)</a></li>
-        
-            <li><a href="/champion-static/br_fix/en/partnerships-affiliate.html">Affiliate</a></li>
-        
-            <li><a href="/champion-static/br_fix/en/partnerships-contributor.html">Content Contributor</a></li>
-        
-    </ul>
+                            <div>
+        <h4>ChampionFX</h4>
+        <div class="separator-line-thin-gray"></div>
+        <ul>
+            
+                <li><a href="/champion-static/br_fix/en/about-us.html">About</a></li>
+            
+                <li><a href="/champion-static/br_fix/en/contact.html">Contact Us</a></li>
+            
+                <li><a href="/champion-static/br_fix/en/licensing.html">License</a></li>
+            
+        </ul>
+    </div>
                         </div>
                         <div class="col-xs-6 col-md-3">
-                            <h4>MT5</h4>
-    <div class="separator-line-thin-gray"></div>
-    <ul>
-        
-            <li><a href="/champion-static/br_fix/en/forex.html">Forex</a></li>
-        
-            <li><a href="/champion-static/br_fix/en/cfd.html">CFDs</a></li>
-        
-            <li><a href="/champion-static/br_fix/en/metals.html">Metals</a></li>
-        
-            <li><a href="/champion-static/br_fix/en/forex.html#forex-accounts">Types of accounts</a></li>
-        
-            <li><a href="/champion-static/br_fix/en/trading-platform/metatrader-5.html">MT5 trading platforms</a></li>
-        
-    </ul>
+                            <div>
+        <h4>Partnerships</h4>
+        <div class="separator-line-thin-gray"></div>
+        <ul>
+            
+                <li><a href="/champion-static/br_fix/en/partnerships-ib.html">Introducing Broker (IB)</a></li>
+            
+                <li><a href="/champion-static/br_fix/en/partnerships-affiliate.html">Affiliate</a></li>
+            
+                <li><a href="/champion-static/br_fix/en/partnerships-contributor.html">Content Contributor</a></li>
+            
+        </ul>
+    </div>
                         </div>
-                        <div class="col-xs-6 col-md-3">
-                            <h4>Binary options</h4>
-    <div class="separator-line-thin-gray"></div>
-    <ul>
-        
-            <li><a href="/champion-static/br_fix/en/range-of-markets.html">Range of markets</a></li>
-        
-            <li><a href="/champion-static/br_fix/en/types-of-accounts.html">Types of accounts</a></li>
-        
-            <li><a href="/champion-static/br_fix/en/trading-platform/champion-trader.html">Binary options trading platforms</a></li>
-        
-    </ul>
+                        <div class="col-xs-6 col-md-3 mt-show">
+                            <div>
+        <h4>MT5</h4>
+        <div class="separator-line-thin-gray"></div>
+        <ul>
+            
+                <li><a href="/champion-static/br_fix/en/forex.html">Forex</a></li>
+            
+                <li><a href="/champion-static/br_fix/en/cfd.html">CFDs</a></li>
+            
+                <li><a href="/champion-static/br_fix/en/metals.html">Metals</a></li>
+            
+                <li><a href="/champion-static/br_fix/en/forex.html#forex-accounts">Types of accounts</a></li>
+            
+                <li><a href="/champion-static/br_fix/en/trading-platform/metatrader-5.html">MT5 trading platforms</a></li>
+            
+        </ul>
+    </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3 mt-hide">
+                            <div>
+        <h4>Binary options</h4>
+        <div class="separator-line-thin-gray"></div>
+        <ul>
+            
+                <li><a href="/champion-static/br_fix/en/types-of-accounts.html">Types of accounts</a></li>
+            
+                <li><a href="/champion-static/br_fix/en/trading-platform/champion-trader.html">Binary options trading platforms</a></li>
+            
+        </ul>
+    </div>
                         </div>
                         <div class="col-xs-6 col-md-3">
                             
-                            <h4>Legal</h4>
-    <div class="separator-line-thin-gray"></div>
-    <ul>
-        
-            <li><a href="/champion-static/br_fix/en/terms-and-conditions.html">Terms and Conditions</a></li>
-        
-            <li><a href="/champion-static/br_fix/en/home.html">&nbsp;</a></li>
-        
-    </ul>
-                            <h4>Resources</h4>
-    <div class="separator-line-thin-gray"></div>
-    <ul>
-        
-            <li><a href="/champion-static/br_fix/en/trading-times.html">Trading Times</a></li>
-        
-            <li><a href="/champion-static/br_fix/en/cashier/payment-methods.html">Payment Methods</a></li>
-        
-    </ul>
+                            <div class="mt-hide">
+        <h4>Legal</h4>
+        <div class="separator-line-thin-gray"></div>
+        <ul>
+            
+                <li><a href="/champion-static/br_fix/en/terms-and-conditions.html">Terms and Conditions</a></li>
+            
+                <li><a href="/champion-static/br_fix/en/home.html">&nbsp;</a></li>
+            
+        </ul>
+    </div>
+                            <div class="mt-show">
+        <h4>Legal</h4>
+        <div class="separator-line-thin-gray"></div>
+        <ul>
+            
+                <li><a href="/champion-static/br_fix/en/terms-and-conditions.html#legal-cfd">Terms and Conditions</a></li>
+            
+                <li><a href="/champion-static/br_fix/en/home.html">&nbsp;</a></li>
+            
+        </ul>
+    </div>
+                            <div class="mt-hide">
+        <h4>Resources</h4>
+        <div class="separator-line-thin-gray"></div>
+        <ul>
+            
+                <li><a href="/champion-static/br_fix/en/trading-times.html">Trading Times</a></li>
+            
+                <li><a href="/champion-static/br_fix/en/cashier/payment-methods.html">Payment Methods</a></li>
+            
+        </ul>
+    </div>
                         </div>
                     </div>
                 </div>
@@ -458,5 +524,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </div>
     <div id="end_note" class="invisible hidden-xs-down"></div>
 </footer>
+    <!--/email_off-->
 </body>
 </html>
