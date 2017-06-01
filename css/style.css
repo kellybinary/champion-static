@@ -414,9 +414,11 @@ h1.main-title {
 }
 
 .fx-panel {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 20px 0;
   min-height: 320px;
+}
+.fx-panel h1 {
+  padding: 10px;
 }
 .fx-panel p {
   padding: 0 20px;
@@ -455,6 +457,11 @@ h1.main-title {
 
 .fx-section-sm {
   padding: 25px 0;
+}
+
+.binary-options-header {
+  background-image: url("../images/binary_options/binary_options_banner.png");
+  background-size: cover;
 }
 
 .mt5-header {
@@ -744,9 +751,19 @@ fieldset {
   top: 100%;
 }
 
+.fx-divider-sm {
+  height: 5px;
+  margin: 10px 0;
+}
+
 .fx-divider {
   height: 5px;
   margin: 20px 0;
+}
+
+.fx-divider-l {
+  height: 5px;
+  margin: 30px 0;
 }
 
 .fx-divider-xl {
@@ -1563,6 +1580,15 @@ ul.checked.small > li {
   padding-left: 24px;
 }
 
+.separator {
+  height: 1px !important;
+}
+
+.box {
+  background-color: #f2f2f2;
+  margin-bottom: 2px;
+}
+
 #payment_methods h3 {
   margin: 20px 0 0;
 }
@@ -1843,6 +1869,11 @@ ul.checked.small > li {
     font-size: 11px !important;
   }
 }
+#mt5_web_platform {
+  border: none;
+  width: 100%;
+}
+
 .app-store-badge, .google-play-badge {
   background-repeat: no-repeat;
   width: 135px;

@@ -18479,22 +18479,23 @@
 	var Home = __webpack_require__(435);
 	var LostPassword = __webpack_require__(438);
 	var MT5 = __webpack_require__(439);
-	var ChampionNewReal = __webpack_require__(440);
-	var ChampionNewVirtual = __webpack_require__(442);
-	var ResetPassword = __webpack_require__(443);
-	var ChampionSignup = __webpack_require__(444);
-	var TradingPlatform = __webpack_require__(445);
-	var TradingTimes = __webpack_require__(446);
-	var Authenticate = __webpack_require__(447);
-	var ChangePassword = __webpack_require__(448);
-	var Limits = __webpack_require__(449);
-	var LoginHistory = __webpack_require__(450);
-	var MetaTrader = __webpack_require__(451);
-	var ChampionProfile = __webpack_require__(454);
-	var ChampionSecurity = __webpack_require__(458);
-	var SelfExclusion = __webpack_require__(459);
-	var ChampionSettings = __webpack_require__(462);
-	var TNCApproval = __webpack_require__(463);
+	var MT5WebPlatform = __webpack_require__(440);
+	var BinaryOptions = __webpack_require__(441);
+	var ChampionNewReal = __webpack_require__(442);
+	var ChampionNewVirtual = __webpack_require__(444);
+	var ResetPassword = __webpack_require__(445);
+	var ChampionSignup = __webpack_require__(446);
+	var TradingTimes = __webpack_require__(447);
+	var Authenticate = __webpack_require__(448);
+	var ChangePassword = __webpack_require__(449);
+	var Limits = __webpack_require__(450);
+	var LoginHistory = __webpack_require__(451);
+	var MetaTrader = __webpack_require__(452);
+	var ChampionProfile = __webpack_require__(455);
+	var ChampionSecurity = __webpack_require__(459);
+	var SelfExclusion = __webpack_require__(460);
+	var ChampionSettings = __webpack_require__(463);
+	var TNCApproval = __webpack_require__(464);
 
 	var Champion = function () {
 	    'use strict';
@@ -18569,6 +18570,8 @@
 	            'change-password': { module: ChangePassword, is_authenticated: true },
 	            'login-history': { module: LoginHistory, is_authenticated: true },
 	            'lost-password': { module: LostPassword, not_authenticated: true },
+	            'binary-options': { module: BinaryOptions },
+	            'mt5-web-platform': { module: MT5WebPlatform },
 	            'payment-methods': { module: CashierPaymentMethods },
 	            'reset-password': { module: ResetPassword, not_authenticated: true },
 	            'self-exclusion': { module: SelfExclusion, is_authenticated: true, only_real: true },
@@ -18577,7 +18580,7 @@
 	            'trading-times': { module: TradingTimes },
 	            'types-of-accounts': { module: ClientType },
 	            'trading-platform': { module: ClientType },
-	            'metatrader-5': { module: TradingPlatform },
+	            'metatrader-5': { module: ClientType },
 	            'champion-trader': { module: ClientType }
 	        };
 	        if (page in pages_map) {
@@ -39381,13 +39384,73 @@
 
 	'use strict';
 
+	var Client = __webpack_require__(301);
+	var ChampionSocket = __webpack_require__(413);
+
+	var MT5WebPlatform = function () {
+	    'use strict';
+
+	    var load = function load() {
+	        $('#footer').addClass('invisible');
+	        if (Client.is_logged_in()) {
+	            ChampionSocket.wait('mt5_login_list').then(function (response) {
+	                setFrameSource(response.mt5_login_list.length > 0);
+	            });
+	        } else {
+	            setFrameSource(false);
+	        }
+	    };
+
+	    var setFrameSource = function setFrameSource(has_mt_account) {
+	        var web_url = 'https://trade.mql5.com/trade?servers=ChampionGroup-Server&trade_server=ChampionGroup-Server&demo_server=ChampionGroup-Server&lang=en';
+	        if (!has_mt_account) {
+	            web_url += '&startup_mode=open_demo';
+	        }
+	        $(document).ready(function () {
+	            $('iframe#mt5_web_platform').attr('src', web_url).css('height', 'calc(100vh - ' + ($('#top_group').height() + 5) + 'px)');
+	        });
+	    };
+
+	    return {
+	        load: load
+	    };
+	}();
+
+	module.exports = MT5WebPlatform;
+
+/***/ },
+/* 441 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var BinaryOptions = function () {
+	    'use strict';
+
+	    var load = function load() {
+	        $('.has-tabs').tabs().removeClass('invisible');
+	    };
+
+	    return {
+	        load: load
+	    };
+	}();
+
+	module.exports = BinaryOptions;
+
+/***/ },
+/* 442 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
 	var moment = __webpack_require__(302);
 	var ChampionSocket = __webpack_require__(413);
 	var Client = __webpack_require__(301);
 	var Utility = __webpack_require__(417);
 	var default_redirect_url = __webpack_require__(419).default_redirect_url;
 	var Validation = __webpack_require__(429);
-	var DatePicker = __webpack_require__(441).DatePicker;
+	var DatePicker = __webpack_require__(443).DatePicker;
 
 	var ChampionNewRealAccount = function () {
 	    'use strict';
@@ -39541,7 +39604,7 @@
 	module.exports = ChampionNewRealAccount;
 
 /***/ },
-/* 441 */
+/* 443 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39705,7 +39768,7 @@
 	};
 
 /***/ },
-/* 442 */
+/* 444 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39794,7 +39857,7 @@
 	module.exports = ChampionNewVirtualAccount;
 
 /***/ },
-/* 443 */
+/* 445 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39803,7 +39866,7 @@
 	var Validation = __webpack_require__(429);
 	var ChampionSocket = __webpack_require__(413);
 	var Login = __webpack_require__(421);
-	var DatePicker = __webpack_require__(441).DatePicker;
+	var DatePicker = __webpack_require__(443).DatePicker;
 	var Utility = __webpack_require__(417);
 	var moment = __webpack_require__(302);
 
@@ -39906,7 +39969,7 @@
 	module.exports = ResetPassword;
 
 /***/ },
-/* 444 */
+/* 446 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39993,60 +40056,13 @@
 	module.exports = ChampionSignup;
 
 /***/ },
-/* 445 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var ClientType = __webpack_require__(433);
-	var Client = __webpack_require__(301);
-	var ChampionSocket = __webpack_require__(413);
-
-	var TradingPlatform = function () {
-	    'use strict';
-
-	    var load = function load() {
-	        ClientType.load();
-
-	        var web_url = 'https://trade.mql5.com/trade?servers=ChampionGroup-Server&trade_server=ChampionGroup-Server&demo_server=ChampionGroup-Server&startup_mode=open_demo&lang=en';
-
-	        var sendToSignup = function sendToSignup() {
-	            $('a.mt5-web-platform').attr('href', web_url);
-	        };
-
-	        if (Client.is_logged_in()) {
-	            ChampionSocket.wait('mt5_login_list').then(function (response) {
-	                if (response.mt5_login_list.length) {
-	                    $('a.mt5-web-platform').attr('href', web_url.replace('&startup_mode=open_demo', ''));
-	                } else {
-	                    sendToSignup();
-	                }
-	            });
-	        } else {
-	            sendToSignup();
-	        }
-	    };
-
-	    var unload = function unload() {
-	        ClientType.unload();
-	    };
-
-	    return {
-	        load: load,
-	        unload: unload
-	    };
-	}();
-
-	module.exports = TradingPlatform;
-
-/***/ },
-/* 446 */
+/* 447 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var ChampionSocket = __webpack_require__(413);
-	var DatePicker = __webpack_require__(441).DatePicker;
+	var DatePicker = __webpack_require__(443).DatePicker;
 	var moment = __webpack_require__(302);
 
 	var TradingTimes = function () {
@@ -40161,7 +40177,7 @@
 	module.exports = TradingTimes;
 
 /***/ },
-/* 447 */
+/* 448 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40198,7 +40214,7 @@
 	module.exports = Authenticate;
 
 /***/ },
-/* 448 */
+/* 449 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40266,7 +40282,7 @@
 	module.exports = ChangePassword;
 
 /***/ },
-/* 449 */
+/* 450 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40354,7 +40370,7 @@
 	module.exports = Limits;
 
 /***/ },
-/* 450 */
+/* 451 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40453,13 +40469,13 @@
 	module.exports = LoginHistory;
 
 /***/ },
-/* 451 */
+/* 452 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var MetaTraderConfig = __webpack_require__(452);
-	var MetaTraderUI = __webpack_require__(453);
+	var MetaTraderConfig = __webpack_require__(453);
+	var MetaTraderUI = __webpack_require__(454);
 	var Client = __webpack_require__(301);
 	var ChampionSocket = __webpack_require__(413);
 	var State = __webpack_require__(416).State;
@@ -40591,7 +40607,7 @@
 	module.exports = MetaTrader;
 
 /***/ },
-/* 452 */
+/* 453 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40811,12 +40827,12 @@
 	module.exports = MetaTraderConfig;
 
 /***/ },
-/* 453 */
+/* 454 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var MetaTraderConfig = __webpack_require__(452);
+	var MetaTraderConfig = __webpack_require__(453);
 	var Client = __webpack_require__(301);
 	var formatMoney = __webpack_require__(423).formatMoney;
 	var showLoadingImage = __webpack_require__(417).showLoadingImage;
@@ -41065,15 +41081,15 @@
 	module.exports = MetaTraderUI;
 
 /***/ },
-/* 454 */
+/* 455 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var Client = __webpack_require__(301);
 	var showLoadingImage = __webpack_require__(417).showLoadingImage;
-	var FinancialAssessment = __webpack_require__(455);
-	var PersonalDetails = __webpack_require__(456);
+	var FinancialAssessment = __webpack_require__(456);
+	var PersonalDetails = __webpack_require__(457);
 
 	var Profile = function () {
 	    'use strict';
@@ -41125,7 +41141,7 @@
 	module.exports = Profile;
 
 /***/ },
-/* 455 */
+/* 456 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41278,7 +41294,7 @@
 	module.exports = FinancialAssessment;
 
 /***/ },
-/* 456 */
+/* 457 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41289,7 +41305,7 @@
 	var ChampionSocket = __webpack_require__(413);
 	var Validation = __webpack_require__(429);
 	var moment = __webpack_require__(302);
-	__webpack_require__(457);
+	__webpack_require__(458);
 
 	var PersonalDetails = function () {
 	    'use strict';
@@ -41487,7 +41503,7 @@
 	module.exports = PersonalDetails;
 
 /***/ },
-/* 457 */
+/* 458 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var require;var require;/*!
@@ -47218,7 +47234,7 @@
 
 
 /***/ },
-/* 458 */
+/* 459 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47246,18 +47262,18 @@
 	module.exports = ChampionSecurity;
 
 /***/ },
-/* 459 */
+/* 460 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var moment = __webpack_require__(302);
 	var Client = __webpack_require__(301);
-	var FormManager = __webpack_require__(460);
+	var FormManager = __webpack_require__(461);
 	var ChampionSocket = __webpack_require__(413);
 	var dateValueChanged = __webpack_require__(417).dateValueChanged;
-	var DatePicker = __webpack_require__(441).DatePicker;
-	var TimePicker = __webpack_require__(461);
+	var DatePicker = __webpack_require__(443).DatePicker;
+	var TimePicker = __webpack_require__(462);
 
 	var SelfExclusion = function () {
 	    'use strict';
@@ -47476,7 +47492,7 @@
 	module.exports = SelfExclusion;
 
 /***/ },
-/* 460 */
+/* 461 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47621,7 +47637,7 @@
 	module.exports = FormManager;
 
 /***/ },
-/* 461 */
+/* 462 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47764,7 +47780,7 @@
 	module.exports = TimePicker;
 
 /***/ },
-/* 462 */
+/* 463 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47794,7 +47810,7 @@
 	module.exports = ChampionSettings;
 
 /***/ },
-/* 463 */
+/* 464 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

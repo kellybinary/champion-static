@@ -23,10 +23,10 @@
 
     <link rel="icon" type="image/png" sizes="16x16" href="/champion-static/images/favicons/CFX_favicon16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/champion-static/images/favicons/CFX_favicon32.png" />
-     <link rel="stylesheet" href="/champion-static/css/style.min.css?292sln81" />
-     <link rel="stylesheet" href="https://style.champion-fx.com/binary.css?292sln81" />
-      <script src="/champion-static/js/bundle.js?292sln81" type="text/javascript"></script>
-     <script src="https://style.champion-fx.com/binary.js?292sln81" type="text/javascript"></script>
+     <link rel="stylesheet" href="/champion-static/css/style.min.css?l8y6pcoe" />
+     <link rel="stylesheet" href="https://style.champion-fx.com/binary.css?l8y6pcoe" />
+      <script src="/champion-static/js/bundle.js?l8y6pcoe" type="text/javascript"></script>
+     <script src="https://style.champion-fx.com/binary.js?l8y6pcoe" type="text/javascript"></script>
      
 </head>
 <body>
@@ -141,10 +141,19 @@
                         <ul class="invisible logged-out">
                             <li>
                                 <div class="separator-line-thin-gray invisible logged-in"></div>
-                                <a href="/champion-static/en/binary-options.html">
+                                <a href="javascript:;" class="nav-dropdown-toggle">
                                     <span class="nav-menu-icon pull-left fx-binary-icon"></span>
                                     Binary Options
+                                    <span class="nav-menu-icon pull-right fx-moremenu-icon"></span>
                                 </a>
+                                <ul class="invisible submenu">
+                                    <li>
+                                        <div class="separator-line-thin-gray"></div>
+                                        <a href="/champion-static/en/binary-options.html">About binary options</a></li>
+                                    <li>
+                                        <div class="separator-line-thin-gray"></div>
+                                        <a href="/champion-static/en/types-of-accounts.html">Account types</a></li>
+                                </ul>
                             </li>
                             <li>
                                 <div class="separator-line-thin-gray"></div>
@@ -220,7 +229,21 @@
         </li>
     
         <li>
-            <a href="/champion-static/en/binary-options.html" class="nav-dropdown-toggle">Binary Options</a>
+            <a href="javascript:;" class="nav-dropdown-toggle">Binary Options<span class="nav-caret"></span></a>
+            
+                <ul class="top-nav-menu invisible logged-out">
+    
+        <li>
+            <a href="/champion-static/en/binary-options.html" class="nav-dropdown-toggle">About binary options</a>
+            
+        </li>
+    
+        <li>
+            <a href="/champion-static/en/types-of-accounts.html" class="nav-dropdown-toggle">Account types</a>
+            
+        </li>
+    
+    </ul>
             
         </li>
     
@@ -358,46 +381,25 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <h1 class="main-title" >How to trade binary options</h1>
-                <p>Trading binary options is relatively easy, and you can purchase a trade in only three simple steps.</p>
-                <div class="fx-divider"></div>
                 <div class="row">
-                    <div class="col-md-3">
-                        <img src="/champion-static/images/binary_options/define_position.svg" class="image-small" alt="" />
-                        <h3>Define your position</h3>
-                        <p>Consider the market, duration, barrier, and payout.</p>
+                    <div class="col-sm-6">
+                        <h1>How to trade binary options</h1>
+                        <p>Trading binary options is relatively easy, and you can purchase a trade in only three simple steps.</p>
                     </div>
-                    <div class="col-md-3 offset-md-1">
-                        <img src="/champion-static/images/binary_options/price.svg" class="image-small" alt="" />
-                        <h3>Get your price</h3>
-                        <p>Receive instant prices based on your position.</p>
-                    </div>
-                    <div class="col-md-3 offset-md-1">
-                        <img src="/champion-static/images/binary_options/trade.svg" class="image-small" alt="" />
-                        <h3>Make your trade</h3>
-                        <p>Choose to buy, or redefine your position.</p>
-                    </div>
-                </div>
-                <div class="fx-divider"></div>
-                <div class="row">
-                    <div class="col-md-8 push-md-2">
-                        <div class="box bordered">
-                            <div class="row center-text">
-                                <div class="col-md-4">
-                                    <a href="#step-1" class="no-ajax">
-                                        <h4>Define your position</h4>
-                                    </a>
-                                </div>
-                                <div class="col-md-4">
-                                    <a href="#step-2" class="no-ajax">
-                                        <h4>Get your price</h4>
-                                    </a>
-                                </div>
-                                <div class="col-md-4">
-                                    <a href="#step-3" class="no-ajax">
-                                        <h4>Make your trade</h4>
-                                    </a>
-                                </div>
+                    <div class="col-sm">
+                        <div class="row steps">
+                            <div class="col-sm-2 hidden-xs-down">
+                                <img class="float-right" src="/champion-static/images/mt5/steps.svg">
+                            </div>
+                            <div class="col-sm-10">
+                                <h3>Define your position</h3>
+                                <p>Consider the market, duration, barrier, and payout.</p>
+                                <div class="fx-divider-sm"></div>
+                                <h3>Get your price</h3>
+                                <p>Receive instant prices based on your position.</p>
+                                <div class="fx-divider-sm"></div>
+                                <h3>Make your trade</h3>
+                                <p>Choose to buy, or redefine your position.</p>
                             </div>
                         </div>
                     </div>
@@ -406,6 +408,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <div class="center-text">
                     <a name="step-1"></a>
                     <h3 id="step-1">Step 1: Define your position</h3>
+                    <img src="/champion-static/images/binary_options/define_position.svg" class="image-small" alt="" />
                     <p>First, you need to set the parameters of your trade. Here's what you need to consider.</p>
                 </div>
                 <div class="fx-divider"></div>
@@ -413,10 +416,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 
                 <div class="row">
-        <div class="col-sm-3 push-sm-1 flex-sm-middle">
+        <div class="col-sm-3 center-text flex-sm-middle">
             <img src="/champion-static/images/binary_options/p1.svg" class="image-medium" alt="" />
         </div>
-        <div class="col-sm-6 push-sm-2 flex-sm-middle">
+        <div class="col-sm-9 flex-sm-middle">
             
                     <h4>1. Underlying market</h4>
                     <p>Choose the asset you wish to trade, such as gold, oil, stocks, or currency pairs. The value of a binary option is derived from the price of the underlying asset. One advantage of trading binary options is that you are not buying or selling the actual asset, only a contract that determines how that asset performs.</p>
@@ -440,10 +443,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <div class="fx-divider hidden-xs-down"></div>
 
                 <div class="row">
-        <div class="col-sm-3 push-sm-1 flex-sm-middle">
+        <div class="col-sm-3 center-text flex-sm-middle">
             <img src="/champion-static/images/binary_options/p2.svg" class="image-medium" alt="" />
         </div>
-        <div class="col-sm-6 push-sm-2 flex-sm-middle">
+        <div class="col-sm-9 flex-sm-middle">
             
                     <h4>2. Trade type</h4>
                     <p>There are four trade types for you to choose from:</p>
@@ -466,10 +469,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <div class="fx-divider hidden-xs-down"></div>
 
                 <div class="row">
-        <div class="col-sm-3 push-sm-1 flex-sm-middle">
+        <div class="col-sm-3 center-text flex-sm-middle">
             <img src="/champion-static/images/binary_options/p3.svg" class="image-medium" alt="" />
         </div>
-        <div class="col-sm-6 push-sm-2 flex-sm-middle">
+        <div class="col-sm-9 flex-sm-middle">
             
                     <h4>3. Duration</h4>
                     <p>Set the length of your trade, from 10 seconds to 365 days. You don’t even need to wait until expiry. Sell back any long-term trades that you purchased at any time to profit from favourable market conditions.</p>
@@ -486,10 +489,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <div class="fx-divider hidden-xs-down"></div>
 
                 <div class="row">
-        <div class="col-sm-3 push-sm-1 flex-sm-middle">
+        <div class="col-sm-3 center-text flex-sm-middle">
             <img src="/champion-static/images/binary_options/p4.svg" class="image-medium" alt="" />
         </div>
-        <div class="col-sm-6 push-sm-2 flex-sm-middle">
+        <div class="col-sm-9 flex-sm-middle">
             
                     <h4>4. Barrier(s)</h4>
                     <p>Set barrier(s) to define your position and trigger the payout you will receive</p>
@@ -506,10 +509,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <div class="fx-divider hidden-xs-down"></div>
 
                 <div class="row">
-        <div class="col-sm-3 push-sm-1 flex-sm-middle">
+        <div class="col-sm-3 center-text flex-sm-middle">
             <img src="/champion-static/images/binary_options/p5.svg" class="image-medium" alt="" />
         </div>
-        <div class="col-sm-6 push-sm-2 flex-sm-middle">
+        <div class="col-sm-9 flex-sm-middle">
             
                     <h4>5. Payout</h4>
                     <p>Each trade comes with a pre-determined payout that you will see after adjusting each parameter. You'll win the payout if your prediction is correct.</p>
@@ -518,16 +521,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </div>
     <div class="fx-divider"></div>
 
-                <div class="fx-divider-xl"></div>
+                <div class="separator fill-bg-color"></div>
                 <div class="center-text">
                     <a name="step-2"></a>
                     <h3 id="step-2">Step 2: Get your price</h3>
+                    <img src="/champion-static/images/binary_options/price.svg" class="image-small" alt="" />
                     <p>Our prices are benchmarked against the interbank options market, so you always get the most competitive prices. You'll always receive fair and transparent pricing, whatever your position.</p>
                 </div>
-                <div class="fx-divider-xl"></div>
+                <div class="separator fill-bg-color"></div>
                 <div class="center-text">
                     <a name="step-3"></a>
                     <h3 id="step-3">Step 3: Make your trade</h3>
+                    <img src="/champion-static/images/binary_options/trade.svg" class="image-small" alt="" />
                     <p>When you are satisfied with the price that you receive, execute your trade immediately. With our unique platform, there's no risk of 'slippage' or gaping markets. And most importantly, there are no hidden fees. You can also sell back any long-term trades at any time to profit from favourable market conditions.</p>
                 </div>
             </div>
