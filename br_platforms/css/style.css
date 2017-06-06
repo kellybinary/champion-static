@@ -154,6 +154,9 @@ h1.main-title {
   padding: 0;
   margin: 0;
 }
+#mobile-menu.nav-menu .nav-menu-dropdown a {
+  border-top: 1px solid #dedede;
+}
 #mobile-menu.nav-menu .nav-menu-dropdown a, #mobile-menu.nav-menu .nav-menu-dropdown span {
   display: block;
   color: #000 !important;
@@ -182,6 +185,7 @@ h1.main-title {
 #mobile-menu.nav-menu .pull-right {
   float: right;
   margin-right: 15px;
+  margin-left: -37px;
 }
 #mobile-menu.nav-menu .pull-left {
   float: left;
@@ -839,7 +843,7 @@ select[disabled=disabled] {
 }
 
 a:hover {
-  text-decoration: none !important;
+  text-decoration: none;
 }
 
 .lightbox {
@@ -937,7 +941,12 @@ ul.no-padding, ul.no-padding li {
   width: 350px;
 }
 
-.underline-link {
+a.underline-link {
+  color: #013365;
+  text-decoration: underline;
+}
+a.underline-link:hover {
+  color: #004385;
   text-decoration: underline;
 }
 
@@ -1519,7 +1528,6 @@ iframe {
 }
 #top_group.logged-in #header #all-accounts ul .separator-line-thin-gray {
   opacity: 0.5;
-  margin: 0 15px;
 }
 #top_group.logged-in ~ #champion-container {
   margin-top: 50px;
@@ -1895,6 +1903,10 @@ ul.checked.small > li {
 
 .google-play-badge {
   background-image: url("../images/buttons/googleplay.svg");
+}
+
+.button-badge {
+  padding: 0 5px;
 }
 
 .select2-container {
