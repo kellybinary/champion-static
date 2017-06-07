@@ -947,7 +947,6 @@ a.underline-link {
 }
 a.underline-link:hover {
   color: #004385;
-  text-decoration: underline;
 }
 
 .icon-ok {
