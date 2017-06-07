@@ -35146,6 +35146,7 @@
 	        userMenu();
 	        if (!Client.is_logged_in()) {
 	            $('#top_group').removeClass('logged-in').find('.logged-out').removeClass(hidden_class);
+	            $('.trading-platform-header').removeClass(hidden_class);
 	        }
 	    };
 
