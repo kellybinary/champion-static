@@ -1610,7 +1610,11 @@ ul.checked.small > li {
 #payment_methods .payment-logo {
   width: 73px;
   height: 57px;
-  background-image: url("../images/payment_methods_sprite.png");
+  margin-left: auto;
+  margin-right: auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 #payment_methods div {
   -webkit-align-self: center;
@@ -1618,88 +1622,18 @@ ul.checked.small > li {
               -ms-grid-row-align: center;
           align-self: center;
 }
-#payment_methods td {
+#payment_methods thead td {
+  padding: 20px 10px;
+  text-align: center;
+}
+#payment_methods tbody td {
   vertical-align: middle;
-}
-
-#int_bank_wire {
-  background-position: -7px -9px;
-}
-
-#local_bank_transfer {
-  background-position: -90px -9px;
-}
-
-#western_union {
-  background-position: -174px -9px;
-}
-
-#citadel {
-  background-position: -257px -9px;
-}
-
-#visa {
-  background-position: -338px -10px;
-}
-
-#mastercard {
-  background-position: -421px -11px;
-}
-
-#cuo_credit_card {
-  background-position: -108px -214px;
-}
-
-#moneybrokers {
-  background-position: -8px -72px;
-}
-
-#neteller {
-  background-position: -90px -72px;
-}
-
-#moneta {
-  background-position: -174px -72px;
-}
-
-#webmoney {
-  background-position: -257px -73px;
-}
-
-#qiwi {
-  background-position: -10px -136px;
-}
-
-#icbc {
-  background-position: -9px -348px;
-}
-
-#fastpay {
-  background-position: -12px -429px;
-}
-
-#perfect_money {
-  background-position: -106px -428px;
-}
-
-#yandex {
-  background-position: -102px -348px;
-}
-
-#paysafecard {
-  background-position: -372px -425px;
-}
-
-#okpay {
-  background-position: -285px -426px;
-}
-
-#eco_payz {
-  background-position: -106px -499px;
+  padding: 0px 10px;
+  text-align: center;
 }
 
 .fx-tab {
-  width: 140px;
+  width: 170px;
   height: 70px;
   margin-left: auto;
   margin-right: auto;
@@ -1717,7 +1651,7 @@ ul.checked.small > li {
   background-image: url("../images/payment_methods/MasterCard.svg");
 }
 
-.netellar {
+.neteller {
   background-image: url("../images/payment_methods/Neteller.svg");
 }
 
@@ -1753,6 +1687,10 @@ ul.checked.small > li {
 }
 .scrollable-tabs ul.-webkit-scrollbar {
   display: none;
+}
+
+.hint {
+  font-size: 16px !important;
 }
 
 #mt_account_management {
@@ -2934,16 +2872,10 @@ ul.checked.small > li {
   height: 100%;
   margin-bottom: 10px;
 }
-
-ul.scroll_tabs_container {
-  list-style: none;
-}
-
 .scroll_tabs_container div.scroll_tab_inner {
   height: 100%;
 }
-
-.scroll_tabs_container div.scroll_tab_inner span, .scroll_tabs_container div.scroll_tab_inner li {
+.scroll_tabs_container div.scroll_tab_inner span {
   padding-left: 20px;
   padding-right: 20px;
   line-height: 100%;
@@ -2952,48 +2884,59 @@ ul.scroll_tabs_container {
   color: #004385;
   cursor: pointer;
 }
-
 .scroll_tabs_container div.scroll_tab_inner li {
+  padding-left: 20px;
+  padding-right: 20px;
+  line-height: 100%;
+  border-left: 1px solid #f2f2f2;
+  border-top: 1px solid #f2f2f2;
+  color: #004385;
+  cursor: pointer;
   display: -moz-inline-stack;
   display: inline-block;
   *display: inline;
   list-style-type: none;
 }
-
 .scroll_tabs_container div.scroll_tab_inner span.scroll_tab_left_finisher {
   padding: 0px;
   width: 0px;
 }
-
 .scroll_tabs_container div.scroll_tab_inner span.scroll_tab_right_finisher {
   padding: 0px;
   width: 0px;
 }
-
-.scroll_tabs_container .scroll_tab_left_button, .scroll_tab_right_button {
+.scroll_tabs_container .scroll_tab_left_button {
   height: 100%;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  border: 1px solid #f2f2f2;
 }
-
 .scroll_tabs_container .scroll_tab_left_button:before {
   content: '\25C0';
   line-height: 100px;
   padding-left: 5px;
 }
-
+.scroll_tabs_container .scroll_tab_right_button {
+  height: 100%;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid #f2f2f2;
+}
 .scroll_tabs_container .scroll_tab_right_button:before {
   content: '\25B6';
   line-height: 100px;
   padding-left: 5px;
 }
-
-.scroll_tabs_container .scroll_tab_right_button_disabled {
+.scroll_tabs_container .scroll_tab_right_button_disabled, .scroll_tabs_container .scroll_tab_left_button_disabled {
   color: #fff;
   background-color: #fff;
+  border: none;
 }
 
 .tab_selected {
@@ -3008,11 +2951,17 @@ ul.scroll_tabs_container {
   overflow: hidden;
 }
 .tab-content-wrapper div {
-  width: 100%;
+  width: 120%;
   display: inline-table;
   background-color: #f2f2f2;
-  margin: 0 10px;
-  padding: 5px;
+  padding: 15px;
+}
+.tab-content-wrapper div p {
+  margin: 0;
+}
+.tab-content-wrapper div h4 {
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
 }
 @-webkit-keyframes foo {
   from {

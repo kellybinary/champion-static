@@ -36397,10 +36397,10 @@
 	                active: false
 	            });
 	            $('.scrollable-tab').scrollTabs({
-	                scroll_distance: 350,
+	                scroll_distance: 1200,
 	                scroll_duration: 350,
-	                left_arrow_size: 40,
-	                right_arrow_size: 40,
+	                left_arrow_size: 86,
+	                right_arrow_size: 86,
 	                click_callback: function click_callback(e) {
 	                    var val = $(this).find('a').attr('rel');
 	                    if (val) {
@@ -36555,6 +36555,9 @@
 	          }
 	          if ($('.scroll_tab_inner', _this).scrollLeft() == 0) {
 	            $('.scroll_tab_left_button', _this).addClass('scroll_arrow_disabled').addClass('scroll_tab_left_button_disabled');
+	            $('.scroll_tab_inner').css({
+	              'left': '0px'
+	            });
 	          } else {
 	            $('.scroll_tab_left_button', _this).removeClass('scroll_arrow_disabled').removeClass('scroll_tab_left_button_disabled');
 	          }
