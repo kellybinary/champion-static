@@ -1633,12 +1633,12 @@ ul.checked.small > li {
 }
 
 .fx-tab {
-  width: 170px;
   height: 70px;
   margin-left: auto;
   margin-right: auto;
   background-repeat: no-repeat;
   background-position: center;
+  background-size: contain;
   margin-top: 16px;
   margin-bottom: 16px;
 }
@@ -1680,6 +1680,7 @@ ul.checked.small > li {
   height: 100%;
   overflow-x: auto;
   overflow-y: hidden;
+  border: 1px solid #f2f2f2;
 }
 .scrollable-tabs ul li.ui-tabs-active {
   border-bottom: none !important;
@@ -2874,22 +2875,21 @@ ul.checked.small > li {
 }
 .scroll_tabs_container div.scroll_tab_inner {
   height: 100%;
+  left: 0px;
 }
 .scroll_tabs_container div.scroll_tab_inner span {
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
   line-height: 100%;
   border-left: 1px solid #f2f2f2;
-  border-top: 1px solid #f2f2f2;
   color: #004385;
   cursor: pointer;
 }
 .scroll_tabs_container div.scroll_tab_inner li {
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
   line-height: 100%;
   border-left: 1px solid #f2f2f2;
-  border-top: 1px solid #f2f2f2;
   color: #004385;
   cursor: pointer;
   display: -moz-inline-stack;
@@ -2906,37 +2906,31 @@ ul.checked.small > li {
   width: 0px;
 }
 .scroll_tabs_container .scroll_tab_left_button {
-  height: 100%;
+  content: url("../images/payment_methods/right_arrow.svg");
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+  height: 90%;
+  padding: 30px;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  border: 1px solid #f2f2f2;
-}
-.scroll_tabs_container .scroll_tab_left_button:before {
-  content: '\25C0';
-  line-height: 100px;
-  padding-left: 5px;
 }
 .scroll_tabs_container .scroll_tab_right_button {
-  height: 100%;
+  content: url("../images/payment_methods/right_arrow.svg");
+  height: 90%;
+  padding: 30px;
+  border-left: 1px solid #f2f2f2;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  border: 1px solid #f2f2f2;
 }
-.scroll_tabs_container .scroll_tab_right_button:before {
-  content: '\25B6';
-  line-height: 100px;
-  padding-left: 5px;
-}
-.scroll_tabs_container .scroll_tab_right_button_disabled, .scroll_tabs_container .scroll_tab_left_button_disabled {
+.scroll_tabs_container .scroll_tab_left_button_disabled, .scroll_tabs_container .scroll_tab_right_button_disabled {
+  opacity: 0;
   color: #fff;
-  background-color: #fff;
-  border: none;
 }
 
 .tab_selected {
@@ -2962,14 +2956,4 @@ ul.checked.small > li {
 .tab-content-wrapper div h4 {
   margin-top: 0.5rem;
   margin-bottom: 1rem;
-}
-@-webkit-keyframes foo {
-  from {
-    -webkit-transform: translateX(-200px);
-            transform: translateX(-200px);
-  }
-  to {
-    -webkit-transform: translateX(0px);
-            transform: translateX(0px);
-  }
 }
