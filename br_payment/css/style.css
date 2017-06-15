@@ -1608,10 +1608,8 @@ ul.checked.small > li {
   margin: 20px 0 0;
 }
 #payment_methods .payment-logo {
-  width: 73px;
-  height: 57px;
-  margin-left: auto;
-  margin-right: auto;
+  height: 40px;
+  margin: auto 15px;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -2931,6 +2929,7 @@ ul.checked.small > li {
 .scroll_tabs_container .scroll_tab_left_button_disabled, .scroll_tabs_container .scroll_tab_right_button_disabled {
   opacity: 0;
   color: #fff;
+  transition: 0.3s;
 }
 
 .tab_selected {
@@ -2956,4 +2955,47 @@ ul.checked.small > li {
 .tab-content-wrapper div h4 {
   margin-top: 0.5rem;
   margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.ui-accordion-header {
+  background-image: none !important;
+  position: relative !important;
+  padding: 10px 40px !important;
+  border: 1px solid #fff !important;
+  color: #004385 !important;
+  font-weight: bold !important;
+}
+.ui-accordion-header .ui-icon {
+  width: 8px !important;
+  height: 16px;
+  display: block !important;
+  visibility: visible !important;
+  background-size: contain;
+  position: absolute !important;
+  top: 50% !important;
+  left: 1em !important;
+}
+.ui-accordion-header .ui-arrow-up {
+  background-image: url("../images/payment_methods/right_arrow.svg");
+  -webkit-transform: rotateZ(270deg);
+          transform: rotateZ(270deg);
+  transition: 0.3s;
+}
+.ui-accordion-header .ui-arrow-down {
+  background-image: url("../images/payment_methods/right_arrow.svg");
+  -webkit-transform: rotateZ(90deg);
+          transform: rotateZ(90deg);
+  transition: 0.3s;
+}
+
+.ui-widget-content {
+  background-color: #f2f2f2;
+  border: 1px solid #f2f2f2 !important;
+}
+
+.ui-accordion-header-active {
+  background-color: #f2f2f2 !important;
+  border-color: #f2f2f2 !important;
+  color: #013365 !important;
 }
