@@ -18472,30 +18472,30 @@
 	var CashierPassword = __webpack_require__(428);
 	var CashierDepositWithdraw = __webpack_require__(430);
 	var CashierPaymentMethods = __webpack_require__(431);
-	var CashierTopUpVirtual = __webpack_require__(434);
-	var ClientType = __webpack_require__(435);
+	var CashierTopUpVirtual = __webpack_require__(432);
+	var ClientType = __webpack_require__(433);
 	var ChampionContact = __webpack_require__(299);
-	var ChampionEndpoint = __webpack_require__(436);
-	var Home = __webpack_require__(437);
-	var LostPassword = __webpack_require__(440);
-	var MT5 = __webpack_require__(441);
-	var MT5WebPlatform = __webpack_require__(442);
-	var BinaryOptions = __webpack_require__(443);
-	var ChampionNewReal = __webpack_require__(444);
-	var ChampionNewVirtual = __webpack_require__(446);
-	var ResetPassword = __webpack_require__(447);
-	var ChampionSignup = __webpack_require__(448);
-	var TradingTimes = __webpack_require__(449);
-	var Authenticate = __webpack_require__(450);
-	var ChangePassword = __webpack_require__(451);
-	var Limits = __webpack_require__(452);
-	var LoginHistory = __webpack_require__(453);
-	var MetaTrader = __webpack_require__(454);
-	var ChampionProfile = __webpack_require__(457);
-	var ChampionSecurity = __webpack_require__(461);
-	var SelfExclusion = __webpack_require__(462);
-	var ChampionSettings = __webpack_require__(465);
-	var TNCApproval = __webpack_require__(466);
+	var ChampionEndpoint = __webpack_require__(434);
+	var Home = __webpack_require__(435);
+	var LostPassword = __webpack_require__(438);
+	var MT5 = __webpack_require__(439);
+	var MT5WebPlatform = __webpack_require__(440);
+	var BinaryOptions = __webpack_require__(441);
+	var ChampionNewReal = __webpack_require__(442);
+	var ChampionNewVirtual = __webpack_require__(444);
+	var ResetPassword = __webpack_require__(445);
+	var ChampionSignup = __webpack_require__(446);
+	var TradingTimes = __webpack_require__(447);
+	var Authenticate = __webpack_require__(448);
+	var ChangePassword = __webpack_require__(449);
+	var Limits = __webpack_require__(450);
+	var LoginHistory = __webpack_require__(451);
+	var MetaTrader = __webpack_require__(452);
+	var ChampionProfile = __webpack_require__(455);
+	var ChampionSecurity = __webpack_require__(459);
+	var SelfExclusion = __webpack_require__(460);
+	var ChampionSettings = __webpack_require__(463);
+	var TNCApproval = __webpack_require__(464);
 
 	var Champion = function () {
 	    'use strict';
@@ -36380,13 +36380,11 @@
 
 	var ChampionSocket = __webpack_require__(413);
 
-	__webpack_require__(432);
-	__webpack_require__(433);
-
 	var CashierPaymentMethods = function () {
 	    'use strict';
 
 	    var hidden_class = 'invisible';
+	    var mobile = $(window).innerWidth() < 767;
 
 	    var load = function load() {
 	        ChampionSocket.wait('authorize').then(function () {
@@ -36394,27 +36392,94 @@
 	                header: 'ui-arrow-down',
 	                activeHeader: 'ui-arrow-up'
 	            };
-	            $('#accordion').accordion({
+	            $('#payment_methods_accordian').accordion({
 	                heightStyle: 'content',
 	                collapsible: true,
 	                active: false,
 	                icons: icons
 	            });
-	            $('.scrollable-tab').scrollTabs({
-	                scroll_distance: 1000,
-	                scroll_duration: 500,
-	                left_arrow_size: 86,
-	                right_arrow_size: 86,
-	                click_callback: function click_callback(e) {
-	                    e.preventDefault();
-	                    var val = $(this).find('a').attr('rel');
-	                    if (val) {
-	                        $('.tab-content-wrapper').animate({ scrollLeft: $('.tab-content-wrapper').scrollLeft() + $(val).position().left }, 500);
-	                    }
-	                }
+
+	            $(window).on('orientationchange resize', function () {
+	                mobile = $(window).innerWidth() < 767;
 	            });
-	            $('#payment_methods_tab').removeClass(hidden_class);
+
+	            $('#payment_methods').removeClass(hidden_class);
+	            scrollContentHandler();
+	            clickToScrollHandler();
+	            swipeToScrollHandler();
 	        });
+	    };
+
+	    var scrollContentHandler = function scrollContentHandler() {
+	        $('.scrollable-tabs li').click(function (e) {
+	            e.preventDefault();
+	            var val = $(this).find('a').attr('rel');
+	            $(this).parent().find('.tab-selected').removeClass('tab-selected');
+	            $(this).addClass('tab-selected');
+	            if (val && mobile) {
+	                $('.tab-content-wrapper').animate({ scrollTop: $('.tab-content-wrapper').scrollTop() + $(val).position().top }, 350);
+	            } else {
+	                $('.tab-content-wrapper').animate({ scrollLeft: $('.tab-content-wrapper').scrollLeft() + $(val).position().left }, 500);
+	            }
+	        });
+	    };
+
+	    var clickToScrollHandler = function clickToScrollHandler() {
+	        var n = 1; // n = tab number
+	        var num_of_tabs = $('.scrollable-tabs').children().length;
+	        $('.scroll-right-button').unbind('click').click(function (e) {
+	            e.preventDefault();
+	            if (num_of_tabs > 5) {
+	                n += 5;
+	            } else {
+	                n += num_of_tabs;
+	            }
+	            if (n < num_of_tabs) {
+	                $('.scroll-left-button').removeClass(hidden_class);
+	                $(this).siblings('.col-md-11').removeClass('col-md-11').addClass('col-md-10');
+	                if (mobile) {
+	                    $('.scrollable-tabs').animate({ scrollTop: 30 + $('.scrollable-tabs').scrollTop() + $('.scrollable-tabs :nth-child(' + n + ')').position().top }, 500);
+	                } else {
+	                    $('.scrollable-tabs').animate({ scrollLeft: 30 + $('.scrollable-tabs').scrollLeft() + $('.scrollable-tabs :nth-child(' + n + ')').position().left }, 500);
+	                }
+	            }
+	            swipeToScrollHandler();
+	        });
+	        $('.scroll-left-button').unbind('click').click(function (e) {
+	            e.preventDefault();
+	            if (num_of_tabs > 5) {
+	                n -= 5;
+	            } else {
+	                n -= num_of_tabs;
+	            }
+	            n = n < 0 ? 1 : n;
+	            if (n < num_of_tabs) {
+	                $('.scroll-left-button').removeClass(hidden_class);
+	                $(this).siblings('.col-md-11').removeClass('col-md-11').addClass('col-md-10');
+	                if (mobile) {
+	                    $('.scrollable-tabs').animate({ scrollTop: -15 + $('.scrollable-tabs').scrollTop() + $('.scrollable-tabs :nth-child(' + n + ')').position().top }, 500);
+	                } else {
+	                    $('.scrollable-tabs').animate({ scrollLeft: -15 + $('.scrollable-tabs').scrollLeft() + $('.scrollable-tabs :nth-child(' + n + ')').position().left }, 500);
+	                }
+	            }
+	        });
+	    };
+
+	    var swipeToScrollHandler = function swipeToScrollHandler() {
+	        var width = Math.ceil($('.scrollable-tabs').width());
+	        $('.scrollable-tabs').scroll(function () {
+	            if ($('.scrollable-tabs :nth-child(1)').position().left === 0) {
+	                hideButton($('.scroll-left-button'));
+	            } else if ($(this).get(0).scrollWidth - $(this).scrollLeft() === width) {
+	                hideButton($('.scroll-right-button'));
+	            }
+	        });
+	    };
+
+	    var hideButton = function hideButton(element) {
+	        element.siblings('div.col-md-10').removeClass('col-md-10').addClass('col-md-11');
+	        element.siblings().removeClass(hidden_class);
+	        element.addClass(hidden_class);
 	    };
 
 	    return {
@@ -36426,516 +36491,6 @@
 
 /***/ },
 /* 432 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-	/**
-	 * SCROLL TABS
-	 *
-	 *  JQuery Plugin to manage scrollable tabs. See the 'defaultOptions' data structure for available options for configuration. The plugin is configured jointly via
-	 *  these Javascript options and CSS classes to style how it is displayed. Some of the CSS is set here in the javascript so that users will have minimal
-	 *  configuration to make the tabs themselves work, and should only have to do configuration on how they want it styled.
-	 *
-	 * Known Limitations:
-	 *  IE6 problems, it does not properly apply scrolling and therefore is always the 'full width.' Additionally, the multiple-class CSS styling does not work
-	 *  properly in IE6. We can work around this in the future by apply distinct class stylings that represent all the combinations.
-	 *
-	 * Version:   2.0
-	 * Author:    Josh Reed
-	 */
-	(function ($) {
-	    $.fn.scrollTabs = function (opts) {
-	        var initialize = function initialize(state) {
-	            var _$$css;
-
-	            opts = $.extend({}, $.fn.scrollTabs.defaultOptions, opts);
-
-	            if ($(this).prop('tagName').toLowerCase() === 'ul') {
-	                this.itemTag = 'li';
-	            } else {
-	                this.itemTag = 'span';
-	            }
-
-	            $(this).addClass('scroll_tabs_container');
-	            if ($(this).css('position') === null || $(this).css('position') === 'static') {
-	                $(this).css('position', 'relative');
-	            }
-
-	            $(this.itemTag, this).last().addClass('scroll_tab_last');
-	            $(this.itemTag, this).first().addClass('scroll_tab_first');
-
-	            $(this).html('<div class=\'scroll_tab_left_button\'></div><div class=\'scroll_tab_inner\'><span class=\'scroll_tab_left_finisher\'>&nbsp;</span>' + $(this).html() + '<span class=\'scroll_tab_right_finisher\'>&nbsp;</span></div><div class=\'scroll_tab_right_button\'></div>');
-
-	            $('.scroll_tab_inner > span.scroll_tab_left_finisher', this).css({
-	                display: 'none'
-	            });
-
-	            $('.scroll_tab_inner > span.scroll_tab_right_finisher', this).css({
-	                display: 'none'
-	            });
-
-	            var _this = this;
-
-	            $('.scroll_tab_inner', this).css({
-	                margin: '0px',
-	                overflow: 'hidden',
-	                'white-space': 'nowrap',
-	                '-ms-text-overflow': 'clip',
-	                'text-overflow': 'clip',
-	                'font-size': '0px',
-	                position: 'absolute',
-	                top: '0px',
-	                left: opts.left_arrow_size + 'px',
-	                right: opts.right_arrow_size + 'px'
-	            });
-
-	            // If mousewheel function not present, don't utilize it
-	            if ($.isFunction($.fn.mousewheel)) {
-	                $('.scroll_tab_inner', this).mousewheel(function (event, delta) {
-	                    // Only do mousewheel scrolling if scrolling is necessary
-	                    if ($('.scroll_tab_right_button', _this).css('display') !== 'none') {
-	                        this.scrollLeft -= delta * 30;
-	                        state.scrollPos = this.scrollLeft;
-	                        event.preventDefault();
-	                    }
-	                });
-	            }
-
-	            // Set initial scroll position
-	            $('.scroll_tab_inner', _this).animate({ scrollLeft: state.scrollPos + 'px' }, 0);
-
-	            $('.scroll_tab_left_button', this).css({
-	                position: 'absolute',
-	                left: '0px',
-	                top: '0px',
-	                width: opts.left_arrow_size + 'px',
-	                cursor: 'pointer'
-	            });
-
-	            $('.scroll_tab_right_button', this).css({
-	                position: 'absolute',
-	                right: '0px',
-	                top: '0px',
-	                width: opts.right_arrow_size + 'px',
-	                cursor: 'pointer'
-	            });
-
-	            $('.scroll_tab_inner > ' + _this.itemTag, _this).css((_$$css = {
-	                display: '-moz-inline-stack'
-	            }, _defineProperty(_$$css, 'display', 'inline-block'), _defineProperty(_$$css, 'zoom', 1), _defineProperty(_$$css, '*display', 'inline'), _defineProperty(_$$css, '_height', '40px'), _defineProperty(_$$css, '-webkit-user-select', 'none'), _defineProperty(_$$css, '-khtml-user-select', 'none'), _defineProperty(_$$css, '-moz-user-select', 'none'), _defineProperty(_$$css, '-ms-user-select', 'none'), _defineProperty(_$$css, '-o-user-select', 'none'), _defineProperty(_$$css, 'user-select', 'none'), _$$css));
-
-	            var size_checking = function size_checking() {
-	                var panel_width = $('.scroll_tab_inner', _this).outerWidth();
-
-	                if ($('.scroll_tab_inner', _this)[0].scrollWidth > panel_width) {
-	                    $('.scroll_tab_right_button', _this).show();
-	                    $('.scroll_tab_left_button', _this).show();
-	                    $('.scroll_tab_inner', _this).css({
-	                        left: opts.left_arrow_size + 'px',
-	                        right: opts.right_arrow_size + 'px'
-	                    });
-	                    $('.scroll_tab_left_finisher', _this).css('display', 'none');
-	                    $('.scroll_tab_right_finisher', _this).css('display', 'none');
-
-	                    if ($('.scroll_tab_inner', _this)[0].scrollWidth - panel_width == $('.scroll_tab_inner', _this).scrollLeft()) {
-	                        $('.scroll_tab_right_button', _this).addClass('scroll_arrow_disabled').addClass('scroll_tab_right_button_disabled');
-	                    } else {
-	                        $('.scroll_tab_right_button', _this).removeClass('scroll_arrow_disabled').removeClass('scroll_tab_right_button_disabled');
-	                    }
-	                    if ($('.scroll_tab_inner', _this).scrollLeft() == 0) {
-	                        $('.scroll_tab_left_button', _this).addClass('scroll_arrow_disabled').addClass('scroll_tab_left_button_disabled');
-	                    } else {
-	                        $('.scroll_tab_left_button', _this).removeClass('scroll_arrow_disabled').removeClass('scroll_tab_left_button_disabled');
-	                    }
-	                } else {
-	                    $('.scroll_tab_right_button', _this).hide();
-	                    $('.scroll_tab_left_button', _this).hide();
-	                    $('.scroll_tab_inner', _this).css({ left: '0px', right: '0px' });
-
-	                    if ($('.scroll_tab_inner > ' + _this.itemTag + ':not(.scroll_tab_right_finisher):not(.scroll_tab_left_finisher):visible', _this).length > 0) {
-	                        $('.scroll_tab_left_finisher', _this).css('display', 'inline-block');
-	                        $('.scroll_tab_right_finisher', _this).css('display', 'inline-block');
-	                    }
-	                }
-	            };
-
-	            size_checking();
-
-	            state.delay_timer = setInterval(function () {
-	                size_checking();
-	            }, 500);
-
-	            var press_and_hold_timeout = void 0;
-
-	            $('.scroll_tab_right_button', this).mousedown(function (e) {
-	                e.stopPropagation();
-	                var scrollRightFunc = function scrollRightFunc() {
-	                    var left = $('.scroll_tab_inner', _this).scrollLeft();
-	                    state.scrollPos = Math.min(left + opts.scroll_distance, $('.scroll_tab_inner', _this)[0].scrollWidth - $('.scroll_tab_inner', _this).outerWidth());
-	                    $('.scroll_tab_inner', _this).animate({ scrollLeft: left + opts.scroll_distance + 'px' }, opts.scroll_duration);
-	                };
-	                scrollRightFunc();
-
-	                press_and_hold_timeout = setInterval(function () {
-	                    scrollRightFunc();
-	                }, opts.scroll_duration);
-	            }).bind('mouseup mouseleave', function () {
-	                clearInterval(press_and_hold_timeout);
-	            }).mouseover(function () {
-	                $(this).addClass('scroll_arrow_over').addClass('scroll_tab_right_button_over');
-	            }).mouseout(function () {
-	                $(this).removeClass('scroll_arrow_over').removeClass('scroll_tab_right_button_over');
-	            });
-
-	            $('.scroll_tab_left_button', this).mousedown(function (e) {
-	                e.stopPropagation();
-	                var scrollLeftFunc = function scrollLeftFunc() {
-	                    var left = $('.scroll_tab_inner', _this).scrollLeft();
-	                    state.scrollPos = Math.max(left - opts.scroll_distance, 0);
-	                    $('.scroll_tab_inner', _this).animate({ scrollLeft: left - opts.scroll_distance + 'px' }, opts.scroll_duration);
-	                };
-	                scrollLeftFunc();
-
-	                press_and_hold_timeout = setInterval(function () {
-	                    scrollLeftFunc();
-	                }, opts.scroll_duration);
-	            }).bind('mouseup mouseleave', function () {
-	                clearInterval(press_and_hold_timeout);
-	            }).mouseover(function () {
-	                $(this).addClass('scroll_arrow_over').addClass('scroll_tab_left_button_over');
-	            }).mouseout(function () {
-	                $(this).removeClass('scroll_arrow_over').removeClass('scroll_tab_left_button_over');
-	            });
-
-	            $('.scroll_tab_inner > ' + this.itemTag + (this.itemTag !== 'span' ? ', .scroll_tab_inner > span' : ''), this).mouseover(function () {
-	                $(this).addClass('scroll_tab_over');
-	                if ($(this).hasClass('scroll_tab_left_finisher')) {
-	                    $('.scroll_tab_inner > ' + _this.itemTag + '.scroll_tab_first', _this).addClass('scroll_tab_over').addClass('scroll_tab_first_over');
-	                }
-	                if ($(this).hasClass('scroll_tab_right_finisher')) {
-	                    $('.scroll_tab_inner > ' + _this.itemTag + '.scroll_tab_last', _this).addClass('scroll_tab_over').addClass('scroll_tab_last_over');
-	                }
-	                if ($(this).hasClass('scroll_tab_first') || $('.scroll_tab_inner > ' + _this.itemTag + '.scroll_tab_last', _this).hasClass('scroll_tab_first')) {
-	                    $('.scroll_tab_inner > span.scroll_tab_left_finisher', _this).addClass('scroll_tab_over').addClass('scroll_tab_left_finisher_over');
-	                }
-	                if ($(this).hasClass('scroll_tab_last') || $('.scroll_tab_inner > ' + _this.itemTag + '.scroll_tab_first', _this).hasClass('scroll_tab_last')) {
-	                    $('.scroll_tab_inner > span.scroll_tab_right_finisher', _this).addClass('scroll_tab_over').addClass('scroll_tab_right_finisher_over');
-	                }
-	            }).mouseout(function () {
-	                $(this).removeClass('scroll_tab_over');
-	                if ($(this).hasClass('scroll_tab_left_finisher')) {
-	                    $('.scroll_tab_inner > ' + _this.itemTag + '.scroll_tab_first', _this).removeClass('scroll_tab_over').removeClass('scroll_tab_first_over');
-	                }
-	                if ($(this).hasClass('scroll_tab_right_finisher')) {
-	                    $('.scroll_tab_inner > ' + _this.itemTag + '.scroll_tab_last', _this).removeClass('scroll_tab_over').removeClass('scroll_tab_last_over');
-	                }
-	                if ($(this).hasClass('scroll_tab_first') || $('.scroll_tab_inner > ' + _this.itemTag + '.scroll_tab_last', _this).hasClass('scroll_tab_first')) {
-	                    $('.scroll_tab_inner > span.scroll_tab_left_finisher', _this).removeClass('scroll_tab_over').removeClass('scroll_tab_left_finisher_over');
-	                }
-	                if ($(this).hasClass('scroll_tab_last') || $('.scroll_tab_inner > ' + _this.itemTag + '.scroll_tab_first', _this).hasClass('scroll_tab_last')) {
-	                    $('.scroll_tab_inner > span.scroll_tab_right_finisher', _this).removeClass('scroll_tab_over').removeClass('scroll_tab_right_finisher_over');
-	                }
-	            }).click(function (e) {
-	                e.stopPropagation();
-	                $('.tab_selected', _this).removeClass('tab_selected scroll_tab_first_selected scroll_tab_last_selected scroll_tab_left_finisher_selected scroll_tab_right_finisher_selected');
-	                $(this).addClass('tab_selected');
-
-	                var context_obj = this;
-	                if ($(this).hasClass('scroll_tab_left_finisher')) {
-	                    context_obj = $('.scroll_tab_inner > ' + _this.itemTag + '.scroll_tab_first', _this).addClass('tab_selected').addClass('scroll_tab_first_selected');
-	                }
-	                if ($(this).hasClass('scroll_tab_right_finisher')) {
-	                    context_obj = $('.scroll_tab_inner > ' + _this.itemTag + '.scroll_tab_last', _this).addClass('tab_selected').addClass('scroll_tab_last_selected');
-	                }
-	                if ($(this).hasClass('scroll_tab_first') || $('.scroll_tab_inner > ' + _this.itemTag + '.scroll_tab_last', _this).hasClass('scroll_tab_first')) {
-	                    $('.scroll_tab_inner > span.scroll_tab_left_finisher', _this).addClass('tab_selected').addClass('scroll_tab_left_finisher_selected');
-	                }
-	                if ($(this).hasClass('scroll_tab_last') || $('.scroll_tab_inner > ' + _this.itemTag + '.scroll_tab_first', _this).hasClass('scroll_tab_last')) {
-	                    $('.scroll_tab_inner > span.scroll_tab_right_finisher', _this).addClass('tab_selected').addClass('scroll_tab_left_finisher_selected');
-	                }
-
-	                // "Slide" it into view if not fully visible.
-	                scroll_selected_into_view.call(_this, state);
-
-	                opts.click_callback.call(context_obj, e);
-	            });
-
-	            // Check to set the edges as selected if needed
-	            if ($('.scroll_tab_inner > ' + _this.itemTag + '.scroll_tab_first', _this).hasClass('tab_selected')) {
-	                $('.scroll_tab_inner > ' + _this.itemTag + '.scroll_tab_left_finisher', _this).addClass('tab_selected').addClass('scroll_tab_left_finisher_selected');
-	            }
-	            if ($('.scroll_tab_inner > ' + _this.itemTag + '.scroll_tab_last', _this).hasClass('tab_selected')) {
-	                $('.scroll_tab_inner > ' + _this.itemTag + '.scroll_tab_right_finisher', _this).addClass('tab_selected').addClass('scroll_tab_right_finisher_selected');
-	            }
-	        };
-
-	        var scroll_selected_into_view = function scroll_selected_into_view(state) {
-	            var _this = this;
-
-	            var selected_item = $('.tab_selected:not(.scroll_tab_right_finisher, .scroll_tab_left_finisher)', _this);
-
-	            var left = $('.scroll_tab_inner', _this).scrollLeft();
-	            var scroll_width = $('.scroll_tab_inner', _this).width();
-	            if (selected_item && typeof selected_item !== 'undefined' && selected_item.position() && typeof selected_item.position() !== 'undefined') {
-	                if (selected_item.position().left < 0) {
-	                    state.scrollPos = Math.max(left + selected_item.position().left + 1, 0);
-	                    $('.scroll_tab_inner', _this).animate({ scrollLeft: left + selected_item.position().left + 1 + 'px' }, opts.scroll_duration);
-	                } else if (selected_item.position().left + selected_item.outerWidth() > scroll_width) {
-	                    state.scrollPos = Math.min(left + (selected_item.position().left + selected_item.outerWidth() - scroll_width), $('.scroll_tab_inner', _this)[0].scrollWidth - $('.scroll_tab_inner', _this).outerWidth());
-	                    $('.scroll_tab_inner', _this).animate({
-	                        scrollLeft: left + (selected_item.position().left + selected_item.outerWidth() - scroll_width) + 'px'
-	                    }, opts.scroll_duration);
-	                }
-	            }
-	        };
-
-	        var ret = [];
-
-	        this.each(function () {
-	            var backup = $(this).html();
-
-	            var state = {};
-	            state.scrollPos = 0;
-	            initialize.call(this, state);
-
-	            var context_obj = this;
-
-	            ret.push({
-	                domObject: context_obj,
-	                state: state,
-	                addTab: function addTab(html, position) {
-	                    if (typeof position === 'undefined') {
-	                        position = $('.scroll_tab_inner > ' + context_obj.itemTag, context_obj).length - (context_obj.itemTag === 'span' ? 2 : 0);
-	                    }
-
-	                    $('.scroll_tab_inner > ' + context_obj.itemTag + '.scroll_tab_last', context_obj).removeClass('scroll_tab_last');
-	                    $('.scroll_tab_inner > ' + context_obj.itemTag + '.scroll_tab_first', context_obj).removeClass('scroll_tab_first');
-	                    backup = '';
-	                    var count = 0;
-	                    $('.scroll_tab_inner > ' + context_obj.itemTag, context_obj).each(function () {
-	                        if ($(this).hasClass('scroll_tab_left_finisher') || $(this).hasClass('scroll_tab_right_finisher')) {
-	                            return true;
-	                        }
-	                        if (position == count) {
-	                            backup += html;
-	                        }
-	                        backup += $(this).clone().wrap('<div>').parent().html();
-	                        count++;
-	                    });
-
-	                    if (position >= count) backup += html;
-
-	                    this.destroy();
-	                    initialize.call(context_obj, state);
-	                    this.refreshFirstLast();
-	                },
-	                removeTabs: function removeTabs(jquery_selector_str) {
-	                    $('.scroll_tab_left_finisher', context_obj).remove();
-	                    $('.scroll_tab_right_finisher', context_obj).remove();
-
-	                    $(jquery_selector_str, context_obj).remove();
-
-	                    $('.scroll_tab_inner > ' + context_obj.itemTag + '.scroll_tab_last', context_obj).removeClass('scroll_tab_last');
-	                    $('.scroll_tab_inner > ' + context_obj.itemTag + '.scroll_tab_first', context_obj).removeClass('scroll_tab_first');
-
-	                    this.refreshState();
-	                },
-	                destroy: function destroy() {
-	                    clearInterval(state.delay_timer);
-	                    $(context_obj).html(backup);
-	                    $(context_obj).removeClass('scroll_tabs_container');
-	                },
-	                refreshState: function refreshState() {
-	                    $('.scroll_tab_inner > ' + context_obj.itemTag + '.scroll_tab_last', context_obj).removeClass('scroll_tab_last');
-	                    $('.scroll_tab_inner > ' + context_obj.itemTag + '.scroll_tab_first', context_obj).removeClass('scroll_tab_first');
-	                    backup = $('.scroll_tab_inner', context_obj).html();
-	                    this.destroy();
-	                    initialize.call(context_obj, state);
-	                    this.refreshFirstLast();
-	                },
-	                clearTabs: function clearTabs() {
-	                    backup = '';
-	                    this.destroy();
-	                    initialize.call(context_obj, state);
-	                    this.refreshFirstLast();
-	                },
-	                refreshFirstLast: function refreshFirstLast() {
-	                    var old_last_item = $('.scroll_tab_inner > ' + context_obj.itemTag + '.scroll_tab_last', context_obj);
-	                    var old_first_item = $('.scroll_tab_inner > ' + context_obj.itemTag + '.scroll_tab_first', context_obj);
-
-	                    old_last_item.removeClass('scroll_tab_last');
-	                    old_first_item.removeClass('scroll_tab_first');
-
-	                    if (old_last_item.hasClass('tab_selected')) {
-	                        $('.scroll_tab_inner > span.scroll_tab_right_finisher', context_obj).removeClass('tab_selected scroll_tab_right_finisher_selected');
-	                    }
-	                    if (old_first_item.hasClass('tab_selected')) {
-	                        $('.scroll_tab_inner > span.scroll_tab_left_finisher', context_obj).removeClass('tab_selected scroll_tab_left_finisher_selected');
-	                    }
-
-	                    if ($('.scroll_tab_inner > ' + context_obj.itemTag + ':not(.scroll_tab_right_finisher):not(.scroll_tab_left_finisher):visible', context_obj).length > 0) {
-	                        var new_last_item = $('.scroll_tab_inner > ' + context_obj.itemTag + ':not(.scroll_tab_right_finisher):visible', context_obj).last();
-	                        var new_first_item = $('.scroll_tab_inner > ' + context_obj.itemTag + ':not(.scroll_tab_left_finisher):visible', context_obj).first();
-
-	                        new_last_item.addClass('scroll_tab_last');
-	                        new_first_item.addClass('scroll_tab_first');
-
-	                        if (new_last_item.hasClass('tab_selected')) {
-	                            $('.scroll_tab_inner > span.scroll_tab_right_finisher', context_obj).addClass('tab_selected').addClass('scroll_tab_right_finisher_selected');
-	                        }
-	                        if (new_first_item.hasClass('tab_selected')) {
-	                            $('.scroll_tab_inner > span.scroll_tab_left_finisher', context_obj).addClass('tab_selected').addClass('scroll_tab_right_finisher_selected');
-	                        }
-	                    } else {
-	                        $('.scroll_tab_inner > span.scroll_tab_right_finisher', context_obj).hide();
-	                        $('.scroll_tab_inner > span.scroll_tab_left_finisher', context_obj).hide();
-	                    }
-	                },
-	                hideTabs: function hideTabs(domObj) {
-	                    $(domObj, context_obj).css('display', 'none');
-	                    this.refreshFirstLast();
-	                },
-	                showTabs: function showTabs(domObj) {
-	                    var _$$css2;
-
-	                    $(domObj, context_obj).css((_$$css2 = {
-	                        display: '-moz-inline-stack'
-	                    }, _defineProperty(_$$css2, 'display', 'inline-block'), _defineProperty(_$$css2, '*display', 'inline'), _$$css2));
-	                    this.refreshFirstLast();
-	                },
-	                scrollSelectedIntoView: function scrollSelectedIntoView() {
-	                    scroll_selected_into_view.call(context_obj, state);
-	                }
-	            });
-	        });
-
-	        if (this.length == 1) {
-	            return ret[0];
-	        }
-	        return ret;
-	    };
-
-	    $.fn.scrollTabs.defaultOptions = {
-	        scroll_distance: 300,
-	        scroll_duration: 300,
-	        left_arrow_size: 26,
-	        right_arrow_size: 26,
-	        click_callback: function click_callback(e) {
-	            var val = $(this).attr('rel');
-	            if (val) {
-	                window.location.href = val;
-	            }
-	        }
-	    };
-	})(jQuery);
-
-/***/ },
-/* 433 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	/*! Copyright (c) 2011 Brandon Aaron (http://brandonaaron.net)
-	 * Licensed under the MIT License (LICENSE.txt).
-	 *
-	 * Thanks to: http://adomas.org/javascript-mouse-wheel/ for some pointers.
-	 * Thanks to: Mathias Bank(http://www.mathias-bank.de) for a scope bug fix.
-	 * Thanks to: Seamus Leahy for adding deltaX and deltaY
-	 *
-	 * Version: 3.0.6
-	 * 
-	 * Requires: 1.2.2+
-	 */
-
-	(function ($) {
-
-	    var types = ['DOMMouseScroll', 'mousewheel'];
-
-	    if ($.event.fixHooks) {
-	        for (var i = types.length; i;) {
-	            $.event.fixHooks[types[--i]] = $.event.mouseHooks;
-	        }
-	    }
-
-	    $.event.special.mousewheel = {
-	        setup: function setup() {
-	            if (this.addEventListener) {
-	                for (var i = types.length; i;) {
-	                    this.addEventListener(types[--i], handler, false);
-	                }
-	            } else {
-	                this.onmousewheel = handler;
-	            }
-	        },
-
-	        teardown: function teardown() {
-	            if (this.removeEventListener) {
-	                for (var i = types.length; i;) {
-	                    this.removeEventListener(types[--i], handler, false);
-	                }
-	            } else {
-	                this.onmousewheel = null;
-	            }
-	        }
-	    };
-
-	    $.fn.extend({
-	        mousewheel: function mousewheel(fn) {
-	            return fn ? this.bind("mousewheel", fn) : this.trigger("mousewheel");
-	        },
-
-	        unmousewheel: function unmousewheel(fn) {
-	            return this.unbind("mousewheel", fn);
-	        }
-	    });
-
-	    function handler(event) {
-	        var orgEvent = event || window.event,
-	            args = [].slice.call(arguments, 1),
-	            delta = 0,
-	            returnValue = true,
-	            deltaX = 0,
-	            deltaY = 0;
-	        event = $.event.fix(orgEvent);
-	        event.type = "mousewheel";
-
-	        // Old school scrollwheel delta
-	        if (orgEvent.wheelDelta) {
-	            delta = orgEvent.wheelDelta / 120;
-	        }
-	        if (orgEvent.detail) {
-	            delta = -orgEvent.detail / 3;
-	        }
-
-	        // New school multidimensional scroll (touchpads) deltas
-	        deltaY = delta;
-
-	        // Gecko
-	        if (orgEvent.axis !== undefined && orgEvent.axis === orgEvent.HORIZONTAL_AXIS) {
-	            deltaY = 0;
-	            deltaX = -1 * delta;
-	        }
-
-	        // Webkit
-	        if (orgEvent.wheelDeltaY !== undefined) {
-	            deltaY = orgEvent.wheelDeltaY / 120;
-	        }
-	        if (orgEvent.wheelDeltaX !== undefined) {
-	            deltaX = -1 * orgEvent.wheelDeltaX / 120;
-	        }
-
-	        // Add event and delta to the front of the arguments
-	        args.unshift(event, delta, deltaX, deltaY);
-
-	        return ($.event.dispatch || $.event.handle).apply(this, args);
-	    }
-	})(jQuery);
-
-/***/ },
-/* 434 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36982,7 +36537,7 @@
 	module.exports = CashierTopUpVirtual;
 
 /***/ },
-/* 435 */
+/* 433 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37020,7 +36575,7 @@
 	module.exports = ClientType;
 
 /***/ },
-/* 436 */
+/* 434 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37085,12 +36640,12 @@
 	module.exports = ChampionEndpoint;
 
 /***/ },
-/* 437 */
+/* 435 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Slider = __webpack_require__(438);
+	var Slider = __webpack_require__(436);
 
 	var Home = function () {
 	    'use strict';
@@ -37118,12 +36673,12 @@
 	module.exports = Home;
 
 /***/ },
-/* 438 */
+/* 436 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	__webpack_require__(439);
+	__webpack_require__(437);
 
 	var Slider = function () {
 	    var init = function init() {
@@ -37191,7 +36746,7 @@
 	module.exports = Slider;
 
 /***/ },
-/* 439 */
+/* 437 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
@@ -39829,7 +39384,7 @@
 	});
 
 /***/ },
-/* 440 */
+/* 438 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39891,7 +39446,7 @@
 	module.exports = LostPassword;
 
 /***/ },
-/* 441 */
+/* 439 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -39911,7 +39466,7 @@
 	module.exports = MT5;
 
 /***/ },
-/* 442 */
+/* 440 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39951,7 +39506,7 @@
 	module.exports = MT5WebPlatform;
 
 /***/ },
-/* 443 */
+/* 441 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -39971,7 +39526,7 @@
 	module.exports = BinaryOptions;
 
 /***/ },
-/* 444 */
+/* 442 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39982,7 +39537,7 @@
 	var Utility = __webpack_require__(417);
 	var default_redirect_url = __webpack_require__(419).default_redirect_url;
 	var Validation = __webpack_require__(429);
-	var DatePicker = __webpack_require__(445).DatePicker;
+	var DatePicker = __webpack_require__(443).DatePicker;
 
 	var ChampionNewRealAccount = function () {
 	    'use strict';
@@ -40136,7 +39691,7 @@
 	module.exports = ChampionNewRealAccount;
 
 /***/ },
-/* 445 */
+/* 443 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40300,7 +39855,7 @@
 	};
 
 /***/ },
-/* 446 */
+/* 444 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40389,7 +39944,7 @@
 	module.exports = ChampionNewVirtualAccount;
 
 /***/ },
-/* 447 */
+/* 445 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40398,7 +39953,7 @@
 	var Validation = __webpack_require__(429);
 	var ChampionSocket = __webpack_require__(413);
 	var Login = __webpack_require__(421);
-	var DatePicker = __webpack_require__(445).DatePicker;
+	var DatePicker = __webpack_require__(443).DatePicker;
 	var Utility = __webpack_require__(417);
 	var moment = __webpack_require__(302);
 
@@ -40501,7 +40056,7 @@
 	module.exports = ResetPassword;
 
 /***/ },
-/* 448 */
+/* 446 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40588,13 +40143,13 @@
 	module.exports = ChampionSignup;
 
 /***/ },
-/* 449 */
+/* 447 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var ChampionSocket = __webpack_require__(413);
-	var DatePicker = __webpack_require__(445).DatePicker;
+	var DatePicker = __webpack_require__(443).DatePicker;
 	var moment = __webpack_require__(302);
 
 	var TradingTimes = function () {
@@ -40709,7 +40264,7 @@
 	module.exports = TradingTimes;
 
 /***/ },
-/* 450 */
+/* 448 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40746,7 +40301,7 @@
 	module.exports = Authenticate;
 
 /***/ },
-/* 451 */
+/* 449 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40814,7 +40369,7 @@
 	module.exports = ChangePassword;
 
 /***/ },
-/* 452 */
+/* 450 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40902,7 +40457,7 @@
 	module.exports = Limits;
 
 /***/ },
-/* 453 */
+/* 451 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41001,13 +40556,13 @@
 	module.exports = LoginHistory;
 
 /***/ },
-/* 454 */
+/* 452 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var MetaTraderConfig = __webpack_require__(455);
-	var MetaTraderUI = __webpack_require__(456);
+	var MetaTraderConfig = __webpack_require__(453);
+	var MetaTraderUI = __webpack_require__(454);
 	var Client = __webpack_require__(301);
 	var ChampionSocket = __webpack_require__(413);
 	var State = __webpack_require__(416).State;
@@ -41139,7 +40694,7 @@
 	module.exports = MetaTrader;
 
 /***/ },
-/* 455 */
+/* 453 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41359,12 +40914,12 @@
 	module.exports = MetaTraderConfig;
 
 /***/ },
-/* 456 */
+/* 454 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var MetaTraderConfig = __webpack_require__(455);
+	var MetaTraderConfig = __webpack_require__(453);
 	var Client = __webpack_require__(301);
 	var formatMoney = __webpack_require__(423).formatMoney;
 	var showLoadingImage = __webpack_require__(417).showLoadingImage;
@@ -41613,15 +41168,15 @@
 	module.exports = MetaTraderUI;
 
 /***/ },
-/* 457 */
+/* 455 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var Client = __webpack_require__(301);
 	var showLoadingImage = __webpack_require__(417).showLoadingImage;
-	var FinancialAssessment = __webpack_require__(458);
-	var PersonalDetails = __webpack_require__(459);
+	var FinancialAssessment = __webpack_require__(456);
+	var PersonalDetails = __webpack_require__(457);
 
 	var Profile = function () {
 	    'use strict';
@@ -41673,7 +41228,7 @@
 	module.exports = Profile;
 
 /***/ },
-/* 458 */
+/* 456 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41826,7 +41381,7 @@
 	module.exports = FinancialAssessment;
 
 /***/ },
-/* 459 */
+/* 457 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41837,7 +41392,7 @@
 	var ChampionSocket = __webpack_require__(413);
 	var Validation = __webpack_require__(429);
 	var moment = __webpack_require__(302);
-	__webpack_require__(460);
+	__webpack_require__(458);
 
 	var PersonalDetails = function () {
 	    'use strict';
@@ -42035,7 +41590,7 @@
 	module.exports = PersonalDetails;
 
 /***/ },
-/* 460 */
+/* 458 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var require;var require;/*!
@@ -47766,7 +47321,7 @@
 
 
 /***/ },
-/* 461 */
+/* 459 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47794,18 +47349,18 @@
 	module.exports = ChampionSecurity;
 
 /***/ },
-/* 462 */
+/* 460 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var moment = __webpack_require__(302);
 	var Client = __webpack_require__(301);
-	var FormManager = __webpack_require__(463);
+	var FormManager = __webpack_require__(461);
 	var ChampionSocket = __webpack_require__(413);
 	var dateValueChanged = __webpack_require__(417).dateValueChanged;
-	var DatePicker = __webpack_require__(445).DatePicker;
-	var TimePicker = __webpack_require__(464);
+	var DatePicker = __webpack_require__(443).DatePicker;
+	var TimePicker = __webpack_require__(462);
 
 	var SelfExclusion = function () {
 	    'use strict';
@@ -48024,7 +47579,7 @@
 	module.exports = SelfExclusion;
 
 /***/ },
-/* 463 */
+/* 461 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48169,7 +47724,7 @@
 	module.exports = FormManager;
 
 /***/ },
-/* 464 */
+/* 462 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48312,7 +47867,7 @@
 	module.exports = TimePicker;
 
 /***/ },
-/* 465 */
+/* 463 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48342,7 +47897,7 @@
 	module.exports = ChampionSettings;
 
 /***/ },
-/* 466 */
+/* 464 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
