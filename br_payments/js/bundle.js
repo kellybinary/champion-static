@@ -36467,7 +36467,7 @@
 
 	    var swipeToScrollHandler = function swipeToScrollHandler() {
 	        var height = Math.ceil($('.scrollable-tabs').height());
-	        var width = Math.ceil($('.scrollable-tabs').width());
+	        var width = Math.floor($('.scrollable-tabs').width());
 	        $('.scrollable-tabs').scroll(function () {
 	            if (mobile) {
 	                if ($('.scrollable-tabs :nth-child(1)').position().top === 0) {
