@@ -1681,6 +1681,7 @@ ul.checked.small > li {
 #payment_methods .horizontal-tab {
   height: 65px;
   border: 1px solid #f2f2f2;
+  transition: width 0.5s;
 }
 #payment_methods .horizontal-tab .horizontal-tab-buttons {
   overflow: hidden;
@@ -1695,9 +1696,11 @@ ul.checked.small > li {
   padding: 0;
 }
 #payment_methods .scroll-right-button {
+  cursor: pointer;
   border-left: 1px solid #f2f2f2;
 }
 #payment_methods .scroll-left-button {
+  cursor: pointer;
   border-right: 1px solid #f2f2f2;
 }
 #payment_methods ul {

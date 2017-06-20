@@ -57,6 +57,20 @@
 
 	$(window).on('load', Champion.init);
 
+	$.fn.scrollEnd = function (callback, timeout) {
+	    $(this).scroll(function (e) {
+	        var _this = this;
+
+	        var $this = $(this);
+	        if ($this.data('scrollTimeout')) {
+	            clearTimeout($this.data('scrollTimeout'));
+	        }
+	        $this.data('scrollTimeout', setTimeout(function () {
+	            return callback.call(_this, e);
+	        }, timeout));
+	    });
+	};
+
 /***/ },
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
@@ -36378,17 +36392,29 @@
 
 	'use strict';
 
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 	var ChampionSocket = __webpack_require__(413);
 
 	var CashierPaymentMethods = function () {
 	    'use strict';
 
+	    var VIEWPORT_TABS = 6;
 	    var hidden_class = 'invisible';
-	    var mobile = $(window).innerWidth() < 767;
-	    var n = 1; // n = tab number
+	    var $container = void 0;
+	    var $previousButton = void 0;
+	    var $nextButton = void 0;
+	    var isVertical = void 0;
+	    var currentFirstTab = void 0;
 
 	    var load = function load() {
 	        ChampionSocket.wait('authorize').then(function () {
+	            $container = $('.scrollable-tabs');
+	            $previousButton = $('.scroll-left-button');
+	            $nextButton = $('.scroll-right-button');
+	            isVertical = $(window).innerWidth() < 767;
+	            currentFirstTab = 1;
+
 	            var icons = {
 	                header: 'ui-arrow-down',
 	                activeHeader: 'ui-arrow-up'
@@ -36401,99 +36427,115 @@
 	            });
 
 	            $(window).on('orientationchange resize', function () {
-	                mobile = $(window).innerWidth() < 767;
+	                isVertical = $(window).innerWidth() < 767;
 	            });
 
 	            $('#payment_methods').removeClass(hidden_class);
-	            scrollContentHandler();
-	            clickToScrollHandler();
-	            swipeToScrollHandler();
+	            scrollTabContents();
+	            $nextButton.unbind('click').click(scrollHandler(true));
+	            $previousButton.unbind('click').click(scrollHandler(false));
+	            $container.scrollEnd(toggleNextAndPrevious, 50);
 	        });
 	    };
 
-	    var scrollContentHandler = function scrollContentHandler() {
-	        $('.scrollable-tabs li').click(function (e) {
+	    var scrollTabContents = function scrollTabContents() {
+	        var $tab_content = $('.tab-content-wrapper');
+	        $container.find('li').click(function (e) {
 	            e.preventDefault();
 	            var val = $(this).find('a').attr('rel');
-	            $(this).parent().find('.tab-selected').removeClass('tab-selected');
-	            $(this).addClass('tab-selected');
-	            if (val && mobile) {
-	                $('.tab-content-wrapper').animate({ scrollTop: $('.tab-content-wrapper').scrollTop() + $(val).position().top }, 350);
-	            } else {
-	                $('.tab-content-wrapper').animate({ scrollLeft: $('.tab-content-wrapper').scrollLeft() + $(val).position().left }, 500);
-	            }
-	        });
-	    };
-
-	    var clickToScrollHandler = function clickToScrollHandler() {
-	        var num_of_tabs = $('.scrollable-tabs').children().length;
-	        $('.scroll-right-button').unbind('click').click(function (e) {
-	            e.preventDefault();
-	            if (num_of_tabs > 5) {
-	                n += 5;
-	            } else {
-	                n += num_of_tabs;
-	            }
-	            if (n < num_of_tabs) {
-	                $('.scroll-left-button').removeClass(hidden_class);
-	                $(this).siblings('.col-md-11').removeClass('col-md-11').addClass('col-md-10');
-	                if (mobile) {
-	                    $('.scrollable-tabs').animate({ scrollTop: $('.scrollable-tabs').scrollTop() + $('.scrollable-tabs :nth-child(' + n + ')').position().top }, 500);
-	                } else {
-	                    $('.scrollable-tabs').animate({ scrollLeft: $('.scrollable-tabs').scrollLeft() + $('.scrollable-tabs :nth-child(' + n + ')').position().left }, 500);
-	                }
-	            }
-	            swipeToScrollHandler();
-	        });
-	        $('.scroll-left-button').unbind('click').click(function (e) {
-	            e.preventDefault();
-	            if (num_of_tabs > 5) {
-	                n -= 5;
-	            } else {
-	                n -= num_of_tabs;
-	            }
-	            n = n < 0 ? 1 : n;
-	            if (n < num_of_tabs) {
-	                $('.scroll-left-button').removeClass(hidden_class);
-	                $(this).siblings('.col-md-11').removeClass('col-md-11').addClass('col-md-10');
-	                if (mobile) {
-	                    $('.scrollable-tabs').animate({ scrollTop: $('.scrollable-tabs').scrollTop() + $('.scrollable-tabs :nth-child(' + n + ')').position().top }, 500);
-	                } else {
-	                    $('.scrollable-tabs').animate({ scrollLeft: $('.scrollable-tabs').scrollLeft() + $('.scrollable-tabs :nth-child(' + n + ')').position().left }, 500);
-	                }
-	            }
-	        });
-	    };
-
-	    var swipeToScrollHandler = function swipeToScrollHandler() {
-	        $('.scrollable-tabs').scroll(function () {
-	            var width = Math.ceil($('.scrollable-tabs').width());
-	            var height = Math.ceil($('.scrollable-tabs').height());
-	            if (mobile) {
-	                if ($('.scrollable-tabs :nth-child(1)').position().top === 0) {
-	                    hideButton($('.scroll-left-button'));
-	                } else if ($(this).get(0).scrollHeight - $(this).scrollTop() === height) {
-	                    hideButton($('.scroll-right-button'));
-	                } else {
-	                    $('.scroll-left-button').removeClass(hidden_class);
-	                    $('.scroll-right-button').removeClass(hidden_class);
-	                    $('.scrollable-tabs').addClass('in-the-middle');
-	                }
+	            if (!val) {
 	                return;
 	            }
-	            if ($('.scrollable-tabs :nth-child(1)').position().left === 0) {
-	                hideButton($('.scroll-left-button'));
-	            } else if ($(this).get(0).scrollWidth - $(this).scrollLeft() <= width) {
-	                hideButton($('.scroll-right-button'));
+	            $(this).parent().find('.tab-selected').removeClass('tab-selected');
+	            $(this).addClass('tab-selected');
+	            if (isVertical) {
+	                $tab_content.animate({ scrollTop: $tab_content.scrollTop() + $(val).position().top }, 500);
+	            } else {
+	                $tab_content.animate({ scrollLeft: $tab_content.scrollLeft() + $(val).position().left }, 500);
 	            }
 	        });
 	    };
+
+	    var scrollHandler = function scrollHandler(isNextButton) {
+	        return function (e) {
+	            e.preventDefault();
+	            currentFirstTab = updateCurrentFirstTab(isNextButton);
+	            if (isThereChildrenToScroll()) {
+	                scroll();
+	            }
+	        };
+	    };
+
+	    function toggleNextAndPrevious(e) {
+	        var $firstTab = $container.find(':nth-child(1)');
+	        var tabSize = isVertical ? $firstTab.height() : $firstTab.width();
+	        var $this = $(e.target);
+	        var MIN_DIFF = 5;
+	        var containerSize = Math.ceil(isVertical ? $container.height() : $container.width());
+	        var firstTabPosition = isVertical ? $firstTab.position().top : $firstTab.position().left;
+	        currentFirstTab = Math.ceil(Math.abs(firstTabPosition / tabSize));
+	        var lastTabPosition = isVertical ? $this.get(0).scrollHeight - $this.scrollTop() : $this.get(0).scrollWidth - $this.scrollLeft();
+
+	        if (firstTabPosition === 0) {
+	            hideButton($previousButton);
+	        } else if (Math.abs(lastTabPosition - containerSize) < MIN_DIFF) {
+	            hideButton($nextButton);
+	        } else {
+	            showBothButtons();
+	            makeScrollTabsSmall(isVertical);
+	        }
+	    }
 
 	    var hideButton = function hideButton(element) {
 	        element.siblings('div.col-md-10').removeClass('col-md-10').addClass('col-md-11');
 	        element.siblings().removeClass(hidden_class);
 	        element.addClass(hidden_class);
-	        $('.scrollable-tabs').removeClass('in-the-middle');
+	        $container.removeClass('in-the-middle');
+	    };
+
+	    var updateCurrentFirstTab = function updateCurrentFirstTab(isDirectionForward) {
+	        var tabsCount = $container.children().length;
+	        var end = currentFirstTab + (VIEWPORT_TABS - 1);
+	        var tabsRemainingInTheEnd = tabsCount - end;
+	        var tabsRemainingInTheBeginning = currentFirstTab - 1;
+	        var JUMP = VIEWPORT_TABS - 1;
+	        if (isDirectionForward) {
+	            if (tabsRemainingInTheEnd > JUMP) {
+	                return currentFirstTab + JUMP;
+	            }
+	            return currentFirstTab + tabsRemainingInTheEnd;
+	        }
+	        if (tabsRemainingInTheBeginning > JUMP) {
+	            return currentFirstTab - JUMP;
+	        }
+	        return currentFirstTab - tabsRemainingInTheBeginning;
+	    };
+
+	    var isThereChildrenToScroll = function isThereChildrenToScroll() {
+	        var num_of_tabs = $container.children().length;
+	        return currentFirstTab < num_of_tabs && currentFirstTab > 0;
+	    };
+
+	    var scroll = function scroll() {
+	        var scrollTo = $container.find(':nth-child(' + currentFirstTab + ')');
+	        var scrollPosition = isVertical ? 'scrollTop' : 'scrollLeft';
+	        var scrollSize = $container[scrollPosition]() + scrollTo.position()[isVertical ? 'top' : 'left'];
+	        if (isThereChildrenToScroll()) {
+	            $container.animate(_defineProperty({}, scrollPosition, scrollSize), 500);
+	        }
+	    };
+
+	    var showBothButtons = function showBothButtons() {
+	        $previousButton.removeClass(hidden_class);
+	        $nextButton.removeClass(hidden_class);
+	    };
+
+	    var makeScrollTabsSmall = function makeScrollTabsSmall() {
+	        if (isVertical) {
+	            $container.addClass('in-the-middle');
+	        } else {
+	            $container.parent().removeClass('col-md-11').addClass('col-md-10');
+	        }
 	    };
 
 	    return {
