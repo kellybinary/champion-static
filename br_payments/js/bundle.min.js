@@ -36385,6 +36385,7 @@
 
 	    var hidden_class = 'invisible';
 	    var mobile = $(window).innerWidth() < 767;
+	    var n = 1; // n = tab number
 
 	    var load = function load() {
 	        ChampionSocket.wait('authorize').then(function () {
@@ -36425,7 +36426,6 @@
 	    };
 
 	    var clickToScrollHandler = function clickToScrollHandler() {
-	        var n = 1; // n = tab number
 	        var num_of_tabs = $('.scrollable-tabs').children().length;
 	        $('.scroll-right-button').unbind('click').click(function (e) {
 	            e.preventDefault();
@@ -36466,9 +36466,9 @@
 	    };
 
 	    var swipeToScrollHandler = function swipeToScrollHandler() {
-	        var height = Math.ceil($('.scrollable-tabs').height());
-	        var width = Math.ceil($('.scrollable-tabs').width());
 	        $('.scrollable-tabs').scroll(function () {
+	            var width = Math.ceil($('.scrollable-tabs').width());
+	            var height = Math.ceil($('.scrollable-tabs').height());
 	            if (mobile) {
 	                if ($('.scrollable-tabs :nth-child(1)').position().top === 0) {
 	                    hideButton($('.scroll-left-button'));
@@ -36483,7 +36483,7 @@
 	            }
 	            if ($('.scrollable-tabs :nth-child(1)').position().left === 0) {
 	                hideButton($('.scroll-left-button'));
-	            } else if ($(this).get(0).scrollWidth - $(this).scrollLeft() === width) {
+	            } else if ($(this).get(0).scrollWidth - $(this).scrollLeft() <= width) {
 	                hideButton($('.scroll-right-button'));
 	            }
 	        });
