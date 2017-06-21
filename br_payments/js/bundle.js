@@ -35133,7 +35133,7 @@
 
 	    var init = function init() {
 	        ChampionSocket.wait('authorize').then(function () {
-	            widthChange(media_query);
+	            updatePage(media_query);
 	        });
 	        $(function () {
 	            var window_path = window.location.pathname;
@@ -35147,16 +35147,17 @@
 	                    $(this).removeClass('active');
 	                }
 	            });
-	            media_query.addListener(widthChange);
+	            media_query.addListener(updatePage);
 	        });
 	    };
 
-	    var widthChange = function widthChange(mq) {
+	    var updatePage = function updatePage(mq) {
 	        if (mq.matches) {
 	            mobileMenu();
 	        } else {
 	            desktopMenu();
 	        }
+	        setMetaTrader();
 	        userMenu();
 	        if (!Client.is_logged_in()) {
 	            $('#top_group').removeClass('logged-in').find('.logged-out').removeClass(hidden_class);
@@ -35270,7 +35271,6 @@
 	        });
 
 	        $('.login-id-list').html(loginid_select);
-	        setMetaTrader(is_mt_pages);
 	        if (!Client.has_real()) {
 	            $('#all-accounts .upgrade').removeClass(hidden_class);
 	        }
@@ -35285,7 +35285,8 @@
 	        });
 	    };
 
-	    var setMetaTrader = function setMetaTrader(is_mt_pages) {
+	    var setMetaTrader = function setMetaTrader() {
+	        var is_mt_pages = State.get('is_mt_pages');
 	        $('#header, #footer').find('.mt-hide')[is_mt_pages ? 'addClass' : 'removeClass'](hidden_class);
 	        $('#header, #footer').find('.mt-show')[is_mt_pages ? 'removeClass' : 'addClass'](hidden_class);
 	    };
