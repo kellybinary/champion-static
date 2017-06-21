@@ -36400,7 +36400,6 @@
 	    'use strict';
 
 	    var VIEWPORT_TABS = 6;
-	    var hidden_class = 'invisible';
 	    var $container = void 0;
 	    var $previousButton = void 0;
 	    var $nextButton = void 0;
@@ -36430,7 +36429,6 @@
 	                isVertical = $(window).innerWidth() < 767;
 	            });
 
-	            $('#payment_methods').removeClass(hidden_class);
 	            scrollTabContents();
 	            $nextButton.unbind('click').click(scrollHandler(true));
 	            $previousButton.unbind('click').click(scrollHandler(false));
@@ -36486,13 +36484,6 @@
 	        }
 	    }
 
-	    var hideButton = function hideButton(element) {
-	        element.siblings('div.col-md-10').removeClass('col-md-10').addClass('col-md-11');
-	        element.siblings().removeClass(hidden_class);
-	        element.addClass(hidden_class);
-	        $container.removeClass('in-the-middle');
-	    };
-
 	    var updateCurrentFirstTab = function updateCurrentFirstTab(isDirectionForward) {
 	        var tabsCount = $container.children().length;
 	        var end = currentFirstTab + (VIEWPORT_TABS - 1);
@@ -36525,9 +36516,16 @@
 	        }
 	    };
 
+	    var hideButton = function hideButton(element) {
+	        element.siblings('div.col-md-10').removeClass('col-md-10').addClass('col-md-11');
+	        element.siblings('div.col-md-1').show(250);
+	        element.hide(250);
+	        $container.removeClass('in-the-middle');
+	    };
+
 	    var showBothButtons = function showBothButtons() {
-	        $previousButton.removeClass(hidden_class);
-	        $nextButton.removeClass(hidden_class);
+	        $previousButton.show(250);
+	        $nextButton.show(250);
 	    };
 
 	    var makeScrollTabsSmall = function makeScrollTabsSmall() {

@@ -1648,7 +1648,7 @@ ul.checked.small > li {
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  height: 40%;
+  height: 25px;
   margin: 20px auto;
 }
 .arrow-right {
@@ -1678,21 +1678,20 @@ ul.checked.small > li {
 #payment_methods > div {
   padding: 0;
 }
-#payment_methods .horizontal-tab {
+#payment_methods .tab-container {
   height: 65px;
   border: 1px solid #f2f2f2;
-  transition: width 0.5s;
 }
-#payment_methods .horizontal-tab .horizontal-tab-buttons {
+#payment_methods .tab-container-buttons {
   overflow: hidden;
   padding: 0px;
+  transition: all 0.3s linear;
 }
-#payment_methods .horizontal-tab.row {
+#payment_methods .tab-container.row {
   margin: 0;
 }
 #payment_methods .scroll {
   border-top: none;
-  cursor: pointer;
   padding: 0;
 }
 #payment_methods .scroll-right-button {
@@ -1702,6 +1701,7 @@ ul.checked.small > li {
 #payment_methods .scroll-left-button {
   cursor: pointer;
   border-right: 1px solid #f2f2f2;
+  display: none;
 }
 #payment_methods ul {
   display: -webkit-flex;
@@ -1840,7 +1840,7 @@ ul.checked.small > li {
 }
 
 @media (max-width: 767px) {
-  #payment_methods .horizontal-tab {
+  #payment_methods .tab-container {
     height: 100%;
     border: 1px solid #f2f2f2;
   }
