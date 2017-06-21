@@ -1644,6 +1644,10 @@ ul.checked.small > li {
   background-image: url("../images/payment_methods/visa.svg");
 }
 
+.payment-methods-header {
+  background-image: url("../images/payment_methods/payment_methods_banner.png");
+}
+
 .arrow {
   background-repeat: no-repeat;
   background-position: center;
@@ -1659,7 +1663,7 @@ ul.checked.small > li {
 }
 @media (max-width: 767px) {
   .arrow {
-    height: 35px;
+    height: 40px;
     width: 20px;
     margin: auto;
   }
@@ -1678,32 +1682,42 @@ ul.checked.small > li {
 #payment_methods > div {
   padding: 0;
 }
-#payment_methods .tab-container {
+#payment_methods .tabs-container {
   height: 65px;
   border: 1px solid #f2f2f2;
 }
-#payment_methods .tab-container-buttons {
-  overflow: hidden;
-  padding: 0px;
-  transition: all 0.3s linear;
-}
-#payment_methods .tab-container.row {
+#payment_methods .tabs-container.row {
   margin: 0;
 }
-#payment_methods .scroll {
+#payment_methods .tabs-container .previous-button, #payment_methods .tabs-container .next-button {
   border-top: none;
-  padding: 0;
-}
-#payment_methods .scroll-right-button {
+  padding: 0px;
   cursor: pointer;
+  transition: max-width 0.5s;
+}
+#payment_methods .tabs-container .previous-button.previous-button, #payment_methods .tabs-container .next-button.previous-button {
+  border-right: 1px solid #f2f2f2;
+}
+#payment_methods .tabs-container .previous-button.previous-button.hide, #payment_methods .tabs-container .next-button.previous-button.hide {
+  max-width: 0px;
+  padding: 0px;
+  border-right: none;
+  transition: 0.5s;
+}
+#payment_methods .tabs-container .previous-button.next-button, #payment_methods .tabs-container .next-button.next-button {
   border-left: 1px solid #f2f2f2;
 }
-#payment_methods .scroll-left-button {
-  cursor: pointer;
-  border-right: 1px solid #f2f2f2;
-  display: none;
+#payment_methods .tabs-container .previous-button.next-button.hide, #payment_methods .tabs-container .next-button.next-button.hide {
+  max-width: 0px;
+  padding: 0px;
+  border-left: none;
+  transition: 0.5s;
 }
-#payment_methods ul {
+#payment_methods .tabs-container .tab-buttons {
+  overflow: hidden;
+  padding: 0px;
+}
+#payment_methods .tabs-container .tab-buttons ul {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -1712,32 +1726,25 @@ ul.checked.small > li {
           flex-direction: row;
   list-style: none;
   overflow: auto;
-  margin: 0;
-  padding: 0;
+  margin: 0px;
+  padding: 0px;
 }
-#payment_methods ul li {
+#payment_methods .tabs-container .tab-buttons ul li {
   cursor: pointer;
   border-left: 1px solid #f2f2f2;
-  margin: 0;
-  padding: 0;
+  margin: 0px;
+  padding: 0px;
 }
-#payment_methods ul .tab-selected {
+#payment_methods .tabs-container .tab-buttons ul li.tab-selected {
   background-color: #f2f2f2;
-  transition: 0.3s ease-in-out;
+  transition: 0.3s;
 }
-#payment_methods ul .scrollable-tab-icon {
+#payment_methods .tabs-container .tab-buttons ul li .tab-icon {
   height: 35px;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
   margin: 15px;
-}
-#payment_methods ul.scrollable-tabs {
-  width: 100%;
-  max-height: 370px;
-}
-#payment_methods ul.scrollable-tabs.in-the-middle {
-  max-height: 335px;
 }
 #payment_methods .tab-content-wrapper {
   display: -webkit-inline-flex;
@@ -1798,64 +1805,29 @@ ul.checked.small > li {
   min-width: 120px;
 }
 
-#payment_methods_accordian h3.fx-accordian-header {
-  background-image: none;
-  position: relative;
-  padding: 10px 40px;
-  border: 1px solid #f2f2f2;
-  border-bottom: none;
-  margin-bottom: 1px;
-  color: #004385;
-  font-weight: bold;
-}
-#payment_methods_accordian h3.fx-accordian-header .ui-icon {
-  width: 8px;
-  height: 12px;
-  display: block;
-  visibility: visible;
-  background-size: contain;
-  position: absolute;
-  top: 60%;
-  left: 16px;
-}
-#payment_methods_accordian h3.fx-accordian-header .ui-arrow-up {
-  background-image: url("../images/payment_methods/arrow_right.svg");
-  -webkit-transform: rotateZ(270deg);
-          transform: rotateZ(270deg);
-  transition: 0.3s;
-}
-#payment_methods_accordian h3.fx-accordian-header .ui-arrow-down {
-  background-image: url("../images/payment_methods/arrow_right.svg");
-  -webkit-transform: rotateZ(90deg);
-          transform: rotateZ(90deg);
-  transition: 0.3s;
-}
-#payment_methods_accordian h3.ui-accordion-header-active {
-  margin-bottom: 0px;
-  background-color: #f2f2f2;
-  color: #013365;
-}
-#payment_methods_accordian .ui-widget-content {
-  background-color: #f2f2f2;
-  border-color: #f2f2f2;
-  color: #000;
-  padding: 10px 40px;
-}
-
 @media (max-width: 767px) {
-  #payment_methods .tab-container {
+  #payment_methods .tabs-container {
     height: 100%;
     border: 1px solid #f2f2f2;
   }
-  #payment_methods .scroll-left-button {
-    border-right: none;
+  #payment_methods .tabs-container > .previous-button, #payment_methods .tabs-container .next-button {
+    max-height: 100%;
+    opacity: 1;
+    transition: max-height 0.5s !important;
+  }
+  #payment_methods .tabs-container > .previous-button.previous-button, #payment_methods .tabs-container .next-button.previous-button {
     border-bottom: 1px solid #f2f2f2;
+    border-right: none;
   }
-  #payment_methods .scroll-right-button {
-    border-left: none;
+  #payment_methods .tabs-container > .previous-button.next-button, #payment_methods .tabs-container .next-button.next-button {
     border-top: 1px solid #f2f2f2;
+    border-left: none;
   }
-  #payment_methods ul {
+  #payment_methods .tabs-container > .previous-button.hide, #payment_methods .tabs-container .next-button.hide {
+    max-height: 0;
+    opacity: 0;
+  }
+  #payment_methods .tabs-container .tab-buttons ul {
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
@@ -1863,12 +1835,18 @@ ul.checked.small > li {
         -ms-flex-direction: column;
             flex-direction: column;
   }
-  #payment_methods ul li {
+  #payment_methods .tabs-container .tab-buttons ul.scrollable-tabs {
+    max-height: 360px;
+  }
+  #payment_methods .tabs-container .tab-buttons ul.scrollable-tabs.in-the-middle {
+    max-height: 330px;
+  }
+  #payment_methods .tabs-container .tab-buttons ul li {
     min-height: 60px;
     border-bottom: 1px solid #f2f2f2;
     border-left: none;
   }
-  #payment_methods ul .scrollable-tab-icon {
+  #payment_methods .tabs-container .tab-buttons ul > .tab-icon {
     height: 47px;
     width: 78px;
     margin: 5px auto;
@@ -1890,32 +1868,15 @@ ul.checked.small > li {
     width: 0;
     padding: 5px;
   }
-  #payment_methods .tab-content-wrapper div p, #payment_methods .tab-content-wrapper div ol li {
-    font-size: 12px;
-  }
-  #payment_methods .tab-content-wrapper div h4 {
-    font-size: 14px;
-  }
   #payment_methods .tab-content-wrapper div ol {
     padding: 5px 20px;
   }
 
-  p.hint {
-    font-size: 12px !important;
+  #payment_methods_accordian h3 {
+    padding: 10px 22px;
   }
-
-  #payment_methods_accordian h3.fx-accordian-header {
-    font-size: 14px;
-  }
-  #payment_methods_accordian .ui-widget-content {
-    font-size: 12px;
-  }
-
-  #payment_methods_table thead td {
-    font-size: 14px;
-  }
-  #payment_methods_table tbody td {
-    font-size: 12px;
+  #payment_methods_accordian div.ui-widget-content {
+    padding: 10px 20px;
   }
 }
 #mt_account_management {
