@@ -1702,17 +1702,17 @@ ul.checked.small > li {
   border-right: 1px solid #f2f2f2;
 }
 #payment_methods .tabs-container .previous-button.previous-button.hide, #payment_methods .tabs-container .next-button.previous-button.hide {
-  max-width: 0px;
-  padding: 0px;
   border-right: none;
 }
 #payment_methods .tabs-container .previous-button.next-button, #payment_methods .tabs-container .next-button.next-button {
   border-left: 1px solid #f2f2f2;
 }
 #payment_methods .tabs-container .previous-button.next-button.hide, #payment_methods .tabs-container .next-button.next-button.hide {
+  border-left: none;
+}
+#payment_methods .tabs-container .previous-button.hide, #payment_methods .tabs-container .next-button.hide {
   max-width: 0px;
   padding: 0px;
-  border-left: none;
 }
 #payment_methods .tabs-container .tab-buttons {
   overflow: hidden;
