@@ -1456,8 +1456,19 @@ iframe {
   display: inline-block;
 }
 
-.fx-contact-callback {
+.fx-contact-callback, .fx-contact-hour {
+  width: 40px;
+  height: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.fx-contact-callback.fx-contact-callback, .fx-contact-hour.fx-contact-callback {
   background: url("../images/contact_us/call_back.svg");
+}
+.fx-contact-callback.fx-contact-hour, .fx-contact-hour.fx-contact-hour {
+  background: url("../images/contact_us/hour.svg");
 }
 
 .fx-contact-hour {
@@ -1473,7 +1484,7 @@ iframe {
 }
 
 .fx-contact-canada {
-  background: url("../images/contact_us/canada.svg") no-repeat;
+  background: url("../images/contact_us/canada.svg");
 }
 
 .fx-contact-germany {
