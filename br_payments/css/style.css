@@ -1705,7 +1705,6 @@ ul.checked.small > li {
   max-width: 0px;
   padding: 0px;
   border-right: none;
-  transition: 0.5s;
 }
 #payment_methods .tabs-container .previous-button.next-button, #payment_methods .tabs-container .next-button.next-button {
   border-left: 1px solid #f2f2f2;
@@ -1714,7 +1713,6 @@ ul.checked.small > li {
   max-width: 0px;
   padding: 0px;
   border-left: none;
-  transition: 0.5s;
 }
 #payment_methods .tabs-container .tab-buttons {
   overflow: hidden;
@@ -1824,6 +1822,10 @@ ul.checked.small > li {
 }
 
 @media (max-width: 767px) {
+  h1 {
+    font-size: 28px;
+  }
+
   #payment_methods .tabs-container {
     height: 100%;
     border: 1px solid #f2f2f2;
@@ -1831,7 +1833,7 @@ ul.checked.small > li {
   #payment_methods .tabs-container > .previous-button, #payment_methods .tabs-container .next-button {
     max-height: 100%;
     opacity: 1;
-    transition: max-height 0.5s !important;
+    transition: max-height 0.5s;
   }
   #payment_methods .tabs-container > .previous-button.previous-button, #payment_methods .tabs-container .next-button.previous-button {
     border-bottom: 1px solid #f2f2f2;
@@ -1857,7 +1859,7 @@ ul.checked.small > li {
     max-height: 400px;
   }
   #payment_methods .tabs-container .tab-buttons ul.scrollable-tabs.in-the-middle {
-    max-height: 370px;
+    max-height: 360px;
   }
   #payment_methods .tabs-container .tab-buttons ul li {
     min-height: 60px;
@@ -1900,6 +1902,13 @@ ul.checked.small > li {
     font-size: 14px;
   }
   #payment_methods_table tbody td {
+    font-size: 12px;
+  }
+
+  #payment_methods_accordian h3 {
+    font-size: 14px;
+  }
+  #payment_methods_accordian div.ui-accordion-content-active {
     font-size: 12px;
   }
 }
