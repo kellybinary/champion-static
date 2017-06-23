@@ -1749,9 +1749,6 @@ ul.checked.small > li {
   background-size: contain;
   margin: 15px;
 }
-#payment_methods .tab-content {
-  max-height: 415px;
-}
 #payment_methods .tab-content .tab-content-wrapper {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1764,6 +1761,7 @@ ul.checked.small > li {
 }
 #payment_methods .tab-content .tab-content-wrapper div.row {
   min-width: 100%;
+  min-height: 100%;
 }
 #payment_methods .tab-content .tab-content-wrapper div {
   background-color: #f2f2f2;
@@ -1856,10 +1854,10 @@ ul.checked.small > li {
             flex-direction: column;
   }
   #payment_methods .tabs-container .tab-buttons ul.scrollable-tabs {
-    max-height: 370px;
+    max-height: 400px;
   }
   #payment_methods .tabs-container .tab-buttons ul.scrollable-tabs.in-the-middle {
-    max-height: 330px;
+    max-height: 370px;
   }
   #payment_methods .tabs-container .tab-buttons ul li {
     min-height: 60px;
@@ -1872,20 +1870,18 @@ ul.checked.small > li {
     margin: 5px auto;
   }
   #payment_methods .tab-content {
-    overflow: hidden;
+    max-height: 450px;
   }
   #payment_methods .tab-content .tab-content-wrapper {
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
     -webkit-flex-direction: column;
         -ms-flex-direction: column;
             flex-direction: column;
-    min-height: 100%;
+    max-height: 100%;
+  }
+  #payment_methods .tab-content .tab-content-wrapper div.row {
+    min-height: 450px;
   }
   #payment_methods .tab-content .tab-content-wrapper div {
-    height: 100%;
-    width: 100%;
     padding: 5px;
   }
   #payment_methods .tab-content .tab-content-wrapper div p, #payment_methods .tab-content .tab-content-wrapper div ol li {
