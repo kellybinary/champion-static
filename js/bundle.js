@@ -18552,6 +18552,7 @@
 	            authenticate: { module: Authenticate, is_authenticated: true, only_real: true },
 	            cashier: { module: Cashier },
 	            contact: { module: ChampionContact },
+	            demo: { module: ClientType },
 	            endpoint: { module: ChampionEndpoint },
 	            forward: { module: CashierDepositWithdraw, is_authenticated: true, only_real: true },
 	            home: { module: Home },
