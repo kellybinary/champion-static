@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
 
-    <title>Create new real account | Champion-FX.com</title>
+    <title>Economic Calendar | Champion-FX.com</title>
     <meta name="description" content="Access the world markets through one powerful all in one platform. The best choice for the modern trader where the client is king." />
 
     <meta property="og:title" content="Champion-FX.com" />
@@ -421,153 +421,26 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     <main class="page-content" aria-label="Content" id="champion-container">
         <div class="wrapper" id="champion-content">
-            <div class="fx-section">
-    <div class="container">
-        <h1 class="main-title" >Create a ChampionFX real account</h1>
-
-        <form id="frm_new_account_real">
-            <div class="row">
-                <div class="col-md-4">
-                    <h4>Details</h4>
-    <div class="separator primary-color"></div>
-    <div class="fx-divider"></div>
-                    <div class="form-row ">
-    <label for="ddl_title">Title</label>
-    
-                <select id="ddl_title" > 
-                        <option value="Mr">Mr</option>
-                        <option value="Mrs">Mrs</option>
-                        <option value="Ms">Ms</option>
-                        <option value="Miss">Miss</option>
-                                </select>
-    
-</div>
-                    <div class="form-row ">
-    <label for="txt_fname">First name</label>
-    
-                <input type="text" id="txt_fname" maxlength="30" />
-    
-</div>
-                    <div class="form-row ">
-    <label for="txt_lname">Family name</label>
-    
-                <input type="text" id="txt_lname" maxlength="30" />
-    
-</div>
-                    <div class="form-row ">
-    <label for="txt_birth_date">Date of birth</label>
-    
-                <input type="text" id="txt_birth_date" size="12" readonly="readonly" />
-    
-</div>
-                    <div class="form-row ">
-    <label>Country of residence</label>
-    <div id="residence_loading" class="small-spinner"><div class="barspinner dark">
-    <div class="rect1"></div>
-    <div class="rect2"></div>
-    <div class="rect3"></div>
-    <div class="rect4"></div>
-    <div class="rect5"></div>
-</div></div>
-                <span class="text-display invisible">
-                                <span id="lbl_residence" ></span>
-            </span>
-    
-</div>
-                </div>
-
-                <div class="col-md-4">
-                    <h4>Address</h4>
-    <div class="separator primary-color"></div>
-    <div class="fx-divider"></div>
-                    <div class="form-row ">
-    <label for="txt_address1">First line of home address</label>
-    
-                <input type="text" id="txt_address1" maxlength="70" />
-    
-</div>
-                    <div class="form-row ">
-    <label for="txt_address2">Second line of home address</label>
-    
-                <input type="text" id="txt_address2" maxlength="70" />
-    
-</div>
-                    <div class="form-row ">
-    <label for="txt_city">Town/City</label>
-    
-                <input type="text" id="txt_city" maxlength="35" />
-    
-</div>
-                    <div class="form-row ">
-    <label for="ddl_state">State/Province</label>
-    <div id="state_loading" class="small-spinner"><div class="barspinner dark">
-    <div class="rect1"></div>
-    <div class="rect2"></div>
-    <div class="rect3"></div>
-    <div class="rect4"></div>
-    <div class="rect5"></div>
-</div></div>
-                <select id="ddl_state" class="invisible">             </select>
-    
-</div>
-                    <div class="form-row ">
-    <label for="txt_postcode">Postal code/ZIP</label>
-    
-                <input type="text" id="txt_postcode" maxlength="20" />
-    
-</div>
-                    <div class="form-row ">
-    <label for="txt_phone">Telephone</label>
-    
-                <input type="text" id="txt_phone" maxlength="35" />
-    
-</div>
-                </div>
-
-                <div class="col-md-4">
-                    <h4>Security</h4>
-    <div class="separator primary-color"></div>
-    <div class="fx-divider"></div>
-                    <div class="form-row ">
-    <label for="ddl_secret_question">Secret question</label>
-    
-                <select id="ddl_secret_question" > 
-                        <option value="Favourite dish">Favourite dish</option>
-                        <option value="Mother's maiden name">Mother's maiden name</option>
-                        <option value="Name of your pet">Name of your pet</option>
-                        <option value="Name of first love">Name of first love</option>
-                        <option value="Memorable town/city">Memorable town/city</option>
-                        <option value="Memorable date">Memorable date</option>
-                        <option value="Brand of first car">Brand of first car</option>
-                        <option value="Favourite artist">Favourite artist</option>
-                                </select>
-    
-</div>
-                    <div class="form-row ">
-    <label for="txt_secret_answer">Answer to secret question</label>
-    
-                <input type="text" id="txt_secret_answer" maxlength="50" autocomplete="off" />
-    
-</div>
-                </div>
-            </div>
-
-            <div class="center-text">
-                <div class="fx-divider"></div>
-                <div class="form-row checkbox">
-    <input id="chk_not_pep" type="checkbox" />
-    <label for="chk_not_pep">I acknowledge that I am not a politically exposed person (<span data-balloon-length="xlarge" data-balloon="A PEP is an individual who is or has been entrusted with a prominent public function. This status extends to a PEP's relatives and close associates.">PEP</span>).</label>
-</div>
-                <div class="form-row checkbox">
-    <input id="chk_tnc" type="checkbox" />
-    <label for="chk_tnc">I have read and agree to the <a target="_blank" href="/champion-static/en/terms-and-conditions.html">terms and conditions</a> of the site.</label>
-</div>
-                <div class="submit-row ">
-    <p id="msg_form" class="error-msg invisible"></p>
-    <button id="btn_submit" type="submit">Create account</button> </div>
-            </div>
-        </form>
+            <div class="primary-color-dark cfd-header">
+    <div class="fx-panel center-text container">
+        <h1 class="content-inverse-color">Economic Calendar</h1>
+        <p class="content-inverse-color">Check out the latest economic events and indicators from all over the world. All data are collected and updated in real time.</p>
     </div>
+</div>
+
+<div class="container">
+    <p>You can monitor macroeconomic indicators straight from the MetaTrader 5 platform using release time labels displayed on financial symbol charts.</p>
+    <p>With the Economic Calendar, you can see a breakdown of all the scheduled economic events due to take place on any given day.</p>
+    <p>Click on an individual event to be presented with further information and links to more in-depth data about it. The information provided by the Economic  Calendar will help you make more informed trading decisions.</p>
+</div>
+        
+<div class="container lg-padding">
+    <!-- Economic Calendar Widget BEGIN -->
+    <script id="economicCalendarWidget" type="text/javascript" src="https://c.mql5.com/js/widgets/calendar/widget.v1.js"></script>
+    <script type="text/javascript">
+        new economicCalendar({ width: "100%", height: "600px", mode: 2 });
+    </script>
+    <!-- Economic Calendar Widget END -->
 </div>
         </div>
     </main>
