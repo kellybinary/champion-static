@@ -587,13 +587,16 @@ h1.main-title {
 
 .contact-us-header {
   background-image: url("../images/contact_us/contact_us_banner.png");
+  background-size: cover;
 }
 
 #contact-us {
   padding: 60px 0;
 }
-
-.contact-phones-title div.row, .contact-emails-title div.row {
+#contact-us .text-align {
+  text-align: right;
+}
+#contact-us .contact-phones-title div.row, #contact-us .contact-emails-title div.row {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -603,19 +606,25 @@ h1.main-title {
       -ms-flex-align: end;
           align-items: flex-end;
 }
-.contact-phones-title img, .contact-emails-title img {
+#contact-us .contact-phones-title .content-center, #contact-us .contact-emails-title .content-center {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+#contact-us .contact-phones-title img, #contact-us .contact-emails-title img {
   width: 265px;
   height: 343px;
   padding: 10px;
 }
-.contact-phones-title.contact-phones-title h2, .contact-phones-title.contact-phones-title p, .contact-emails-title.contact-phones-title h2, .contact-emails-title.contact-phones-title p {
+#contact-us .contact-phones-title.contact-phones-title h2, #contact-us .contact-phones-title.contact-phones-title p, #contact-us .contact-emails-title.contact-phones-title h2, #contact-us .contact-emails-title.contact-phones-title p {
   text-align: right;
 }
-.contact-phones-title div, .contact-emails-title div {
-  padding: 0;
-}
-
-.contact-phones, .contact-emails {
+#contact-us .contact-phones, #contact-us .contact-emails {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -627,48 +636,48 @@ h1.main-title {
   font-size: 16px;
   padding: 15px;
 }
-.contact-phones p, .contact-emails p {
+#contact-us .contact-phones p, #contact-us .contact-emails p {
   font-size: 14px;
-  margin-top: 0.5em;
+}
+#contact-us .contact-phones.contact-phones h5, #contact-us .contact-emails.contact-phones h5 {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0.5em;
+}
+#contact-us .contact-phones.contact-phones span, #contact-us .contact-emails.contact-phones span {
+  font-size: 14px;
+}
+#contact-us .contact-phones.contact-emails h5, #contact-us .contact-emails.contact-emails h5 {
+  font-size: 14px;
+  font-weight: bold;
   margin-bottom: 0.5em;
 }
-.contact-phones.contact-phones span, .contact-emails.contact-phones span {
-  font-weight: bold;
+#contact-us .contact-phones.contact-emails span > a, #contact-us .contact-emails.contact-emails span > a {
+  font-weight: normal;
 }
-.contact-phones.contact-emails p, .contact-emails.contact-emails p {
-  font-weight: bold;
-}
-.contact-phones.contact-emails .general-email, .contact-emails.contact-emails .general-email {
-  text-align: right;
-}
-.contact-phones.contact-emails .general-email h2, .contact-emails.contact-emails .general-email h2 {
-  margin-top: 0;
-}
-
 @media (max-width: 767px) {
-  .column-reverse {
+  #contact-us h2 {
+    font-size: 22px;
+  }
+  #contact-us p {
+    font-size: 12px;
+  }
+  #contact-us .text-align {
+    text-align: left;
+  }
+  #contact-us .column-reverse {
     -webkit-box-orient: vertical;
     -webkit-box-direction: reverse;
     -webkit-flex-direction: column-reverse;
         -ms-flex-direction: column-reverse;
             flex-direction: column-reverse;
   }
-
-  .contact-phones-title img, .contact-emails-title img {
-    width: 100%;
+  #contact-us .contact-phones-title img, #contact-us .contact-emails-title img {
+    width: 120%;
     height: 100%;
   }
-  .contact-phones-title h2, .contact-emails-title h2 {
-    font-size: 22px;
-  }
-  .contact-phones-title p, .contact-emails-title p {
-    font-size: 12px;
-  }
-
-  .contact-emails {
-    text-align: left;
-  }
 }
+
 .champion-features th {
   text-align: left;
 }
@@ -1495,7 +1504,7 @@ iframe {
 }
 
 .fx-contact-flag {
-  width: 45px;
+  width: 40px;
   height: 30px;
   background-repeat: no-repeat;
   display: inline-block;
@@ -1504,16 +1513,15 @@ iframe {
 .fx-contact-callback, .fx-contact-hour {
   width: 40px;
   height: 40px;
-  margin-left: auto;
-  margin-right: auto;
-  background-repeat: no-repeat;
-  background-position: center;
+  margin: 0 auto;
 }
 .fx-contact-callback.fx-contact-callback, .fx-contact-hour.fx-contact-callback {
-  background: url("../images/contact_us/call_back.svg");
+  background: url("../images/contact_us/call_back.svg") no-repeat center;
+  background-size: cover;
 }
 .fx-contact-callback.fx-contact-hour, .fx-contact-hour.fx-contact-hour {
-  background: url("../images/contact_us/hour.svg");
+  background: url("../images/contact_us/hour.svg") no-repeat center;
+  background-size: cover;
 }
 
 .fx-contact-hour {
