@@ -18556,7 +18556,6 @@
 	            authenticate: { module: Authenticate, is_authenticated: true, only_real: true },
 	            cashier: { module: Cashier },
 	            contact: { module: ChampionContact },
-	            demo: { module: ClientType },
 	            endpoint: { module: ChampionEndpoint },
 	            forward: { module: CashierDepositWithdraw, is_authenticated: true, only_real: true },
 	            home: { module: Home },
@@ -18586,7 +18585,8 @@
 	            'types-of-accounts': { module: ClientType },
 	            'trading-platform': { module: ClientType },
 	            'metatrader-5': { module: ClientType },
-	            'champion-trader': { module: ClientType }
+	            'champion-trader': { module: ClientType },
+	            'economic-calendar': { module: ClientType }
 	        };
 	        if (page in pages_map) {
 	            loadHandler(pages_map[page]);
