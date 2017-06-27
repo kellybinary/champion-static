@@ -591,6 +591,7 @@ h1.main-title {
 }
 .contact-us-header h4 {
   margin-bottom: 0;
+  padding: 0;
 }
 .contact-us-header p {
   margin-top: 15px;
@@ -618,19 +619,6 @@ h1.main-title {
 
 #contact-us {
   padding: 60px 0;
-}
-#contact-us .text-align h4 {
-  color: #000;
-  font-size: 16px;
-  font-weight: bold;
-  margin-top: 0;
-  margin-bottom: 5px;
-}
-#contact-us .text-align h3 {
-  margin-top: 0;
-}
-#contact-us a {
-  font-weight: normal;
 }
 #contact-us .contact-phones-title div.row, #contact-us .contact-emails-title div.row {
   display: -webkit-box;
@@ -689,19 +677,27 @@ h1.main-title {
 }
 #contact-us .contact-phones.contact-phones span, #contact-us .contact-emails.contact-phones span {
   font-size: 14px;
+  white-space: nowrap;
 }
 #contact-us .contact-phones.contact-emails, #contact-us .contact-emails.contact-emails {
   text-align: right;
 }
-#contact-us .contact-phones.contact-emails .row div, #contact-us .contact-emails.contact-emails .row div {
-  padding-left: 0;
+#contact-us .contact-phones.contact-emails .contact-email-lg h4, #contact-us .contact-emails.contact-emails .contact-email-lg h4 {
+  color: #000;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+#contact-us .contact-phones.contact-emails .contact-email-lg a, #contact-us .contact-emails.contact-emails .contact-email-lg a {
+  font-size: 22px;
 }
 #contact-us .contact-phones.contact-emails h5, #contact-us .contact-emails.contact-emails h5 {
   font-size: 12px;
   font-weight: bold;
   margin-bottom: 0.5em;
 }
-#contact-us .contact-phones.contact-emails span > a, #contact-us .contact-emails.contact-emails span > a {
+#contact-us .contact-phones.contact-emails a, #contact-us .contact-emails.contact-emails a {
   font-size: 14px;
 }
 
@@ -739,18 +735,16 @@ h1.main-title {
   }
   #contact-us .contact-phones.contact-phones span, #contact-us .contact-emails.contact-phones span {
     font-size: 12px;
+    white-space: normal;
   }
   #contact-us .contact-phones.contact-emails, #contact-us .contact-emails.contact-emails {
     text-align: left;
   }
-  #contact-us .contact-phones.contact-emails .row div, #contact-us .contact-emails.contact-emails .row div {
-    padding-left: 15px;
-  }
-  #contact-us .contact-phones.contact-emails h5, #contact-us .contact-emails.contact-emails h5 {
-    font-size: 12px;
-  }
-  #contact-us .contact-phones.contact-emails span, #contact-us .contact-emails.contact-emails span {
+  #contact-us .contact-phones.contact-emails .contact-email-lg h4, #contact-us .contact-emails.contact-emails .contact-email-lg h4 {
     font-size: 14px;
+  }
+  #contact-us .contact-phones.contact-emails .contact-email-lg a, #contact-us .contact-emails.contact-emails .contact-email-lg a {
+    font-size: 18px;
   }
   #contact-us h2 {
     font-size: 22px;
@@ -1145,6 +1139,7 @@ ul.no-padding, ul.no-padding li {
 a.underline-link {
   color: #004385;
   text-decoration: underline;
+  font-weight: normal;
 }
 a.underline-link:hover {
   color: #013365;
