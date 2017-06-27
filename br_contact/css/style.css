@@ -693,12 +693,13 @@ h1.main-title {
   font-size: 22px;
 }
 #contact-us .contact-phones.contact-emails h5, #contact-us .contact-emails.contact-emails h5 {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
   margin-bottom: 0.5em;
 }
 #contact-us .contact-phones.contact-emails a, #contact-us .contact-emails.contact-emails a {
-  font-size: 14px;
+  font-size: 16px;
+  white-space: nowrap;
 }
 
 @media (max-width: 767px) {
@@ -714,6 +715,12 @@ h1.main-title {
   }
   #contact-us .separator {
     margin: 0 0 30px;
+  }
+  #contact-us .contact-emails-title h2, #contact-us .contact-phones-title h2 {
+    font-size: 22px;
+  }
+  #contact-us .contact-emails-title p, #contact-us .contact-phones-title p {
+    font-size: 12px;
   }
   #contact-us .contact-emails-title img, #contact-us .contact-phones-title img {
     width: 100%;
@@ -740,22 +747,16 @@ h1.main-title {
   #contact-us .contact-phones.contact-emails, #contact-us .contact-emails.contact-emails {
     text-align: left;
   }
+  #contact-us .contact-phones.contact-emails h5, #contact-us .contact-emails.contact-emails h5 {
+    font-size: 12px;
+  }
+  #contact-us .contact-phones.contact-emails a, #contact-us .contact-emails.contact-emails a {
+    font-size: 14px;
+  }
   #contact-us .contact-phones.contact-emails .contact-email-lg h4, #contact-us .contact-emails.contact-emails .contact-email-lg h4 {
     font-size: 14px;
   }
   #contact-us .contact-phones.contact-emails .contact-email-lg a, #contact-us .contact-emails.contact-emails .contact-email-lg a {
-    font-size: 18px;
-  }
-  #contact-us h2 {
-    font-size: 22px;
-  }
-  #contact-us p {
-    font-size: 12px;
-  }
-  #contact-us .text-align h4 {
-    font-size: 14px !important;
-  }
-  #contact-us h3 {
     font-size: 18px;
   }
 
