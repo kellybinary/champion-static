@@ -589,6 +589,12 @@ h1.main-title {
   background-image: url("../images/contact_us/contact_us_banner.png");
   background-size: cover;
 }
+.contact-us-header h4 {
+  margin-bottom: 0;
+}
+.contact-us-header p {
+  margin-top: 10px;
+}
 .contact-us-header .flex-display {
   display: -webkit-box;
   display: -webkit-flex;
@@ -1129,11 +1135,11 @@ ul.no-padding, ul.no-padding li {
 }
 
 a.underline-link {
-  color: #013365;
+  color: #004385;
   text-decoration: underline;
 }
 a.underline-link:hover {
-  color: #004385;
+  color: #013365;
 }
 
 .icon-ok {
