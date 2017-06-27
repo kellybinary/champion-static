@@ -593,7 +593,7 @@ h1.main-title {
   margin-bottom: 0;
 }
 .contact-us-header p {
-  margin-top: 10px;
+  margin-top: 15px;
 }
 .contact-us-header .flex-display {
   display: -webkit-box;
@@ -628,6 +628,9 @@ h1.main-title {
 }
 #contact-us .text-align h3 {
   margin-top: 0;
+}
+#contact-us a {
+  font-weight: normal;
 }
 #contact-us .contact-phones-title div.row, #contact-us .contact-emails-title div.row {
   display: -webkit-box;
@@ -694,13 +697,12 @@ h1.main-title {
   padding-left: 0;
 }
 #contact-us .contact-phones.contact-emails h5, #contact-us .contact-emails.contact-emails h5 {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
   margin-bottom: 0.5em;
 }
 #contact-us .contact-phones.contact-emails span > a, #contact-us .contact-emails.contact-emails span > a {
-  font-weight: normal;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 @media (max-width: 767px) {
@@ -755,6 +757,12 @@ h1.main-title {
   }
   #contact-us p {
     font-size: 12px;
+  }
+  #contact-us h4 {
+    font-size: 14px;
+  }
+  #contact-us h3 {
+    font-size: 18px;
   }
 
   .contact-us-header h4 {
