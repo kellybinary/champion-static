@@ -667,8 +667,19 @@ h1.main-title {
   font-size: 14px;
   margin: 10px 0;
 }
+#contact-us .contact-phones .contact-address h4, #contact-us .contact-phones .contact-email-lg h4, #contact-us .contact-emails .contact-address h4, #contact-us .contact-emails .contact-email-lg h4 {
+  color: #000;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 5px;
+}
 #contact-us .contact-phones.contact-phones div.row > div, #contact-us .contact-emails.contact-phones div.row > div {
   margin: 15px 0;
+}
+#contact-us .contact-phones.contact-phones .contact-address span, #contact-us .contact-emails.contact-phones .contact-address span {
+  font-size: 22px;
+  white-space: normal;
 }
 #contact-us .contact-phones.contact-phones h5, #contact-us .contact-emails.contact-phones h5 {
   font-size: 16px;
@@ -692,13 +703,6 @@ h1.main-title {
 }
 #contact-us .contact-phones.contact-emails, #contact-us .contact-emails.contact-emails {
   text-align: right;
-}
-#contact-us .contact-phones.contact-emails .contact-email-lg h4, #contact-us .contact-emails.contact-emails .contact-email-lg h4 {
-  color: #000;
-  font-size: 16px;
-  font-weight: bold;
-  margin-top: 0;
-  margin-bottom: 5px;
 }
 #contact-us .contact-phones.contact-emails .contact-email-lg a, #contact-us .contact-emails.contact-emails .contact-email-lg a {
   font-size: 22px;
@@ -759,11 +763,17 @@ h1.main-title {
   #contact-us .contact-emails-title.contact-emails-title img, #contact-us .contact-phones-title.contact-emails-title img {
     padding-right: 0;
   }
+  #contact-us .contact-phones .contact-email-lg h4, #contact-us .contact-phones .contact-address h4, #contact-us .contact-emails .contact-email-lg h4, #contact-us .contact-emails .contact-address h4 {
+    font-size: 14px;
+  }
   #contact-us .contact-phones.contact-phones h5, #contact-us .contact-emails.contact-phones h5 {
     font-size: 14px;
   }
   #contact-us .contact-phones.contact-phones span, #contact-us .contact-emails.contact-phones span {
     font-size: 12px;
+  }
+  #contact-us .contact-phones.contact-phones .contact-address span, #contact-us .contact-emails.contact-phones .contact-address span {
+    font-size: 18px;
   }
   #contact-us .contact-phones.contact-emails, #contact-us .contact-emails.contact-emails {
     text-align: left;
@@ -772,9 +782,6 @@ h1.main-title {
     font-size: 12px;
   }
   #contact-us .contact-phones.contact-emails a, #contact-us .contact-emails.contact-emails a {
-    font-size: 14px;
-  }
-  #contact-us .contact-phones.contact-emails .contact-email-lg h4, #contact-us .contact-emails.contact-emails .contact-email-lg h4 {
     font-size: 14px;
   }
   #contact-us .contact-phones.contact-emails .contact-email-lg a, #contact-us .contact-emails.contact-emails .contact-email-lg a {
