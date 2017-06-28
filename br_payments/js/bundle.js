@@ -25848,6 +25848,7 @@
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 	var ChampionSocket = __webpack_require__(305);
+	var Client = __webpack_require__(301);
 
 	var CashierPaymentMethods = function () {
 	    'use strict';
@@ -25866,6 +25867,13 @@
 	            $nextButton = $('.next-button');
 	            isVertical = $(window).innerWidth() < 767;
 	            currentFirstTab = 1;
+
+	            var container = $('#payment_methods');
+	            if (!Client.is_logged_in()) {
+	                container.find('#btn-signup').removeClass('invisible');
+	            } else {
+	                container.find('#btn-cashier').removeClass('invisible');
+	            }
 
 	            $('#payment_methods_accordian').accordion({
 	                heightStyle: 'content',

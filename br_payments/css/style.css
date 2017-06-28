@@ -1723,6 +1723,7 @@ ul.checked.small > li {
   margin-bottom: 30px;
   margin-right: 0px;
   margin-left: 0px;
+  padding-bottom: 10px;
 }
 #payment_methods div {
   padding: 0;
@@ -1836,9 +1837,6 @@ ul.checked.small > li {
   padding: 0px 30px;
 }
 
-#payment_methods_table {
-  padding-bottom: 20px;
-}
 #payment_methods_table h3 {
   margin: 20px 0 0;
 }
