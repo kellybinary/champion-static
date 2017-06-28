@@ -35,3 +35,7 @@
     }
     @return url('data:image/svg+xml;charset=utf8,#{$encoded}');
 }
+
+@function strip-units($value) {
+    @return ($value / ($value * 0 + 1));
+}
