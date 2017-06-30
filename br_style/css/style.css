@@ -92,7 +92,7 @@ h4 {
 }
 
 body, p {
-  line-height: 25px;
+  line-height: 1.5em;
   letter-spacing: 0.2px;
 }
 body, p {
@@ -124,6 +124,7 @@ body, p {
 h1, h2, h3, h4 {
   font-weight: 500;
   letter-spacing: 0.2px;
+  line-height: 1.5em;
 }
 
 .headings, .body {
