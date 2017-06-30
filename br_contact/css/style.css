@@ -620,7 +620,7 @@ h1.main-title {
 #contact-us {
   padding: 60px 0;
 }
-#contact-us .contact-phones-title div.row, #contact-us .contact-emails-title div.row {
+#contact-us .section-heading div.row {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -630,10 +630,10 @@ h1.main-title {
       -ms-flex-align: end;
           align-items: flex-end;
 }
-#contact-us .contact-phones-title p, #contact-us .contact-emails-title p {
+#contact-us .section-heading p {
   margin: 10px 0;
 }
-#contact-us .contact-phones-title .content-center, #contact-us .contact-emails-title .content-center {
+#contact-us .section-heading .content-center {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -643,13 +643,16 @@ h1.main-title {
       -ms-flex-pack: center;
           justify-content: center;
 }
-#contact-us .contact-phones-title img, #contact-us .contact-emails-title img {
+#contact-us .section-heading .content-align-right {
+  text-align: right;
+}
+#contact-us .section-heading .content-align-left {
+  text-align: left;
+}
+#contact-us .section-heading img {
   width: 130%;
   height: 100%;
   padding: 15px;
-}
-#contact-us .contact-phones-title.contact-phones-title h2, #contact-us .contact-phones-title.contact-phones-title p, #contact-us .contact-emails-title.contact-phones-title h2, #contact-us .contact-emails-title.contact-phones-title p {
-  text-align: right;
 }
 #contact-us .contact-phones, #contact-us .contact-emails {
   display: -webkit-box;
@@ -660,44 +663,47 @@ h1.main-title {
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-  font-size: 16px;
   padding: 15px;
 }
-#contact-us .contact-phones p, #contact-us .contact-emails p {
-  font-size: 14px;
-  margin: 10px 0;
-}
-#contact-us .contact-phones .contact-address h4, #contact-us .contact-phones .contact-email-lg h4, #contact-us .contact-emails .contact-address h4, #contact-us .contact-emails .contact-email-lg h4 {
+#contact-us .contact-phones h4, #contact-us .contact-emails h4 {
   color: #000;
   font-size: 14px;
   font-weight: bold;
   margin-top: 0;
   margin-bottom: 5px;
 }
-#contact-us .contact-phones.contact-phones .contact-address, #contact-us .contact-emails.contact-phones .contact-address {
-  margin-bottom: 15px;
+#contact-us .contact-phones.contact-phones .vertical-center, #contact-us .contact-emails.contact-phones .vertical-center {
+  margin-top: 15px;
 }
-#contact-us .contact-phones.contact-phones .contact-address span, #contact-us .contact-emails.contact-phones .contact-address span {
-  font-size: 18px;
-}
-#contact-us .contact-phones.contact-phones h5, #contact-us .contact-emails.contact-phones h5 {
+#contact-us .contact-phones.contact-phones p, #contact-us .contact-emails.contact-phones p {
   font-size: 14px;
   font-weight: bold;
-  margin: 0.5em;
+  margin: 5px;
 }
 #contact-us .contact-phones.contact-phones span, #contact-us .contact-emails.contact-phones span {
   font-size: 12px;
 }
+#contact-us .contact-phones.contact-phones span.text-lg, #contact-us .contact-emails.contact-phones span.text-lg {
+  font-size: 18px;
+}
+@media (max-width: 1100px) {
+  #contact-us .contact-phones.contact-phones span.text-lg, #contact-us .contact-emails.contact-phones span.text-lg {
+    font-size: 16px;
+  }
+}
 #contact-us .contact-phones.contact-emails, #contact-us .contact-emails.contact-emails {
   text-align: right;
 }
-#contact-us .contact-phones.contact-emails .contact-email-lg a, #contact-us .contact-emails.contact-emails .contact-email-lg a {
-  font-size: 18px;
+@media (max-width: 767px) {
+  #contact-us .contact-phones.contact-emails, #contact-us .contact-emails.contact-emails {
+    text-align: left;
+  }
 }
-#contact-us .contact-phones.contact-emails h5, #contact-us .contact-emails.contact-emails h5 {
+#contact-us .contact-phones.contact-emails p, #contact-us .contact-emails.contact-emails p {
   font-size: 12px;
   font-weight: bold;
-  margin-bottom: 0.5em;
+  margin-bottom: 5px;
+  margin-top: 15px;
 }
 #contact-us .contact-phones.contact-emails a, #contact-us .contact-emails.contact-emails a {
   font-size: 14px;
@@ -707,6 +713,9 @@ h1.main-title {
   #contact-us .contact-phones.contact-emails a, #contact-us .contact-emails.contact-emails a {
     white-space: normal;
   }
+}
+#contact-us .contact-phones.contact-emails a.text-lg, #contact-us .contact-emails.contact-emails a.text-lg {
+  font-size: 18px;
 }
 
 @media (max-width: 767px) {
@@ -721,52 +730,28 @@ h1.main-title {
             flex-direction: column-reverse;
   }
   #contact-us .separator {
-    margin: 0 0 30px;
+    margin: 25px 0 30px;
   }
-  #contact-us .contact-emails-title h2, #contact-us .contact-phones-title h2 {
+  #contact-us .section-heading h2 {
     font-size: 22px;
   }
-  #contact-us .contact-emails-title p, #contact-us .contact-phones-title p {
+  #contact-us .section-heading p {
     font-size: 12px;
   }
-  #contact-us .contact-emails-title img, #contact-us .contact-phones-title img {
+  #contact-us .section-heading img {
     width: 100%;
   }
-  #contact-us .contact-emails-title.contact-phones-title .row div, #contact-us .contact-phones-title.contact-phones-title .row div {
+  #contact-us .section-heading .content-align-right > div {
     padding-right: 0;
   }
-  #contact-us .contact-emails-title.contact-phones-title img, #contact-us .contact-phones-title.contact-phones-title img {
+  #contact-us .section-heading .content-align-right > div img {
     padding-left: 0;
   }
-  #contact-us .contact-emails-title.contact-emails-title .row div, #contact-us .contact-phones-title.contact-emails-title .row div {
+  #contact-us .section-heading .content-align-left > div {
     padding-left: 0;
   }
-  #contact-us .contact-emails-title.contact-emails-title img, #contact-us .contact-phones-title.contact-emails-title img {
+  #contact-us .section-heading .content-align-left > div img {
     padding-right: 0;
-  }
-  #contact-us .contact-phones .contact-email-lg h4, #contact-us .contact-phones .contact-address h4, #contact-us .contact-emails .contact-email-lg h4, #contact-us .contact-emails .contact-address h4 {
-    font-size: 14px;
-  }
-  #contact-us .contact-phones.contact-phones div.row > div, #contact-us .contact-emails.contact-phones div.row > div {
-    margin: 10px 0;
-  }
-  #contact-us .contact-phones.contact-phones h5, #contact-us .contact-emails.contact-phones h5 {
-    font-size: 14px;
-  }
-  #contact-us .contact-phones.contact-phones span, #contact-us .contact-emails.contact-phones span {
-    font-size: 12px;
-  }
-  #contact-us .contact-phones.contact-phones .contact-address span, #contact-us .contact-emails.contact-phones .contact-address span {
-    font-size: 14px;
-  }
-  #contact-us .contact-phones.contact-emails, #contact-us .contact-emails.contact-emails {
-    text-align: left;
-  }
-  #contact-us .contact-phones.contact-emails h5, #contact-us .contact-emails.contact-emails h5 {
-    font-size: 12px;
-  }
-  #contact-us .contact-phones.contact-emails a, #contact-us .contact-emails.contact-emails a {
-    font-size: 14px;
   }
 
   .contact-us-header h4 {
