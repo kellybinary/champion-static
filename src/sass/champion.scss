@@ -8,6 +8,7 @@ html {
         overflow-x: hidden;
         position: inherit;
         width: 100%;
+        font-weight: 300;
 
         #champion-container {
             flex: 1 1 auto;
@@ -32,6 +33,7 @@ h4 {
 }
 
 h1, h2, h3, h4 {
+    font-weight: 500;
     letter-spacing: 0.2px;
     line-height: 1.5em;
 }
