@@ -38,6 +38,7 @@ const ChampionSecurity        = require('./../pages/user/security');
 const SelfExclusion           = require('./../pages/user/self_exclusion');
 const ChampionSettings        = require('./../pages/user/settings');
 const TNCApproval             = require('./../pages/user/tnc_approval');
+const Responsive              = require('./../pages/responsive');
 
 const Champion = (function() {
     'use strict';
@@ -112,6 +113,7 @@ const Champion = (function() {
             'trading-platform' : { module: ClientType },
             'metatrader-5'     : { module: ClientType },
             'champion-trader'  : { module: ClientType },
+            'responsive-type'  : { module: Responsive },
         };
         if (page in pages_map) {
             loadHandler(pages_map[page]);

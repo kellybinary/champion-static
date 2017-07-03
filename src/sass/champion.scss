@@ -8,6 +8,7 @@ html {
         overflow-x: hidden;
         position: inherit;
         width: 100%;
+        font-weight: 300;
 
         #champion-container {
             flex: 1 1 auto;
@@ -28,11 +29,42 @@ h3 {
 }
 
 h4 {
-    @include fluid-type(14px, 18px);
+    @include fluid-type(16px, 18px);
 }
 
-body {
-    @include fluid-type(12px, 16px);
+body, p, a {
+    @include fluid-type(12px, 14px);
+    line-height: 1.5em;
+    letter-spacing: 0.2px;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+.medium {
+    font-weight: 500;
+}
+
+.light {
+    font-weight: 300;
+}
+
+h1, h2, h3, h4 {
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    line-height: 1.5em;
+}
+
+.headings, .body {
+    font-size: 28px;
+
+    &.headings {
+        font-weight: 500;
+    }
+    &.body {
+        font-weight: 300;
+    }
 }
 
 .page-title {
@@ -992,11 +1024,12 @@ ul.no-padding {
 }
 
 a.underline-link {
-    color: $darkPrimaryBrandColor;
+    color: $primaryBrandColor;
     text-decoration: underline;
+    cursor: pointer;
 
     &:hover {
-        color: $primaryBrandColor;
+        color: $darkPrimaryBrandColor;
     }
 }
 

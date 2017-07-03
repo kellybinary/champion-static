@@ -18,7 +18,7 @@
     <meta property="og:title" content="[%= website_name =%]" />
     <meta property="og:type"  content="website" />
     <meta property="og:image" content="[% request.url_for('images/cfx-animated-links.gif') %]" />
-
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300, 400, 500, 600, 700, 800" rel="stylesheet">
     <link rel="icon" type="image/png" sizes="16x16" href="[% request.url_for('images/favicons/CFX_favicon16.png') %]" />
     <link rel="icon" type="image/png" sizes="32x32" href="[% request.url_for('images/favicons/CFX_favicon32.png') %]" />
     [% FOREACH css_file IN css_files =%]
