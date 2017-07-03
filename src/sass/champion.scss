@@ -32,9 +32,9 @@ h4 {
     @include fluid-type(16px, 18px);
 }
 
-body, p, a {
-    @include fluid-type(12px, 14px);
-    line-height: 1.5em;
+body, p, a, ul, ol {
+    @include fluid-type(14px, 14px);
+    line-height: 1.5rem;
     letter-spacing: 0.2px;
 }
 
@@ -833,8 +833,7 @@ fieldset {
 }
 
 .fx-divider {
-    height: 5px;
-    margin: 20px 0;
+    height: 25px;
 }
 
 .fx-divider-l {

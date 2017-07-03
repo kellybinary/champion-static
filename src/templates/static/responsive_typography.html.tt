@@ -1,4 +1,7 @@
 <div class="container">
+    <h2>Typography</h2>
+    <div class="separator fill-bg-color"></div>
+
     <p class="bold">Responsive type</p>
     <h1>ChampionFX heading level 1</h1>
     Font size: <span id="h1"></span>
@@ -21,7 +24,7 @@
 
     <p class="bold">Font weights</p>
     <p class="medium">
-        <div class="headings">Medium 500</div>  Font-weight: 500 / Medium is used at sizes greater than or equal to 18px (h1-h4).
+        <div class="headings">Medium 500</div>  Font-weight: 500 / Medium is used at font sizes greater than or equal to 18px (e.g. h1-h4).
     </p>
     <p class="light">
         <div class="body">Light 300</div>   Font-weight: 300 / Light is used as body text.
@@ -29,13 +32,18 @@
 
     <div class="separator fill-bg-color"></div>
     <p class="bold">Letter spacing</p>
-    <p>Headings and paragraph text has a letter-spacing of 0.2px.</p>
+    <p>Headings and body texts have a letter-spacing of 0.2px.</p>
 
     <p class="bold">Line heights</p>
-    <p>Body text has a line-height of 25px.</p>
+    <p>Headings has a line-height of 1.5em.</p>
+    <p>Body text has a line-height of 1.5rem.</p>
 
+    <p class="bold">Line lengths</p>
+    <p>52-72 characters</p>
 
     <div class="separator fill-bg-color"></div>
+    <!-- p class="bold">Components</p>
+
     <p>Button</p>
     <button>This is a button</button>
     <button class="button-secondary">This is a secondary button</button>
@@ -45,5 +53,64 @@
     <a class="button-secondary"><span>This is a secondary link</span></a>
     <a class="underline-link"><span>This is an underline link</span></a>
 
+    <p>List</p>
+    <ul class="bullet">
+        <li>Unordered list 1</li>
+        <ul>
+            <li>- Unordered nested list 1</li>
+        </ul>
+        <li>Unordered list 2</li>
+    </ul>
+    <ol>
+        <li>Ordered list 1</li>
+        <li>Ordered list 2</li>
+    </ol>
     <div class="separator fill-bg-color"></div>
+    <p>Box</p>
+    <div class="row row-grid">
+        <div class="col-md-4">
+            <div class="box">
+                <h4>Title</h4>
+                <p>Content</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="box">
+                <h4>Title</h4>
+                <p>Content.</p>
+                <p>This box has more content.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="box">
+                <h4>Title</h4>
+                <p>Content.</p>
+                <p>This box has more content.</p>
+            </div>
+        </div>
+    </div>
+    <div class="row row-grid">
+        <div class="col-md-4">
+            <div class="box">
+                <h4>Title</h4>
+                <p>Content</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="box">
+                <h4>Title</h4>
+                <p>Content.</p>
+                <p>This box has more content.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="box">
+                <h4>Title</h4>
+                <p>Content.</p>
+                <p>This box has more content.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="separator fill-bg-color"></div -->
 </div>
