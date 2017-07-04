@@ -25974,8 +25974,8 @@
 
 	    var hideButton = function hideButton(element) {
 	        element.siblings('div.col-md-10').removeClass('col-md-10').addClass('col-md-11');
-	        element.siblings('div.col-md-1').removeClass('hide');
-	        element.addClass('hide');
+	        element.siblings('div.hide').removeClass('hide').addClass('col-md-1');
+	        element.addClass('hide').removeClass('col-md-1');
 	        $container.removeClass('in-the-middle');
 	    };
 
@@ -30261,12 +30261,6 @@
 	                $form.find(fields[action].lbl_account_type.id).text(types_info[acc_type].title);
 	                // Email
 	                $form.find(fields[action].lbl_email.id).text(fields[action].additional_fields(acc_type).email);
-	                // Max leverage
-	                $form.find(fields[action].ddl_leverage.id + ' option').each(function () {
-	                    if (+$(this).val() > types_info[acc_type].max_leverage) {
-	                        $(this).remove();
-	                    }
-	                });
 	            },
 	            onSuccess: function onSuccess(response) {
 	                GTM.mt5NewAccount(response);
@@ -30356,7 +30350,6 @@
 	            lbl_account_type: { id: '#lbl_account_type' },
 	            lbl_email: { id: '#lbl_email' },
 	            txt_name: { id: '#txt_name', request_field: 'name' },
-	            ddl_leverage: { id: '#ddl_leverage', request_field: 'leverage' },
 	            txt_main_pass: { id: '#txt_main_pass', request_field: 'mainPassword' },
 	            txt_re_main_pass: { id: '#txt_re_main_pass' },
 	            txt_investor_pass: { id: '#txt_investor_pass', request_field: 'investPassword' },
@@ -30366,7 +30359,8 @@
 	                    account_type: types_info[acc_type].account_type,
 	                    email: Client.get('email')
 	                }, types_info[acc_type].mt5_account_type ? {
-	                    mt5_account_type: types_info[acc_type].mt5_account_type
+	                    mt5_account_type: types_info[acc_type].mt5_account_type,
+	                    leverage: types_info[acc_type].max_leverage
 	                } : {});
 	            }
 	        },
@@ -30407,7 +30401,7 @@
 	    };
 
 	    var validations = {
-	        new_account: [{ selector: fields.new_account.txt_name.id, validations: ['req', 'letter_symbol', ['length', { min: 2, max: 30 }]] }, { selector: fields.new_account.txt_main_pass.id, validations: ['req', ['password', 'mt']] }, { selector: fields.new_account.txt_re_main_pass.id, validations: ['req', ['compare', { to: fields.new_account.txt_main_pass.id }]] }, { selector: fields.new_account.txt_investor_pass.id, validations: ['req', ['password', 'mt'], ['not_equal', { to: fields.new_account.txt_main_pass.id, name1: 'Main password', name2: 'Investor password' }]] }, { selector: fields.new_account.ddl_leverage.id, validations: ['req'] }, { selector: fields.new_account.chk_tnc.id, validations: ['req'] }],
+	        new_account: [{ selector: fields.new_account.txt_name.id, validations: ['req', 'letter_symbol', ['length', { min: 2, max: 30 }]] }, { selector: fields.new_account.txt_main_pass.id, validations: ['req', ['password', 'mt']] }, { selector: fields.new_account.txt_re_main_pass.id, validations: ['req', ['compare', { to: fields.new_account.txt_main_pass.id }]] }, { selector: fields.new_account.txt_investor_pass.id, validations: ['req', ['password', 'mt'], ['not_equal', { to: fields.new_account.txt_main_pass.id, name1: 'Main password', name2: 'Investor password' }]] }, { selector: fields.new_account.chk_tnc.id, validations: ['req'] }],
 	        password_change: [{ selector: fields.password_change.txt_old_password.id, validations: ['req'] }, { selector: fields.password_change.txt_new_password.id, validations: ['req', ['password', 'mt'], ['not_equal', { to: fields.password_change.txt_old_password.id, name1: 'Current password', name2: 'New password' }]] }, { selector: fields.password_change.txt_re_new_password.id, validations: ['req', ['compare', { to: fields.password_change.txt_new_password.id }]] }],
 	        deposit: [{ selector: fields.deposit.txt_amount.id, validations: ['req', ['number', { type: 'float', min: 1, max: 20000, decimals: '0, 2' }]] }],
 	        withdrawal: [{ selector: fields.withdrawal.txt_main_pass.id, validations: ['req'] }, { selector: fields.withdrawal.txt_amount.id, validations: ['req', ['number', { type: 'float', min: 1, max: 20000, decimals: '0, 2' }]] }]
