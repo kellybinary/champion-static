@@ -1735,10 +1735,6 @@ ul.checked.small > li {
 #payment_methods .tabs-container.row {
   margin: 0;
 }
-#payment_methods .tabs-container.row div {
-  -webkit-transition: max-width 0.5s;
-  transition: max-width 0.5s;
-}
 #payment_methods .tabs-container .previous-button, #payment_methods .tabs-container .next-button {
   border-top: none;
   padding: 0px;
@@ -1895,6 +1891,9 @@ ul.checked.small > li {
   #payment_methods .tabs-container > .previous-button.next-button, #payment_methods .tabs-container .next-button.next-button {
     border-top: 1px solid #f2f2f2;
     border-left: none;
+  }
+  #payment_methods .tabs-container > .previous-button.hide, #payment_methods .tabs-container .next-button.hide {
+    max-height: 0;
   }
   #payment_methods .tabs-container .tab-buttons ul {
     display: -webkit-box;
