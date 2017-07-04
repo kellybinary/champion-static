@@ -18585,7 +18585,8 @@
 	            'types-of-accounts': { module: ClientType },
 	            'trading-platform': { module: ClientType },
 	            'metatrader-5': { module: ClientType },
-	            'champion-trader': { module: ClientType }
+	            'champion-trader': { module: ClientType },
+	            'economic-calendar': { module: ClientType }
 	        };
 	        if (page in pages_map) {
 	            loadHandler(pages_map[page]);
