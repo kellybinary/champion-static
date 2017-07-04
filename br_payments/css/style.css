@@ -1755,9 +1755,9 @@ ul.checked.small > li {
   border-left: none;
 }
 #payment_methods .tabs-container .previous-button.hide, #payment_methods .tabs-container .next-button.hide {
-  max-height: 0px;
-  max-width: 0px;
-  padding: 0px;
+  max-height: 0;
+  max-width: 0;
+  padding: 0;
 }
 #payment_methods .tabs-container .tab-buttons {
   overflow: hidden;
@@ -1894,6 +1894,7 @@ ul.checked.small > li {
   }
   #payment_methods .tabs-container > .previous-button.hide, #payment_methods .tabs-container .next-button.hide {
     max-height: 0;
+    opacity: 0;
   }
   #payment_methods .tabs-container .tab-buttons ul {
     display: -webkit-box;
