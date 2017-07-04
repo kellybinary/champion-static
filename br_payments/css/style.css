@@ -1735,12 +1735,16 @@ ul.checked.small > li {
 #payment_methods .tabs-container.row {
   margin: 0;
 }
+#payment_methods .tabs-container.row div {
+  -webkit-transition: max-width 0.5s;
+  transition: max-width 0.5s;
+}
 #payment_methods .tabs-container .previous-button, #payment_methods .tabs-container .next-button {
   border-top: none;
   padding: 0px;
   cursor: pointer;
-  -webkit-transition: max-width 0.5s;
-  transition: max-width 0.5s;
+  -webkit-transition: max-width 0.3s;
+  transition: max-width 0.3s;
 }
 #payment_methods .tabs-container .previous-button.previous-button, #payment_methods .tabs-container .next-button.previous-button {
   border-right: 1px solid #f2f2f2;
@@ -1755,6 +1759,7 @@ ul.checked.small > li {
   border-left: none;
 }
 #payment_methods .tabs-container .previous-button.hide, #payment_methods .tabs-container .next-button.hide {
+  max-height: 0px;
   max-width: 0px;
   padding: 0px;
 }
@@ -1880,8 +1885,8 @@ ul.checked.small > li {
   #payment_methods .tabs-container > .previous-button, #payment_methods .tabs-container .next-button {
     max-height: 100%;
     opacity: 1;
-    -webkit-transition: max-height 0.5s;
-    transition: max-height 0.5s;
+    -webkit-transition: max-height 0.3s;
+    transition: max-height 0.3s;
   }
   #payment_methods .tabs-container > .previous-button.previous-button, #payment_methods .tabs-container .next-button.previous-button {
     border-bottom: 1px solid #f2f2f2;
@@ -1890,10 +1895,6 @@ ul.checked.small > li {
   #payment_methods .tabs-container > .previous-button.next-button, #payment_methods .tabs-container .next-button.next-button {
     border-top: 1px solid #f2f2f2;
     border-left: none;
-  }
-  #payment_methods .tabs-container > .previous-button.hide, #payment_methods .tabs-container .next-button.hide {
-    max-height: 0;
-    opacity: 0;
   }
   #payment_methods .tabs-container .tab-buttons ul {
     display: -webkit-box;

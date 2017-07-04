@@ -25980,8 +25980,8 @@
 	    };
 
 	    var showBothButtons = function showBothButtons() {
-	        $previousButton.removeClass('hide');
-	        $nextButton.removeClass('hide');
+	        $previousButton.removeClass('hide').addClass('col-md-1');
+	        $nextButton.removeClass('hide').addClass('col-md-1');
 	    };
 
 	    var makeScrollTabsSmall = function makeScrollTabsSmall() {
