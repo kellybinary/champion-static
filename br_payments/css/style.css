@@ -1924,7 +1924,7 @@ ul.checked.small > li {
     margin: 5px auto;
   }
   #payment_methods .tab-content {
-    max-height: 450px;
+    height: 450px;
   }
   #payment_methods .tab-content .tab-content-wrapper {
     -webkit-box-orient: vertical;
