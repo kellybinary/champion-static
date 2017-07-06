@@ -25854,26 +25854,21 @@
 	    'use strict';
 
 	    var VIEWPORT_TABS = 6;
-	    var $container = void 0;
-	    var $previousButton = void 0;
+	    var $scrollTabsContainer = void 0;
+	    var $prevButton = void 0;
 	    var $nextButton = void 0;
 	    var isVertical = void 0;
 	    var currentFirstTab = void 0;
 
 	    var load = function load() {
 	        ChampionSocket.wait('authorize').then(function () {
-	            $container = $('.scrollable-tabs');
-	            $previousButton = $('.previous-button');
+	            $scrollTabsContainer = $('.scrollable-tabs');
+	            $prevButton = $('.previous-button');
 	            $nextButton = $('.next-button');
 	            isVertical = $(window).innerWidth() < 767;
 	            currentFirstTab = 1;
 
-	            var container = $('#payment_methods');
-	            if (!Client.is_logged_in()) {
-	                container.find('#btn-signup').removeClass('invisible');
-	            } else {
-	                container.find('#btn-cashier').removeClass('invisible');
-	            }
+	            $('#payment_methods').find(Client.is_logged_in() ? '#btn-cashier' : '#btn-signup').removeClass('invisible');
 
 	            $('#payment_methods_accordian').accordion({
 	                heightStyle: 'content',
@@ -25887,14 +25882,14 @@
 
 	            scrollTabContents();
 	            $nextButton.unbind('click').click(scrollHandler(true));
-	            $previousButton.unbind('click').click(scrollHandler(false));
-	            $container.scrollEnd(toggleNextAndPrevious, 50);
+	            $prevButton.unbind('click').click(scrollHandler(false));
+	            $scrollTabsContainer.scrollEnd(toggleNextAndPrevious, 50);
 	        });
 	    };
 
 	    var scrollTabContents = function scrollTabContents() {
 	        var $tab_content = $('.tab-content-wrapper');
-	        $container.find('li').click(function (e) {
+	        $scrollTabsContainer.find('li').click(function (e) {
 	            e.preventDefault();
 	            var val = $(this).find('a').attr('rel');
 	            if (!val) {
@@ -25921,17 +25916,17 @@
 	    };
 
 	    function toggleNextAndPrevious(e) {
-	        var $firstTab = $container.find(':nth-child(1)');
+	        var $firstTab = $scrollTabsContainer.find(':nth-child(1)');
 	        var tabSize = isVertical ? $firstTab.height() : $firstTab.width();
 	        var $this = $(e.target);
 	        var MIN_DIFF = 5;
-	        var containerSize = Math.ceil(isVertical ? $container.height() : $container.width());
+	        var containerSize = Math.ceil(isVertical ? $scrollTabsContainer.height() : $scrollTabsContainer.width());
 	        var firstTabPosition = isVertical ? $firstTab.position().top : $firstTab.position().left;
 	        currentFirstTab = Math.ceil(Math.abs(firstTabPosition / tabSize));
 	        var lastTabPosition = isVertical ? $this.get(0).scrollHeight - $this.scrollTop() : $this.get(0).scrollWidth - $this.scrollLeft();
 
 	        if (firstTabPosition === 0) {
-	            hideButton($previousButton);
+	            hideButton($prevButton);
 	        } else if (Math.abs(lastTabPosition - containerSize) < MIN_DIFF) {
 	            hideButton($nextButton);
 	        } else {
@@ -25941,7 +25936,7 @@
 	    }
 
 	    var updateCurrentFirstTab = function updateCurrentFirstTab(isDirectionForward) {
-	        var tabsCount = $container.children().length;
+	        var tabsCount = $scrollTabsContainer.children().length;
 	        var end = currentFirstTab + (VIEWPORT_TABS - 1);
 	        var tabsRemainingInTheEnd = tabsCount - end;
 	        var tabsRemainingInTheBeginning = currentFirstTab - 1;
@@ -25959,16 +25954,16 @@
 	    };
 
 	    var isThereChildrenToScroll = function isThereChildrenToScroll() {
-	        var num_of_tabs = $container.children().length;
+	        var num_of_tabs = $scrollTabsContainer.children().length;
 	        return currentFirstTab < num_of_tabs && currentFirstTab > 0;
 	    };
 
 	    var scroll = function scroll() {
-	        var scrollTo = $container.find(':nth-child(' + currentFirstTab + ')');
+	        var scrollTo = $scrollTabsContainer.find(':nth-child(' + currentFirstTab + ')');
 	        var scrollPosition = isVertical ? 'scrollTop' : 'scrollLeft';
-	        var scrollSize = $container[scrollPosition]() + scrollTo.position()[isVertical ? 'top' : 'left'];
+	        var scrollSize = $scrollTabsContainer[scrollPosition]() + scrollTo.position()[isVertical ? 'top' : 'left'];
 	        if (isThereChildrenToScroll()) {
-	            $container.animate(_defineProperty({}, scrollPosition, scrollSize), 500);
+	            $scrollTabsContainer.animate(_defineProperty({}, scrollPosition, scrollSize), 500);
 	        }
 	    };
 
@@ -25976,19 +25971,19 @@
 	        element.siblings('div.col-md-10').removeClass('col-md-10').addClass('col-md-11');
 	        element.siblings('div.hide').removeClass('hide').addClass('col-md-1');
 	        element.addClass('hide').removeClass('col-md-1');
-	        $container.removeClass('in-the-middle');
+	        $scrollTabsContainer.removeClass('in-the-middle');
 	    };
 
 	    var showBothButtons = function showBothButtons() {
-	        $previousButton.removeClass('hide').addClass('col-md-1');
+	        $prevButton.removeClass('hide').addClass('col-md-1');
 	        $nextButton.removeClass('hide').addClass('col-md-1');
 	    };
 
 	    var makeScrollTabsSmall = function makeScrollTabsSmall() {
 	        if (isVertical) {
-	            $container.addClass('in-the-middle');
+	            $scrollTabsContainer.addClass('in-the-middle');
 	        } else {
-	            $container.parent().removeClass('col-md-11').addClass('col-md-10');
+	            $scrollTabsContainer.parent().removeClass('col-md-11').addClass('col-md-10');
 	        }
 	    };
 
