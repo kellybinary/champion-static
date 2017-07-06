@@ -1879,7 +1879,7 @@ ul.checked.small > li {
     border: 1px solid #f2f2f2;
   }
   #payment_methods .tabs-container > .previous-button, #payment_methods .tabs-container .next-button {
-    max-height: 50px;
+    max-height: 48px;
     opacity: 1;
     -webkit-transition: max-height 0.3s;
     transition: max-height 0.3s;
