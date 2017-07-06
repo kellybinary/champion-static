@@ -18585,7 +18585,8 @@
 	            'types-of-accounts': { module: ClientType },
 	            'trading-platform': { module: ClientType },
 	            'metatrader-5': { module: ClientType },
-	            'champion-trader': { module: ClientType }
+	            'champion-trader': { module: ClientType },
+	            'economic-calendar': { module: ClientType }
 	        };
 	        if (page in pages_map) {
 	            loadHandler(pages_map[page]);
@@ -28941,8 +28942,7 @@
 	        txt_secret_answer: '#txt_secret_answer',
 	        chk_not_pep: '#chk_not_pep',
 	        chk_tnc: '#chk_tnc',
-	        btn_submit: '#btn_submit',
-	        ddl_opening_reason: '#ddl_opening_reason'
+	        btn_submit: '#btn_submit'
 	    };
 
 	    var load = function load() {
@@ -28971,7 +28971,7 @@
 	    };
 
 	    var initValidation = function initValidation() {
-	        Validation.init(form_selector, [{ selector: fields.txt_fname, validations: ['req', 'letter_symbol', ['min', { min: 2 }]] }, { selector: fields.txt_lname, validations: ['req', 'letter_symbol', ['min', { min: 2 }]] }, { selector: fields.txt_birth_date, validations: ['req'] }, { selector: fields.txt_address1, validations: ['req', 'address', ['length', { min: 1, max: 70 }]] }, { selector: fields.txt_address2, validations: ['address', ['length', { min: 0, max: 70 }]] }, { selector: fields.txt_city, validations: ['req', 'letter_symbol', ['length', { min: 1, max: 35 }]] }, { selector: fields.txt_state, validations: ['letter_symbol'] }, { selector: fields.txt_postcode, validations: ['postcode', ['length', { min: 0, max: 20 }]] }, { selector: fields.txt_phone, validations: ['req', 'phone', ['length', { min: 6, max: 35, exclude: /^\+/ }]] }, { selector: fields.ddl_secret_question, validations: ['req'] }, { selector: fields.txt_secret_answer, validations: ['req', 'general', ['length', { min: 4, max: 50 }]] }, { selector: fields.chk_tnc, validations: ['req'] }, { selector: fields.chk_not_pep, validations: ['req'] }, { selector: fields.ddl_opening_reason, validations: ['req'] }]);
+	        Validation.init(form_selector, [{ selector: fields.txt_fname, validations: ['req', 'letter_symbol', ['min', { min: 2 }]] }, { selector: fields.txt_lname, validations: ['req', 'letter_symbol', ['min', { min: 2 }]] }, { selector: fields.txt_birth_date, validations: ['req'] }, { selector: fields.txt_address1, validations: ['req', 'address', ['length', { min: 1, max: 70 }]] }, { selector: fields.txt_address2, validations: ['address', ['length', { min: 0, max: 70 }]] }, { selector: fields.txt_city, validations: ['req', 'letter_symbol', ['length', { min: 1, max: 35 }]] }, { selector: fields.txt_state, validations: ['letter_symbol'] }, { selector: fields.txt_postcode, validations: ['postcode', ['length', { min: 0, max: 20 }]] }, { selector: fields.txt_phone, validations: ['req', 'phone', ['length', { min: 6, max: 35, exclude: /^\+/ }]] }, { selector: fields.ddl_secret_question, validations: ['req'] }, { selector: fields.txt_secret_answer, validations: ['req', 'general', ['length', { min: 4, max: 50 }]] }, { selector: fields.chk_tnc, validations: ['req'] }, { selector: fields.chk_not_pep, validations: ['req'] }]);
 	    };
 
 	    var displayResidence = function displayResidence() {
@@ -29036,8 +29036,7 @@
 	                address_postcode: $(fields.txt_postcode).val(),
 	                phone: $(fields.txt_phone).val(),
 	                secret_question: $(fields.ddl_secret_question).val(),
-	                secret_answer: $(fields.txt_secret_answer).val(),
-	                account_opening_reason: $(fields.ddl_opening_reason).val()
+	                secret_answer: $(fields.txt_secret_answer).val()
 	            };
 	            if (Client.get('affiliate_token')) {
 	                data.affiliate_token = Client.get('affiliate_token');
