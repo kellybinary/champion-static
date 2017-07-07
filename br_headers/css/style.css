@@ -1711,9 +1711,6 @@ ul.checked.small > li {
 .payment-methods-header {
   background-image: url("../images/payment_methods/payment_methods_banner.png");
 }
-.payment-methods-header h1 {
-  padding: 30px 0;
-}
 
 .arrow {
   background-repeat: no-repeat;
