@@ -491,6 +491,10 @@ h1.main-title {
   background-image: url("../images/CFDs.png");
 }
 
+.economic-calendar-header {
+  background-image: url("../images/mt5/economic_calendar_banner.png");
+}
+
 .fx-home-header {
   width: 100%;
   /* for IE 6 */
