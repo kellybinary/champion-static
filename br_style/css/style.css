@@ -490,6 +490,7 @@ h1.main-title {
   padding: 25px 0 0;
   font-size: 10px;
   text-align: justify;
+  line-height: 1.5em;
 }
 #footer #footer-last {
   padding: 10px 0;
