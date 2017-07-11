@@ -3321,6 +3321,7 @@ section {
   background: url("../images/ico/globe_network_bg.svg");
   background-size: cover;
   background-position: center;
+  height: 100%;
 }
 #pre-announcement h1, #pre-announcement h3, #pre-announcement p {
   color: #fff;
