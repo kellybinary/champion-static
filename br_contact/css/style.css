@@ -614,9 +614,6 @@ h1.main-title {
   background-image: url("../images/contact_us/contact_us_banner.png");
   background-size: cover;
 }
-.contact-us-header h4, .contact-us-header p {
-  color: #fff;
-}
 .contact-us-header h4 {
   margin-bottom: 0;
   padding: 0;
@@ -652,10 +649,9 @@ h1.main-title {
 #contact-us .row-reverse {
   -webkit-box-orient: horizontal;
   -webkit-box-direction: reverse;
-  -webkit-flex-direction: row-reverse;
       -ms-flex-direction: row-reverse;
           flex-direction: row-reverse;
-  -webkit-flex-flow: row-reverse wrap;
+  -webkit-flex-direction: row-reverse;
   /* Safari 6.1+ */
 }
 #contact-us .section-heading div.row {
