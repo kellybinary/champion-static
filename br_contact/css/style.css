@@ -772,16 +772,16 @@ h1.main-title {
     font-size: 11px;
   }
   #contact-us .section-heading .content-align-right > div {
-    padding-left: 0;
+    padding-right: 0;
   }
   #contact-us .section-heading .content-align-right > div img {
-    padding-left: 0;
+    padding-right: 15px;
   }
   #contact-us .section-heading .content-align-left > div {
-    padding-right: 0;
+    padding-left: 0;
   }
   #contact-us .section-heading .content-align-left > div img {
-    padding-right: 0;
+    padding-left: 15px;
   }
 
   .contact-us-header h1 {
