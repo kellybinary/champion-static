@@ -3262,7 +3262,7 @@ section {
 
 .navbar-fixed-top.top-nav-collapse {
   padding: 0;
-  background: #004385 !important;
+  background: #013365;
 }
 
 .navbar-toggle {
@@ -3395,6 +3395,56 @@ h2 {
   #cfx-intro p {
     margin: 1.5em;
   }
+}
+
+.popup-box {
+  width: 50%;
+  position: relative;
+  margin: 15% auto;
+  border-radius: 10px;
+  height: 50%;
+}
+.popup-box-content {
+  height: 100%;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  -webkit-transition: opacity 500ms;
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.close {
+  background: #fff;
+  color: #000;
+  line-height: 25px;
+  position: absolute;
+  right: -12px;
+  text-align: center;
+  top: -10px;
+  width: 24px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 12px;
+  -webkit-box-shadow: 1px 1px 3px #000;
+  box-shadow: 1px 1px 3px #000;
+}
+
+.close:hover {
+  background: #bfd0e0;
 }
 
 #why-cfx .container {
@@ -3658,11 +3708,6 @@ h2 {
 #how-ico-works .steps .content-right {
   text-align: right;
 }
-#how-ico-works hr {
-  height: 2px;
-  border: 1px solid #f2f2f2;
-  margin: 60px 0;
-}
 #how-ico-works .icon {
   margin: 20px;
 }
@@ -3746,6 +3791,31 @@ h2 {
   margin: 20px;
 }
 
+#faq .container {
+  padding: 120px 0 60px;
+}
+#faq .faq-content {
+  margin-bottom: 40px;
+}
+#faq .faq-content .question:before {
+  content: 'Q:';
+  padding-right: 5px;
+  color: #004385;
+  margin-left: -20px;
+}
+#faq .faq-content .answer:before {
+  content: 'A:';
+  color: #004385;
+  margin-left: -20px;
+}
+#faq .faq-content .question p, #faq .faq-content .answer p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+#faq .faq-content .question p:first-child, #faq .faq-content .answer p:first-child {
+  display: inline;
+}
+
 footer {
   background: #013365;
   padding: 30px;
@@ -3758,4 +3828,10 @@ footer p {
 
 p {
   line-height: 1.5rem;
+}
+
+hr {
+  height: 2px;
+  border: 1px solid #f2f2f2;
+  margin: 60px 0;
 }

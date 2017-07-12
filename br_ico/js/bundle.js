@@ -37455,10 +37455,9 @@
 	    // Scroll to section
 	    document.addEventListener('click', function (e) {
 	        if (e.target.classList.contains('page-scroll')) {
-	            // document.getElementById('home').classList.remove('invisible');
-	            // document.getElementById('faq').classList.add('invisible');
+	            document.getElementById('home').classList.remove('invisible');
+	            document.getElementById('faq').classList.add('invisible');
 	            var target = e.target.getAttribute('href').substr(1);
-	            console.log(e.target);
 	            var offset = 0;
 	            if (target === 'who-we-are' || target === 'page-top') {
 	                offset = 55;
@@ -37482,13 +37481,13 @@
 	        e.stopPropagation();
 	    });
 
-	    // const faqButton = document.getElementById('faq-btn');
-	    // faqButton.addEventListener('click', function(e) {
-	    //     document.getElementById('faq').classList.remove('invisible');
-	    //     scrollTo(document.body, 0, 1000);
-	    //     e.stopPropagation();
-	    //     document.getElementById('home').classList.add('invisible');
-	    // });
+	    var faqButton = document.getElementById('faq-btn');
+	    faqButton.addEventListener('click', function (e) {
+	        document.getElementById('faq').classList.remove('invisible');
+	        scrollTo(document.body, 0, 500);
+	        e.stopPropagation();
+	        document.getElementById('home').classList.add('invisible');
+	    });
 
 	    window.onresize = checkWidth;
 	    window.onscroll = collapseNavbar;
@@ -37498,9 +37497,10 @@
 	// Collapse navbar on scroll
 	function collapseNavbar() {
 	    var navbarFixedTopEl = document.getElementsByClassName('navbar-fixed-top');
+	    var isFAQVisible = document.getElementById('faq').classList.contains('invisible');
 	    if (window.scrollY > 50) {
 	        navbarFixedTopEl[0].classList.add('top-nav-collapse');
-	    } else {
+	    } else if (isFAQVisible) {
 	        navbarFixedTopEl[0].classList.remove('top-nav-collapse');
 	    }
 	}
