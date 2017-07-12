@@ -621,6 +621,9 @@ h1.main-title {
   margin-bottom: 0;
   padding: 0;
 }
+.contact-us-header p {
+  font-size: 14px;
+}
 .contact-us-header .flex-display {
   display: -webkit-box;
   display: -ms-flexbox;
