@@ -37467,6 +37467,7 @@
 	            scrollTo(document.body, to, 1000);
 	            e.preventDefault();
 	        }
+	        window.location.hash = '';
 	    });
 
 	    // Toggle mobile menu
@@ -37487,6 +37488,7 @@
 	        scrollTo(document.body, 0, 500);
 	        e.stopPropagation();
 	        document.getElementById('home').classList.add('invisible');
+	        window.location.hash = '';
 	    });
 
 	    window.onresize = checkWidth;
