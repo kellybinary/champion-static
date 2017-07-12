@@ -37452,19 +37452,6 @@
 	'use strict';
 
 	document.addEventListener('DOMContentLoaded', function () {
-	    // Scroll to section
-	    document.addEventListener('click', function (e) {
-	        if (e.target.classList.contains('page-scroll')) {
-	            document.getElementById('home').classList.remove('invisible');
-	            document.getElementById('faq').classList.add('invisible');
-	            var target = e.target.getAttribute('href').substr(1);
-	            var navbarHeight = checkWidth();
-	            var to = document.getElementById(target).offsetTop - navbarHeight;
-	            scrollTo(document.body, to, 1000);
-	            e.preventDefault();
-	        }
-	    });
-
 	    // Toggle mobile menu
 	    var toggleButton = document.getElementById('toggle-menu');
 	    var navbar = document.getElementsByClassName('navbar-fixed-top')[0];
@@ -37475,6 +37462,20 @@
 	            navbar.classList.add('expand');
 	        }
 	        e.stopPropagation();
+	    });
+
+	    // Scroll to section
+	    document.addEventListener('click', function (e) {
+	        if (e.target.classList.contains('page-scroll')) {
+	            document.getElementById('home').classList.remove('invisible');
+	            document.getElementById('faq').classList.add('invisible');
+	            var target = e.target.getAttribute('href').substr(1);
+	            var navbarHeight = checkWidth();
+	            var to = document.getElementById(target).offsetTop - navbarHeight;
+	            scrollTo(document.body, to, 1000);
+	            navbar.classList.remove('expand');
+	            e.preventDefault();
+	        }
 	    });
 
 	    var faqButton = document.getElementById('faq-btn');
@@ -37496,8 +37497,10 @@
 	    var isFAQVisible = document.getElementById('faq').classList.contains('invisible');
 	    if (window.scrollY > 50) {
 	        navbarFixedTopEl[0].classList.add('top-nav-collapse');
+	        document.getElementById('subscribe-btn').classList.remove('btn-hide');
 	    } else if (isFAQVisible) {
 	        navbarFixedTopEl[0].classList.remove('top-nav-collapse');
+	        document.getElementById('subscribe-btn').classList.add('btn-hide');
 	    }
 	}
 
