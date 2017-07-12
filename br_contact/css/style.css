@@ -614,12 +614,12 @@ h1.main-title {
   background-image: url("../images/contact_us/contact_us_banner.png");
   background-size: cover;
 }
+.contact-us-header h4, .contact-us-header p {
+  color: #fff;
+}
 .contact-us-header h4 {
   margin-bottom: 0;
   padding: 0;
-}
-.contact-us-header p {
-  margin-top: 15px;
 }
 .contact-us-header .flex-display {
   display: -webkit-box;
@@ -639,7 +639,7 @@ h1.main-title {
   -webkit-justify-content: center;
       -ms-flex-pack: center;
           justify-content: center;
-  margin: 0;
+  margin: 15px 0;
 }
 
 #contact-us {
