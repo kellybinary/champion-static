@@ -3174,16 +3174,12 @@ ul.checked.small > li {
   padding-left: 50px;
 }
 
+section {
+  padding: 0 15px;
+}
+
 .container {
   max-width: 1100px !important;
-}
-
-section {
-  padding: 0 10px;
-}
-
-.uppercase {
-  text-transform: uppercase;
 }
 
 .navbar-fixed-top {
@@ -3323,11 +3319,16 @@ section {
   background-position: center;
   height: 100%;
 }
-#pre-announcement h1, #pre-announcement h3, #pre-announcement p {
-  color: #fff;
+@media (min-width: 767px) {
+  #pre-announcement {
+    height: auto;
+  }
 }
 #pre-announcement .container {
   padding: 120px 0;
+}
+#pre-announcement h1, #pre-announcement h3, #pre-announcement p {
+  color: #fff;
 }
 #pre-announcement .cfx-logo {
   background: url("../images/ico/cfx_logo.svg");
@@ -3360,10 +3361,6 @@ section {
   display: inline-flex;
 }
 
-h2 {
-  margin: 0 0 20px;
-}
-
 #cfx-intro {
   -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 3vw));
           clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 3vw));
@@ -3378,7 +3375,7 @@ h2 {
   display: inline-block;
   margin-bottom: 10px;
 }
-#cfx-intro .center-horizontal {
+#cfx-intro .btn-container {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -3387,14 +3384,10 @@ h2 {
   -webkit-justify-content: center;
       -ms-flex-pack: center;
           justify-content: center;
+  margin-top: 20px;
 }
 #cfx-intro p {
-  margin: 1.5em 10em;
-}
-@media (max-width: 575px) {
-  #cfx-intro p {
-    margin: 1.5em;
-  }
+  margin: 0 0 10px;
 }
 
 .popup-box {
@@ -3424,7 +3417,6 @@ h2 {
 .overlay:target {
   visibility: visible;
   opacity: 1;
-  pointer-events: auto;
 }
 
 .close {
@@ -3550,10 +3542,11 @@ h2 {
   position: relative;
 }
 #milestones .timelines .timeline-vertical-line {
-  height: 96%;
+  height: 100%;
   left: 50%;
   position: absolute;
   border-left: 1px solid #dedede;
+  margin: 0;
 }
 #milestones .timelines .timeline-vertical-line:before, #milestones .timelines .timeline-vertical-line:after {
   position: absolute;
@@ -3596,8 +3589,8 @@ h2 {
 }
 #milestones .timeline-box:after {
   position: absolute;
-  top: 40px;
   content: '';
+  top: 40px;
   width: 10px;
   height: 10px;
   background: #004385;
@@ -3738,6 +3731,8 @@ h2 {
 
 #read-faq {
   background: url("../images/ico/faq_bg.png");
+  background-size: cover;
+  background-position: center;
 }
 #read-faq p {
   color: #fff;
@@ -3767,19 +3762,19 @@ h2 {
 #join-cfx-ico .icon {
   margin: 10px;
 }
-#join-cfx-ico .icon-facebook {
+#join-cfx-ico .icon-facebook:before {
   content: url("../images/ico/facebook.svg");
 }
-#join-cfx-ico .icon-twitter {
+#join-cfx-ico .icon-twitter:before {
   content: url("../images/ico/twitter.svg");
 }
-#join-cfx-ico .icon-slack {
+#join-cfx-ico .icon-slack:before {
   content: url("../images/ico/slack.svg");
 }
-#join-cfx-ico .icon-reddit {
+#join-cfx-ico .icon-reddit:before {
   content: url("../images/ico/reddit.svg");
 }
-#join-cfx-ico .icon-bitcointalk {
+#join-cfx-ico .icon-bitcointalk:before {
   content: url("../images/ico/bitcointalk.svg");
 }
 #join-cfx-ico p {
@@ -3797,6 +3792,12 @@ h2 {
 #faq .faq-content {
   margin-bottom: 40px;
 }
+@media (max-width: 575px) {
+  #faq .faq-content {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+}
 #faq .faq-content .question:before {
   content: 'Q:';
   padding-right: 5px;
@@ -3813,10 +3814,7 @@ h2 {
   margin-bottom: 10px;
 }
 #faq .faq-content .question p:first-child, #faq .faq-content .answer p:first-child {
-  display: -webkit-inline-box;
-  display: -webkit-inline-flex;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
+  display: inline-table;
 }
 
 footer {
@@ -3824,13 +3822,21 @@ footer {
   padding: 30px;
 }
 footer p {
-  font-size: 12px;
+  font-size: 10px;
   color: #fff;
   line-height: 1.83em;
 }
 
+h2 {
+  margin: 0 0 20px;
+}
+
 p {
   line-height: 1.5rem;
+}
+
+.uppercase {
+  text-transform: uppercase;
 }
 
 hr {
