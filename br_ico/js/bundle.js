@@ -37458,16 +37458,11 @@
 	            document.getElementById('home').classList.remove('invisible');
 	            document.getElementById('faq').classList.add('invisible');
 	            var target = e.target.getAttribute('href').substr(1);
-	            var offset = 0;
-	            if (target === 'who-we-are' || target === 'page-top') {
-	                offset = 55;
-	            }
 	            var navbarHeight = checkWidth();
-	            var to = document.getElementById(target).offsetTop - navbarHeight - offset;
+	            var to = document.getElementById(target).offsetTop - navbarHeight;
 	            scrollTo(document.body, to, 1000);
 	            e.preventDefault();
 	        }
-	        window.location.hash = '';
 	    });
 
 	    // Toggle mobile menu
@@ -37488,7 +37483,6 @@
 	        scrollTo(document.body, 0, 500);
 	        e.stopPropagation();
 	        document.getElementById('home').classList.add('invisible');
-	        window.location.hash = '';
 	    });
 
 	    window.onresize = checkWidth;
@@ -37518,7 +37512,7 @@
 
 	function checkBrowser() {
 	    var isFirefox = typeof InstallTrigger !== 'undefined'; // Firefox 1.0+
-	    var isIE = /* @cc_on!@ */false || !!document.documentMode; // Internet Explorer 6-11
+	    var isIE = false || !!document.documentMode; // Internet Explorer 6-11
 
 	    if (isFirefox || isIE) {
 	        return true;
