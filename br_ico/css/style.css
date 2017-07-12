@@ -3453,28 +3453,25 @@ section {
           align-items: flex-start;
 }
 #why-cfx .icon {
-  padding: 16px;
   margin: 0 10px;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
 }
-#why-cfx .icon-licensed {
-  background: url("../images/ico/licensed.svg");
+#why-cfx .icon-licensed:before {
+  content: url("../images/ico/licensed.svg");
 }
-#why-cfx .icon-king {
-  background: url("../images/ico/king.svg");
+#why-cfx .icon-king:before {
+  content: url("../images/ico/king.svg");
 }
-#why-cfx .icon-award {
-  background: url("../images/ico/award.svg");
+#why-cfx .icon-award:before {
+  content: url("../images/ico/award.svg");
 }
-#why-cfx .icon-dedicated-mt5 {
-  background: url("../images/ico/dedicated_mt5.svg");
+#why-cfx .icon-dedicated-mt5:before {
+  content: url("../images/ico/dedicated_mt5.svg");
 }
-#why-cfx .icon-hassle-free {
-  background: url("../images/ico/hassle_free.svg");
+#why-cfx .icon-hassle-free:before {
+  content: url("../images/ico/hassle_free.svg");
 }
-#why-cfx .icon-multi-asset {
-  background: url("../images/ico/multi_asset.svg");
+#why-cfx .icon-multi-asset:before {
+  content: url("../images/ico/multi_asset.svg");
 }
 #why-cfx .content, #why-cfx .icon {
   display: inline-block;
@@ -3508,19 +3505,16 @@ section {
 }
 #behind-cfx .icon {
   display: block;
-  padding: 30px;
   margin: 20px;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
 }
-#behind-cfx .icon-business-background {
-  background: url("../images/ico/business_background.svg");
+#behind-cfx .icon-business-background:before {
+  content: url("../images/ico/business_background.svg");
 }
-#behind-cfx .icon-shared-resources {
-  background: url("../images/ico/shared_resources.svg");
+#behind-cfx .icon-shared-resources:before {
+  content: url("../images/ico/shared_resources.svg");
 }
-#behind-cfx .icon-technology-leadership {
-  background: url("../images/ico/technology_leadership.svg");
+#behind-cfx .icon-technology-leadership:before {
+  content: url("../images/ico/technology_leadership.svg");
 }
 
 #milestones {
@@ -3652,12 +3646,12 @@ section {
   position: absolute;
   top: 0;
 }
-#how-ico-works .steps .step-box-left:before {
+#how-ico-works .steps .step-box-left:after {
   right: 0;
   width: 30px;
   height: 100%;
 }
-#how-ico-works .steps .step-box-left:after {
+#how-ico-works .steps .step-box-left:before {
   height: 30px;
   width: 100%;
   left: 0;
@@ -3693,7 +3687,6 @@ section {
 }
 #how-ico-works .steps .content {
   width: 100%;
-  margin-left: -15px;
 }
 #how-ico-works .steps .content-left {
   text-align: left;
@@ -3702,21 +3695,22 @@ section {
   text-align: right;
 }
 #how-ico-works .icon {
+  display: block;
   margin: 20px;
 }
-#how-ico-works .icon-money {
+#how-ico-works .icon-money:before {
   content: url("../images/ico/money.svg");
 }
-#how-ico-works .icon-dividends {
+#how-ico-works .icon-dividends:before {
   content: url("../images/ico/dividends.svg");
 }
-#how-ico-works .icon-tokenholders {
+#how-ico-works .icon-tokenholders:before {
   content: url("../images/ico/tokenholders.svg");
 }
-#how-ico-works .icon-purchase {
+#how-ico-works .icon-purchase:before {
   content: url("../images/ico/purchase.svg");
 }
-#how-ico-works .icon-earn {
+#how-ico-works .icon-earn:before {
   content: url("../images/ico/earn.svg");
 }
 #how-ico-works p {
@@ -3760,6 +3754,7 @@ section {
   padding: 80px 0 20px;
 }
 #join-cfx-ico .icon {
+  display: inline-block;
   margin: 10px;
 }
 #join-cfx-ico .icon-facebook:before {
