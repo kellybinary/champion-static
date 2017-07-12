@@ -57,6 +57,20 @@
 
 	$(window).on('load', Champion.init);
 
+	$.fn.scrollEnd = function (callback, timeout) {
+	    $(this).scroll(function (e) {
+	        var _this = this;
+
+	        var $this = $(this);
+	        if ($this.data('scrollTimeout')) {
+	            clearTimeout($this.data('scrollTimeout'));
+	        }
+	        $this.data('scrollTimeout', setTimeout(function () {
+	            return callback.call(_this, e);
+	        }, timeout));
+	    });
+	};
+
 /***/ }),
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -18585,7 +18599,8 @@
 	            'types-of-accounts': { module: ClientType },
 	            'trading-platform': { module: ClientType },
 	            'metatrader-5': { module: ClientType },
-	            'champion-trader': { module: ClientType }
+	            'champion-trader': { module: ClientType },
+	            'economic-calendar': { module: ClientType }
 	        };
 	        if (page in pages_map) {
 	            loadHandler(pages_map[page]);
@@ -18600,7 +18615,7 @@
 
 	    var errorMessages = {
 	        login: function login(module) {
-	            return module === MetaTrader ? Utility.template('To register an MT5 account, please <a href="[_1]">log in</a> to your ChampionFX account<br />\n                Don\'t have a ChampionFX account? <a href="[_2]">Create one</a> now', [Login.login_url(), url_for('/')]) : Utility.template('Please <a href="[_1]">log in</a> to view this page.', [Login.login_url()]);
+	            return module === MetaTrader ? Utility.template('To register an MT5 account, please <a href="[_1]" class="login">log in</a> to your ChampionFX account<br />\n                Don\'t have a ChampionFX account? <a href="[_2]">Create one</a> now', ['java' + 'script:;', url_for('/')]) : Utility.template('Please <a href="[_1]" class="login">log in</a> to view this page.', ['java' + 'script:;']);
 	        },
 	        only_virtual: 'Sorry, this feature is available to virtual accounts only.',
 	        only_real: 'This feature is not relevant to virtual-money accounts.'
@@ -18634,6 +18649,9 @@
 	    var displayMessage = function displayMessage(message) {
 	        var $content = container.find('#champion-content .container');
 	        $content.html($content.find('h1').first()).append($('<p/>', { class: 'center-text notice-msg', html: message }));
+	        $content.find('a.login').on('click', function () {
+	            Login.redirect_to_login();
+	        });
 	    };
 
 	    return {
@@ -25150,7 +25168,7 @@
 	        // redirect back
 	        var set_default = true;
 	        if (redirect_url) {
-	            var do_not_redirect = ['reset-password', 'lost-password', 'change-password', 'home'];
+	            var do_not_redirect = ['reset-password', 'lost-password', 'change-password', 'home', '404'];
 	            var reg = new RegExp(do_not_redirect.join('|'), 'i');
 	            if (!reg.test(redirect_url) && url_for('') !== redirect_url) {
 	                set_default = false;
@@ -25831,28 +25849,146 @@
 
 	'use strict';
 
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 	var ChampionSocket = __webpack_require__(305);
 	var Client = __webpack_require__(301);
 
 	var CashierPaymentMethods = function () {
 	    'use strict';
 
-	    var hidden_class = 'invisible';
+	    var VIEWPORT_TABS = 6;
+	    var $scrollTabsContainer = void 0;
+	    var $prevButton = void 0;
+	    var $nextButton = void 0;
+	    var isVertical = void 0;
+	    var currentFirstTab = void 0;
 
 	    var load = function load() {
 	        ChampionSocket.wait('authorize').then(function () {
-	            var container = $('.fx-payment-methods');
-	            if (!Client.is_logged_in()) {
-	                container.find('#btn-open-account').removeClass(hidden_class);
-	            } else if (!Client.is_virtual()) {
-	                container.find('#btn-deposit, #btn-withdraw').removeClass(hidden_class);
-	                ChampionSocket.send({ cashier_password: 1 }).then(function (response) {
-	                    if (!response.error && response.cashier_password === 1) {
-	                        container.find('#btn-deposit, #btn-withdraw').addClass('button-disabled');
-	                    }
-	                });
+	            $scrollTabsContainer = $('.scrollable-tabs');
+	            $prevButton = $('.previous-button');
+	            $nextButton = $('.next-button');
+	            isVertical = $(window).innerWidth() < 767;
+	            currentFirstTab = 1;
+
+	            $('#payment_methods').find(Client.is_logged_in() ? '#btn-cashier' : '#btn-signup').removeClass('invisible');
+
+	            $('#payment_methods_accordian').accordion({
+	                heightStyle: 'content',
+	                collapsible: true,
+	                active: false
+	            });
+
+	            $(window).on('orientationchange resize', function () {
+	                isVertical = $(window).innerWidth() < 767;
+	            });
+
+	            scrollTabContents();
+	            $nextButton.unbind('click').click(scrollHandler(true));
+	            $prevButton.unbind('click').click(scrollHandler(false));
+	            $scrollTabsContainer.scrollEnd(toggleNextAndPrevious, 50);
+	        });
+	    };
+
+	    var scrollTabContents = function scrollTabContents() {
+	        var $tab_content = $('.tab-content-wrapper');
+	        $scrollTabsContainer.find('li').click(function (e) {
+	            e.preventDefault();
+	            var val = $(this).find('a').attr('rel');
+	            if (!val) {
+	                return;
+	            }
+	            $(this).parent().find('.tab-selected').removeClass('tab-selected');
+	            $(this).addClass('tab-selected');
+	            if (isVertical) {
+	                $tab_content.animate({ scrollTop: $tab_content.scrollTop() + $(val).position().top }, 500);
+	            } else {
+	                $tab_content.animate({ scrollLeft: $tab_content.scrollLeft() + $(val).position().left }, 500);
 	            }
 	        });
+	    };
+
+	    var scrollHandler = function scrollHandler(isNextButton) {
+	        return function (e) {
+	            e.preventDefault();
+	            currentFirstTab = updateCurrentFirstTab(isNextButton);
+	            if (isThereChildrenToScroll()) {
+	                scroll();
+	            }
+	        };
+	    };
+
+	    function toggleNextAndPrevious(e) {
+	        var $firstTab = $scrollTabsContainer.find(':nth-child(1)');
+	        var tabSize = isVertical ? $firstTab.height() : $firstTab.width();
+	        var $this = $(e.target);
+	        var MIN_DIFF = 5;
+	        var containerSize = Math.ceil(isVertical ? $scrollTabsContainer.height() : $scrollTabsContainer.width());
+	        var firstTabPosition = isVertical ? $firstTab.position().top : $firstTab.position().left;
+	        currentFirstTab = Math.ceil(Math.abs(firstTabPosition / tabSize));
+	        var lastTabPosition = isVertical ? $this.get(0).scrollHeight - $this.scrollTop() : $this.get(0).scrollWidth - $this.scrollLeft();
+
+	        if (firstTabPosition === 0) {
+	            hideButton($prevButton);
+	        } else if (Math.abs(lastTabPosition - containerSize) < MIN_DIFF) {
+	            hideButton($nextButton);
+	        } else {
+	            showBothButtons();
+	            makeScrollTabsSmall(isVertical);
+	        }
+	    }
+
+	    var updateCurrentFirstTab = function updateCurrentFirstTab(isDirectionForward) {
+	        var tabsCount = $scrollTabsContainer.children().length;
+	        var end = currentFirstTab + (VIEWPORT_TABS - 1);
+	        var tabsRemainingInTheEnd = tabsCount - end;
+	        var tabsRemainingInTheBeginning = currentFirstTab - 1;
+	        var JUMP = VIEWPORT_TABS - 1;
+	        if (isDirectionForward) {
+	            if (tabsRemainingInTheEnd > JUMP) {
+	                return currentFirstTab + JUMP;
+	            }
+	            return currentFirstTab + tabsRemainingInTheEnd;
+	        }
+	        if (tabsRemainingInTheBeginning > JUMP) {
+	            return currentFirstTab - JUMP;
+	        }
+	        return currentFirstTab - tabsRemainingInTheBeginning;
+	    };
+
+	    var isThereChildrenToScroll = function isThereChildrenToScroll() {
+	        var num_of_tabs = $scrollTabsContainer.children().length;
+	        return currentFirstTab < num_of_tabs && currentFirstTab > 0;
+	    };
+
+	    var scroll = function scroll() {
+	        var scrollTo = $scrollTabsContainer.find(':nth-child(' + currentFirstTab + ')');
+	        var scrollPosition = isVertical ? 'scrollTop' : 'scrollLeft';
+	        var scrollSize = $scrollTabsContainer[scrollPosition]() + scrollTo.position()[isVertical ? 'top' : 'left'];
+	        if (isThereChildrenToScroll()) {
+	            $scrollTabsContainer.animate(_defineProperty({}, scrollPosition, scrollSize), 500);
+	        }
+	    };
+
+	    var hideButton = function hideButton(element) {
+	        element.siblings('div.col-md-10').removeClass('col-md-10').addClass('col-md-11');
+	        element.siblings('div.hide').removeClass('hide').addClass('col-md-1');
+	        element.addClass('hide').removeClass('col-md-1');
+	        $scrollTabsContainer.removeClass('in-the-middle');
+	    };
+
+	    var showBothButtons = function showBothButtons() {
+	        $prevButton.removeClass('hide').addClass('col-md-1');
+	        $nextButton.removeClass('hide').addClass('col-md-1');
+	    };
+
+	    var makeScrollTabsSmall = function makeScrollTabsSmall() {
+	        if (isVertical) {
+	            $scrollTabsContainer.addClass('in-the-middle');
+	        } else {
+	            $scrollTabsContainer.parent().removeClass('col-md-11').addClass('col-md-10');
+	        }
 	    };
 
 	    return {
@@ -28941,7 +29077,8 @@
 	        txt_secret_answer: '#txt_secret_answer',
 	        chk_not_pep: '#chk_not_pep',
 	        chk_tnc: '#chk_tnc',
-	        btn_submit: '#btn_submit'
+	        btn_submit: '#btn_submit',
+	        ddl_opening_reason: '#ddl_opening_reason'
 	    };
 
 	    var load = function load() {
@@ -28970,7 +29107,7 @@
 	    };
 
 	    var initValidation = function initValidation() {
-	        Validation.init(form_selector, [{ selector: fields.txt_fname, validations: ['req', 'letter_symbol', ['min', { min: 2 }]] }, { selector: fields.txt_lname, validations: ['req', 'letter_symbol', ['min', { min: 2 }]] }, { selector: fields.txt_birth_date, validations: ['req'] }, { selector: fields.txt_address1, validations: ['req', 'address', ['length', { min: 1, max: 70 }]] }, { selector: fields.txt_address2, validations: ['address', ['length', { min: 0, max: 70 }]] }, { selector: fields.txt_city, validations: ['req', 'letter_symbol', ['length', { min: 1, max: 35 }]] }, { selector: fields.txt_state, validations: ['letter_symbol'] }, { selector: fields.txt_postcode, validations: ['postcode', ['length', { min: 0, max: 20 }]] }, { selector: fields.txt_phone, validations: ['req', 'phone', ['length', { min: 6, max: 35, exclude: /^\+/ }]] }, { selector: fields.ddl_secret_question, validations: ['req'] }, { selector: fields.txt_secret_answer, validations: ['req', 'general', ['length', { min: 4, max: 50 }]] }, { selector: fields.chk_tnc, validations: ['req'] }, { selector: fields.chk_not_pep, validations: ['req'] }]);
+	        Validation.init(form_selector, [{ selector: fields.txt_fname, validations: ['req', 'letter_symbol', ['min', { min: 2 }]] }, { selector: fields.txt_lname, validations: ['req', 'letter_symbol', ['min', { min: 2 }]] }, { selector: fields.txt_birth_date, validations: ['req'] }, { selector: fields.txt_address1, validations: ['req', 'address', ['length', { min: 1, max: 70 }]] }, { selector: fields.txt_address2, validations: ['address', ['length', { min: 0, max: 70 }]] }, { selector: fields.txt_city, validations: ['req', 'letter_symbol', ['length', { min: 1, max: 35 }]] }, { selector: fields.txt_state, validations: ['letter_symbol'] }, { selector: fields.txt_postcode, validations: ['postcode', ['length', { min: 0, max: 20 }]] }, { selector: fields.txt_phone, validations: ['req', 'phone', ['length', { min: 6, max: 35, exclude: /^\+/ }]] }, { selector: fields.ddl_secret_question, validations: ['req'] }, { selector: fields.txt_secret_answer, validations: ['req', 'general', ['length', { min: 4, max: 50 }]] }, { selector: fields.chk_tnc, validations: ['req'] }, { selector: fields.chk_not_pep, validations: ['req'] }, { selector: fields.ddl_opening_reason, validations: ['req'] }]);
 	    };
 
 	    var displayResidence = function displayResidence() {
@@ -29035,7 +29172,8 @@
 	                address_postcode: $(fields.txt_postcode).val(),
 	                phone: $(fields.txt_phone).val(),
 	                secret_question: $(fields.ddl_secret_question).val(),
-	                secret_answer: $(fields.txt_secret_answer).val()
+	                secret_answer: $(fields.txt_secret_answer).val(),
+	                account_opening_reason: $(fields.ddl_opening_reason).val()
 	            };
 	            if (Client.get('affiliate_token')) {
 	                data.affiliate_token = Client.get('affiliate_token');
