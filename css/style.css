@@ -1137,6 +1137,38 @@ iframe {
   padding: 0;
 }
 
+#fx-liquidity .separator {
+  margin: 40px 0;
+}
+#fx-liquidity .bold-title {
+  font-weight: bold;
+  margin-bottom: 0;
+}
+#fx-liquidity p {
+  margin-top: 5px;
+}
+#fx-liquidity .box, #fx-liquidity .box-bordered {
+  margin: 20px 0;
+}
+#fx-liquidity .box-full-height {
+  height: 90%;
+}
+#fx-liquidity .box-bordered {
+  border: 2px solid #f2f2f2;
+  background: none;
+  position: relative;
+  height: 80%;
+}
+#fx-liquidity .box-bordered .box-title {
+  position: absolute;
+  top: -20px;
+  left: 10px;
+  background: #fff;
+  font-weight: bold;
+  color: #004385;
+  padding: 0 5px;
+}
+
 .fx-advisors {
   background: url("../images/symbols/advisors.svg");
 }
@@ -1465,6 +1497,46 @@ iframe {
 
 .fx-trading-icon {
   background: url("../images/menu_icons/trading.svg");
+}
+
+.fx {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin: 10px 0;
+}
+
+.fx-backoffice-support:before {
+  content: url("../images/liquidity_solutions/backoffice_support.svg");
+}
+
+.fx-fix-api:before {
+  content: url("../images/liquidity_solutions/fix_api.svg");
+}
+
+.fx-full-transparency:before {
+  content: url("../images/liquidity_solutions/full_transparency.svg");
+}
+
+.fx-liquidity-solution:before {
+  content: url("../images/liquidity_solutions/liquidity_solution.svg");
+}
+
+.fx-mt5-gateaway:before {
+  content: url("../images/liquidity_solutions/mt5_gateway.svg");
+}
+
+.fx-multi-asset-execution:before {
+  content: url("../images/liquidity_solutions/multi_asset_execution.svg");
+}
+
+.fx-one-zero:before {
+  content: url("../images/liquidity_solutions/one_zero.svg");
 }
 
 #header {
