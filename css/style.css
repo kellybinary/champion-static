@@ -1149,7 +1149,7 @@ iframe {
   margin-bottom: 0;
 }
 #fx-liquidity .box, #fx-liquidity .box-bordered {
-  margin: 20px 0 0;
+  margin: 20px 0;
   padding: 20px;
 }
 #fx-liquidity .box.box-col, #fx-liquidity .box-bordered.box-col {
@@ -1158,6 +1158,7 @@ iframe {
 @media (max-width: 997px) {
   #fx-liquidity .box.box-col, #fx-liquidity .box-bordered.box-col {
     min-height: 235px;
+    margin-bottom: 0;
   }
 }
 #fx-liquidity .box.box-bordered, #fx-liquidity .box-bordered.box-bordered {
