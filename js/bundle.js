@@ -18615,7 +18615,7 @@
 
 	    var errorMessages = {
 	        login: function login(module) {
-	            return module === MetaTrader ? Utility.template('To register an MT5 account, please <a href="[_1]">log in</a> to your ChampionFX account<br />\n                Don\'t have a ChampionFX account? <a href="[_2]">Create one</a> now', [Login.login_url(), url_for('/')]) : Utility.template('Please <a href="[_1]">log in</a> to view this page.', [Login.login_url()]);
+	            return module === MetaTrader ? Utility.template('To register an MT5 account, please <a href="[_1]" class="login">log in</a> to your ChampionFX account<br />\n                Don\'t have a ChampionFX account? <a href="[_2]">Create one</a> now', ['java' + 'script:;', url_for('/')]) : Utility.template('Please <a href="[_1]" class="login">log in</a> to view this page.', ['java' + 'script:;']);
 	        },
 	        only_virtual: 'Sorry, this feature is available to virtual accounts only.',
 	        only_real: 'This feature is not relevant to virtual-money accounts.'
@@ -18649,6 +18649,9 @@
 	    var displayMessage = function displayMessage(message) {
 	        var $content = container.find('#champion-content .container');
 	        $content.html($content.find('h1').first()).append($('<p/>', { class: 'center-text notice-msg', html: message }));
+	        $content.find('a.login').on('click', function () {
+	            Login.redirect_to_login();
+	        });
 	    };
 
 	    return {
@@ -25165,7 +25168,7 @@
 	        // redirect back
 	        var set_default = true;
 	        if (redirect_url) {
-	            var do_not_redirect = ['reset-password', 'lost-password', 'change-password', 'home'];
+	            var do_not_redirect = ['reset-password', 'lost-password', 'change-password', 'home', '404'];
 	            var reg = new RegExp(do_not_redirect.join('|'), 'i');
 	            if (!reg.test(redirect_url) && url_for('') !== redirect_url) {
 	                set_default = false;
