@@ -1146,19 +1146,25 @@ iframe {
 }
 #fx-liquidity p {
   margin-top: 5px;
+  margin-bottom: 0;
 }
 #fx-liquidity .box, #fx-liquidity .box-bordered {
-  margin: 20px 0;
-  padding: 10px 20px;
+  margin: 20px 0 0;
+  padding: 20px;
 }
 #fx-liquidity .box.box-col, #fx-liquidity .box-bordered.box-col {
   min-height: 290px;
+}
+@media (max-width: 997px) {
+  #fx-liquidity .box.box-col, #fx-liquidity .box-bordered.box-col {
+    min-height: 235px;
+  }
 }
 #fx-liquidity .box.box-bordered, #fx-liquidity .box-bordered.box-bordered {
   border: 2px solid #f2f2f2;
   background: none;
   position: relative;
-  min-height: 235px;
+  min-height: 210px;
 }
 #fx-liquidity .box.box-bordered .box-title, #fx-liquidity .box-bordered.box-bordered .box-title {
   position: absolute;
@@ -1509,7 +1515,7 @@ iframe {
   -webkit-justify-content: center;
       -ms-flex-pack: center;
           justify-content: center;
-  margin: 10px 0;
+  margin: 0 0 10px;
 }
 
 .fx-backoffice-support:before {
