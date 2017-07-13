@@ -1149,9 +1149,10 @@ iframe {
 }
 #fx-liquidity .box, #fx-liquidity .box-bordered {
   margin: 20px 0;
+  padding: 10px 20px;
 }
 #fx-liquidity .box.box-col, #fx-liquidity .box-bordered.box-col {
-  min-height: 285px;
+  min-height: 290px;
 }
 #fx-liquidity .box.box-bordered, #fx-liquidity .box-bordered.box-bordered {
   border: 2px solid #f2f2f2;
