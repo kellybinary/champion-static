@@ -1158,7 +1158,7 @@ iframe {
   border: 2px solid #f2f2f2;
   background: none;
   position: relative;
-  min-height: 210px;
+  min-height: 235px;
 }
 #fx-liquidity .box.box-bordered .box-title, #fx-liquidity .box-bordered.box-bordered .box-title {
   position: absolute;
