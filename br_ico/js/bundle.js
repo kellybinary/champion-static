@@ -37522,9 +37522,12 @@
 	    var isFAQVisible = document.getElementById('faq').classList.contains('invisible');
 	    if (window.scrollY > 50) {
 	        navbarFixedTopEl[0].classList.add('top-nav-collapse');
-	        document.getElementById('subscribe-btn').classList.remove('btn-hide');
 	    } else if (isFAQVisible) {
 	        navbarFixedTopEl[0].classList.remove('top-nav-collapse');
+	    }
+	    if (window.scrollY > 600) {
+	        document.getElementById('subscribe-btn').classList.remove('btn-hide');
+	    } else {
 	        document.getElementById('subscribe-btn').classList.add('btn-hide');
 	    }
 	}
