@@ -37452,6 +37452,22 @@
 	'use strict';
 
 	document.addEventListener('DOMContentLoaded', function () {
+	    // Handle form submission
+	    if (window.location.hash === '#done') {
+	        for (var i = 0; i < 2; i++) {
+	            document.querySelectorAll('.notice-msg')[i].classList.remove('invisible');
+	            document.getElementsByTagName('form')[i].classList.add('invisible');
+	        }
+	        if (window.history.pushState) {
+	            window.history.pushState('', '/', window.location.pathname);
+	        } else {
+	            window.location.hash = '';
+	        }
+	        var navbarHeight = checkWidth();
+	        var to = document.getElementById('coming-soon').offsetTop - navbarHeight;
+	        scrollTo(document.body, to, 1000);
+	    }
+
 	    // Toggle mobile menu
 	    var toggleButton = document.getElementById('toggle-menu');
 	    var navbar = document.getElementsByClassName('navbar-fixed-top')[0];
@@ -37470,9 +37486,9 @@
 	            document.getElementById('home').classList.remove('invisible');
 	            document.getElementById('faq').classList.add('invisible');
 	            var target = e.target.getAttribute('href').substr(1);
-	            var navbarHeight = checkWidth();
-	            var to = document.getElementById(target).offsetTop - navbarHeight;
-	            scrollTo(document.body, to, 1000);
+	            var _navbarHeight = checkWidth();
+	            var _to = document.getElementById(target).offsetTop - _navbarHeight;
+	            scrollTo(document.body, _to, 1000);
 	            navbar.classList.remove('expand');
 	            e.preventDefault();
 	        }

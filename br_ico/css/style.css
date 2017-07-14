@@ -3307,7 +3307,7 @@ section {
       -ms-flex-pack: center;
           justify-content: center;
   margin: 0 10px;
-  padding: 10px;
+  padding: 0 10px;
   opacity: 1;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
@@ -3325,6 +3325,11 @@ section {
   color: #004385;
   border: 1px solid #004385;
 }
+.btn-form {
+  background: #bfd0e0;
+  color: #004385;
+  margin: 0;
+}
 .btn-hide {
   opacity: 0;
 }
@@ -3335,7 +3340,7 @@ section {
   background-position: center;
   height: 100%;
 }
-@media (max-width: 767px) {
+@media (max-width: 1099px) {
   #pre-announcement {
     height: auto;
   }
@@ -3363,18 +3368,32 @@ section {
 #pre-announcement .small {
   font-size: 12px;
 }
-#pre-announcement .form {
-  padding-top: 60px;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+#pre-announcement .af-element {
+  position: relative;
+  margin: 60px 0;
 }
-#pre-announcement .form form {
-  display: -webkit-inline-box;
-  display: -webkit-inline-flex;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
+#pre-announcement .af-element input[type='text'] {
+  width: 100%;
+  height: 30px;
+  border: none;
+  padding: 10px;
+  padding-right: 45%;
+}
+#pre-announcement .af-element input[type='submit'] {
+  position: absolute;
+  right: 0;
+  border: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  width: 40%;
+}
+#pre-announcement p.notice-msg {
+  color: #004385;
+  background: #bfd0e0;
+  font-size: 12px;
+  border-radius: 10px;
+  margin-top: 40px;
+  font-weight: bold;
 }
 
 #cfx-intro {
@@ -3409,12 +3428,14 @@ section {
 .popup-box {
   width: 70vw;
   position: relative;
-  margin: 15vh auto;
+  margin: auto;
+  top: 20%;
   border-radius: 10px;
-  height: 50%;
+  height: 40vw;
 }
 .popup-box-content {
-  height: 100%;
+  width: 100%;
+  padding-bottom: 75%;
 }
 
 .overlay {
@@ -3806,8 +3827,165 @@ section {
 #cfx-chart .container {
   padding: 60px 0;
 }
-#cfx-chart img {
-  padding: 20px;
+#cfx-chart .center-content {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+@media (max-width: 520px) {
+  #cfx-chart .center-content {
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+  }
+}
+#cfx-chart .chart {
+  position: relative;
+  margin: 60px 0;
+}
+#cfx-chart .chart:before {
+  content: url("../images/ico/chart.svg");
+}
+@media (max-width: 360px) {
+  #cfx-chart .chart:before {
+    zoom: 80%;
+  }
+}
+#cfx-chart .chart .chart-content {
+  position: absolute;
+  width: 150%;
+  height: 100%;
+  top: 0;
+}
+@media (max-width: 360px) {
+  #cfx-chart .chart .chart-content {
+    zoom: 80%;
+  }
+}
+#cfx-chart #chart-pie-1 {
+  position: absolute;
+  bottom: 80px;
+  left: -50%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+  -webkit-flex-direction: row-reverse;
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse;
+  text-align: right;
+  -webkit-box-align: baseline;
+  -webkit-align-items: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+  width: 200px;
+}
+#cfx-chart #chart-pie-1:before {
+  content: url("../images/ico/chart_arrow4.svg");
+  margin-left: 5px;
+  -webkit-transform: rotateY(180deg);
+          transform: rotateY(180deg);
+}
+@media (max-width: 520px) {
+  #cfx-chart #chart-pie-1 {
+    bottom: -40%;
+    left: 20%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    text-align: left;
+    -webkit-box-align: baseline;
+    -webkit-align-items: baseline;
+        -ms-flex-align: baseline;
+            align-items: baseline;
+  }
+  #cfx-chart #chart-pie-1:before {
+    content: url("../images/ico/chart_arrow2.svg");
+    margin-right: 5px;
+    -webkit-transform: rotateX(180deg);
+            transform: rotateX(180deg);
+  }
+}
+#cfx-chart #chart-pie-2 {
+  position: absolute;
+  top: -25%;
+  left: 20%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: left;
+}
+#cfx-chart #chart-pie-2:before {
+  content: url("../images/ico/chart_arrow2.svg");
+  margin-right: 5px;
+}
+#cfx-chart #chart-pie-3 {
+  position: absolute;
+  top: 22%;
+  left: 55%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: left;
+  -webkit-box-align: baseline;
+  -webkit-align-items: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+}
+#cfx-chart #chart-pie-3:before {
+  content: url("../images/ico/chart_arrow3.svg");
+  margin-right: 5px;
+}
+#cfx-chart #chart-pie-4 {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: left;
+  -webkit-box-align: baseline;
+  -webkit-align-items: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+}
+#cfx-chart #chart-pie-4:before {
+  content: url("../images/ico/chart_arrow4.svg");
+  margin-right: 5px;
+}
+#cfx-chart #chart-pie-5 {
+  position: absolute;
+  bottom: -5%;
+  left: 40%;
+  -webkit-box-align: baseline;
+  -webkit-align-items: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+}
+#cfx-chart #chart-pie-5:before {
+  content: url("../images/ico/chart_arrow5.svg");
+  margin-right: 5px;
 }
 
 #join-cfx-ico {
@@ -3839,10 +4017,39 @@ section {
 #join-cfx-ico p {
   margin: 0;
 }
-#join-cfx-ico .email {
+#join-cfx-ico .follow-us p, #join-cfx-ico .follow-us a, #join-cfx-ico .follow-us span {
   font-size: 12px;
-  color: #004385;
+}
+#join-cfx-ico .follow-us .address {
   margin: 20px;
+  color: #004385;
+}
+#join-cfx-ico .af-element {
+  position: relative;
+  margin: 30px 0 40px;
+}
+#join-cfx-ico .af-element input[type='text'] {
+  width: 100%;
+  height: 30px;
+  border: 1px solid #004385;
+  padding: 10px;
+  padding-right: 45%;
+}
+#join-cfx-ico .af-element input[type='submit'] {
+  position: absolute;
+  right: 0;
+  border: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  width: 40%;
+  margin: 0;
+}
+#join-cfx-ico p.notice-msg {
+  color: #fff;
+  background: #004385;
+  font-size: 12px;
+  border-radius: 10px;
+  margin: 40px 0;
 }
 
 #faq .container {
@@ -3884,6 +4091,7 @@ footer p {
   font-size: 10px;
   color: #fff;
   line-height: 1.83em;
+  text-align: justify;
 }
 
 h2 {
