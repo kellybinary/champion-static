@@ -1,5 +1,9 @@
 /* GLOBAL RULES */
 /*
+ * Fluid typography
+ * https://css-tricks.com/snippets/css/fluid-typography
+ */
+/*
  * To replace characters in a string
  */
 /*
@@ -3174,12 +3178,95 @@ ul.checked.small > li {
   padding-left: 50px;
 }
 
+html {
+  font-size: 10px;
+}
+
 section {
   padding: 0 15px;
 }
 
 .container {
   max-width: 1100px !important;
+}
+
+h1, h2, h3, h5 {
+  margin: 10px 0 20px;
+  line-height: 1.83rem;
+}
+
+p {
+  line-height: 1.83em;
+}
+
+h1 {
+  font-size: 22px;
+}
+@media screen and (min-width: 320px) {
+  h1 {
+    font-size: calc(22px + 10 * ((100vw - 320px) / 1080));
+  }
+}
+@media screen and (min-width: 1400px) {
+  h1 {
+    font-size: 32px;
+  }
+}
+
+h2 {
+  font-size: 18px;
+}
+@media screen and (min-width: 320px) {
+  h2 {
+    font-size: calc(18px + 4 * ((100vw - 320px) / 1080));
+  }
+}
+@media screen and (min-width: 1400px) {
+  h2 {
+    font-size: 22px;
+  }
+}
+
+h3 {
+  font-size: 16px;
+}
+@media screen and (min-width: 320px) {
+  h3 {
+    font-size: calc(16px + 2 * ((100vw - 320px) / 1080));
+  }
+}
+@media screen and (min-width: 1400px) {
+  h3 {
+    font-size: 18px;
+  }
+}
+
+h4 {
+  font-size: 16px;
+}
+@media screen and (min-width: 320px) {
+  h4 {
+    font-size: calc(16px + 2 * ((100vw - 320px) / 1080));
+  }
+}
+@media screen and (min-width: 1400px) {
+  h4 {
+    font-size: 18px;
+  }
+}
+
+body, p, a, span, ul li, ol li, ul, ol {
+  font-size: 12px;
+}
+@media screen and (min-width: 320px) {
+  body, p, a, span, ul li, ol li, ul, ol {
+    font-size: calc(12px + 4 * ((100vw - 320px) / 1080));
+  }
+}
+@media screen and (min-width: 1400px) {
+  body, p, a, span, ul li, ol li, ul, ol {
+    font-size: 16px;
+  }
 }
 
 .navbar-fixed-top {
@@ -3267,7 +3354,7 @@ section {
 
 .navbar-toggle {
   position: relative;
-  background: url("../images/menu_icons/main_menu.svg") no-repeat;
+  background: url("../images/ico/hamburger_menu.svg") no-repeat;
   border: 1px solid transparent;
   border-radius: 4px;
   width: 36px;
@@ -3325,10 +3412,9 @@ section {
   color: #004385;
   border: 1px solid #004385;
 }
-.btn-form {
+.btn-light {
   background: #bfd0e0;
   color: #004385;
-  margin: 0;
 }
 .btn-hide {
   opacity: 0;
@@ -3338,32 +3424,44 @@ section {
   background: url("../images/ico/globe_network_bg.svg");
   background-size: cover;
   background-position: center;
-  height: 100%;
-}
-@media (max-width: 1099px) {
-  #pre-announcement {
-    height: auto;
-  }
 }
 #pre-announcement .container {
-  padding: 120px 0;
+  padding: 12rem 0;
+}
+@media (max-width: 575px) {
+  #pre-announcement .container {
+    padding: 6rem 0;
+  }
 }
 #pre-announcement h1, #pre-announcement h3, #pre-announcement p {
   color: #fff;
 }
 #pre-announcement .cfx-logo {
-  background: url("../images/ico/cfx_logo.svg");
-  height: 65px;
-  width: 213px;
+  background: url("../images/ico/cfx_logo.svg") no-repeat center;
+  height: 6rem;
+  width: 100%;
   display: inline-block;
-  margin: 40px 0;
+  margin: 2.5rem 0;
+}
+@media (max-width: 575px) {
+  #pre-announcement .cfx-logo {
+    height: 4rem;
+    margin: 2rem 0;
+  }
 }
 #pre-announcement .hourglass {
-  background: url("../images/ico/hourglass.svg");
-  height: 80px;
-  width: 23px;
+  background: url("../images/ico/hourglass.svg") no-repeat center;
+  height: 8rem;
+  width: 2.3em;
   display: inline-block;
-  margin-top: 60px;
+  margin-top: 4rem;
+}
+@media (max-width: 575px) {
+  #pre-announcement .hourglass {
+    height: 5.5rem;
+    width: 1.5rem;
+    margin-top: 2rem;
+  }
 }
 #pre-announcement .small {
   font-size: 12px;
@@ -3386,6 +3484,7 @@ section {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   width: 40%;
+  margin: 0;
 }
 #pre-announcement p.notice-msg {
   color: #004385;
@@ -3396,7 +3495,12 @@ section {
   font-weight: bold;
 }
 #pre-announcement p.a {
-  margin: 40px 0 20px;
+  margin: 4rem 0 2rem;
+}
+@media (max-width: 575px) {
+  #pre-announcement p.a {
+    margin: 2rem 0;
+  }
 }
 
 #cfx-intro {
@@ -4105,14 +4209,6 @@ footer p {
   color: #fff;
   line-height: 1.83em;
   text-align: justify;
-}
-
-h2 {
-  margin: 0 0 20px;
-}
-
-p {
-  line-height: 1.5rem;
 }
 
 .uppercase {
