@@ -37502,6 +37502,15 @@
 	        document.getElementById('home').classList.add('invisible');
 	    });
 
+	    var closePopUpButton = document.getElementById('close-btn');
+	    closePopUpButton.addEventListener('click', function () {
+	        var iframe = document.getElementsByTagName('iframe')[0];
+	        var src = iframe.getAttribute('src');
+	        iframe.setAttribute('src', '/empty.html');
+	        iframe.setAttribute('src', src);
+	        // e.preventDefault();
+	    });
+
 	    window.onresize = checkWidth;
 	    window.onscroll = collapseNavbar;
 	    document.ready = collapseNavbar;
