@@ -37454,91 +37454,79 @@
 	document.addEventListener('DOMContentLoaded', function () {
 	    // Handle form submission
 	    if (window.location.hash === '#done') {
-	        for (var i = 0; i < 2; i++) {
-	            document.querySelectorAll('.notice-msg')[i].classList.remove('invisible');
-	            document.getElementsByTagName('form')[i].classList.add('invisible');
-	        }
+	        $('.notice-msg').removeClass('invisible');
+	        $('form').addClass('invisible');
 	        if (window.history.pushState) {
 	            window.history.pushState('', '/', window.location.pathname);
 	        } else {
 	            window.location.hash = '';
 	        }
-	        var navbarHeight = checkWidth();
-	        var to = document.getElementById('coming-soon').offsetTop - navbarHeight;
+	        var to = $('#coming-soon').offset.top;
 	        scrollTo(document.body, to, 1000);
 	    }
 
 	    // Toggle mobile menu
-	    var toggleButton = document.getElementById('toggle-menu');
-	    var navbar = document.getElementsByClassName('navbar-fixed-top')[0];
-	    toggleButton.addEventListener('click', function (e) {
-	        if (navbar.classList.contains('expand')) {
-	            navbar.classList.remove('expand');
-	        } else {
-	            navbar.classList.add('expand');
-	        }
+	    var navbar = $('.navbar-fixed-top');
+	    $('#toggle-menu').click(function (e) {
+	        navbar.toggleClass('expand');
 	        e.stopPropagation();
 	    });
 
 	    // Scroll to section
 	    document.addEventListener('click', function (e) {
-	        if (e.target.classList.contains('page-scroll')) {
-	            document.getElementById('home').classList.remove('invisible');
-	            document.getElementById('faq').classList.add('invisible');
+	        if ($(e.target).hasClass('page-scroll')) {
+	            $('#home').removeClass('invisible');
+	            $('#faq').addClass('invisible');
 	            var target = e.target.getAttribute('href').substr(1);
-	            var _navbarHeight = checkWidth();
-	            var _to = document.getElementById(target).offsetTop - _navbarHeight;
+	            var _to = $('#' + target).offset().top;
 	            scrollTo(document.body, _to, 1000);
-	            navbar.classList.remove('expand');
+	            navbar.removeClass('expand');
 	            e.preventDefault();
 	        }
 	    });
 
-	    var faqButton = document.getElementById('faq-btn');
-	    faqButton.addEventListener('click', function (e) {
-	        document.getElementById('faq').classList.remove('invisible');
+	    $('#faq-btn').click(function (e) {
+	        $('#faq').removeClass('invisible');
 	        scrollTo(document.body, 0, 500);
 	        e.stopPropagation();
-	        document.getElementById('home').classList.add('invisible');
+	        $('#home').addClass('invisible');
 	    });
 
-	    var closePopUpButton = document.getElementById('close-btn');
-	    closePopUpButton.addEventListener('click', function () {
+	    $('#close-btn').click(function () {
 	        var iframe = document.getElementsByTagName('iframe')[0];
 	        var src = iframe.getAttribute('src');
 	        iframe.setAttribute('src', '/empty.html');
 	        iframe.setAttribute('src', src);
-	        // e.preventDefault();
 	    });
 
-	    window.onresize = checkWidth;
-	    window.onscroll = collapseNavbar;
-	    document.ready = collapseNavbar;
+	    window.onscroll = showHideButton;
+	    initializeSlider();
+	    window.onresize = initializeSlider;
 	});
 
-	// Collapse navbar on scroll
-	function collapseNavbar() {
-	    var navbarFixedTopEl = document.getElementsByClassName('navbar-fixed-top');
-	    var isFAQVisible = document.getElementById('faq').classList.contains('invisible');
-	    if (window.scrollY > 50) {
-	        navbarFixedTopEl[0].classList.add('top-nav-collapse');
-	    } else if (isFAQVisible) {
-	        navbarFixedTopEl[0].classList.remove('top-nav-collapse');
-	    }
-	    if (window.scrollY > 600) {
-	        document.getElementById('subscribe-btn').classList.remove('btn-hide');
+	function showHideButton() {
+	    if (window.scrollY - $('.form-container').offset().top > 30) {
+	        $('#subscribe-btn').removeClass('btn--hide');
 	    } else {
-	        document.getElementById('subscribe-btn').classList.add('btn-hide');
+	        $('#subscribe-btn').addClass('btn--hide');
 	    }
 	}
 
-	// Check view width, add navbar height as offset if on desktop
-	function checkWidth() {
-	    var mq = window.matchMedia('(max-width: 1099px)');
-	    if (mq.matches) {
-	        return 0;
+	function initializeSlider() {
+	    var mq = window.matchMedia('(min-width: 768px)');
+	    var isSlickInitialized = $('.slick-initialized').length;
+	    if (!isSlickInitialized && !mq.matches) {
+	        $(document).find('.slider').slick({
+	            infinite: false,
+	            dots: true,
+	            arrows: false,
+	            slidesToShow: 1,
+	            lazyLoad: 'progressive',
+	            autoplay: true
+	        });
+	    } else if (isSlickInitialized && mq.matches) {
+	        $('.slider').slick('unslick');
 	    }
-	    return document.getElementsByClassName('navbar-fixed-top')[0].scrollHeight;
 	}
 
 	function checkBrowser() {
