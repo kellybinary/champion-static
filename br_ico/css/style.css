@@ -3296,6 +3296,9 @@ p {
   }
 }
 
+/*------------------------------------*\
+  Components
+\*------------------------------------*/
 .navbar-fixed-top {
   position: fixed;
   top: 0;
@@ -3366,11 +3369,9 @@ p {
 }
 .navbar-fixed-top .navbar__toggle {
   position: relative;
-  background: url("../images/ico/hamburger_menu.svg") no-repeat;
-  border: 1rem solid transparent;
-  border-radius: 4px;
-  width: 3.6rem;
-  height: 3.6rem;
+  background: url("../images/ico/hamburger_menu.svg") no-repeat center;
+  width: 3.2rem;
+  height: 3.2rem;
   display: block;
 }
 @media (min-width: 768px) {
@@ -3386,9 +3387,6 @@ p {
   margin-right: 0;
 }
 
-/*------------------------------------*\
-  Components
-\*------------------------------------*/
 .btn {
   border-radius: 0.5rem;
   height: 3rem;
@@ -3459,7 +3457,7 @@ p {
   position: relative;
   width: 80vw;
   height: calc((9/16) * 80vw);
-  top: 20%;
+  top: 10rem;
   margin: auto;
 }
 @media (min-width: 576px) {
@@ -3590,17 +3588,18 @@ p {
 
 .chart {
   position: relative;
-  margin: 6rem 0;
+  margin: 8rem 0;
 }
 .chart:before {
   content: url("../images/ico/chart.svg");
   display: block;
-  width: 23.8rem;
-  height: 23.8rem;
+  width: 20rem;
+  height: 20rem;
 }
-@media (max-width: 360px) {
+@media (min-width: 360px) {
   .chart:before {
-    zoom: 80%;
+    width: 23rem;
+    height: 23rem;
   }
 }
 .chart .chart__content {
@@ -3610,11 +3609,6 @@ p {
   top: 0;
   font-size: 1.4rem;
   color: #004385;
-}
-@media (max-width: 360px) {
-  .chart .chart__content {
-    zoom: 80%;
-  }
 }
 .chart .chart__content--1, .chart .chart__content--2, .chart .chart__content--3, .chart .chart__content--4, .chart .chart__content--5 {
   position: absolute;
@@ -3640,8 +3634,8 @@ p {
           flex-direction: row-reverse;
   text-align: right;
   bottom: 8rem;
-  left: -50%;
-  width: 21rem;
+  left: -45%;
+  width: 20rem;
 }
 .chart .chart__content--1:before {
   content: url("../images/ico/chart_line4.svg");
@@ -3666,7 +3660,7 @@ p {
   }
 }
 .chart .chart__content--2 {
-  top: -25%;
+  top: -30%;
   left: 20%;
   -webkit-box-align: start;
   -webkit-align-items: flex-start;
@@ -3840,7 +3834,7 @@ hr {
   border: none;
   padding: 1rem;
   padding-right: 45%;
-  font-size: 12px;
+  font-size: 1.2rem;
 }
 .af-element input[type='submit'] {
   position: absolute;

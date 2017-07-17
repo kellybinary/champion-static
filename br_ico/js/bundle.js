@@ -37447,11 +37447,18 @@
 
 /***/ }),
 /* 357 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
+	__webpack_require__(310);
+
 	document.addEventListener('DOMContentLoaded', function () {
+	    var $home = $('#home');
+	    var $faq = $('#faq');
+	    var $navbar = $('.navbar-fixed-top');
+	    var navbarHeight = 55;
+
 	    // Handle form submission
 	    if (window.location.hash === '#done') {
 	        $('.notice-msg').removeClass('invisible');
@@ -37461,46 +37468,44 @@
 	        } else {
 	            window.location.hash = '';
 	        }
-	        var to = $('#coming-soon').offset.top;
-	        scrollTo(document.body, to, 1000);
+	        var to = $('#coming-soon').offset().top;
+	        $(document).scrollTo(to, 500);
 	    }
 
 	    // Toggle mobile menu
-	    var navbar = $('.navbar-fixed-top');
 	    $('#toggle-menu').click(function (e) {
-	        navbar.toggleClass('expand');
+	        $navbar.toggleClass('expand');
 	        e.stopPropagation();
 	    });
 
 	    // Scroll to section
-	    document.addEventListener('click', function (e) {
-	        if ($(e.target).hasClass('page-scroll')) {
-	            $('#home').removeClass('invisible');
-	            $('#faq').addClass('invisible');
-	            var target = e.target.getAttribute('href').substr(1);
-	            var _to = $('#' + target).offset().top;
-	            scrollTo(document.body, _to, 1000);
-	            navbar.removeClass('expand');
-	            e.preventDefault();
+	    $('.page-scroll').click(function (e) {
+	        var to = $('' + $(e.target).attr('href')).offset().top - navbarHeight;
+	        $navbar.removeClass('expand');
+	        if ($home.hasClass('invisible')) {
+	            $faq.addClass('invisible');
+	            $home.removeClass('invisible');
 	        }
+	        $(document).scrollTo(to, 500);
+	        e.preventDefault();
 	    });
 
 	    $('#faq-btn').click(function (e) {
-	        $('#faq').removeClass('invisible');
-	        scrollTo(document.body, 0, 500);
-	        e.stopPropagation();
-	        $('#home').addClass('invisible');
+	        $faq.removeClass('invisible');
+	        $home.addClass('invisible');
+	        $(document).scrollTo(0, 500);
+	        e.preventDefault();
 	    });
 
 	    $('#close-btn').click(function () {
-	        var iframe = document.getElementsByTagName('iframe')[0];
-	        var src = iframe.getAttribute('src');
-	        iframe.setAttribute('src', '/empty.html');
-	        iframe.setAttribute('src', src);
+	        var $iframe = $(document).find('iframe');
+	        var src = $iframe.attr('src');
+	        $iframe.attr('src', '/empty.html');
+	        $iframe.attr('src', src);
 	    });
 
-	    window.onscroll = showHideButton;
 	    initializeSlider();
+	    window.onscroll = showHideButton;
 	    window.onresize = initializeSlider;
 	});
 
@@ -37528,49 +37533,6 @@
 	        $('.slider').slick('unslick');
 	    }
 	}
-
-	function checkBrowser() {
-	    var isFirefox = typeof InstallTrigger !== 'undefined'; // Firefox 1.0+
-	    var isIE = false || !!document.documentMode; // Internet Explorer 6-11
-
-	    if (isFirefox || isIE) {
-	        return true;
-	    }
-	    return false;
-	}
-
-	// scrollTo function with animation
-	// - Gist reference: https://gist.github.com/andjosh/6764939
-	function scrollTo(element, to, duration) {
-	    if (checkBrowser()) {
-	        element = document.documentElement;
-	    }
-	    var start = element.scrollTop;
-	    var change = to - start;
-	    var currentTime = 0;
-	    var increment = 20;
-
-	    var animateScroll = function animateScroll() {
-	        currentTime += increment;
-	        var val = Math.easeInOutQuad(currentTime, start, change, duration);
-	        element.scrollTop = val;
-	        if (currentTime < duration) {
-	            setTimeout(animateScroll, increment);
-	        }
-	    };
-	    animateScroll();
-	}
-
-	// t = current time
-	// b = start value
-	// c = change in value
-	// d = duration
-	Math.easeInOutQuad = function (t, b, c, d) {
-	    t /= d / 2;
-	    if (t < 1) return c / 2 * (t * t) + b;
-	    t--;
-	    return -(c / 2 * (t * (t - 2) - 1)) + b;
-	};
 
 /***/ })
 /******/ ]);
