@@ -37502,6 +37502,7 @@
 	        var src = $iframe.attr('src');
 	        $iframe.attr('src', '/empty.html');
 	        $iframe.attr('src', src);
+	        window.location.hash = '';
 	    });
 
 	    initializeSlider();

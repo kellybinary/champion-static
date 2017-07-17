@@ -3821,6 +3821,9 @@ hr {
 .icon--bitcointalk:before {
   content: url("../images/ico/bitcointalk.svg");
 }
+.icon--youtube:before {
+  content: url("../images/ico/youtube.svg");
+}
 
 /*------------------------------------*\
   #Aweber form
@@ -3968,6 +3971,13 @@ hr {
 #behind-cfx .slider .slick-dots {
   width: 100%;
   margin: auto;
+}
+#behind-cfx .slider .slick-dots button {
+  background: none;
+  border: 1px solid #fff;
+}
+#behind-cfx .slider .slick-dots .slick-active > button {
+  background: #fff;
 }
 
 #milestones {
@@ -4170,11 +4180,14 @@ hr {
   display: inline-block;
   margin: 1rem;
 }
-#join-cfx-ico .follow-us p, #join-cfx-ico .follow-us a, #join-cfx-ico .follow-us span {
+#join-cfx-ico .social p, #join-cfx-ico .social a, #join-cfx-ico .social span, #join-cfx-ico .address p, #join-cfx-ico .address a, #join-cfx-ico .address span {
   font-size: 1.2rem;
 }
-#join-cfx-ico .follow-us .address {
-  margin: 2rem;
+#join-cfx-ico .social p {
+  margin: 0;
+}
+#join-cfx-ico .address {
+  margin: 0 0 2rem;
   color: #004385;
 }
 #join-cfx-ico .af-element input[type='text'] {
