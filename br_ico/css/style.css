@@ -3306,7 +3306,7 @@ p {
   left: 0;
   z-index: 999;
   padding: 1rem 0;
-  height: 55px;
+  height: 5.5rem;
   background: #013365;
   -webkit-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
@@ -3593,8 +3593,8 @@ p {
 .chart:before {
   content: url("../images/ico/chart.svg");
   display: block;
-  width: 20rem;
-  height: 20rem;
+  width: 19rem;
+  height: 19rem;
 }
 @media (min-width: 360px) {
   .chart:before {
@@ -3741,6 +3741,27 @@ hr {
 .text--underline:hover {
   text-decoration: underline;
   color: #013365;
+}
+
+.scroll-btn {
+  position: fixed;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 10rem;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 999;
+  background: #004385;
+  opacity: 1;
+  -webkit-transition: 0.3s opacity;
+  transition: 0.3s opacity;
+}
+.scroll-btn--hide {
+  opacity: 0;
+}
+.scroll-btn:before {
+  content: url("../images/ico/arrow_up.svg");
+  padding: 1.3rem;
 }
 
 /*------------------------------------*\
@@ -4025,7 +4046,7 @@ hr {
   border-right: 2px solid #bfd0e0;
   border-top: 2px solid #bfd0e0;
   border-bottom: 2px solid #bfd0e0;
-  border-radius: 4rem 1.5rem 1.5rem 0;
+  border-radius: 2.5rem 1.5rem 1.5rem 0;
 }
 #how-ico-works .steps .step .icon {
   width: 5rem;
@@ -4116,9 +4137,9 @@ hr {
   background: #fff;
   position: absolute;
   right: 0.1rem;
-  width: 6rem;
+  width: 4rem;
   height: 5rem;
-  bottom: 0;
+  bottom: -0.9rem;
   border-radius: 2rem;
 }
 #how-ico-works .text--bold {
