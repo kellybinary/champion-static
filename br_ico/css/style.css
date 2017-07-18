@@ -3487,7 +3487,7 @@ p {
 }
 @media (min-width: 1024px) {
   .btn {
-    min-width: 154px;
+    min-width: 15.4rem;
   }
 }
 .btn--white {
@@ -3501,7 +3501,7 @@ p {
 .btn--outline {
   background: none;
   color: #004385;
-  border: 1px solid #004385;
+  border: 0.1rem solid #004385;
 }
 .btn--light {
   background: #bfd0e0;
@@ -3568,7 +3568,7 @@ p {
   position: absolute;
   height: 100%;
   left: -0.5rem;
-  border-left: 1px solid #dedede;
+  border-left: 0.1rem solid #dedede;
   margin: 0;
 }
 @media (min-width: 1024px) {
@@ -3676,7 +3676,7 @@ p {
   width: 19rem;
   height: 19rem;
 }
-@media (min-width: 360px) {
+@media (min-width: 361px) {
   .chart:before {
     width: 23rem;
     height: 23rem;
@@ -3704,39 +3704,39 @@ p {
   font-size: 1.2rem;
 }
 .chart .chart__content--1:before, .chart .chart__content--2:before, .chart .chart__content--3:before, .chart .chart__content--4:before, .chart .chart__content--5:before {
-  margin: 0 5px;
+  margin: 0 0.5rem;
 }
 .chart .chart__content--1 {
   -webkit-box-orient: horizontal;
-  -webkit-box-direction: reverse;
-  -webkit-flex-direction: row-reverse;
-      -ms-flex-direction: row-reverse;
-          flex-direction: row-reverse;
-  text-align: right;
-  bottom: 8rem;
-  left: -45%;
-  width: 20rem;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  text-align: left;
+  bottom: -35%;
+  left: 20%;
 }
 .chart .chart__content--1:before {
-  content: url("../images/ico/chart_line4.svg");
-  -webkit-transform: rotateY(180deg);
-          transform: rotateY(180deg);
+  content: url("../images/ico/chart_line2.svg");
+  -webkit-transform: rotateX(180deg);
+          transform: rotateX(180deg);
 }
-@media (max-width: 520px) {
+@media (min-width: 521px) {
   .chart .chart__content--1 {
-    bottom: -35%;
-    left: 20%;
     -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: row;
-        -ms-flex-direction: row;
-            flex-direction: row;
-    text-align: left;
+    -webkit-box-direction: reverse;
+    -webkit-flex-direction: row-reverse;
+        -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse;
+    text-align: right;
+    bottom: 8rem;
+    left: -45%;
+    width: 20rem;
   }
   .chart .chart__content--1:before {
-    content: url("../images/ico/chart_line2.svg");
-    -webkit-transform: rotateX(180deg);
-            transform: rotateX(180deg);
+    content: url("../images/ico/chart_line4.svg");
+    -webkit-transform: rotateY(180deg);
+            transform: rotateY(180deg);
   }
 }
 .chart .chart__content--2 {
@@ -4116,13 +4116,15 @@ hr {
 #behind-cfx .icon--technology-leadership {
   width: 3.2rem;
 }
-#behind-cfx .icon--shared-resources {
-  width: 6.5rem;
-}
 @media (min-width: 1024px) {
   #behind-cfx .icon--technology-leadership {
     width: 3.8rem;
   }
+}
+#behind-cfx .icon--shared-resources {
+  width: 6.5rem;
+}
+@media (min-width: 1024px) {
   #behind-cfx .icon--shared-resources {
     width: 7.6rem;
   }
@@ -4187,9 +4189,9 @@ hr {
   border-radius: 0 0 4rem 1.5rem;
 }
 #how-ico-works .steps .step:nth-of-type(even) {
-  border-right: 2px solid #bfd0e0;
-  border-top: 2px solid #bfd0e0;
-  border-bottom: 2px solid #bfd0e0;
+  border-right: 0.2rem solid #bfd0e0;
+  border-top: 0.2rem solid #bfd0e0;
+  border-bottom: 0.2rem solid #bfd0e0;
   border-radius: 2.5rem 1.5rem 1.5rem 0;
 }
 #how-ico-works .steps .step .icon {
@@ -4321,21 +4323,21 @@ hr {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
   -webkit-box-align: center;
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
 }
-@media (max-width: 520px) {
+@media (min-width: 521px) {
   #cfx-chart .center-content {
-    -webkit-box-pack: start;
-    -webkit-justify-content: flex-start;
-        -ms-flex-pack: start;
-            justify-content: flex-start;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
   }
 }
 
