@@ -3179,7 +3179,7 @@ ul.checked.small > li {
 }
 
 html {
-  font-size: 62.5%;
+  font-size: 62.5% !important;
 }
 
 section {
@@ -3191,11 +3191,11 @@ section {
 }
 
 h1 {
-  font-size: 28px;
+  font-size: 22px;
 }
 @media screen and (min-width: 320px) {
   h1 {
-    font-size: calc(28px + 8 * ((100vw - 320px) / 1080));
+    font-size: calc(22px + 14 * ((100vw - 320px) / 1080));
   }
 }
 @media screen and (min-width: 1400px) {
@@ -3205,11 +3205,11 @@ h1 {
 }
 
 h2 {
-  font-size: 22px;
+  font-size: 18px;
 }
 @media screen and (min-width: 320px) {
   h2 {
-    font-size: calc(22px + 6 * ((100vw - 320px) / 1080));
+    font-size: calc(18px + 10 * ((100vw - 320px) / 1080));
   }
 }
 @media screen and (min-width: 1400px) {
@@ -3219,11 +3219,11 @@ h2 {
 }
 
 h3 {
-  font-size: 18px;
+  font-size: 16px;
 }
 @media screen and (min-width: 320px) {
   h3 {
-    font-size: calc(18px + 4 * ((100vw - 320px) / 1080));
+    font-size: calc(16px + 6 * ((100vw - 320px) / 1080));
   }
 }
 @media screen and (min-width: 1400px) {
@@ -3233,11 +3233,11 @@ h3 {
 }
 
 h4 {
-  font-size: 16px;
+  font-size: 14px;
 }
 @media screen and (min-width: 320px) {
   h4 {
-    font-size: calc(16px + 2 * ((100vw - 320px) / 1080));
+    font-size: calc(14px + 4 * ((100vw - 320px) / 1080));
   }
 }
 @media screen and (min-width: 1400px) {
@@ -3289,11 +3289,6 @@ h1, h2, h3, h4, h5 {
 
 p {
   margin: 0 0 1rem;
-}
-@media (min-width: 1024px) {
-  p {
-    margin: 0 0 2rem;
-  }
 }
 
 /*------------------------------------*\
@@ -3526,8 +3521,6 @@ p {
   .timeline__box {
     max-width: 48%;
     margin-right: 52%;
-    margin-top: 0;
-    margin-bottom: 0;
   }
 }
 .timeline__box__title {
@@ -3536,6 +3529,7 @@ p {
 }
 .timeline__box ul {
   padding: 0;
+  margin-bottom: 0;
 }
 .timeline__box ul li {
   font-size: 12px;
@@ -3706,15 +3700,13 @@ hr {
 }
 
 .form-container {
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
+}
+.form-container h2 {
+  margin: 0;
 }
 .form-container p {
   margin: 2rem 0;
-}
-@media (min-width: 768px) {
-  .form-container p {
-    margin-top: 4rem;
-  }
 }
 
 .notice-msg {
@@ -3722,6 +3714,10 @@ hr {
   border-radius: 1rem;
   margin-top: 4rem;
   font-weight: bold;
+}
+
+.barspinner {
+  margin: 50vh auto;
 }
 
 /*------------------------------------*\
@@ -3732,7 +3728,17 @@ hr {
 }
 
 .text--small {
-  font-size: 1.2rem;
+  font-size: 10px;
+}
+@media screen and (min-width: 320px) {
+  .text--small {
+    font-size: calc(10px + 2 * ((100vw - 320px) / 1080));
+  }
+}
+@media screen and (min-width: 1400px) {
+  .text--small {
+    font-size: 12px;
+  }
 }
 
 .text--uppercase {
@@ -3775,11 +3781,31 @@ hr {
 \*------------------------------------*/
 .icon {
   display: block;
-  margin: 1rem;
+  margin: 1rem auto;
 }
 @media (min-width: 1024px) {
   .icon {
-    margin: 2rem;
+    margin: 2rem auto;
+  }
+}
+.icon--xs {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+@media (min-width: 1024px) {
+  .icon--xs {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+.icon--sm {
+  width: 4rem;
+  height: 4rem;
+}
+@media (min-width: 1024px) {
+  .icon--sm {
+    width: 5.2rem;
+    height: 5.2rem;
   }
 }
 .icon--cfx-logo:before {
@@ -3898,32 +3924,26 @@ hr {
 #pre-announcement h1, #pre-announcement h3, #pre-announcement p {
   color: #fff;
 }
-#pre-announcement .icon {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+#pre-announcement h1 {
+  margin-bottom: 1rem;
 }
-#pre-announcement .icon--cfx-logo:before {
+#pre-announcement .icon--cfx-logo {
   width: 15rem;
-  margin: 1rem;
+  margin: 4rem auto;
 }
-@media (min-width: 575px) {
-  #pre-announcement .icon--cfx-logo:before {
+@media (min-width: 1024px) {
+  #pre-announcement .icon--cfx-logo {
     width: 20rem;
-    margin: 2rem;
   }
 }
-#pre-announcement .icon--hourglass:before {
+#pre-announcement .icon--hourglass {
   width: 1.5rem;
-  margin: 0;
+  margin-top: 4rem;
+  margin-bottom: 1rem;
 }
-@media (min-width: 575px) {
-  #pre-announcement .icon--hourglass:before {
+@media (min-width: 1024px) {
+  #pre-announcement .icon--hourglass {
+    margin-top: 6rem;
     width: 2rem;
   }
 }
@@ -3932,7 +3952,7 @@ hr {
   background: #bfd0e0;
 }
 #pre-announcement .btn {
-  width: 12rem;
+  width: 10rem;
 }
 
 #cfx-intro {
@@ -3941,6 +3961,14 @@ hr {
 }
 #cfx-intro .container {
   padding: 6rem 0 13rem;
+}
+#cfx-intro .icon--cfx-logo-dark {
+  width: 4.4rem;
+}
+@media (min-width: 1024px) {
+  #cfx-intro .icon--cfx-logo-dark {
+    width: 6.4rem;
+  }
 }
 #cfx-intro .btn-container {
   display: -webkit-box;
@@ -3967,7 +3995,8 @@ hr {
           align-items: flex-start;
 }
 #why-cfx .icon {
-  margin: 0 1rem;
+  display: table;
+  margin: 0 1rem 0 0;
 }
 #why-cfx h5 {
   font-weight: bold;
@@ -3977,6 +4006,7 @@ hr {
 #why-cfx p {
   margin-top: 0.8rem;
   margin-bottom: 4rem;
+  margin-right: 1.5rem;
 }
 
 #behind-cfx {
@@ -3986,14 +4016,33 @@ hr {
 #behind-cfx .container {
   padding: 8rem 0;
 }
-#behind-cfx .icon {
-  margin: 2rem;
-}
 #behind-cfx h2, #behind-cfx p, #behind-cfx span {
   color: #fff;
 }
+#behind-cfx .icon {
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+}
+#behind-cfx .icon--technology-leadership {
+  width: 3.2rem;
+}
+#behind-cfx .icon--shared-resources {
+  width: 6.5rem;
+}
+@media (min-width: 1024px) {
+  #behind-cfx .icon--technology-leadership {
+    width: 3.8rem;
+  }
+  #behind-cfx .icon--shared-resources {
+    width: 7.6rem;
+  }
+}
+#behind-cfx .slider p {
+  margin: 0;
+}
 #behind-cfx .slider .slick-slide {
-  height: 26rem;
+  height: 20rem;
 }
 #behind-cfx .slider .slick-dots {
   width: 100%;
@@ -4173,6 +4222,11 @@ hr {
 #cfx-chart .container {
   padding: 6rem 0;
 }
+@media (min-width: 1024px) {
+  #cfx-chart .container {
+    padding: 6rem 0 0;
+  }
+}
 #cfx-chart .center-content {
   display: -webkit-box;
   display: -webkit-flex;
@@ -4214,7 +4268,7 @@ hr {
   margin: 0;
 }
 #join-cfx-ico .address {
-  margin: 0 0 2rem;
+  margin: 1rem 0;
   color: #004385;
 }
 #join-cfx-ico .af-element input[type='text'] {
@@ -4227,6 +4281,9 @@ hr {
 
 #faq .container {
   padding: 12rem 0 6rem;
+}
+#faq h4 {
+  margin: 4rem 0 1rem;
 }
 #faq .faq-content {
   margin-bottom: 40px;
@@ -4256,11 +4313,13 @@ hr {
 }
 #faq .faq-content .question ol, #faq .faq-content .answer ol {
   padding: 0;
-  margin: 0;
 }
 #faq .btn {
   width: 12rem;
   margin: auto;
+}
+#faq hr {
+  margin: 3rem 0;
 }
 
 footer {

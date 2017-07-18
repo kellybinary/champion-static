@@ -37459,6 +37459,9 @@
 	    var $navbar = $('.navbar-fixed-top');
 	    var navbarHeight = 55;
 
+	    $('.barspinner').fadeOut(500);
+	    $home.fadeIn(1000);
+
 	    // Handle form submission
 	    if (window.location.hash === '#done') {
 	        $('.notice-msg').removeClass('invisible');
@@ -37512,13 +37515,9 @@
 	function showHideButton() {
 	    if (window.scrollY - $('.form-container').offset().top > 30) {
 	        $('#subscribe-btn').removeClass('btn--hide');
-	    } else {
-	        $('#subscribe-btn').addClass('btn--hide');
-	    }
-
-	    if (window.scrollY > 2000) {
 	        $('.scroll-btn').removeClass('scroll-btn--hide');
 	    } else {
+	        $('#subscribe-btn').addClass('btn--hide');
 	        $('.scroll-btn').addClass('scroll-btn--hide');
 	    }
 	}
@@ -37528,7 +37527,7 @@
 	    var isSlickInitialized = $('.slick-initialized').length;
 	    if (!isSlickInitialized && !mq.matches) {
 	        $(document).find('.slider').slick({
-	            infinite: false,
+	            infinite: true,
 	            dots: true,
 	            arrows: false,
 	            slidesToShow: 1,
