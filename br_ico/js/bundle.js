@@ -37505,8 +37505,8 @@
 	    });
 
 	    $('#open-btn').click(function (e) {
-	        $('.popup-overlay').css('opacity', 1);
 	        $('.popup-overlay').css('visibility', 'visible');
+	        $('.popup-overlay').css('opacity', 1);
 	        e.preventDefault();
 	    });
 
@@ -37515,8 +37515,8 @@
 	        var src = $iframe.attr('src');
 	        $iframe.attr('src', '/empty.html');
 	        $iframe.attr('src', src);
-	        $('.popup-overlay').css('opacity', 0);
 	        $('.popup-overlay').css('visibility', 'hidden');
+	        $('.popup-overlay').css('opacity', 0);
 	        e.preventDefault();
 	    });
 

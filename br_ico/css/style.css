@@ -3555,6 +3555,10 @@ p {
   height: 2.5rem;
   border-radius: 10rem;
 }
+.popup-box__btn:before {
+  content: 'X';
+  font-size: 1.4rem;
+}
 
 .timeline {
   position: relative;
@@ -3974,6 +3978,7 @@ hr {
 }
 .af-element input[type='submit'] {
   position: absolute;
+  top: 0;
   right: 0;
   border: none;
   border-top-left-radius: 0;
@@ -3987,18 +3992,10 @@ hr {
   background: url("../images/ico/globe_network_bg.svg") no-repeat center;
   background-size: cover;
   display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
+  /* Safari support */
   -webkit-box-pack: center;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
   -webkit-box-align: center;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
-  min-height: 100%;
+  height: 100vh;
   padding: 5.5rem 0;
 }
 #pre-announcement h1, #pre-announcement h3, #pre-announcement p {
@@ -4360,18 +4357,26 @@ hr {
 }
 
 #faq .container {
-  padding: 12rem 0 6rem;
+  padding: 10rem 0 6rem;
+}
+@media (min-width: 1024px) {
+  #faq .container {
+    padding-top: 12rem;
+  }
+}
+#faq h2 {
+  margin-bottom: 2rem;
 }
 #faq h4 {
-  margin: 4rem 0 1rem;
+  margin: 2rem 0 1rem;
+}
+@media (min-width: 1024px) {
+  #faq h4 {
+    margin-top: 4rem;
+  }
 }
 #faq .faq-content {
-  margin-bottom: 40px;
-}
-@media (max-width: 575px) {
-  #faq .faq-content {
-    margin: 0 2rem;
-  }
+  margin: 0 2rem 2rem;
 }
 #faq .faq-content .question:before, #faq .faq-content .answer:before {
   padding-right: 0.5rem;
@@ -4399,7 +4404,12 @@ hr {
   margin: auto;
 }
 #faq hr {
-  margin: 3rem 0;
+  margin: 1rem 0 3rem;
+}
+@media (min-width: 1024px) {
+  #faq hr {
+    margin: 4rem 0 6rem;
+  }
 }
 
 footer {
