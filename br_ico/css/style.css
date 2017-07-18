@@ -3526,6 +3526,8 @@ p {
   .timeline__box {
     max-width: 48%;
     margin-right: 52%;
+    margin-top: 0;
+    margin-bottom: 0;
   }
 }
 .timeline__box__title {
@@ -3703,6 +3705,9 @@ hr {
   }
 }
 
+.form-container {
+  margin-bottom: 3rem;
+}
 .form-container p {
   margin: 2rem 0;
 }
@@ -3760,12 +3765,13 @@ hr {
   opacity: 0;
 }
 .scroll-btn:before {
+  position: absolute;
   content: url("../images/ico/arrow_up.svg");
   padding: 1.3rem;
 }
 
 /*------------------------------------*\
-  #Iconography
+  #Icons
 \*------------------------------------*/
 .icon {
   display: block;
