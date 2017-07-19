@@ -18514,7 +18514,6 @@
 	var SelfExclusion = __webpack_require__(352);
 	var ChampionSettings = __webpack_require__(355);
 	var TNCApproval = __webpack_require__(356);
-	var ChampionICO = __webpack_require__(357);
 
 	var Champion = function () {
 	    'use strict';
@@ -18585,7 +18584,6 @@
 	            settings: { module: ChampionSettings, is_authenticated: true },
 	            security: { module: ChampionSecurity, is_authenticated: true },
 	            virtual: { module: ChampionNewVirtual, not_authenticated: true },
-	            ico: { module: ChampionICO },
 	            'cashier-password': { module: CashierPassword, is_authenticated: true, only_real: true },
 	            'change-password': { module: ChangePassword, is_authenticated: true },
 	            'login-history': { module: LoginHistory, is_authenticated: true },
@@ -37448,109 +37446,6 @@
 	}();
 
 	module.exports = TNCApproval;
-
-/***/ }),
-/* 357 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	__webpack_require__(310);
-
-	$(document).ready(function () {
-	    var $home = $('#home');
-	    var $faq = $('#faq');
-	    var $navbar = $('.navbar-fixed-top');
-	    var navbarHeight = 55;
-
-	    $('.barspinner').fadeOut(500);
-	    $home.fadeIn(1000);
-
-	    // Handle form submission
-	    if (window.location.hash === '#done') {
-	        $('.notice-msg').removeClass('invisible');
-	        $('form').addClass('invisible');
-	        if (window.history.pushState) {
-	            window.history.pushState('', '/', window.location.pathname);
-	        } else {
-	            window.location.hash = '';
-	        }
-	        var to = $('#coming-soon').offset().top;
-	        $(document).scrollTo(to, 1000);
-	    }
-
-	    // Toggle mobile menu
-	    $('#toggle-menu').click(function (e) {
-	        $navbar.toggleClass('expand');
-	        e.stopPropagation();
-	    });
-
-	    // Scroll to section
-	    $('.page-scroll').click(function (e) {
-	        var to = $('' + $(e.target).attr('href')).offset().top - navbarHeight;
-	        $navbar.removeClass('expand');
-	        if ($home.hasClass('invisible')) {
-	            $faq.addClass('invisible');
-	            $home.removeClass('invisible');
-	        }
-	        $(document).scrollTo(to, 1000);
-	        e.preventDefault();
-	    });
-
-	    $('#faq-btn').click(function (e) {
-	        $faq.removeClass('invisible');
-	        $home.addClass('invisible');
-	        $(document).scrollTo(0, 1000);
-	        e.preventDefault();
-	    });
-
-	    $('#open-btn').click(function (e) {
-	        $('.popup-overlay').css('visibility', 'visible');
-	        $('.popup-overlay').css('opacity', 1);
-	        e.preventDefault();
-	    });
-
-	    $('#close-btn').click(function (e) {
-	        var $iframe = $(document).find('iframe');
-	        var src = $iframe.attr('src');
-	        $iframe.attr('src', '/empty.html');
-	        $iframe.attr('src', src);
-	        $('.popup-overlay').css('visibility', 'hidden');
-	        $('.popup-overlay').css('opacity', 0);
-	        e.preventDefault();
-	    });
-
-	    initializeSlider();
-	    window.onscroll = showHideButton;
-	    window.onresize = initializeSlider;
-	});
-
-	function showHideButton() {
-	    if (window.scrollY - $('.form-container').offset().top > 30) {
-	        $('#subscribe-btn').removeClass('btn--hide');
-	        $('.scroll-btn').removeClass('scroll-btn--hide');
-	    } else {
-	        $('#subscribe-btn').addClass('btn--hide');
-	        $('.scroll-btn').addClass('scroll-btn--hide');
-	    }
-	}
-
-	function initializeSlider() {
-	    var mq = window.matchMedia('(min-width: 768px)');
-	    var isSlickInitialized = $('.slick-initialized').length;
-	    if (!isSlickInitialized && !mq.matches) {
-	        $(document).find('.slider').slick({
-	            infinite: true,
-	            dots: true,
-	            arrows: false,
-	            slidesToShow: 1,
-	            lazyLoad: 'progressive',
-	            autoplay: true
-	        });
-	    } else if (isSlickInitialized && mq.matches) {
-	        $('.slider').slick('unslick');
-	    }
-	}
 
 /***/ })
 /******/ ]);
