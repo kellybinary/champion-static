@@ -750,7 +750,7 @@ img {
 }
 
 span {
-  margin-top: 0;
+  margin: 0;
 }
 
 .fx-advisors {
@@ -1247,7 +1247,8 @@ span {
   opacity: 0.5;
 }
 #top_group.logged-in ~ #champion-container {
-  margin-top: 0;
+  margin-top: 50px;
+  margin-bottom: -6rem;
 }
 
 .main-nav > li > ul {
@@ -1308,6 +1309,11 @@ button .barspinner.white {
 }
 .slick-slide a:focus {
   outline: none;
+}
+
+.main-nav > li > ul a li {
+  margin: 0 !important;
+  padding: 10px;
 }
 
 .bankwire {
