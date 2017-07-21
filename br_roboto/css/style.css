@@ -28,6 +28,7 @@ html body #champion-container {
   -webkit-flex: 1 1 auto;
       -ms-flex: 1 1 auto;
           flex: 1 1 auto;
+  margin-top: 0;
 }
 
 .gray-bg-color {
@@ -168,6 +169,85 @@ html body #champion-container {
   margin-left: 15px;
 }
 
+#account-info:hover {
+  color: #dedede;
+}
+
+.right-align {
+  width: 100%;
+  float: right;
+  margin-right: 10px;
+}
+
+.slide-in {
+  -webkit-animation: slide-in 0.5s forwards;
+  animation: slide-in 0.5s forwards;
+}
+
+.slide-out {
+  -webkit-animation: slide-out 0.5s backwards;
+  animation: slide-out 0.5s backwards;
+}
+
+@keyframes slide-in {
+  100% {
+    -webkit-transform: translateX(0%);
+            transform: translateX(0%);
+    opacity: 1;
+  }
+}
+@keyframes slide-out {
+  0% {
+    -webkit-transform: translateX(0%);
+            transform: translateX(0%);
+  }
+  100% {
+    transfrom: translateX(-100%);
+  }
+}
+@-webkit-keyframes slide-in {
+  100% {
+    -webkit-transform: translateX(0%);
+            transform: translateX(0%);
+    opacity: 1;
+  }
+}
+@-webkit-keyframes slide-out {
+  0% {
+    -webkit-transform: translateX(0%);
+            transform: translateX(0%);
+  }
+  100% {
+    transfrom: translateX(-100%);
+  }
+}
+@keyframes pulsing {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes pulsing {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.pulser {
+  -webkit-animation: pulsing 3s infinite ease;
+  animation: pulsing 3s infinite ease;
+}
+
 #footer {
   margin-top: 6rem;
 }
@@ -296,7 +376,7 @@ table {
 }
 
 .fx-section {
-  padding: 6rem 0;
+  padding-top: 6rem;
 }
 
 .fx-md, .fx-xxs {
@@ -494,6 +574,66 @@ fieldset {
   text-align: right;
 }
 
+a:hover {
+  text-decoration: none;
+}
+
+.lightbox {
+  display: table;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 2000000000;
+}
+
+.icon-ok {
+  color: #1ec522;
+  font-size: 18px;
+}
+
+.icon-remove {
+  color: #ea202d;
+  font-size: 18px;
+}
+
+.has-tabs * {
+  outline: none;
+}
+.has-tabs li.col-sm {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-width: 1vw;
+  margin-top: 1px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+.has-tabs li.col-sm a {
+  white-space: normal;
+  text-align: center;
+  width: 100%;
+}
+.has-tabs li.col-sm.ui-tabs-active a {
+  padding-bottom: 1px !important;
+}
+
+img.float-right {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: auto;
+  padding: 10px 0;
+}
+
 .separator-vertical {
   width: 2px;
 }
@@ -530,6 +670,11 @@ fieldset {
 .middle-align {
   margin-top: auto !important;
   margin-bottom: auto !important;
+}
+
+.no-gutters {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 #msg_notification {
@@ -972,6 +1117,193 @@ img {
 
 .fx-one-zero:before {
   content: url("../images/liquidity_solutions/one_zero.svg");
+}
+
+#header {
+  border: 0 !important;
+}
+#header .top-nav-menu {
+  float: right;
+  margin-left: auto;
+}
+#header .top-nav-menu li a {
+  height: auto;
+  padding: 25px 15px;
+  border-bottom: 4px solid transparent;
+  color: #fff !important;
+}
+#header .top-nav-menu li a.active {
+  border-bottom-color: #dedede;
+}
+#header .top-nav-menu li a li {
+  border-bottom: 3px solid #004385;
+  margin-bottom: -4px;
+}
+#header .top-nav-menu li ul {
+  z-index: 10;
+}
+#header .top-nav-menu ul li a {
+  padding: 10px 15px;
+}
+#header .top-nav-menu ul li a.active {
+  border-bottom: none;
+}
+
+#top_group.logged-in {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+}
+#top_group.logged-in #topbar {
+  display: none;
+}
+#top_group.logged-in #header {
+  border: none;
+}
+#top_group.logged-in #header .logo-parent {
+  padding: 5px 0;
+}
+#top_group.logged-in #header .logo-parent .logo, #top_group.logged-in #header .logo-parent .logo > div {
+  width: 40px;
+  height: 40px;
+}
+#top_group.logged-in #header .logo-parent .binary-logo-text > div {
+  margin-top: 5px;
+}
+#top_group.logged-in #header .top-nav-menu {
+  float: none;
+  margin-left: 0;
+}
+#top_group.logged-in #header .top-nav-menu li a {
+  padding: 0 15px;
+  line-height: 50px;
+  border-bottom: none;
+}
+#top_group.logged-in #header .top-nav-menu li a.active {
+  background: #013365;
+}
+#top_group.logged-in #header, #top_group.logged-in #header #main-logout, #top_group.logged-in #header #main-account {
+  height: 50px;
+}
+#top_group.logged-in #header #main-logout, #top_group.logged-in #header .main-nav {
+  width: auto;
+  min-width: 160px;
+  white-space: nowrap;
+  border: 0;
+}
+#top_group.logged-in #header .account-balance {
+  font-size: 13px;
+}
+#top_group.logged-in #header .account-type {
+  font-size: 11px;
+}
+#top_group.logged-in #header .main-nav li {
+  text-align: left;
+}
+#top_group.logged-in #header .main-nav li a {
+  padding: 0 15px;
+}
+#top_group.logged-in #header .main-nav li .nav-caret {
+  position: absolute;
+  top: 20px;
+  right: 10px;
+}
+#top_group.logged-in #header #main-logout li.account > a {
+  background: #013365;
+  height: 50px;
+  margin-top: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+#top_group.logged-in #header #all-accounts {
+  padding-top: 0;
+}
+#top_group.logged-in #header #all-accounts, #top_group.logged-in #header #all-accounts li ul {
+  background: #004385;
+  border: none;
+}
+#top_group.logged-in #header #all-accounts a {
+  color: #fff;
+}
+#top_group.logged-in #header #all-accounts ul {
+  margin-left: 0;
+}
+#top_group.logged-in #header #all-accounts ul li:hover {
+  opacity: 0.7;
+  background: none;
+}
+#top_group.logged-in #header #all-accounts ul .separator-line-thin-gray {
+  opacity: 0.5;
+}
+#top_group.logged-in ~ #champion-container {
+  margin-top: 0;
+}
+
+.main-nav > li > ul {
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+  margin-top: 0 !important;
+}
+
+.logo > div {
+  height: 45px;
+}
+
+.logo, .logo-dark {
+  height: 45px;
+}
+
+body .has-tabs .ui-tabs-panel {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+#indices-cfd-contract-specs table th {
+  max-width: 180px;
+}
+
+#fx-profile.ui-tabs-vertical {
+  width: auto;
+}
+#fx-profile .ui-tabs-nav, #fx-profile .ui-tabs-panel {
+  width: auto;
+  float: none;
+}
+
+#ui-timepicker-div, #ui-timepicker-div:before, #ui-timepicker-div:after, #ui-datepicker-div, #ui-datepicker-div:before, #ui-datepicker-div:after {
+  -webkit-transition: none;
+  transition: none;
+}
+
+.ui-datepicker.ui-widget-content, .ui-timepicker-table.ui-widget-content {
+  border: 0;
+}
+.ui-datepicker.ui-corner-all, .ui-datepicker .ui-corner-all, .ui-timepicker-table.ui-corner-all, .ui-timepicker-table .ui-corner-all {
+  border-radius: 0;
+}
+
+#ui-timepicker-div .ui-state-default, #ui-timepicker-div .ui-widget-content .ui-state-default {
+  width: 80%;
+}
+
+button .barspinner.white {
+  height: 13px;
+  margin: 3px auto;
+}
+
+.slick-slide ul.bullet {
+  padding: 1.25em 0 1.25em 1.25em;
+  margin: 0;
+}
+.slick-slide a:focus {
+  outline: none;
 }
 
 .bankwire {
