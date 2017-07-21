@@ -5,6 +5,31 @@
 /*
  * To create an optimized svg url
  */
+html {
+  height: 100%;
+  overflow-x: hidden;
+}
+html body {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  overflow-x: hidden;
+  position: inherit;
+  width: 100%;
+}
+html body #champion-container {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 auto;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+}
+
 .gray-bg-color {
   background: #dedede;
 }
@@ -457,20 +482,16 @@ fieldset {
   top: 100%;
 }
 
-.lg-padding {
-  padding: 20px !important;
+.has-tabs .ui-tabs-panel {
+  padding: 0;
+}
+
+.padding-top-bottom-6 {
+  padding: 6rem 0;
 }
 
 .txt-right {
   text-align: right;
-}
-
-.margin-top-sm {
-  margin-top: 3rem;
-}
-
-.margin-top-6 {
-  margin-top: 6rem;
 }
 
 .separator-vertical {
@@ -496,6 +517,19 @@ fieldset {
 
 .margin-bottom-6 {
   margin-bottom: 6rem;
+}
+
+.margin-top-sm {
+  margin-top: 3rem;
+}
+
+.margin-top-6 {
+  margin-top: 6rem;
+}
+
+.middle-align {
+  margin-top: auto !important;
+  margin-bottom: auto !important;
 }
 
 #msg_notification {
@@ -549,6 +583,25 @@ img {
   font-weight: bold;
   color: #004385;
   padding: 0 5px;
+}
+
+.formula {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.formula img {
+  margin: 0;
 }
 
 .fx-advisors {
