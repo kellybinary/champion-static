@@ -749,6 +749,10 @@ img {
   margin: 0;
 }
 
+span {
+  margin-top: 0;
+}
+
 .fx-advisors {
   background: url("../images/symbols/advisors.svg");
 }
