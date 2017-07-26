@@ -1970,13 +1970,14 @@ ul.checked.small > li {
   margin-bottom: 2px;
 }
 
-.notice-msg {
+.hint-msg {
   background: none;
   color: #9b9b9b;
   font-style: italic;
   margin: 0;
+  padding: 10px 0;
 }
-.notice-msg a {
+.hint-msg a {
   text-decoration: underline;
 }
 
