@@ -945,7 +945,7 @@ fieldset {
 }
 
 .submit-row {
-  margin: 40px 0;
+  margin-top: 40px;
 }
 
 .champion-accounts th {
@@ -1293,7 +1293,6 @@ iframe {
 }
 
 .required {
-  padding: 0 5px;
   font-size: inherit !important;
   font-style: inherit !important;
 }
@@ -1969,6 +1968,18 @@ ul.checked.small > li {
 .box {
   background-color: #f2f2f2;
   margin-bottom: 2px;
+}
+
+.hint-msg {
+  background: none;
+  color: #9b9b9b;
+  font-style: italic;
+  margin: 0;
+  padding: 10px 0;
+  font-size: 12px;
+}
+.hint-msg a {
+  text-decoration: underline;
 }
 
 .bankwire {
