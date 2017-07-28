@@ -30794,7 +30794,10 @@
 	        });
 	        arr_validation = [];
 	        $(form_selector).find('select').map(function () {
-	            arr_validation.push({ selector: '#' + $(this).attr('id'), validations: ['req'] });
+	            var id = $(this).attr('id');
+	            if (!/(employment_status|source_of_wealth)/.test(id)) {
+	                arr_validation.push({ selector: '#' + $(this).attr('id'), validations: ['req'] });
+	            }
 	        });
 	        Validation.init(form_selector, arr_validation);
 	    };
