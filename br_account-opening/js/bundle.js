@@ -30932,7 +30932,7 @@
 	        get_settings.name = get_settings.salutation + ' ' + get_settings.first_name + ' ' + get_settings.last_name;
 	        get_settings.date_of_birth = get_settings.date_of_birth ? moment.utc(new Date(get_settings.date_of_birth * 1000)).format('YYYY-MM-DD') : '';
 
-	        if (get_settings.account_opening_reason === null) {
+	        if (!get_settings.account_opening_reason) {
 	            $('#account_opening_reason').parent().removeClass('invisible');
 	            $('#lbl_account_opening_reason').parent().parent().addClass('invisible');
 	        } else {
