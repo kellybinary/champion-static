@@ -24769,12 +24769,11 @@
 	                status = void 0;
 
 	            var riskAssessment = function riskAssessment() {
+	                var fa_not_complete = /financial_assessment_not_complete/.test(get_account_status.status);
 	                if (get_account_status.risk_classification === 'high') {
-	                    return isEmptyObject(State.get(['response', 'get_financial_assessment', 'get_financial_assessment']));
+	                    return isEmptyObject(State.get(['response', 'get_financial_assessment', 'get_financial_assessment'])) || fa_not_complete;
 	                }
-	                return get_account_status.status.some(function (obj) {
-	                    return obj === 'financial_assessment_not_complete';
-	                });
+	                return fa_not_complete;
 	            };
 
 	            var messages = {
@@ -30218,7 +30217,6 @@
 	var GTM = __webpack_require__(312);
 	var ChampionSocket = __webpack_require__(305);
 	var url_for = __webpack_require__(311).url_for;
-	var isEmptyObject = __webpack_require__(309).isEmptyObject;
 
 	var MetaTraderConfig = function () {
 	    'use strict';
@@ -30254,8 +30252,8 @@
 	                    } else if (Client.is_virtual()) {
 	                        resolve(needsRealMessage());
 	                    } else {
-	                        ChampionSocket.send({ get_financial_assessment: 1 }).then(function (response_financial) {
-	                            resolve(isEmptyObject(response_financial.get_financial_assessment) ? $('#msg_assessment').html() : '');
+	                        ChampionSocket.send({ get_account_status: 1 }).then(function (response) {
+	                            resolve(/financial_assessment_not_complete/.test(response.get_account_status.status) ? $('#msg_assessment').html() : '');
 	                        });
 	                    }
 	                });
