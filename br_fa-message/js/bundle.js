@@ -30853,8 +30853,8 @@
 	    var showFormMessage = function showFormMessage(msg, isSuccess) {
 	        $msg_form.removeClass(hidden_class).css('display', '').html('');
 	        if (isSuccess && is_first_time) {
+	            $msg_success.removeClass(hidden_class);
 	            ChampionSocket.send({ get_account_status: 1 }).then(function (response_status) {
-	                $msg_success.removeClass(hidden_class);
 	                if ($.inArray('authenticated', response_status.get_account_status.status) === -1) {
 	                    $('#msg_authenticate').removeClass(hidden_class);
 	                }
