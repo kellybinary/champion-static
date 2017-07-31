@@ -24765,10 +24765,11 @@
 	    var displayAccountStatus = function displayAccountStatus() {
 	        ChampionSocket.wait('authorize').then(function () {
 	            var get_account_status = void 0,
-	                status = void 0;
+	                status = void 0,
+	                has_mt_account = false;
 
 	            var riskAssessment = function riskAssessment() {
-	                return get_account_status.risk_classification === 'high' && /financial_assessment_not_complete/.test(status);
+	                return (get_account_status.risk_classification === 'high' || has_mt_account) && /financial_assessment_not_complete/.test(status);
 	            };
 
 	            var messages = {
@@ -24807,6 +24808,11 @@
 	            ChampionSocket.wait('website_status', 'get_account_status', 'get_settings', 'get_financial_assessment').then(function () {
 	                get_account_status = State.get(['response', 'get_account_status', 'get_account_status']) || {};
 	                status = get_account_status.status;
+	                ChampionSocket.wait('mt5_login_list').then(function (response) {
+	                    if (response.mt5_login_list.length) {
+	                        has_mt_account = true;
+	                    }
+	                });
 	                var notified = check_statuses.some(function (object) {
 	                    if (object.validation()) {
 	                        displayNotification(object.message());
