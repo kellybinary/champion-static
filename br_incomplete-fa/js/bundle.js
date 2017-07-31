@@ -24580,7 +24580,6 @@
 	var State = __webpack_require__(308).State;
 	var url_for = __webpack_require__(311).url_for;
 	var Utility = __webpack_require__(309);
-	var isEmptyObject = __webpack_require__(309).isEmptyObject;
 	var template = __webpack_require__(309).template;
 
 	var Header = function () {
@@ -24769,11 +24768,7 @@
 	                status = void 0;
 
 	            var riskAssessment = function riskAssessment() {
-	                var fa_not_complete = /financial_assessment_not_complete/.test(get_account_status.status);
-	                if (get_account_status.risk_classification === 'high') {
-	                    return isEmptyObject(State.get(['response', 'get_financial_assessment', 'get_financial_assessment'])) || fa_not_complete;
-	                }
-	                return fa_not_complete;
+	                return get_account_status.risk_classification === 'high' && /financial_assessment_not_complete/.test(status);
 	            };
 
 	            var messages = {
