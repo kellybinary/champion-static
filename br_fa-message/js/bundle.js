@@ -30861,6 +30861,7 @@
 	                }
 	            });
 	        } else {
+	            $msg_success.addClass(hidden_class);
 	            $msg_form.attr('class', isSuccess ? 'success-msg' : 'error-msg').css('display', 'block').html(msg).delay(5000).fadeOut(1000);
 	        }
 	    };
