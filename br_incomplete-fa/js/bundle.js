@@ -30844,7 +30844,7 @@
 	                } else {
 	                    showFormMessage('Your changes have been updated successfully.', true);
 	                    // need to remove financial_assessment_not_complete from status if any
-	                    ChampionSocket.send({ get_account_status: 1 }).then(function () {
+	                    ChampionSocket.send({ get_account_status: 1 }, true).then(function () {
 	                        Header.displayAccountStatus();
 	                    });
 	                }
