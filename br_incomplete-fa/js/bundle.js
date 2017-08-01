@@ -30792,10 +30792,19 @@
 	            });
 	        }
 
+	        if (!hasProp(financial_assessment, 'account_turnover')) {
+	            financial_assessment.account_turnover = '';
+	        } else if (!hasProp(financial_assessment, 'employment_status')) {
+	            financial_assessment.employment_status = '';
+	        } else if (!hasProp(financial_assessment, 'source_of_wealth')) {
+	            financial_assessment.source_of_wealth = '';
+	        }
+
 	        Object.keys(financial_assessment).forEach(function (key) {
 	            var val = financial_assessment[key];
 	            $('#' + key).val(val);
 	        });
+
 	        arr_validation = [];
 	        $(form_selector).find('select').map(function () {
 	            arr_validation.push({ selector: '#' + $(this).attr('id'), validations: ['req'] });
@@ -30865,6 +30874,10 @@
 	            $msg_success.addClass(hidden_class);
 	            $msg_form.attr('class', isSuccess ? 'success-msg' : 'error-msg').css('display', 'block').html(msg).delay(5000).fadeOut(1000);
 	        }
+	    };
+
+	    var hasProp = function hasProp(obj, prop) {
+	        return Object.prototype.hasOwnProperty.call(obj, prop);
 	    };
 
 	    var unload = function unload() {
