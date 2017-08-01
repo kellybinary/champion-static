@@ -24812,15 +24812,15 @@
 	                    if (response.mt5_login_list.length) {
 	                        has_mt_account = true;
 	                    }
+	                    var notified = check_statuses.some(function (object) {
+	                        if (object.validation()) {
+	                            displayNotification(object.message());
+	                            return true;
+	                        }
+	                        return false;
+	                    });
+	                    if (!notified) hideNotification();
 	                });
-	                var notified = check_statuses.some(function (object) {
-	                    if (object.validation()) {
-	                        displayNotification(object.message());
-	                        return true;
-	                    }
-	                    return false;
-	                });
-	                if (!notified) hideNotification();
 	            });
 	        });
 	    };
