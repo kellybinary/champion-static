@@ -24792,8 +24792,7 @@
 
 	            var validations = {
 	                authenticate: function authenticate() {
-	                    return (/prompt_client_to_authenticate/.test(status)
-	                    );
+	                    return get_account_status.prompt_client_to_authenticate;
 	                },
 	                risk: function risk() {
 	                    return riskAssessment();
