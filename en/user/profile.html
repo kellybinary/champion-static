@@ -23,10 +23,10 @@
 
     <link rel="icon" type="image/png" sizes="16x16" href="/champion-static/images/favicons/CFX_favicon16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/champion-static/images/favicons/CFX_favicon32.png" />
-     <link rel="stylesheet" href="https://style.champion-fx.com/binary.css?nauxvs44" />
-     <link rel="stylesheet" href="/champion-static/css/style.min.css?nauxvs44" />
-      <script src="/champion-static/js/bundle.js?nauxvs44" type="text/javascript"></script>
-     <script src="https://style.champion-fx.com/binary.js?nauxvs44" type="text/javascript"></script>
+     <link rel="stylesheet" href="https://style.champion-fx.com/binary.css?m6u4uhq4" />
+     <link rel="stylesheet" href="/champion-static/css/style.min.css?m6u4uhq4" />
+      <script src="/champion-static/js/bundle.js?m6u4uhq4" type="text/javascript"></script>
+     <script src="https://style.champion-fx.com/binary.js?m6u4uhq4" type="text/javascript"></script>
      
 </head>
 <body>
@@ -533,12 +533,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </div>
 
     <div class="form-row is-real">
+    <label>Account opening reason</label>
+    
+                <span class="text-display ">
+                                <span id="lbl_account_opening_reason" ></span>
+            </span>
+    
+</div>
+    <!-- if account_opening_reason is not set, display dropdown -->
+    <div class="form-row is-real invisible">
     <label for="account_opening_reason">Account opening reason</label>
     
                 <select id="account_opening_reason" > 
+        <option value="">Please select</option>
         <option value="Speculative">Speculative</option>
         <option value="Income Earning">Income Earning</option>
-        <option value="Asset Saving">Asset Saving</option>
+        <option value="Assets Saving">Assets Saving</option>
         <option value="Hedging">Hedging</option>
                 </select>
     

@@ -101,12 +101,22 @@
 </div>
 
     <div class="form-row is-real">
+    <label>Account opening reason</label>
+    
+                <span class="text-display ">
+                                <span id="lbl_account_opening_reason" ></span>
+            </span>
+    
+</div>
+    <!-- if account_opening_reason is not set, display dropdown -->
+    <div class="form-row is-real invisible">
     <label for="account_opening_reason">Account opening reason</label>
     
                 <select id="account_opening_reason" > 
+        <option value="">Please select</option>
         <option value="Speculative">Speculative</option>
         <option value="Income Earning">Income Earning</option>
-        <option value="Asset Saving">Asset Saving</option>
+        <option value="Assets Saving">Assets Saving</option>
         <option value="Hedging">Hedging</option>
                 </select>
     
