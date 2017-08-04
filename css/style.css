@@ -2191,6 +2191,10 @@ ul.checked.small > li {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
 }
 .timeline--single-col .timeline__box:before {
   border: 0;
