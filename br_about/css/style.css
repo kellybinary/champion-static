@@ -2219,6 +2219,9 @@ ul.checked.small > li {
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
+    -webkit-align-self: center;
+        -ms-flex-item-align: center;
+            align-self: center;
   }
 }
 .timeline--single-col .timeline__box__icon span {
