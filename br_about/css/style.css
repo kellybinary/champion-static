@@ -2211,8 +2211,9 @@ ul.checked.small > li {
   margin-bottom: 0;
 }
 .timeline--single-col .timeline__box__icon {
-  display: block;
   position: absolute;
+  display: block;
+  top: 18px;
   right: 1rem;
   margin-right: 100%;
 }
