@@ -2267,6 +2267,10 @@ p {
   margin: 1rem 0;
 }
 
+.img-md {
+  height: 80px;
+}
+
 .bankwire {
   background-image: url("../images/payment_methods/bankwire.svg");
 }
