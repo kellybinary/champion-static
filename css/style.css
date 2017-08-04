@@ -1864,6 +1864,7 @@ html {
   padding: 25px 15px;
   border-bottom: 4px solid transparent;
   color: #fff !important;
+  font-size: 1.6rem;
 }
 #header .top-nav-menu li a.active {
   border-bottom-color: #dedede;
