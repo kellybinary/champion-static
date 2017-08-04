@@ -2241,11 +2241,6 @@ ul.checked.small > li {
   padding-bottom: 56.25%;
   /* 16:9 aspect ratio */
 }
-@media (min-width: 615px) {
-  .yt-container {
-    padding-bottom: 37.5%;
-  }
-}
 
 .yt-iframe {
   position: absolute;
