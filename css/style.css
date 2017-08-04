@@ -2078,6 +2078,18 @@ ul.checked.small > li {
   padding: 10px;
 }
 
+@media (max-width: 576px) {
+  .font-resize h3 {
+    font-size: 16px;
+  }
+  .font-resize p {
+    font-size: 14px;
+  }
+
+  .text-justified {
+    text-align: justify;
+  }
+}
 .timeline {
   position: relative;
   margin: 3rem 0;
@@ -2249,6 +2261,10 @@ ul.checked.small > li {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+p {
+  margin: 1rem 0;
 }
 
 .bankwire {

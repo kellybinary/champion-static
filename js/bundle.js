@@ -24790,7 +24790,7 @@
 
 	            var validations = {
 	                authenticate: function authenticate() {
-	                    return !/authenticated/.test(status) || !/age_verification/.test(status);
+	                    return get_account_status.prompt_client_to_authenticate;
 	                },
 	                risk: function risk() {
 	                    return riskAssessment();
