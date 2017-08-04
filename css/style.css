@@ -2178,12 +2178,9 @@ ul.checked.small > li {
 }
 .timeline--single-col .timeline__box {
   display: -webkit-box;
-  /* OLD - iOS 6-, Safari 3.1-6 */
-  /* OLD - Firefox 19- (buggy but mostly works) */
-  display: -ms-flexbox;
-  /* TWEENER - IE 10 */
   display: -webkit-flex;
-  /* NEW - Chrome */
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-align: center;
   -webkit-align-items: center;
       -ms-flex-align: center;
@@ -2200,7 +2197,6 @@ ul.checked.small > li {
 }
 .timeline--single-col .timeline__box:after {
   left: 0;
-  top: initial;
 }
 .timeline--single-col .timeline__box__date {
   font-size: 12px;
