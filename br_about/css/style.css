@@ -2185,6 +2185,9 @@ ul.checked.small > li {
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-align-self: center;
+      -ms-flex-item-align: center;
+          align-self: center;
   background: none;
   max-width: 100%;
   margin-right: 0;
@@ -2219,9 +2222,6 @@ ul.checked.small > li {
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    -webkit-align-self: center;
-        -ms-flex-item-align: center;
-            align-self: center;
   }
 }
 .timeline--single-col .timeline__box__icon span {
