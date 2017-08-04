@@ -2177,12 +2177,6 @@ ul.checked.small > li {
   left: 0.5rem;
 }
 .timeline--single-col .timeline__box {
-  background: none;
-  max-width: 100%;
-  margin-right: 0;
-  margin-left: 0;
-  text-align: left;
-  padding: 1rem 2rem;
   display: -webkit-box;
   /* OLD - iOS 6-, Safari 3.1-6 */
   /* OLD - Firefox 19- (buggy but mostly works) */
@@ -2194,6 +2188,12 @@ ul.checked.small > li {
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
+  background: none;
+  max-width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+  text-align: left;
+  padding: 1rem 2rem;
 }
 .timeline--single-col .timeline__box:before {
   border: 0;
