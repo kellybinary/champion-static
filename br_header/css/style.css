@@ -1625,11 +1625,6 @@ html {
   font-size: 62.5%;
 }
 
-@media (max-width: 568px) {
-  .navbar__brand.logged-in {
-    display: none;
-  }
-}
 .navbar__button-group {
   margin-left: 3rem;
 }
@@ -3304,6 +3299,10 @@ p {
   .text-justified {
     text-align: justify;
   }
+
+  .navbar__brand {
+    display: none;
+  }
 }
 @media (max-width: 767px) {
   .hidden-sm-down {
@@ -3335,6 +3334,10 @@ p {
 
   .hidden-sm-up {
     display: none !important;
+  }
+
+  .navbar__toggle, .navbar__button-group {
+    width: 20rem;
   }
 }
 @media (max-width: 991px) {
@@ -3377,6 +3380,14 @@ p {
 
   #header .button span, .button-secondary span {
     padding: 7px 20px !important;
+  }
+
+  .navbar__brand.logged-in {
+    display: none;
+  }
+
+  .navbar__toggle.logged-in {
+    width: 100%;
   }
 }
 @media (min-width: 1200px) {
