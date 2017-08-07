@@ -24580,7 +24580,6 @@
 	var ChampionSocket = __webpack_require__(305);
 	var State = __webpack_require__(308).State;
 	var url_for = __webpack_require__(311).url_for;
-	// const Utility        = require('./utility');
 	var template = __webpack_require__(309).template;
 
 	var Header = function () {
@@ -24619,34 +24618,12 @@
 	    };
 
 	    var desktopMenu = function desktopMenu() {
-	        // const $all_accounts = $('#all-accounts');
-	        // $all_accounts.find('li.has-sub > a').off('click').on('click', function(e) {
-	        //     e.stopPropagation();
-	        //     $(this).siblings('ul').toggleClass(hidden_class);
-	        // });
-
 	        if (!Client.is_logged_in()) return;
 
 	        $(window).off('resize.updateBody').on('resize.updateBody', updateBody);
 	        updateBody();
 
 	        $('#header .logged-in').removeClass(hidden_class);
-	        // $all_accounts.find('.account > a').removeClass('menu-icon');
-	        // const language = $('#select_language');
-	        // $('.nav-menu').unbind('click').on('click', function(e) {
-	        //     e.stopPropagation();
-	        //     Utility.animateDisappear(language);
-	        //     if (+$all_accounts.css('opacity') === 1) {
-	        //         Utility.animateDisappear($all_accounts);
-	        //     } else {
-	        //         Utility.animateAppear($all_accounts);
-	        //     }
-	        // });
-	        //
-	        // $(document).off('click.desktopMenu').on('click.desktopMenu', function(e) {
-	        //     e.stopPropagation();
-	        //     Utility.animateDisappear($all_accounts);
-	        // });
 	    };
 
 	    var updateBody = function updateBody() {
