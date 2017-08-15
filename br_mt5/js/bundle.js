@@ -28970,14 +28970,16 @@
 	var MT5 = function () {
 	    'use strict';
 
+	    var $mt5 = $('#mt5-accounts');
+
 	    var load = function load() {
 	        $('.has-tabs').tabs().removeClass('invisible');
 
 	        if (Client.is_logged_in()) {
-	            $('#mt5-accounts').find('.button-disabled').addClass('button').removeClass('button-disabled');
+	            $mt5.find('.button-disabled').addClass('button').removeClass('button-disabled');
 	        } else {
-	            $('#mt5-accounts').find('.button').addClass('button-disabled').removeClass('button');
-	            $('#mt5-accounts').find('a').removeAttr('href');
+	            $mt5.find('.button').addClass('button-disabled').removeClass('button');
+	            $mt5.find('a').removeAttr('href');
 	        }
 	    };
 
