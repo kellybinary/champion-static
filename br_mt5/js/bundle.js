@@ -28970,10 +28970,10 @@
 	var MT5 = function () {
 	    'use strict';
 
-	    var $mt5 = $('#mt5-accounts');
-
 	    var load = function load() {
 	        $('.has-tabs').tabs().removeClass('invisible');
+
+	        var $mt5 = $('#mt5-accounts');
 
 	        if (Client.is_logged_in()) {
 	            $mt5.find('.button-disabled').addClass('button').removeClass('button-disabled');
