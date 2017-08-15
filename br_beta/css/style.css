@@ -2076,7 +2076,7 @@ ul.checked.small > li {
   position: absolute;
   height: 100%;
   left: -1.3rem;
-  border-left: 0.1rem solid #dedede;
+  border-left: 1px solid #dedede;
   margin: 0;
 }
 @media (min-width: 1024px) {
@@ -2141,7 +2141,7 @@ ul.checked.small > li {
   top: 2.5rem;
   background: #004385;
   border-radius: 3.13rem;
-  left: -1.53rem;
+  left: -1.65rem;
 }
 @media (min-width: 1024px) {
   .timeline__box:nth-of-type(odd) {
