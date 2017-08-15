@@ -404,11 +404,15 @@ h1.main-title {
 }
 #footer #footer-regulatory {
   padding: 25px 0 0;
+}
+#footer #footer-regulatory div {
   font-size: 10px;
   text-align: justify;
 }
 #footer #footer-last {
   padding: 10px 0;
+}
+#footer #footer-last div {
   font-size: 13px;
 }
 #footer #end_note {
