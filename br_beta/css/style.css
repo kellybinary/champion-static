@@ -598,13 +598,11 @@ h1.main-title {
 }
 
 .about-us-header {
-  background: url("../images/about/banner_championfx.png") no-repeat center center;
-  background-size: cover;
+  background: url("../images/about/banner_championfx.png") top left/cover no-repeat;
 }
 
 .contact-us-header {
-  background-image: url("../images/contact_us/contact_us_banner.png");
-  background-size: cover;
+  background-image: url("../images/contact_us/contact_us_banner.png") top left/cover no-repeat;
 }
 .contact-us-header h4 {
   margin-bottom: 0;
@@ -2294,7 +2292,7 @@ p {
 }
 
 .payment-methods-header {
-  background-image: url("../images/payment_methods/payment_methods_banner.png");
+  background: url("../images/payment_methods/payment_methods_banner.png") top left/cover no-repeat;
 }
 
 .arrow {
