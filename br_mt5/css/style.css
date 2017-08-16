@@ -492,32 +492,31 @@ h1.main-title {
 }
 
 .binary-options-header {
-  background-image: url("../images/binary_options/binary_options_banner.png");
-  background-size: cover;
+  background: url("../images/binary_options/binary_options_banner.png") top left/cover no-repeat;
 }
 
 .trading-platform-header {
-  background-image: url("../images/trading_platforms_banner.png");
+  background: url("../images/trading_platforms_banner.png") top left/cover no-repeat;
 }
 
 .forex-header {
-  background-image: url("../images/forex.png");
-}
-
-.cfd-header {
-  background-image: url("../images/cfd_banner.png");
-}
-
-.metals-header {
-  background-image: url("../images/metals_banner.png");
-}
-
-.economic-calendar-header {
-  background-image: url("../images/mt5/economic_calendar_banner.png");
+  background: url("../images/forex.png") top left/cover no-repeat;
 }
 
 .mt5-header {
-  background-image: url("../images/metatrader/mt5_banner.png");
+  background: url("../images/forex.png") top left/cover no-repeat;
+}
+
+.cfd-header {
+  background: url("../images/cfd_banner.png") top left/cover no-repeat;
+}
+
+.metals-header {
+  background: url("../images/metals_banner.png") top left/cover no-repeat;
+}
+
+.economic-calendar-header {
+  background: url("../images/mt5/economic_calendar_banner.png") top left/cover no-repeat;
 }
 
 .fx-home-header {
@@ -603,13 +602,11 @@ h1.main-title {
 }
 
 .about-us-header {
-  background: url("../images/about/banner_championfx.png") no-repeat center center;
-  background-size: cover;
+  background: url("../images/about/banner_championfx.png") top left/cover no-repeat;
 }
 
 .contact-us-header {
-  background-image: url("../images/contact_us/contact_us_banner.png");
-  background-size: cover;
+  background-image: url("../images/contact_us/contact_us_banner.png") top left/cover no-repeat;
 }
 .contact-us-header h4 {
   margin-bottom: 0;
@@ -2168,13 +2165,13 @@ ul.checked.small > li {
 
 .timeline {
   position: relative;
-  margin: 3rem 0;
+  margin: 1.88rem 0;
 }
 .timeline__vertical-line {
   position: absolute;
   height: 100%;
-  left: -2rem;
-  border-left: 0.1rem solid #dedede;
+  left: -1.3rem;
+  border-left: 1px solid #dedede;
   margin: 0;
 }
 @media (min-width: 1024px) {
@@ -2185,24 +2182,24 @@ ul.checked.small > li {
 .timeline__vertical-line:before, .timeline__vertical-line:after {
   position: absolute;
   content: '';
-  margin-left: -0.5rem;
+  margin-left: -0.31rem;
   background: #bfd0e0;
-  height: 1rem;
-  width: 1rem;
+  height: 0.63rem;
+  width: 0.63rem;
   border-radius: 10rem;
 }
 .timeline__vertical-line:before {
-  top: -1rem;
+  top: -0.63rem;
 }
 .timeline__vertical-line:after {
-  bottom: -1rem;
+  bottom: -0.63rem;
 }
 .timeline__box {
   position: relative;
   background-color: #f2f2f2;
-  border-radius: 0.5rem;
-  padding: 2rem;
-  margin: 1rem 0;
+  border-radius: 0.31rem;
+  padding: 1.25rem;
+  margin: 0.63rem 0;
   text-align: left;
 }
 @media (min-width: 1024px) {
@@ -2226,34 +2223,34 @@ ul.checked.small > li {
 .timeline__box:nth-of-type(odd):before, .timeline__box:nth-of-type(odd):after, .timeline__box:nth-of-type(even):before, .timeline__box:nth-of-type(even):after {
   position: absolute;
   content: '';
-  width: 1rem;
-  height: 1rem;
+  width: 0.63rem;
+  height: 0.63rem;
 }
 .timeline__box:nth-of-type(odd):before, .timeline__box:nth-of-type(even):before {
-  border-top: 2.5rem solid transparent;
-  border-bottom: 2.5rem solid transparent;
-  border-right: 2.5rem solid #f2f2f2;
-  left: -1rem;
+  border-top: 1.53rem solid transparent;
+  border-bottom: 1.53rem solid transparent;
+  border-right: 1.53rem solid #f2f2f2;
+  left: -0.63rem;
 }
 .timeline__box:nth-of-type(odd):after, .timeline__box:nth-of-type(even):after {
-  top: 4rem;
+  top: 2.5rem;
   background: #004385;
-  border-radius: 5rem;
-  left: -2.5rem;
+  border-radius: 3.13rem;
+  left: -1.65rem;
 }
 @media (min-width: 1024px) {
   .timeline__box:nth-of-type(odd) {
     text-align: right;
   }
   .timeline__box:nth-of-type(odd):before {
-    border-right: 2.5rem solid transparent;
-    border-left: 2.5rem solid #f2f2f2;
+    border-right: 1.53rem solid transparent;
+    border-left: 1.53rem solid #f2f2f2;
     left: initial;
-    right: -3.5rem;
+    right: -2.2rem;
   }
   .timeline__box:nth-of-type(odd):after {
     left: initial;
-    right: -2.7rem;
+    right: -1.69rem;
   }
   .timeline__box:nth-of-type(even) {
     margin-right: 0;
@@ -2261,7 +2258,7 @@ ul.checked.small > li {
   }
 }
 .timeline--single-col .timeline__vertical-line {
-  left: 0.5rem;
+  left: 0.31rem;
 }
 .timeline--single-col .timeline__box {
   display: -webkit-box;
@@ -2280,7 +2277,7 @@ ul.checked.small > li {
   margin-right: 0;
   margin-left: 0;
   text-align: left;
-  padding: 1rem 2rem;
+  padding: 0.63rem 1.25rem;
 }
 .timeline--single-col .timeline__box:before {
   border: 0;
@@ -2301,7 +2298,7 @@ ul.checked.small > li {
   position: absolute;
   display: block;
   top: 18px;
-  right: 1rem;
+  right: 0.63rem;
   margin-right: 100%;
 }
 @media (min-width: 575px) {
@@ -2313,7 +2310,7 @@ ul.checked.small > li {
   }
 }
 .timeline--single-col .timeline__box__icon span {
-  margin: 0 0.5rem;
+  margin: 0 0.31rem;
 }
 
 .col-bordered {
@@ -2390,7 +2387,7 @@ p {
 }
 
 .payment-methods-header {
-  background-image: url("../images/payment_methods/payment_methods_banner.png");
+  background: url("../images/payment_methods/payment_methods_banner.png") top left/cover no-repeat;
 }
 
 .arrow {
