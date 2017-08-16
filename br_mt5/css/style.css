@@ -1443,6 +1443,10 @@ iframe {
   }
 }
 
+.box-bordered {
+  border: 2px solid #f2f2f2;
+}
+
 .fx-advisors {
   background: url("../images/symbols/advisors.svg");
 }
@@ -1936,6 +1940,22 @@ iframe {
 
 .fx-stp-account:before {
   content: url("../images/metatrader/stp.svg");
+}
+
+.fx-android:before {
+  content: url("../images/metatrader/android.svg");
+}
+
+.fx-apple:before {
+  content: url("../images/metatrader/apple.svg");
+}
+
+.fx-penguin:before {
+  content: url("../images/metatrader/penguin.svg");
+}
+
+.fx-windows:before {
+  content: url("../images/metatrader/windows.svg");
 }
 
 #header {

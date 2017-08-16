@@ -28977,6 +28977,8 @@
 
 	        if (Client.is_logged_in()) {
 	            $mt5.find('.button-disabled').addClass('button').removeClass('button-disabled');
+	            $('.mt5-logged-in').removeClass('invisible');
+	            $('.mt5-logged-out').addClass('invisible');
 	        } else {
 	            $mt5.find('.button').addClass('button-disabled').removeClass('button');
 	            $mt5.find('a').removeAttr('href');
