@@ -1381,11 +1381,11 @@ iframe {
 }
 
 .table-fixed {
-  table-layout: fixed;
+  table-layout: auto;
 }
-@media (max-width: 575px) {
+@media (min-width: 575px) {
   .table-fixed {
-    table-layout: auto;
+    table-layout: fixed;
   }
 }
 .table-fixed td {
@@ -1406,9 +1406,9 @@ iframe {
   -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  min-height: 460px;
   padding: 20px 15px;
   border: 3px solid #f2f2f2;
+  min-height: 460px;
 }
 @media (min-width: 767px) {
   #mt5-accounts .box {
@@ -1437,8 +1437,8 @@ iframe {
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-  min-height: 100px;
   padding: 20px;
+  min-height: 100px;
 }
 @media (min-width: 575px) {
   #why-mt5 .box {
