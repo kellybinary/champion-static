@@ -29025,8 +29025,13 @@
 	        });
 	    };
 
+	    var unload = function unload() {
+	        $('#footer').removeClass('invisible');
+	    };
+
 	    return {
-	        load: load
+	        load: load,
+	        unload: unload
 	    };
 	}();
 
