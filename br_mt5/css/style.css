@@ -1169,12 +1169,12 @@ a.underline-link:hover {
   color: #013365;
 }
 
-.icon-ok {
-  font-size: 18px;
+.icon-ok:before {
+  content: url("../images/metatrader/checklist.svg");
 }
 
-.icon-remove {
-  font-size: 18px;
+.icon-remove:before {
+  content: url("../images/metatrader/cross.svg");
 }
 
 .no-margin-top {
@@ -1380,6 +1380,18 @@ iframe {
   border-bottom: 4px solid #004385;
 }
 
+.table-fixed {
+  table-layout: fixed;
+}
+@media (max-width: 575px) {
+  .table-fixed {
+    table-layout: auto;
+  }
+}
+.table-fixed td {
+  vertical-align: middle;
+}
+
 #mt5-accounts .box {
   display: -webkit-box;
   display: -webkit-flex;
@@ -1410,6 +1422,28 @@ iframe {
 }
 #mt5-accounts p {
   font-size: 12px;
+}
+
+#why-mt5 .box {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-height: 100px;
+  padding: 20px;
+}
+@media (min-width: 575px) {
+  #why-mt5 .box {
+    min-height: 205px;
+  }
 }
 
 .fx-advisors {
