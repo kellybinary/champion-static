@@ -1950,8 +1950,8 @@ iframe {
   content: url("../images/metatrader/apple.svg");
 }
 
-.fx-penguin:before {
-  content: url("../images/metatrader/penguin.svg");
+.fx-linux:before {
+  content: url("../images/metatrader/linux.svg");
 }
 
 .fx-windows:before {

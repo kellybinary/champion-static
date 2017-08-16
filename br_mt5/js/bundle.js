@@ -28970,18 +28970,20 @@
 	var MT5 = function () {
 	    'use strict';
 
-	    var load = function load() {
-	        $('.has-tabs').tabs().removeClass('invisible');
+	    var hidden_class = 'invisible';
 
-	        var $mt5 = $('#mt5-accounts');
+	    var load = function load() {
+	        $('.has-tabs').tabs().removeClass(hidden_class);
+
+	        var $mt5_accounts = $('#mt5-accounts');
 
 	        if (Client.is_logged_in()) {
-	            $mt5.find('.button-disabled').addClass('button').removeClass('button-disabled');
-	            $('.mt5-logged-in').removeClass('invisible');
-	            $('.mt5-logged-out').addClass('invisible');
+	            $mt5_accounts.find('.button-disabled').addClass('button').removeClass('button-disabled');
+	            $('.mt5-logged-in').removeClass(hidden_class);
+	            $('.mt5-logged-out').addClass(hidden_class);
 	        } else {
-	            $mt5.find('.button').addClass('button-disabled').removeClass('button');
-	            $mt5.find('a').removeAttr('href');
+	            $mt5_accounts.find('.button').addClass('button-disabled').removeClass('button');
+	            $mt5_accounts.find('a').removeAttr('href');
 	        }
 	    };
 
