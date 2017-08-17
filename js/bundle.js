@@ -18599,9 +18599,10 @@
 	            'trading-times': { module: TradingTimes },
 	            'types-of-accounts': { module: ClientType },
 	            'trading-platform': { module: ClientType },
-	            'metatrader-5': { module: ClientType },
+	            'metatrader-5': { module: MT5 },
 	            'champion-trader': { module: ClientType },
-	            'economic-calendar': { module: ClientType }
+	            'economic-calendar': { module: ClientType },
+	            'mt5-types-of-accounts': { module: MT5 }
 	        };
 	        if (page in pages_map) {
 	            loadHandler(pages_map[page]);
@@ -28960,15 +28961,30 @@
 
 /***/ }),
 /* 331 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
+
+	var Client = __webpack_require__(301);
 
 	var MT5 = function () {
 	    'use strict';
 
+	    var hidden_class = 'invisible';
+
 	    var load = function load() {
-	        $('.has-tabs').tabs().removeClass('invisible');
+	        $('.has-tabs').tabs().removeClass(hidden_class);
+
+	        var $mt5_accounts = $('#mt5-accounts');
+
+	        if (Client.is_logged_in()) {
+	            $mt5_accounts.find('.button-disabled').addClass('button').removeClass('button-disabled');
+	            $('.mt5-logged-in').removeClass(hidden_class);
+	            $('.mt5-logged-out').addClass(hidden_class);
+	        } else {
+	            $mt5_accounts.find('.button').addClass('button-disabled').removeClass('button');
+	            $mt5_accounts.find('a').removeAttr('href');
+	        }
 	    };
 
 	    return {
@@ -29011,8 +29027,13 @@
 	        });
 	    };
 
+	    var unload = function unload() {
+	        $('#footer').removeClass('invisible');
+	    };
+
 	    return {
-	        load: load
+	        load: load,
+	        unload: unload
 	    };
 	}();
 
