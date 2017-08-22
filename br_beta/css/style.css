@@ -499,8 +499,12 @@ h1.main-title {
   background: url("../images/trading_platforms_banner.png") top left/cover no-repeat;
 }
 
-.mt5-header {
+.forex-header {
   background: url("../images/forex.png") top left/cover no-repeat;
+}
+
+.mt5-header {
+  background: url("../images/metatrader/mt5_banner.png") top left/cover no-repeat;
 }
 
 .cfd-header {
@@ -1162,14 +1166,12 @@ a.underline-link:hover {
   color: #013365;
 }
 
-.icon-ok {
-  color: #1ec522;
-  font-size: 18px;
+.icon-ok:before {
+  content: url("../images/metatrader/checklist.svg");
 }
 
-.icon-remove {
-  color: #ea202d;
-  font-size: 18px;
+.icon-remove:before {
+  content: url("../images/metatrader/cross.svg");
 }
 
 .no-margin-top {
@@ -1360,6 +1362,91 @@ iframe {
   }
 }
 
+.table-col-bordered th:nth-child(2) {
+  border-top: 4px solid #004385;
+  border-left: 4px solid #004385;
+  border-right: 4px solid #004385;
+  color: #004385;
+}
+.table-col-bordered td:nth-child(2) {
+  border-left: 4px solid #004385;
+  border-right: 4px solid #004385;
+  color: #004385;
+}
+.table-col-bordered tr:last-child td:nth-child(2) {
+  border-bottom: 4px solid #004385;
+}
+
+.table-fixed {
+  table-layout: auto;
+}
+@media (min-width: 575px) {
+  .table-fixed {
+    table-layout: fixed;
+  }
+}
+.table-fixed td {
+  vertical-align: middle;
+}
+
+#mt5-accounts .box {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 20px 15px;
+  border: 3px solid #f2f2f2;
+  min-height: 460px;
+}
+@media (min-width: 767px) {
+  #mt5-accounts .box {
+    min-height: 545px;
+  }
+}
+@media (min-width: 961px) {
+  #mt5-accounts .box {
+    min-height: 460px;
+  }
+}
+#mt5-accounts p {
+  font-size: 12px;
+}
+
+#why-mt5 .box {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 20px;
+  min-height: 100px;
+}
+@media (min-width: 575px) {
+  #why-mt5 .box {
+    min-height: 205px;
+  }
+}
+
+.box-bordered {
+  border: 2px solid #f2f2f2;
+}
+
 .fx-advisors {
   background: url("../images/symbols/advisors.svg");
 }
@@ -1504,8 +1591,8 @@ iframe {
   background: url("../images/symbols/worldwide.svg");
 }
 
-.fx-unbeatable {
-  background: url("../images/symbols/unbeatable.svg");
+.fx-flexible-leverage {
+  background: url("../images/symbols/flexible_leverage.svg");
 }
 
 .fx-245-icon {
@@ -1841,6 +1928,54 @@ iframe {
 
 .fx-recruitment:before {
   content: url("../images/milestones/recruitment.svg");
+}
+
+.fx-cent-account:before {
+  content: url("../images/metatrader/cent.svg");
+}
+
+.fx-standard-account:before {
+  content: url("../images/metatrader/standard.svg");
+}
+
+.fx-stp-account:before {
+  content: url("../images/metatrader/stp.svg");
+}
+
+.fx-android:before {
+  content: url("../images/metatrader/android.svg");
+}
+
+.fx-apple:before {
+  content: url("../images/metatrader/apple.svg");
+}
+
+.fx-linux:before {
+  content: url("../images/metatrader/linux.svg");
+}
+
+.fx-windows:before {
+  content: url("../images/metatrader/windows.svg");
+}
+
+.fx-circle {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: auto;
+  width: 120px;
+  height: 120px;
+  border-radius: 100%;
+  background-color: #f2f2f2;
 }
 
 #header {
