@@ -97,6 +97,7 @@ h1.main-title {
 }
 .topbar-contacts ul li a {
   text-decoration: none;
+  font-weight: 400;
 }
 
 .FX__Header__cta {
@@ -3415,9 +3416,9 @@ p {
 }
 @media (max-width: 520px) {
   #header .button span, .button-secondary span {
-    padding: 5px 20px !important;
+    padding: 5px 15px !important;
     margin: 2px 0;
-    width: 85px;
+    width: 80px;
   }
 }
 @media (max-width: 575px) {
