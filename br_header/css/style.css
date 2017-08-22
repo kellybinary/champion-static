@@ -99,6 +99,9 @@ h1.main-title {
   text-decoration: none;
   font-weight: 400;
 }
+.topbar-contacts ul li a:hover {
+  text-decoration: underline;
+}
 
 .FX__Header__cta {
   text-align: right;
@@ -1319,6 +1322,13 @@ iframe {
           justify-content: space-between;
   padding: 30px;
   min-height: 340px;
+}
+
+#trading-platform .box {
+  padding: 20px;
+}
+#trading-platform .box p {
+  margin: 0;
 }
 
 .fx-advisors {
