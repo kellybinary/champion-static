@@ -1303,6 +1303,24 @@ iframe {
   border: 2px solid #f2f2f2;
 }
 
+#binary-options-accounts .box {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 30px;
+  min-height: 340px;
+}
+
 .fx-advisors {
   background: url("../images/symbols/advisors.svg");
 }
@@ -1822,8 +1840,7 @@ button .barspinner.white {
 }
 
 ul.checked.small > li {
-  background-size: 16px;
-  padding-left: 24px;
+  margin-left: 24px;
 }
 
 .separator {
@@ -2040,6 +2057,10 @@ p {
 
 .img-md {
   height: 80px;
+}
+
+#fx-settings-content a, #fx-security-content a {
+  text-decoration: none;
 }
 
 .bankwire {
