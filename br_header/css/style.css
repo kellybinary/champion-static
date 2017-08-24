@@ -1331,6 +1331,10 @@ iframe {
   margin: 0;
 }
 
+.navbar__nav {
+  height: 100% !important;
+}
+
 .fx-advisors {
   background: url("../images/symbols/advisors.svg");
 }
