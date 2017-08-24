@@ -24616,6 +24616,7 @@
 	            $('.navbar__brand, .navbar__toggle').removeClass('logged-in'); // show logo
 	            $('#header').removeClass('navbar--fixed');
 	        }
+	        $('.navbar__nav').height($(window).innerHeight());
 	    };
 
 	    var desktopMenu = function desktopMenu() {
