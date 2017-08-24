@@ -24617,6 +24617,9 @@
 	            $('#header').removeClass('navbar--fixed');
 	        }
 	        $('.navbar__nav').height($(window).innerHeight());
+	        $(window).on('orientationchange resize', function () {
+	            $('.navbar__nav').height($(window).innerHeight());
+	        });
 	    };
 
 	    var desktopMenu = function desktopMenu() {
