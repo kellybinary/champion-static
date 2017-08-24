@@ -2332,7 +2332,6 @@ p {
 .box-grid .box {
   height: 100%;
   min-height: 150px;
-  border-bottom: 2px solid #fff;
 }
 .box-grid .row ~ .row {
   margin-top: 30px;
