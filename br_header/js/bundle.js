@@ -24618,7 +24618,8 @@
 	        }
 	        $('.navbar__nav').height($(window).innerHeight());
 	        $(window).on('orientationchange resize', function () {
-	            $('.navbar__nav').height($(window).innerHeight() + 60);
+	            $(window).scrollTop(-1);
+	            $('.navbar__nav').height($(window).innerHeight());
 	        });
 	    };
 
