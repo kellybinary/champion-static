@@ -24654,10 +24654,10 @@
 	        setMetaTrader();
 
 	        var selectedTemplate = function selectedTemplate(text, value, icon) {
-	            return '<div class="hidden-lg-up">\n                 <a rel="#" class="selected" value="' + value + '">\n                     <li><span class="fx ' + icon + '"></span>' + text + '</li>\n                 </a>\n             </div>';
+	            return '<div class="hidden-lg-up invisible">\n                 <a rel="#" class="selected" value="' + value + '">\n                     <li><span class="fx ' + icon + '"></span>' + text + '</li>\n                 </a>\n             </div>';
 	        };
 	        var switchTemplate = function switchTemplate(text, value, icon, type, item_class) {
-	            return '<li>\n                <a href="javascript:;" value="' + value + '" class="' + item_class + '">\n                     <span class="hidden-lg-up fx ' + icon + '"></span>\n                     <div class="account-id">' + text + '</div>\n                     <div class="hidden-lg-down account-type">' + type + '</div>\n                </a>\n            </li>\n            ';
+	            return '<li class="' + item_class + '">\n                <a href="javascript:;" value="' + value + '">\n                     <span class="hidden-lg-up fx ' + icon + '"></span>\n                     <div class="account-id">' + text + '</div>\n                     <div class="hidden-lg-down account-type">' + type + '</div>\n                </a>\n            </li>\n            ';
 	        };
 	        var is_mt_pages = State.get('is_mt_pages');
 	        var loginid_select = is_mt_pages ? selectedTemplate('MetaTrader 5', '', 'fx-mt5-o') : '';
