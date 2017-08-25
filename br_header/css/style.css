@@ -93,11 +93,15 @@ h1.main-title {
 .topbar-contacts ul li {
   display: inline-block;
   margin: 0;
-  padding: 5px 12px;
+  padding: 0 5px;
 }
 .topbar-contacts ul li a {
   font-weight: 400;
   padding: 5px 1px;
+  text-decoration: none;
+}
+.topbar-contacts ul li a:hover {
+  text-decoration: underline;
 }
 
 .FX__Header__cta {
@@ -377,11 +381,12 @@ h1.main-title {
   font-size: 13px;
 }
 #footer #footer-menu ul {
-  margin: 0 0 30px;
+  margin: 10px 0 30px;
   padding: 0;
 }
 #footer #footer-menu ul li {
   margin-top: 0.3em;
+  margin-bottom: 0;
 }
 #footer #footer-menu ul li a {
   font-size: 13px;
@@ -1066,10 +1071,6 @@ select[disabled=disabled] {
   border-top: solid 1px #dedede;
 }
 
-a:hover {
-  text-decoration: none;
-}
-
 .lightbox {
   display: table;
   position: fixed;
@@ -1323,6 +1324,7 @@ iframe {
   left: 0;
   bottom: 0;
   right: 0;
+  width: 560px;
 }
 @media (max-width: 800px) {
   #home-academy .row ~ .row .fx-3-dots-line {
@@ -1818,6 +1820,11 @@ iframe {
 #top_group .navbar__nav {
   top: -30px;
 }
+@media (min-width: 1200px) {
+  #top_group .navbar__nav {
+    height: 50px !important;
+  }
+}
 
 #top_group.logged-in {
   position: fixed;
@@ -1833,11 +1840,6 @@ iframe {
 }
 #top_group.logged-in .navbar__nav {
   top: 0;
-}
-@media (min-width: 1200px) {
-  #top_group.logged-in .navbar__nav {
-    height: 50px !important;
-  }
 }
 #top_group.logged-in ~ #champion-container {
   -webkit-transition: margin-top 0.3s;
