@@ -24616,11 +24616,6 @@
 	            $('.navbar__brand, .navbar__toggle').removeClass('logged-in'); // show logo
 	            $('#header').removeClass('navbar--fixed');
 	        }
-	        $('.navbar__nav').height($(window).innerHeight());
-	        $(window).on('orientationchange resize', function () {
-	            $(window).scrollTop(-1);
-	            $('.navbar__nav').height($(window).innerHeight());
-	        });
 	    };
 
 	    var desktopMenu = function desktopMenu() {
