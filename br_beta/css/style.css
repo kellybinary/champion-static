@@ -523,6 +523,10 @@ h1.main-title {
   background: url("../images/mt5/economic_calendar_banner.png") top left/cover no-repeat;
 }
 
+.partnerships-header {
+  background: url("../images/partnerships_banner.png") top left/cover no-repeat;
+}
+
 .fx-home-header {
   width: 100%;
   /* for IE 6 */
@@ -3695,9 +3699,6 @@ p {
   .slider-footer {
     position: relative;
     background: #f2f2f2;
-  }
-
-  .license-box {
     color: #000;
   }
 }
@@ -3705,9 +3706,6 @@ p {
   .slider-footer {
     position: relative;
     background: #f2f2f2;
-  }
-
-  .license-box {
     color: #000;
   }
 
