@@ -25342,12 +25342,12 @@
 	                    }
 	                    var notified = check_statuses.some(function (object) {
 	                        if (object.validation()) {
-	                            Notification.notify(object.message());
+	                            notify(object.message());
 	                            return true;
 	                        }
 	                        return false;
 	                    });
-	                    if (!notified) Notification.hide();
+	                    if (!notified) hideNotification();
 	                });
 	            });
 	        });
@@ -25375,7 +25375,7 @@
 	        $('.notify-bubble').fadeOut();
 	    };
 
-	    var hide = function hide() {
+	    var hideNotification = function hideNotification() {
 	        numberOfNotification = 0;
 	        updateUI();
 	    };
@@ -25383,7 +25383,7 @@
 	    return {
 	        init: init,
 	        notify: notify,
-	        hide: hide
+	        hideNotification: hideNotification
 	    };
 	}();
 
