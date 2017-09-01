@@ -18528,6 +18528,7 @@
 	        container.on('champion:before', beforeContentChange);
 	        container.on('champion:after', afterContentChange);
 	        Client.init();
+	        Notify.init(); // call once
 
 	        ChampionSocket.init({
 	            authorize: function authorize(response) {
@@ -18616,7 +18617,6 @@
 	        GTM.pushDataLayer();
 	        ChampionSignup.load();
 	        Utility.handleActive();
-	        Notify.init();
 	    };
 
 	    var errorMessages = {
@@ -25274,7 +25274,7 @@
 	        // create ui
 	        $('.notify').append('<a class="toggle-notification"><span class="notify-bell"></span></a>\n                     <div class="notify-bubble"></div>');
 
-	        $('#top_group').append('<div class="notifications">\n                        <div class="notifications-header">Notifications<a class="btn-close"></a></div>\n                        <div class="notifications-list"></div>\n                     </div>');
+	        $('#top_group').append('<div class="notifications">\n                     <div class="notifications-header">Notifications<a class="btn-close"></a></div>\n                     <div class="notifications-list"></div></div>');
 
 	        // attach event listeners
 	        $('.toggle-notification, .notify-bubble, .notifications > .btn-close').off('click').on('click', function (e) {
