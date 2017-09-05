@@ -1820,11 +1820,6 @@ iframe {
 #top_group .navbar__nav {
   top: -30px;
 }
-@media (min-width: 1200px) {
-  #top_group .navbar__nav {
-    height: 50px !important;
-  }
-}
 
 #top_group.logged-in {
   position: fixed;
@@ -1840,6 +1835,11 @@ iframe {
 }
 #top_group.logged-in .navbar__nav {
   top: 0;
+}
+@media (min-width: 1200px) {
+  #top_group.logged-in .navbar__nav {
+    height: 50px !important;
+  }
 }
 #top_group.logged-in ~ #champion-container {
   -webkit-transition: margin-top 0.3s;
