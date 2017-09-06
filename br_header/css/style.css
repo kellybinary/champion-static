@@ -1753,7 +1753,7 @@ iframe {
 #top_group .navbar .navbar__nav {
   top: -30px;
 }
-@media (min-width: 1200px) {
+@media (min-width: 1024px) {
   #top_group .navbar .navbar__nav {
     height: 76px;
   }
@@ -1777,7 +1777,7 @@ iframe {
 #top_group.logged-in .navbar .navbar__nav {
   top: 0;
 }
-@media (min-width: 1200px) {
+@media (min-width: 1024px) {
   #top_group.logged-in .navbar .navbar__nav {
     height: 50px;
   }
@@ -3551,6 +3551,14 @@ p {
 @media (min-width: 991px) {
   .container, .fx-container {
     width: 100%;
+  }
+}
+@media (min-width: 1024px) {
+  #topbar .hidden-lg-up, #header .hidden-lg-up {
+    display: none !important;
+  }
+  #topbar .hidden-lg-down, #header .hidden-lg-down {
+    display: inline-block !important;
   }
 }
 @media (max-width: 1199px) {
