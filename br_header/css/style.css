@@ -1738,7 +1738,6 @@ iframe {
 .navbar__button-group {
   z-index: 9999;
   text-align: right;
-  width: 100px;
 }
 .navbar__button-group .button, .navbar__button-group .button-secondary {
   white-space: nowrap;
@@ -3502,6 +3501,10 @@ p {
 
   .navbar__brand.logged-in {
     display: none;
+  }
+
+  .navbar__button-group {
+    width: 100px;
   }
 }
 @media (max-width: 767px) {
