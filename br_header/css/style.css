@@ -1738,6 +1738,7 @@ iframe {
 .navbar__button-group {
   z-index: 9999;
   text-align: right;
+  width: 100px;
 }
 .navbar__button-group .button, .navbar__button-group .button-secondary {
   white-space: nowrap;
