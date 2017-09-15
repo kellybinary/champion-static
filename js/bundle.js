@@ -24583,117 +24583,81 @@
 	var ChampionSocket = __webpack_require__(305);
 	var State = __webpack_require__(308).State;
 	var url_for = __webpack_require__(311).url_for;
-	var Utility = __webpack_require__(309);
 	var template = __webpack_require__(309).template;
 
 	var Header = function () {
 	    'use strict';
 
 	    var hidden_class = 'invisible';
-	    var media_query = window.matchMedia('(max-width: 1199px)');
 
 	    var init = function init() {
 	        ChampionSocket.wait('authorize').then(function () {
-	            updatePage(media_query);
+	            updatePage();
 	        });
 	        $(function () {
 	            var window_path = window.location.pathname;
 	            var path = window_path.replace(/\/$/, '');
 	            var href = decodeURIComponent(path);
-	            $('.top-nav-menu li a').each(function () {
+	            $('.navbar__nav__menu li a').each(function () {
 	                var target = $(this).attr('href');
 	                if (target === href) {
-	                    $(this).addClass('active');
+	                    $(this).parent().addClass('active');
 	                } else {
-	                    $(this).removeClass('active');
+	                    $(this).parent().removeClass('active');
 	                }
 	            });
-	            media_query.addListener(updatePage);
+	            $('body').off('click').on('click', function (e) {
+	                e.stopPropagation();
+	                if ($(e.target).is('.side_menu, .side_menu *')) {
+	                    return false;
+	                }
+	                $('.side_menu').removeClass('side_menu--show');
+	                return true;
+	            });
+	            $('#toggleSignUp, #toggleSignUp-desktop').off('click').on('click', function (e) {
+	                e.stopPropagation();
+	                $('.side_menu').toggleClass('side_menu--show');
+	                if ($('.side_menu--show').length) {
+	                    $('body').css('position', 'fixed');
+	                }
+	            });
 	        });
 	    };
 
-	    var updatePage = function updatePage(mq) {
-	        if (mq.matches) {
-	            mobileMenu();
-	        } else {
-	            desktopMenu();
-	        }
+	    var updatePage = function updatePage() {
+	        desktopMenu();
 	        userMenu();
 	        if (!Client.is_logged_in()) {
 	            $('#top_group').removeClass('logged-in').find('.logged-out').removeClass(hidden_class);
 	            $('.trading-platform-header').removeClass(hidden_class);
+	            $('.navbar__brand, .navbar__toggle').removeClass('logged-in'); // show logo
+	            $('#header > .navbar').removeClass('navbar--fixed');
 	        }
-	    };
-
-	    var mobileMenu = function mobileMenu() {
-	        var $menu_dropdown = $('.nav-menu-dropdown');
-
-	        $('#mobile-menu > ul').height($(window).innerHeight());
-	        $(window).on('orientationchange resize', function () {
-	            $('#mobile-menu > ul').height($(window).innerHeight());
-	        });
-
-	        $('.nav-menu:not(.selected-account)').unbind('click').on('click', function (e) {
-	            e.stopPropagation();
-	            if ($('.nav-menu-dropdown.slide-in').length) {
-	                Utility.slideOut($menu_dropdown);
-	            } else {
-	                Utility.slideIn($menu_dropdown);
-	            }
-	        });
-
-	        $(document).off('click.mobileMenu').on('click.mobileMenu', function (e) {
-	            e.stopPropagation();
-	            if ($('.nav-menu-dropdown.slide-in').length) {
-	                Utility.slideOut($menu_dropdown);
-	            }
-	        });
-
-	        $('.nav-dropdown-toggle').off('click').on('click', function (e) {
-	            e.stopPropagation();
-	            $(this).next().toggleClass(hidden_class);
-	        });
-
-	        if (!Client.is_logged_in()) {
-	            $('#topbar, #header').find('.logged-out').removeClass(hidden_class);
-	            return;
-	        }
-	        $('#topbar, #header').find('.logged-in').removeClass(hidden_class);
 	    };
 
 	    var desktopMenu = function desktopMenu() {
-	        var $all_accounts = $('#all-accounts');
-	        $all_accounts.find('li.has-sub > a').off('click').on('click', function (e) {
-	            e.stopPropagation();
-	            $(this).siblings('ul').toggleClass(hidden_class);
-	        });
-
 	        if (!Client.is_logged_in()) return;
 
 	        $(window).off('resize.updateBody').on('resize.updateBody', updateBody);
 	        updateBody();
 
 	        $('#header .logged-in').removeClass(hidden_class);
-	        $all_accounts.find('.account > a').removeClass('menu-icon');
-	        var language = $('#select_language');
-	        $('.nav-menu').unbind('click').on('click', function (e) {
-	            e.stopPropagation();
-	            Utility.animateDisappear(language);
-	            if (+$all_accounts.css('opacity') === 1) {
-	                Utility.animateDisappear($all_accounts);
-	            } else {
-	                Utility.animateAppear($all_accounts);
-	            }
-	        });
+	        $('#header > .navbar').addClass('navbar--fixed');
 
-	        $(document).off('click.desktopMenu').on('click.desktopMenu', function (e) {
-	            e.stopPropagation();
-	            Utility.animateDisappear($all_accounts);
-	        });
+	        // to be remove when we change notification ui
+	        $(window).on('orientationchange resize', updateMobileMenuHeight);
+	        updateMobileMenuHeight();
 	    };
 
 	    var updateBody = function updateBody() {
-	        $('#champion-container').css('margin-top', $('#top_group').height());
+	        var notificationBarHeight = $('#msg_notification').css('display') === 'block' ? $('#top_group').height() : 0;
+	        var navbarHeight = 50;
+	        $('#champion-container').css('margin-top', navbarHeight + notificationBarHeight);
+	        updateMobileMenuHeight();
+	    };
+
+	    var updateMobileMenuHeight = function updateMobileMenuHeight() {
+	        $('.navbar__nav').height($(window).height() - $('#top_group').height());
 	    };
 
 	    var userMenu = function userMenu() {
@@ -24705,25 +24669,24 @@
 	        setMetaTrader();
 
 	        var selectedTemplate = function selectedTemplate(text, value, icon) {
-	            return '<div class="hidden-lg-up">\n                 <span class="selected" value="' + value + '">\n                     <li><span class="nav-menu-icon pull-left ' + icon + '"></span>' + text + '</li>\n                 </span>\n                 <div class="separator-line-thin-gray hidden-lg-down"></div>\n             </div>';
+	            return '<div class="hidden-lg-up invisible">\n                 <a rel="#" class="selected" value="' + value + '">\n                     <li><span class="fx ' + icon + '"></span>' + text + '</li>\n                 </a>\n             </div>';
 	        };
 	        var switchTemplate = function switchTemplate(text, value, icon, type, item_class) {
-	            return '<a href="javascript:;" value="' + value + '" class="' + item_class + '">\n                 <li>\n                     <span class="hidden-lg-up nav-menu-icon pull-left ' + icon + '"></span>\n                     <div>' + text + '</div>\n                     <div class="hidden-lg-down account-type">' + type + '</div>\n                 </li>\n                 <div class="separator-line-thin-gray hidden-lg-down"></div>\n            </a>';
+	            return '<li class="' + item_class + '">\n                <a href="javascript:;" value="' + value + '">\n                     <span class="hidden-lg-up fx ' + icon + '"></span>\n                     <div class="account-id">' + text + '</div>\n                     <div class="hidden-lg-down account-type">' + type + '</div>\n                </a>\n            </li>\n            ';
 	        };
 	        var is_mt_pages = State.get('is_mt_pages');
-	        var loginid_select = is_mt_pages ? selectedTemplate('MetaTrader 5', '', 'fx-mt5-icon') : '';
+	        var loginid_select = is_mt_pages ? selectedTemplate('MetaTrader 5', '', 'fx-mt5-o') : '';
 	        Client.get('loginid_array').forEach(function (login) {
 	            if (!login.disabled) {
 	                var curr_id = login.id;
 	                var type = '(Binary ' + (login.real ? 'Real' : 'Virtual') + ' Account)';
-	                var icon = login.real ? 'fx-real-icon' : 'fx-virtual-icon';
+	                var icon = login.real ? 'fx-account-real' : 'fx-account-virtual';
 	                var is_current = curr_id === Client.get('loginid');
 
 	                // default account
 	                if (is_current && !is_mt_pages) {
-	                    $('.main-account .account-type').html(type);
-	                    $('.main-account .account-id').html(curr_id);
-	                    loginid_select += selectedTemplate(curr_id, curr_id, icon);
+	                    $('.account-type').html(type);
+	                    $('.account-id').html(curr_id);
 	                } else if (is_mt_pages && login.real && Client.is_virtual()) {
 	                    switchLoginId(curr_id);
 	                    return;
@@ -24734,7 +24697,7 @@
 
 	        $('.login-id-list').html(loginid_select);
 	        if (!Client.has_real()) {
-	            $('#all-accounts .upgrade').removeClass(hidden_class);
+	            $('.account-list .upgrade').removeClass(hidden_class);
 	        }
 	        $('.login-id-list a').off('click').on('click', function (e) {
 	            e.preventDefault();
