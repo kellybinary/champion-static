@@ -147,7 +147,6 @@ h1.main-title {
   -webkit-flex-grow: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
-  height: 100%;
 }
 #verify-email-form #email {
   text-align: center;
@@ -1216,44 +1215,120 @@ iframe {
 
 .dialog {
   position: absolute;
-  max-width: 300px;
   background: #f2f2f2;
   margin: auto;
   top: 20px;
-  right: 0;
   bottom: 20px;
+  right: 0;
   left: 0;
   -webkit-transition: 0.3s;
   transition: 0.3s;
-  padding: 30px;
   text-align: center;
+  overflow-x: hidden;
   overflow-y: scroll;
   border-radius: 10px;
-  z-index: -1;
-  height: 95vh;
+  width: 90vw;
+  height: 90vh;
   -webkit-box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
           box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
   opacity: 0;
 }
-@media (min-height: 667px) {
+@media (min-width: 768px) {
   .dialog {
-    height: 580px;
+    overflow: hidden;
+    width: 700px;
+    height: 395px;
   }
+}
+.dialog h1 {
+  font-size: 18px;
+}
+@media screen and (min-width: 320px) {
+  .dialog h1 {
+    font-size: calc(18px + 18 * ((100vw - 320px) / 880));
+  }
+}
+@media screen and (min-width: 1200px) {
+  .dialog h1 {
+    font-size: 36px;
+  }
+}
+.dialog h2 {
+  font-size: 16px;
+}
+@media screen and (min-width: 320px) {
+  .dialog h2 {
+    font-size: calc(16px + 12 * ((100vw - 320px) / 880));
+  }
+}
+@media screen and (min-width: 1200px) {
+  .dialog h2 {
+    font-size: 28px;
+  }
+}
+.dialog p, .dialog a {
+  font-size: 12px;
+}
+@media screen and (min-width: 320px) {
+  .dialog p, .dialog a {
+    font-size: calc(12px + 4 * ((100vw - 320px) / 880));
+  }
+}
+@media screen and (min-width: 1200px) {
+  .dialog p, .dialog a {
+    font-size: 16px;
+  }
+}
+.dialog--wrapper {
+  height: initial;
+  width: inherit;
+  margin: 0;
+}
+.dialog--wrapper [class*=' col-'] {
+  padding-left: 0;
+  padding-right: 0;
 }
 .dialog__header {
   position: relative;
+  width: 100%;
+  height: 100%;
 }
 .dialog__header .close {
   position: absolute;
-  right: -20px;
-  top: -20px;
+  right: 10px;
+  top: 10px;
+  z-index: 999999;
 }
 .dialog__header .close:before {
   content: url("../images/cross.svg");
 }
+.dialog__body {
+  padding-top: 30px;
+  background: #f2f2f2;
+}
+.dialog__body h2 {
+  margin-bottom: 0 !important;
+}
+@media (min-width: 768px) {
+  .dialog__body {
+    height: 395px;
+    padding-top: 0;
+    background: #013365;
+  }
+  .dialog__body h2, .dialog__body p, .dialog__body a {
+    color: #fff;
+  }
+}
 .dialog__form_wrapper {
+  padding-bottom: 30px;
   width: 200px;
   margin: 0 auto;
+}
+@media (min-width: 768px) {
+  .dialog__form_wrapper {
+    padding-bottom: 0;
+    height: 395px;
+  }
 }
 .dialog__form_wrapper form {
   -webkit-box-orient: vertical;
@@ -1261,6 +1336,16 @@ iframe {
   -webkit-flex-direction: column;
       -ms-flex-direction: column;
           flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 20px 0 !important;
+}
+@media (min-width: 768px) {
+  .dialog__form_wrapper form {
+    margin: 40px 0 !important;
+  }
 }
 .dialog__form_wrapper input, .dialog__form_wrapper button {
   text-align: center;
@@ -1272,17 +1357,15 @@ iframe {
   margin: 10px 0 0;
 }
 .dialog__form_wrapper .separator {
-  margin: 20px 0;
+  margin: 20px auto;
+  width: 200px;
   background: #fff;
 }
 .dialog__form_wrapper .error-msg:before {
   content: '*';
 }
-.dialog h4 {
-  font-size: 18px;
-}
-.dialog p {
-  font-size: 12px;
+.dialog__form_message {
+  padding: 30px;
 }
 .dialog .asterisk {
   color: #ea202d;
@@ -1291,6 +1374,68 @@ iframe {
 .dialog .text-blue {
   color: #004385;
 }
+.dialog .content {
+  height: 100%;
+  width: 100%;
+  padding: 0 20px;
+}
+@media (min-width: 768px) {
+  .dialog .content {
+    padding: 30px;
+  }
+}
+.dialog .flex-content {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+@media (min-width: 768px) {
+  .dialog .flex-content {
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+}
+.dialog .flex-content .flex-items-end {
+  justify-self: flex-end;
+}
+.dialog .flex-switch {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+  -webkit-flex-direction: column-reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
+  margin-bottom: 20px;
+}
+@media (min-width: 768px) {
+  .dialog .flex-switch {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+@media (min-width: 768px) {
+  .dialog .invisible.invisible-md-down {
+    display: block !important;
+  }
+}
 
 .dialog--show {
   opacity: 1;
@@ -1298,6 +1443,13 @@ iframe {
   -webkit-animation-name: animatetop;
   -webkit-animation-duration: 0.3s;
   animation-name: animatetop;
+}
+
+.font-xs, .font-xs * {
+  font-size: 12px !important;
+}
+.font-xs a:hover, .font-xs * a:hover {
+  color: #fff;
 }
 
 /* dialog popup animation */
@@ -1321,6 +1473,10 @@ iframe {
     opacity: 1;
   }
 }
+.field-error {
+  border: 1px solid #ea202d;
+}
+
 button.button-secondary {
   background: #fff;
   color: #004385;
