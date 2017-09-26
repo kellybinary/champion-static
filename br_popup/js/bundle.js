@@ -24606,28 +24606,6 @@
 	                    $(this).parent().removeClass('active');
 	                }
 	            });
-	            // $('#side_menu__form').submit(function(es) {
-	            //     console.log(es);
-	            // });
-	            // $('body').off('click').on('click', function(e) {
-	            //     e.stopPropagation();
-	            //     if ($(e.target).is('.side_menu, .side_menu *:not(#side_menu__form)')) {
-	            //         return false;
-	            //     }
-	            //     $('.side_menu').removeClass('side_menu--show');
-	            //     return true;
-	            // });
-	            $('#toggleSignUp, #toggleSignUp-desktop').off('click').on('click', function (e) {
-	                e.stopPropagation();
-	                $('.dialog').toggleClass('dialog--show');
-	                if ($('.side_menu--show').length) {
-	                    $('body').off('click', 'a');
-	                }
-	            });
-	            $('.dialog__header .close').off('click').on('click', function (e) {
-	                e.stopPropagation();
-	                $('.dialog').removeClass('dialog--show');
-	            });
 	        });
 	    };
 
@@ -29734,6 +29712,15 @@
 	        $button = void 0;
 
 	    var load = function load() {
+	        $('.toggle-notification').off('click').on('click', function (e) {
+	            e.stopPropagation();
+	            $('.modal').toggleClass('modal--show');
+	        });
+	        $('.modal__header .close').off('click').on('click', function (e) {
+	            e.stopPropagation();
+	            $('.modal').removeClass('modal--show');
+	        });
+
 	        if (Client.is_logged_in() || /(new-account|terms-and-conditions|user|cashier)/.test(window.location.pathname)) {
 	            changeVisibility($(form_selector), 'hide');
 	        } else {
@@ -29770,6 +29757,8 @@
 	            $input.val('');
 	        }
 	        is_active = false;
+	        $('toggle-notification').off('click');
+	        $('.modal__header .close').off('click');
 	    };
 
 	    var submit = function submit(e) {

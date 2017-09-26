@@ -1213,7 +1213,7 @@ iframe {
   vertical-align: middle;
 }
 
-.dialog {
+.modal {
   position: absolute;
   background: #f2f2f2;
   margin: auto;
@@ -1221,127 +1221,101 @@ iframe {
   bottom: 20px;
   right: 0;
   left: 0;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
   text-align: center;
   overflow-x: hidden;
   overflow-y: scroll;
   border-radius: 10px;
-  z-index: -1;
+  z-index: -9;
   width: 300px;
   height: 90vh;
   max-height: 580px;
   -webkit-box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
           box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
   opacity: 0;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
-@media (min-width: 768px) {
-  .dialog {
-    overflow: hidden;
-    width: 700px;
-    height: 395px;
-  }
-}
-.dialog h1 {
-  line-height: 1.25;
-}
-.dialog h1 {
+.modal h1 {
   font-size: 18px;
 }
 @media screen and (min-width: 320px) {
-  .dialog h1 {
+  .modal h1 {
     font-size: calc(18px + 18 * ((100vw - 320px) / 880));
   }
 }
 @media screen and (min-width: 1200px) {
-  .dialog h1 {
+  .modal h1 {
     font-size: 36px;
   }
 }
-.dialog h2 {
-  line-height: 1.25;
-}
-.dialog h2 {
+.modal h2 {
   font-size: 16px;
 }
 @media screen and (min-width: 320px) {
-  .dialog h2 {
+  .modal h2 {
     font-size: calc(16px + 12 * ((100vw - 320px) / 880));
   }
 }
 @media screen and (min-width: 1200px) {
-  .dialog h2 {
+  .modal h2 {
     font-size: 28px;
   }
 }
-.dialog p, .dialog a {
+.modal h1, .modal h2, .modal h3, .modal h4 {
+  line-height: 1.25;
+}
+.modal p, .modal a {
   line-height: 1.5;
 }
-.dialog p, .dialog a {
+.modal p, .modal a {
   font-size: 12px;
 }
 @media screen and (min-width: 320px) {
-  .dialog p, .dialog a {
+  .modal p, .modal a {
     font-size: calc(12px + 4 * ((100vw - 320px) / 880));
   }
 }
 @media screen and (min-width: 1200px) {
-  .dialog p, .dialog a {
+  .modal p, .modal a {
     font-size: 16px;
   }
 }
-.dialog--wrapper {
+.modal--wrapper {
   height: initial;
   width: inherit;
   margin: 0;
 }
-.dialog--wrapper [class*=' col-'] {
+.modal--wrapper [class*=' col-'] {
   padding-left: 0;
   padding-right: 0;
 }
-.dialog__header {
+.modal__header {
   position: relative;
   width: 100%;
   height: 100%;
 }
-.dialog__header .close {
+.modal__header .close {
   position: absolute;
   right: 10px;
   top: 10px;
   z-index: 999999;
 }
-.dialog__header .close:before {
+.modal__header .close:before {
   content: url("../images/cross.svg");
 }
-.dialog__body {
+.modal__body {
   padding-top: 30px;
   background: #f2f2f2;
 }
-.dialog__body h2 {
+.modal__body h2 {
   margin-bottom: 0 !important;
 }
-@media (min-width: 768px) {
-  .dialog__body {
-    height: 395px;
-    padding-top: 0;
-    background: #013365;
-  }
-  .dialog__body h2, .dialog__body p, .dialog__body a {
-    color: #fff;
-  }
-}
-.dialog__form_wrapper {
+.modal__form_wrapper {
   padding-bottom: 30px;
   width: 200px;
   margin: 0 auto;
 }
-@media (min-width: 768px) {
-  .dialog__form_wrapper {
-    padding-bottom: 0;
-    height: 395px;
-  }
-}
-.dialog__form_wrapper form {
+.modal__form_wrapper form {
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
@@ -1353,59 +1327,38 @@ iframe {
           align-items: center;
   margin: 20px 0 !important;
 }
-@media (min-width: 768px) {
-  .dialog__form_wrapper form {
-    margin: 40px 0 !important;
-  }
-}
-.dialog__form_wrapper input, .dialog__form_wrapper button {
+.modal__form_wrapper input, .modal__form_wrapper button {
   text-align: center;
   width: 200px !important;
   height: 40px;
   font-size: 14px;
 }
-@media (min-width: 768px) {
-  .dialog__form_wrapper input, .dialog__form_wrapper button {
-    width: 338px !important;
-  }
-}
-.dialog__form_wrapper input ~ *, .dialog__form_wrapper button ~ * {
+.modal__form_wrapper input ~ *, .modal__form_wrapper button ~ * {
   margin: 10px 0 0;
 }
-@media (min-width: 768px) {
-  .dialog__form_wrapper input ~ *, .dialog__form_wrapper button ~ * {
-    margin: 20px 0 0;
-  }
-}
-.dialog__form_wrapper .separator {
+.modal__form_wrapper .separator {
   margin: 20px auto;
   width: 200px;
   background: #fff;
 }
-.dialog__form_wrapper .error-msg:before {
+.modal__form_wrapper .error-msg:before {
   content: '*';
 }
-.dialog__form_message {
-  padding: 30px;
+.modal__form_message {
+  padding: 50px;
 }
-.dialog .asterisk {
+.modal .asterisk {
   color: #ea202d;
   font-size: 14px;
 }
-.dialog .text-blue {
+.modal .text-blue {
   color: #004385;
 }
-.dialog .content {
+.modal .content {
   height: 100%;
   width: 100%;
-  padding: 0 20px;
 }
-@media (min-width: 768px) {
-  .dialog .content {
-    padding: 30px;
-  }
-}
-.dialog .flex-content {
+.modal .flex-content {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1420,18 +1373,10 @@ iframe {
       -ms-flex-pack: center;
           justify-content: center;
 }
-@media (min-width: 768px) {
-  .dialog .flex-content {
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
-  }
-}
-.dialog .flex-content .flex-items-end {
+.modal .flex-content .flex-items-end {
   justify-self: flex-end;
 }
-.dialog .flex-switch {
+.modal .flex-switch {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1444,21 +1389,51 @@ iframe {
   margin-bottom: 20px;
 }
 @media (min-width: 768px) {
-  .dialog .flex-switch {
+  .modal {
+    overflow: hidden;
+    width: 700px;
+    height: 395px;
+  }
+  .modal__body {
+    height: 395px;
+    padding-top: 0;
+    background: #013365;
+  }
+  .modal__body h2, .modal__body p, .modal__body a {
+    color: #fff;
+  }
+  .modal__form_wrapper {
+    padding-bottom: 0;
+    height: 395px;
+  }
+  .modal__form_wrapper form {
+    margin: 40px 0 !important;
+  }
+  .modal__form_wrapper input, .modal__form_wrapper button {
+    width: 338px !important;
+  }
+  .modal .content {
+    padding: 30px;
+  }
+  .modal .flex-content {
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+  .modal .flex-switch {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -webkit-flex-direction: column;
         -ms-flex-direction: column;
             flex-direction: column;
   }
-}
-@media (min-width: 768px) {
-  .dialog .invisible.invisible-md-down {
+  .modal .invisible.invisible-md-down {
     display: block !important;
   }
 }
 
-.dialog--show {
+.modal--show {
   opacity: 1;
   z-index: 99999;
   -webkit-animation-name: animatetop;
@@ -1473,7 +1448,6 @@ iframe {
   color: #fff;
 }
 
-/* dialog popup animation */
 @-webkit-keyframes animatetop {
   from {
     top: -300px;
@@ -1902,8 +1876,12 @@ button.button-secondary {
   top: 25%;
 }
 
-.fx-arrow-right-icon {
+.fx-arrow-right-icon:before {
   content: url("../images/multi_account_manager/fx_arrow_right.svg");
+}
+
+.fx-arrow-down-icon:before {
+  content: url("../images/multi_account_manager/fx_arrow_down.svg");
 }
 
 .fx-trading-books:before {
@@ -3826,6 +3804,22 @@ p {
     margin: 0 0 15px;
   }
 }
+@media (max-width: 340px) {
+  .fx-one-zero:before {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+  }
+
+  .fx-mt5-gateaway:before {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+  }
+
+  .fx-fix-api:before {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+  }
+}
 @media (max-width: 575px) {
   .hidden-xs-down {
     display: none !important;
@@ -3876,10 +3870,26 @@ p {
   .table-container {
     overflow-x: auto;
   }
+
+  .fx-box-margin {
+    margin-bottom: 10px;
+  }
+
+  .fx-row-margin-top {
+    margin-top: 10px !important;
+  }
+
+  .fx-partnerships-margin-bottom {
+    margin-bottom: 20px;
+  }
 }
 @media (min-width: 768px) {
   .container, .fx-container {
     width: 100%;
+  }
+
+  .fx-row-margin-bottom {
+    margin-bottom: 30px;
   }
 
   .hidden-sm-up {
@@ -3898,10 +3908,26 @@ p {
   .fx-panel, .fx-panel-item {
     height: auto;
   }
+
+  .fx-liquidity-margin-top {
+    margin-top: 30px;
+  }
+
+  .fx-partnerships-margin-top {
+    margin-top: 20px;
+  }
 }
-@media (min-width: 991px) {
+@media (min-width: 992px) {
   .container, .fx-container {
     width: 100%;
+  }
+
+  .hidden-md-up {
+    display: none !important;
+  }
+
+  .fx-row-margin-bottom {
+    margin-bottom: unset;
   }
 }
 @media (min-width: 1024px) {
