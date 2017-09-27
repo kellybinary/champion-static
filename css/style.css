@@ -1346,6 +1346,14 @@ iframe {
 .modal__form_message {
   padding: 50px 30px;
 }
+.modal__footer {
+  margin: auto;
+  bottom: 0;
+  font-size: 12px !important;
+}
+.modal__footer a:hover {
+  color: #013365;
+}
 .modal .asterisk {
   color: #ea202d;
   font-size: 14px;
@@ -1358,12 +1366,6 @@ iframe {
   background: #fff;
   width: 30px;
   margin: 0 auto;
-}
-.modal .note, .modal .note * {
-  font-size: 12px !important;
-}
-.modal .note a:hover, .modal .note * a:hover {
-  color: #fff;
 }
 .modal .flex-display {
   display: -webkit-box;
@@ -1387,6 +1389,7 @@ iframe {
   -webkit-flex-direction: column-reverse;
       -ms-flex-direction: column-reverse;
           flex-direction: column-reverse;
+  height: initial;
 }
 @media (min-width: 768px) {
   .modal {
@@ -1421,14 +1424,25 @@ iframe {
   .modal__form_wrapper input ~ .error-msg ~ button, .modal__form_wrapper button ~ .error-msg ~ button {
     margin: 10px 0 0;
   }
+  .modal__footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 0 30px 10px;
+  }
+  .modal__footer p, .modal__footer a, .modal__footer a:hover {
+    font-size: 12px;
+    color: #fff;
+  }
   .modal .flex-display-swap {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -webkit-flex-direction: column;
         -ms-flex-direction: column;
             flex-direction: column;
+    height: 100%;
   }
-  .modal .invisible.invisible-md-down {
+  .modal .invisible.visible-md-down {
     display: block !important;
   }
 }
