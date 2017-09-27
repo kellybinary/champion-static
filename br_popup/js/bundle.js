@@ -25683,7 +25683,9 @@
 
 	    var showError = function showError(field, message) {
 	        clearError(field);
-	        field.$.addClass('field-error');
+	        if (field.type === 'input') {
+	            field.$.addClass('field-error');
+	        }
 	        field.$error.text(message).removeClass(hidden_class);
 	    };
 
@@ -29712,11 +29714,11 @@
 	        $button = void 0;
 
 	    var load = function load() {
-	        $('.toggle-notification').off('click').on('click', function (e) {
+	        $('.toggle-modal').off('click').on('click', function (e) {
 	            e.stopPropagation();
 	            $('.modal').toggleClass('modal--show');
 	            if ($('.modal--show').length) {
-	                $('body').append('<div class="modal-overlay"></div>');
+	                $('body').css('position', 'static').append('<div class="modal-overlay"></div>');
 	                $('html').css('overflow-y', 'hidden');
 	            }
 	        });
