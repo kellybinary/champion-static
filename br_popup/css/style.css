@@ -1346,6 +1346,10 @@ iframe {
 .modal__form_message {
   padding: 50px 30px;
 }
+.modal__footer {
+  margin: auto;
+  bottom: 0;
+}
 .modal .asterisk {
   color: #ea202d;
   font-size: 14px;
@@ -1420,6 +1424,14 @@ iframe {
   }
   .modal__form_wrapper input ~ .error-msg ~ button, .modal__form_wrapper button ~ .error-msg ~ button {
     margin: 10px 0 0;
+  }
+  .modal__footer {
+    position: absolute;
+    bottom: 0;
+    padding: 0 30px 10px;
+  }
+  .modal__footer p, .modal__footer a {
+    color: #fff;
   }
   .modal .flex-display-swap {
     -webkit-box-orient: vertical;
