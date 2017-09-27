@@ -29778,7 +29778,7 @@
 	            }).then(function (response) {
 	                if (response.verify_email) {
 	                    $('.modal__form_message').removeClass('invisible');
-	                    $('.modal__form_wrapper, .modal__body').addClass('invisible');
+	                    $('.modal__form_wrapper, .modal__body, .modal__footer').addClass('invisible');
 	                } else if (response.error) {
 	                    $(form_selector + ':visible #signup_error').text(response.error.message).removeClass(hidden_class);
 	                }

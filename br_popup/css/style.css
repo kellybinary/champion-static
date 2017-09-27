@@ -1349,6 +1349,10 @@ iframe {
 .modal__footer {
   margin: auto;
   bottom: 0;
+  font-size: 12px !important;
+}
+.modal__footer a:hover {
+  color: #013365;
 }
 .modal .asterisk {
   color: #ea202d;
@@ -1362,12 +1366,6 @@ iframe {
   background: #fff;
   width: 30px;
   margin: 0 auto;
-}
-.modal .note, .modal .note * {
-  font-size: 12px !important;
-}
-.modal .note a:hover, .modal .note * a:hover {
-  color: #fff;
 }
 .modal .flex-display {
   display: -webkit-box;
@@ -1427,10 +1425,12 @@ iframe {
   }
   .modal__footer {
     position: absolute;
+    left: 0;
     bottom: 0;
     padding: 0 30px 10px;
   }
-  .modal__footer p, .modal__footer a {
+  .modal__footer p, .modal__footer a, .modal__footer a:hover {
+    font-size: 12px;
     color: #fff;
   }
   .modal .flex-display-swap {
@@ -1440,7 +1440,7 @@ iframe {
         -ms-flex-direction: column;
             flex-direction: column;
   }
-  .modal .invisible.invisible-md-down {
+  .modal .invisible.visible-md-down {
     display: block !important;
   }
 }
