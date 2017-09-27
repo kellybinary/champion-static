@@ -24606,21 +24606,6 @@
 	                    $(this).parent().removeClass('active');
 	                }
 	            });
-	            $('body').off('click').on('click', function (e) {
-	                e.stopPropagation();
-	                if ($(e.target).is('.side_menu, .side_menu *')) {
-	                    return false;
-	                }
-	                $('.side_menu').removeClass('side_menu--show');
-	                return true;
-	            });
-	            $('#toggleSignUp, #toggleSignUp-desktop').off('click').on('click', function (e) {
-	                e.stopPropagation();
-	                $('.side_menu').toggleClass('side_menu--show');
-	                if ($('.side_menu--show').length) {
-	                    $('body').css('position', 'fixed');
-	                }
-	            });
 	        });
 	    };
 
@@ -25617,7 +25602,7 @@
 
 	    var validators_map = {
 	        req: { func: validRequired, message: '' },
-	        email: { func: validEmail, message: 'Invalid email address' },
+	        email: { func: validEmail, message: 'Invalid email address.' },
 	        password: { func: validPassword, message: 'Password should have lower and uppercase letters with numbers.' },
 	        general: { func: validGeneral, message: 'Only letters, numbers, space, hyphen, period, and apostrophe are allowed.' },
 	        address: { func: validAddress, message: 'Only letters, numbers, space, hyphen, period, and apostrophe are allowed.' },
@@ -25692,11 +25677,15 @@
 	    var clearError = function clearError(field) {
 	        if (field.$error && field.$error.length) {
 	            field.$error.addClass(hidden_class);
+	            field.$.removeClass('field-error');
 	        }
 	    };
 
 	    var showError = function showError(field, message) {
 	        clearError(field);
+	        if (field.type === 'input') {
+	            field.$.addClass('field-error');
+	        }
 	        field.$error.text(message).removeClass(hidden_class);
 	    };
 
@@ -28957,11 +28946,9 @@
 
 /***/ }),
 /* 332 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
 	'use strict';
-
-	var Client = __webpack_require__(301);
 
 	var MT5 = function () {
 	    'use strict';
@@ -28970,15 +28957,6 @@
 
 	    var load = function load() {
 	        $('.has-tabs').tabs().removeClass(hidden_class);
-
-	        var $mt5_accounts = $('#mt5-accounts');
-
-	        if (Client.is_logged_in()) {
-	            $mt5_accounts.find('.button-disabled').addClass('button').removeClass('button-disabled');
-	        } else {
-	            $mt5_accounts.find('.button').addClass('button-disabled').removeClass('button');
-	            $mt5_accounts.find('a').removeAttr('href');
-	        }
 	    };
 
 	    return {
@@ -29736,6 +29714,21 @@
 	        $button = void 0;
 
 	    var load = function load() {
+	        $('.toggle-modal').off('click').on('click', function (e) {
+	            e.stopPropagation();
+	            $('.modal').toggleClass('modal--show');
+	            if ($('.modal--show').length) {
+	                $('body').css('position', 'static').append('<div class="modal-overlay"></div>');
+	                $('html').css('overflow-y', 'hidden');
+	            }
+	        });
+	        $('.modal__header .close').off('click').on('click', function (e) {
+	            e.stopPropagation();
+	            $('.modal').removeClass('modal--show');
+	            $('.modal-overlay').remove();
+	            $('html').css('overflow-y', 'auto');
+	        });
+
 	        if (Client.is_logged_in() || /(new-account|terms-and-conditions|user|cashier)/.test(window.location.pathname)) {
 	            changeVisibility($(form_selector), 'hide');
 	        } else {
@@ -29763,7 +29756,7 @@
 	        $button = $form.find('button');
 	        $button.off('click', submit).on('click', submit);
 	        is_active = true;
-	        Validation.init(form_selector, [{ selector: '#email', validations: ['req', 'email'], msg_element: '#signup_error' }]);
+	        Validation.init(form_selector, [{ selector: '#email', validations: ['req', 'email'], msg_element: '#signup_error', no_scroll: true }]);
 	    };
 
 	    var unload = function unload() {
@@ -29772,6 +29765,8 @@
 	            $input.val('');
 	        }
 	        is_active = false;
+	        $('toggle-notification').off('click');
+	        $('.modal__header .close').off('click');
 	    };
 
 	    var submit = function submit(e) {
@@ -29782,7 +29777,8 @@
 	                type: 'account_opening'
 	            }).then(function (response) {
 	                if (response.verify_email) {
-	                    $('.signup-box').text('Thank you for signing up! Please check your email to complete the registration process.');
+	                    $('.modal__form_message').removeClass('invisible');
+	                    $('.modal__form_wrapper, .modal__body').addClass('invisible');
 	                } else if (response.error) {
 	                    $(form_selector + ':visible #signup_error').text(response.error.message).removeClass(hidden_class);
 	                }

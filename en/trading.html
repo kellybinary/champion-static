@@ -23,10 +23,10 @@
 
     <link rel="icon" type="image/png" sizes="16x16" href="/champion-static/images/favicons/CFX_favicon16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/champion-static/images/favicons/CFX_favicon32.png" />
-     <link rel="stylesheet" href="https://kelly-championfx.github.io/binary-style/binary.css?kycfxm39" />
-     <link rel="stylesheet" href="/champion-static/css/style.min.css?kycfxm39" />
-      <script src="/champion-static/js/bundle.js?kycfxm39" type="text/javascript"></script>
-     <script src="https://kelly-championfx.github.io/binary-style/binary.js?kycfxm39" type="text/javascript"></script>
+     <link rel="stylesheet" href="https://kelly-championfx.github.io/binary-style/binary.css?p51r1hq0" />
+     <link rel="stylesheet" href="/champion-static/css/style.min.css?p51r1hq0" />
+      <script src="/champion-static/js/bundle.js?p51r1hq0" type="text/javascript"></script>
+     <script src="https://kelly-championfx.github.io/binary-style/binary.js?p51r1hq0" type="text/javascript"></script>
      
 </head>
 <body>
@@ -450,28 +450,8 @@
             </div>
 
             <div class="navbar__button-group logged-out invisible">
-                <a class="hidden-lg-up" id="toggleSignUp" href="javascript:;"><img src="/champion-static/images/login.svg"/></a>
-                <div class="side_menu">
-    <div class="side_menu__header">
-        <h4>No funds, no problem.</h4>
-        <p>Your first trade is on us*</p>
-        <img src="/champion-static/images/wallet_money.svg"/>
-        <h4>Sign up now!</h4>
-        <p>And get <span class="text-blue">free welcome bonus worth 10<span class="asterisk">*</span></span></p>
-        <p>No deposit required.</p>
-    </div>
-    <div class="side_menu__form">
-        <form id="verify-email-side_menu__form">
-            <input class="clean-input primary-input" autocomplete="off" name="email" id="side_menu__form__email" maxlength="50" placeholder="Enter your email">
-            <span class="error-msg hint center-text invisible" id="side_menu__form__error"></span>
-            <button class="button" id="side_menu__form__button" type="submit">Create Free Account</button>
-        </form>
-        <div class="separator fill-bg-color"></div>
-        <p>Already have an account?</p>
-        <button class="btn-login button-secondary" type="submit">Log In</button>
-    </div>
-</div>
-                <a class="button-secondary hidden-lg-down" id="toggleSignUp-desktop" href="javascript:;"><span>Sign Up</span></a>
+                <a class="hidden-lg-up toggle-modal" href="javascript:;"><img src="/champion-static/images/signup/login.svg"/></a>
+                <a class="button-secondary hidden-lg-down toggle-modal" href="javascript:;"><span>Sign Up</span></a>
             </div>
         </div>
     </nav>
@@ -597,6 +577,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             
                 <li class=""><a href="/champion-static/en/liquidity-solutions.html">Liquidity Solutions</a></li>
             
+                <li class=""><a href="/champion-static/en/multiple-accounts-manager.html">Multiple Accounts Manager (MAM)</a></li>
+            
                 <li class=""><a href="/champion-static/en/partnerships-affiliate.html">Affiliate Programme</a></li>
             
                 <li class=""><a href="/champion-static/en/partnerships-contributor.html">Content Contributor</a></li>
@@ -697,6 +679,42 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </div>
     <div id="end_note" class="invisible hidden-xs-down"></div>
 </footer>
+    <div class="modal">
+    <div class="modal--wrapper row">
+        <div class="modal__header">
+            <a href="javascript:;" class="close"></a>
+        </div>
+        <div class="modal__body col-xs-12 col-md-4 invisible-md-down">
+            <div class="flex-display">
+                <h2>No funds, no problem.</h2>
+                <div class="flex-display flex-display-swap">
+                    <img src="/champion-static/images/signup/wallet_money.svg"/>
+                    <p>Your first trade is on us*</p>
+                </div>
+                <div class="dash hidden-sm-down"></div>
+                <p class="note hidden-sm-down">*<a href="free-bonus.html">terms and conditions</a> apply</p>
+            </div>
+        </div>
+        <div class="modal__form_wrapper col-xs-12 col-md-8">
+            <h1>Sign up now!</h1>
+            <p>And get <span class="color-blue">free welcome bonus worth $10</span><span class="asterisk">*</span></p>
+            <p>No deposit required.</p>
+            <form id="verify-email-form" class="frm-verify-email">
+    <input class="clean-input primary-input" autocomplete="off" name="email" id="email" maxlength="50" placeholder="Enter your email">
+    <span class="error-msg invisible" id="signup_error"></span>
+    <button class="button" id="btn-verify-email" type="submit">Create Free Account</button>
+</form>
+            <div class="separator hidden-sm-up"></div>
+            <p>Already have an account? <a class="btn-login hidden-sm-down" href="javascript:;">Log In</a></p>
+            <button class="btn-login button-secondary hidden-sm-up" type="submit">Log In</button>
+        </div>
+        <div class="modal__form_message col-xs-12 col-md-8 invisible">
+            <h2>Thank you for signing up!</h2>
+            <img src="/champion-static/images/signup/check_email.svg"/>
+            <p>Please check your email to complete the registration process.</p>
+        </div>
+    </div>
+</div>
     <!--/email_off-->
 </body>
 </html>
