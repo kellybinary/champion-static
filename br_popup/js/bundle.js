@@ -29718,10 +29718,11 @@
 	            e.stopPropagation();
 	            $('.modal').toggleClass('modal--show');
 	            if ($('.modal--show').length) {
-	                $('body').css('position', 'static').append('<div class="modal-overlay"></div>');
-	                $('html').css('overflow-y', 'hidden').on('touchmove', function (event) {
-	                    event.preventDefault();
+	                document.body.addEventListener('touchmove', function (evt) {
+	                    evt.preventDefault();
 	                });
+	                $('body').css('position', 'static').append('<div class="modal-overlay"></div>');
+	                $('html').css('overflow-y', 'hidden');
 	            }
 	        });
 	        $('.modal__header .close').off('click').on('click', function (e) {
