@@ -29719,7 +29719,9 @@
 	            $('.modal').toggleClass('modal--show');
 	            if ($('.modal--show').length) {
 	                $('body').css('position', 'static').append('<div class="modal-overlay"></div>');
-	                $('html').css('overflow-y', 'hidden');
+	                $('html').css('overflow-y', 'hidden').on('touchmove', function (event) {
+	                    event.preventDefault();
+	                });
 	            }
 	        });
 	        $('.modal__header .close').off('click').on('click', function (e) {
