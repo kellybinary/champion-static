@@ -18485,7 +18485,6 @@
 	var ChampionSocket = __webpack_require__(305);
 	var State = __webpack_require__(308).State;
 	var default_redirect_url = __webpack_require__(311).default_redirect_url;
-	var url_for = __webpack_require__(311).url_for;
 	var Utility = __webpack_require__(309);
 	var Cashier = __webpack_require__(320);
 	var CashierPassword = __webpack_require__(321);
@@ -18619,7 +18618,7 @@
 
 	    var errorMessages = {
 	        login: function login(module) {
-	            return module === MetaTrader ? Utility.template('To register an MT5 account, please <a href="[_1]" class="login">log in</a> to your ChampionFX account<br />\n                Don\'t have a ChampionFX account? <a href="[_2]">Create one</a> now', ['java' + 'script:;', url_for('/')]) : Utility.template('Please <a href="[_1]" class="login">log in</a> to view this page.', ['java' + 'script:;']);
+	            return module === MetaTrader ? Utility.template('To register an MT5 account, please <a href="[_1]" class="login">log in</a> to your ChampionFX account<br />\n                Don\'t have a ChampionFX account? <a href="[_2]" class="toggle-modal">Create one</a> now', ['java' + 'script:;', 'java' + 'script:;']) : Utility.template('Please <a href="[_1]" class="login">log in</a> to view this page.', ['java' + 'script:;']);
 	        },
 	        only_virtual: 'Sorry, this feature is available to virtual accounts only.',
 	        only_real: 'This feature is not relevant to virtual-money accounts.'
@@ -28946,9 +28945,11 @@
 
 /***/ }),
 /* 332 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
+
+	var Client = __webpack_require__(301);
 
 	var MT5 = function () {
 	    'use strict';
@@ -28957,6 +28958,16 @@
 
 	    var load = function load() {
 	        $('.has-tabs').tabs().removeClass(hidden_class);
+
+	        if (!Client.is_logged_in()) {
+	            var $signup_btn = $('#mt5-accounts').find('a');
+	            $signup_btn.addClass('toggle-modal');
+	            replaceHref($signup_btn);
+	        }
+	    };
+
+	    var replaceHref = function replaceHref($element) {
+	        $element.attr('href', 'java' + 'script:;');
 	    };
 
 	    return {
@@ -29699,13 +29710,12 @@
 
 	var ChampionSocket = __webpack_require__(305);
 	var Validation = __webpack_require__(322);
-	var Client = __webpack_require__(301);
+	// const Client         = require('../common/client');
 
 	var ChampionSignup = function () {
 	    'use strict';
 
 	    var form_selector = '.frm-verify-email';
-	    var signup_selector = '#signup';
 	    var hidden_class = 'invisible';
 
 	    var is_active = false,
@@ -29714,43 +29724,27 @@
 	        $button = void 0;
 
 	    var load = function load() {
-	        $('.toggle-modal').off('click').on('click', function (e) {
-	            e.stopPropagation();
-	            $('.modal').toggleClass('modal--show');
-	            if ($('.modal--show').length) {
-	                document.body.addEventListener('touchmove', function (evt) {
-	                    evt.preventDefault();
-	                });
-	                $('body').css('position', 'static').append('<div class="modal-overlay"></div>');
-	                $('html').css('overflow-y', 'hidden');
-	            }
-	        });
-	        $('.modal__header .close').off('click').on('click', function (e) {
-	            e.stopPropagation();
-	            $('.modal').removeClass('modal--show');
-	            $('.modal-overlay').remove();
-	            $('html').css('overflow-y', 'auto');
-	        });
+	        $('.toggle-modal').off('click').on('click', showModal);
+	        $('.modal__header .close').off('click').on('click', hideModal);
 
-	        if (Client.is_logged_in() || /(new-account|terms-and-conditions|user|cashier)/.test(window.location.pathname)) {
-	            changeVisibility($(form_selector), 'hide');
-	        } else {
-	            changeVisibility($(form_selector), 'show');
-	            if ($(form_selector).length === 1) {
-	                changeVisibility($(signup_selector), 'show');
-	            } else {
-	                changeVisibility($(signup_selector), 'hide');
-	            }
-	            eventHandler();
+	        eventHandler();
+	    };
+
+	    var showModal = function showModal(e) {
+	        e.stopPropagation();
+	        $('.modal').toggleClass('modal--show');
+	        if ($('.modal--show').length) {
+	            $('body').css('position', 'static').append('<div class="modal-overlay"></div>');
+	            $('.modal-overlay').off('click', hideModal).on('click', hideModal);
 	        }
 	    };
 
-	    var changeVisibility = function changeVisibility($selector, action) {
-	        if (action === 'hide') {
-	            $selector.addClass(hidden_class);
-	        } else {
-	            $selector.removeClass(hidden_class);
-	        }
+	    var hideModal = function hideModal(e) {
+	        e.stopPropagation();
+	        $('.modal').removeClass('modal--show');
+	        $('.modal-overlay').fadeOut(500, function () {
+	            this.remove();
+	        });
 	    };
 
 	    var eventHandler = function eventHandler() {
@@ -29768,7 +29762,8 @@
 	            $input.val('');
 	        }
 	        is_active = false;
-	        $('toggle-notification').off('click');
+
+	        $('toggle-modal').off('click');
 	        $('.modal__header .close').off('click');
 	    };
 
@@ -29780,8 +29775,8 @@
 	                type: 'account_opening'
 	            }).then(function (response) {
 	                if (response.verify_email) {
-	                    $('.modal__form_message').removeClass('invisible');
-	                    $('.modal__form_wrapper, .modal__body, .modal__footer').addClass('invisible');
+	                    $('.modal__form_message').removeClass(hidden_class);
+	                    $('.modal__form_wrapper, .modal__body, .modal__footer').addClass(hidden_class);
 	                } else if (response.error) {
 	                    $(form_selector + ':visible #signup_error').text(response.error.message).removeClass(hidden_class);
 	                }
