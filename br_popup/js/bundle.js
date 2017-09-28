@@ -18618,7 +18618,7 @@
 
 	    var errorMessages = {
 	        login: function login(module) {
-	            return module === MetaTrader ? Utility.template('To register an MT5 account, please <a href="[_1]" class="login">log in</a> to your ChampionFX account<br />\n                Don\'t have a ChampionFX account? <a href="[_2]" class="toggle-modal">Create one</a> now', ['java' + 'script:;', 'java' + 'script:;']) : Utility.template('Please <a href="[_1]" class="login">log in</a> to view this page.', ['java' + 'script:;']);
+	            return module === MetaTrader ? Utility.template('To register an MT5 account, please <a href="[_1]" class="login">log in</a> to your ChampionFX account<br />\n                Don\'t have a ChampionFX account? <a href="[_2]" class="toggle-signup-modal">Create one</a> now', ['java' + 'script:;', 'java' + 'script:;']) : Utility.template('Please <a href="[_1]" class="login">log in</a> to view this page.', ['java' + 'script:;']);
 	        },
 	        only_virtual: 'Sorry, this feature is available to virtual accounts only.',
 	        only_real: 'This feature is not relevant to virtual-money accounts.'
@@ -28889,7 +28889,6 @@
 
 	var ChampionSocket = __webpack_require__(305);
 	var Validation = __webpack_require__(322);
-	// const Client         = require('../common/client');
 
 	var ChampionSignup = function () {
 	    'use strict';
@@ -28903,7 +28902,7 @@
 	        $button = void 0;
 
 	    var load = function load() {
-	        $('.toggle-modal').off('click').on('click', showModal);
+	        $('.toggle-signup-modal').off('click').on('click', showModal);
 	        $('.modal__header .close').off('click').on('click', hideModal);
 
 	        eventHandler();
@@ -29051,7 +29050,7 @@
 
 	        if (!Client.is_logged_in()) {
 	            var $signup_btn = $('#mt5-accounts').find('a');
-	            $signup_btn.addClass('toggle-modal');
+	            $signup_btn.addClass('toggle-signup-modal');
 	            replaceHref($signup_btn);
 	        }
 	    };
