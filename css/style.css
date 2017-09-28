@@ -1214,7 +1214,7 @@ iframe {
 }
 
 .modal {
-  position: absolute;
+  position: fixed;
   background: #f2f2f2;
   margin: auto;
   top: 20px;
@@ -1456,7 +1456,7 @@ iframe {
 }
 
 .modal-overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   background: #000;
