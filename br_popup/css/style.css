@@ -1450,9 +1450,6 @@ iframe {
 .modal--show {
   opacity: 1;
   z-index: 100001;
-  -webkit-animation-name: animatetop;
-  -webkit-animation-duration: 0.3s;
-  animation-name: animatetop;
 }
 
 .modal-overlay {
@@ -1466,26 +1463,6 @@ iframe {
   width: 100%;
 }
 
-@-webkit-keyframes animatetop {
-  from {
-    top: -300px;
-    opacity: 0;
-  }
-  to {
-    top: 0;
-    opacity: 1;
-  }
-}
-@keyframes animatetop {
-  from {
-    top: -300px;
-    opacity: 0;
-  }
-  to {
-    top: 0;
-    opacity: 1;
-  }
-}
 .field-error {
   border: 1px solid #ea202d;
 }
