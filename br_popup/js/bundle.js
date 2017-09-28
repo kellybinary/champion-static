@@ -28924,6 +28924,7 @@
 
 	            // if sign-up success message is visible, show sign-up form again
 	            if (!$after_signup_msg.hasClass(hidden_class)) {
+	                $input.val();
 	                changeVisibility($after_signup_msg, 'hide');
 	                changeVisibility($before_signup_el, 'show');
 	            }
