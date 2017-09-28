@@ -28922,7 +28922,7 @@
 	            $('body').css('position', 'static').append('<div class="modal-overlay"></div>');
 	            $('.modal-overlay').off('click', hideModal).on('click', hideModal);
 
-	            // if sign-up success message is visible, show sign-up form again
+	            // if sign-up success message is already visible, show sign-up form
 	            if (!$after_signup_msg.hasClass(hidden_class)) {
 	                $input.val('');
 	                changeVisibility($after_signup_msg, 'hide');
