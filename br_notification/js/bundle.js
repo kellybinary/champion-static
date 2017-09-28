@@ -25278,7 +25278,7 @@
 	                        has_mt_account = true;
 	                    }
 	                    var notified = check_statuses.some(function (object) {
-	                        if ( /* object.validation() */true) {
+	                        if (object.validation()) {
 	                            notify(object.message());
 	                            return true;
 	                        }
