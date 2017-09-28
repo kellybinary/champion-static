@@ -18495,14 +18495,14 @@
 	var ChampionContact = __webpack_require__(299);
 	var ChampionEndpoint = __webpack_require__(327);
 	var Home = __webpack_require__(328);
-	var LostPassword = __webpack_require__(331);
-	var MT5 = __webpack_require__(332);
-	var MT5WebPlatform = __webpack_require__(333);
-	var BinaryOptions = __webpack_require__(334);
-	var ChampionNewReal = __webpack_require__(335);
-	var ChampionNewVirtual = __webpack_require__(337);
-	var ResetPassword = __webpack_require__(339);
-	var ChampionSignup = __webpack_require__(340);
+	var LostPassword = __webpack_require__(332);
+	var MT5 = __webpack_require__(333);
+	var MT5WebPlatform = __webpack_require__(334);
+	var BinaryOptions = __webpack_require__(335);
+	var ChampionNewReal = __webpack_require__(336);
+	var ChampionNewVirtual = __webpack_require__(338);
+	var ResetPassword = __webpack_require__(340);
+	var ChampionSignup = __webpack_require__(331);
 	var TradingTimes = __webpack_require__(341);
 	var Authenticate = __webpack_require__(342);
 	var ChangePassword = __webpack_require__(343);
@@ -26145,6 +26145,7 @@
 	'use strict';
 
 	var Slider = __webpack_require__(329);
+	var ChampionSignup = __webpack_require__(331);
 
 	var Home = function () {
 	    'use strict';
@@ -26153,9 +26154,7 @@
 	        Slider.init();
 	        var hash = window.location.hash.substring(1);
 	        if (hash === 'signup') {
-	            setTimeout(function () {
-	                $.scrollTo($('#verify-email-form'), 500);
-	            }, 500);
+	            ChampionSignup.showModal();
 	        }
 	    };
 
@@ -28888,6 +28887,97 @@
 
 	'use strict';
 
+	var ChampionSocket = __webpack_require__(305);
+	var Validation = __webpack_require__(322);
+	// const Client         = require('../common/client');
+
+	var ChampionSignup = function () {
+	    'use strict';
+
+	    var form_selector = '.frm-verify-email';
+	    var hidden_class = 'invisible';
+
+	    var is_active = false,
+	        $form = void 0,
+	        $input = void 0,
+	        $button = void 0;
+
+	    var load = function load() {
+	        $('.toggle-modal').off('click').on('click', showModal);
+	        $('.modal__header .close').off('click').on('click', hideModal);
+
+	        eventHandler();
+	    };
+
+	    var showModal = function showModal(e) {
+	        if (e) e.stopPropagation();
+	        $('.modal').toggleClass('modal--show');
+	        if ($('.modal--show').length) {
+	            $('body').css('position', 'static').append('<div class="modal-overlay"></div>');
+	            $('.modal-overlay').off('click', hideModal).on('click', hideModal);
+	        }
+	    };
+
+	    var hideModal = function hideModal(e) {
+	        e.stopPropagation();
+	        $('.modal').removeClass('modal--show');
+	        $('.modal-overlay').fadeOut(500, function () {
+	            this.remove();
+	        });
+	    };
+
+	    var eventHandler = function eventHandler() {
+	        $form = $(form_selector + ':visible');
+	        $input = $form.find('input');
+	        $button = $form.find('button');
+	        $button.off('click', submit).on('click', submit);
+	        is_active = true;
+	        Validation.init(form_selector, [{ selector: '#email', validations: ['req', 'email'], msg_element: '#signup_error', no_scroll: true }]);
+	    };
+
+	    var unload = function unload() {
+	        if (is_active) {
+	            $button.off('click', submit);
+	            $input.val('');
+	        }
+	        is_active = false;
+
+	        $('toggle-modal').off('click');
+	        $('.modal__header .close').off('click');
+	    };
+
+	    var submit = function submit(e) {
+	        e.preventDefault();
+	        if (is_active && Validation.validate(form_selector)) {
+	            ChampionSocket.send({
+	                verify_email: $input.val(),
+	                type: 'account_opening'
+	            }).then(function (response) {
+	                if (response.verify_email) {
+	                    $('.modal__form_message').removeClass(hidden_class);
+	                    $('.modal__form_wrapper, .modal__body, .modal__footer').addClass(hidden_class);
+	                } else if (response.error) {
+	                    $(form_selector + ':visible #signup_error').text(response.error.message).removeClass(hidden_class);
+	                }
+	            });
+	        }
+	    };
+
+	    return {
+	        load: load,
+	        unload: unload,
+	        showModal: showModal
+	    };
+	}();
+
+	module.exports = ChampionSignup;
+
+/***/ }),
+/* 332 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
 	var Client = __webpack_require__(301);
 	var Validation = __webpack_require__(322);
 	var ChampionSocket = __webpack_require__(305);
@@ -28944,7 +29034,7 @@
 	module.exports = LostPassword;
 
 /***/ }),
-/* 332 */
+/* 333 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28978,7 +29068,7 @@
 	module.exports = MT5;
 
 /***/ }),
-/* 333 */
+/* 334 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29023,7 +29113,7 @@
 	module.exports = MT5WebPlatform;
 
 /***/ }),
-/* 334 */
+/* 335 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -29043,7 +29133,7 @@
 	module.exports = BinaryOptions;
 
 /***/ }),
-/* 335 */
+/* 336 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29054,7 +29144,7 @@
 	var Utility = __webpack_require__(309);
 	var default_redirect_url = __webpack_require__(311).default_redirect_url;
 	var Validation = __webpack_require__(322);
-	var DatePicker = __webpack_require__(336).DatePicker;
+	var DatePicker = __webpack_require__(337).DatePicker;
 
 	var ChampionNewRealAccount = function () {
 	    'use strict';
@@ -29210,7 +29300,7 @@
 	module.exports = ChampionNewRealAccount;
 
 /***/ }),
-/* 336 */
+/* 337 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29374,7 +29464,7 @@
 	};
 
 /***/ }),
-/* 337 */
+/* 338 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29383,7 +29473,7 @@
 	var Client = __webpack_require__(301);
 	var default_redirect_url = __webpack_require__(311).default_redirect_url;
 	var Utility = __webpack_require__(309);
-	var FormManager = __webpack_require__(338);
+	var FormManager = __webpack_require__(339);
 
 	var ChampionNewVirtualAccount = function () {
 	    'use strict';
@@ -29442,7 +29532,7 @@
 	module.exports = ChampionNewVirtualAccount;
 
 /***/ }),
-/* 338 */
+/* 339 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29591,7 +29681,7 @@
 	module.exports = FormManager;
 
 /***/ }),
-/* 339 */
+/* 340 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29603,7 +29693,7 @@
 	var get_params = __webpack_require__(311).get_params;
 	var Utility = __webpack_require__(309);
 	var Validation = __webpack_require__(322);
-	var DatePicker = __webpack_require__(336).DatePicker;
+	var DatePicker = __webpack_require__(337).DatePicker;
 
 	var ResetPassword = function () {
 	    'use strict';
@@ -29703,103 +29793,13 @@
 	module.exports = ResetPassword;
 
 /***/ }),
-/* 340 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var ChampionSocket = __webpack_require__(305);
-	var Validation = __webpack_require__(322);
-	// const Client         = require('../common/client');
-
-	var ChampionSignup = function () {
-	    'use strict';
-
-	    var form_selector = '.frm-verify-email';
-	    var hidden_class = 'invisible';
-
-	    var is_active = false,
-	        $form = void 0,
-	        $input = void 0,
-	        $button = void 0;
-
-	    var load = function load() {
-	        $('.toggle-modal').off('click').on('click', showModal);
-	        $('.modal__header .close').off('click').on('click', hideModal);
-
-	        eventHandler();
-	    };
-
-	    var showModal = function showModal(e) {
-	        e.stopPropagation();
-	        $('.modal').toggleClass('modal--show');
-	        if ($('.modal--show').length) {
-	            $('body').css('position', 'static').append('<div class="modal-overlay"></div>');
-	            $('.modal-overlay').off('click', hideModal).on('click', hideModal);
-	        }
-	    };
-
-	    var hideModal = function hideModal(e) {
-	        e.stopPropagation();
-	        $('.modal').removeClass('modal--show');
-	        $('.modal-overlay').fadeOut(500, function () {
-	            this.remove();
-	        });
-	    };
-
-	    var eventHandler = function eventHandler() {
-	        $form = $(form_selector + ':visible');
-	        $input = $form.find('input');
-	        $button = $form.find('button');
-	        $button.off('click', submit).on('click', submit);
-	        is_active = true;
-	        Validation.init(form_selector, [{ selector: '#email', validations: ['req', 'email'], msg_element: '#signup_error', no_scroll: true }]);
-	    };
-
-	    var unload = function unload() {
-	        if (is_active) {
-	            $button.off('click', submit);
-	            $input.val('');
-	        }
-	        is_active = false;
-
-	        $('toggle-modal').off('click');
-	        $('.modal__header .close').off('click');
-	    };
-
-	    var submit = function submit(e) {
-	        e.preventDefault();
-	        if (is_active && Validation.validate(form_selector)) {
-	            ChampionSocket.send({
-	                verify_email: $input.val(),
-	                type: 'account_opening'
-	            }).then(function (response) {
-	                if (response.verify_email) {
-	                    $('.modal__form_message').removeClass(hidden_class);
-	                    $('.modal__form_wrapper, .modal__body, .modal__footer').addClass(hidden_class);
-	                } else if (response.error) {
-	                    $(form_selector + ':visible #signup_error').text(response.error.message).removeClass(hidden_class);
-	                }
-	            });
-	        }
-	    };
-
-	    return {
-	        load: load,
-	        unload: unload
-	    };
-	}();
-
-	module.exports = ChampionSignup;
-
-/***/ }),
 /* 341 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var ChampionSocket = __webpack_require__(305);
-	var DatePicker = __webpack_require__(336).DatePicker;
+	var DatePicker = __webpack_require__(337).DatePicker;
 	var moment = __webpack_require__(302);
 
 	var TradingTimes = function () {
@@ -37002,10 +37002,10 @@
 
 	var moment = __webpack_require__(302);
 	var Client = __webpack_require__(301);
-	var FormManager = __webpack_require__(338);
+	var FormManager = __webpack_require__(339);
 	var ChampionSocket = __webpack_require__(305);
 	var dateValueChanged = __webpack_require__(309).dateValueChanged;
-	var DatePicker = __webpack_require__(336).DatePicker;
+	var DatePicker = __webpack_require__(337).DatePicker;
 	var TimePicker = __webpack_require__(355);
 
 	var SelfExclusion = function () {
