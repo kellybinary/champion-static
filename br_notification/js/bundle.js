@@ -18477,17 +18477,17 @@
 	var Client = __webpack_require__(301);
 	var GTM = __webpack_require__(312);
 	var Header = __webpack_require__(314);
-	var LoggedIn = __webpack_require__(317);
+	var LoggedIn = __webpack_require__(318);
 	var Login = __webpack_require__(313);
-	var Redirect = __webpack_require__(318);
-	var ChampionRouter = __webpack_require__(316);
-	var SessionDurationLimit = __webpack_require__(319);
+	var Redirect = __webpack_require__(319);
+	var ChampionRouter = __webpack_require__(317);
+	var SessionDurationLimit = __webpack_require__(320);
 	var ChampionSocket = __webpack_require__(305);
 	var State = __webpack_require__(308).State;
 	var default_redirect_url = __webpack_require__(311).default_redirect_url;
 	var url_for = __webpack_require__(311).url_for;
 	var Utility = __webpack_require__(309);
-	var Notify = __webpack_require__(320);
+	var Notify = __webpack_require__(316);
 	var Cashier = __webpack_require__(321);
 	var CashierPassword = __webpack_require__(322);
 	var CashierDepositWithdraw = __webpack_require__(324);
@@ -24581,7 +24581,8 @@
 	var Client = __webpack_require__(301);
 	var formatMoney = __webpack_require__(315).formatMoney;
 	var GTM = __webpack_require__(312);
-	var ChampionRouter = __webpack_require__(316);
+	var Notify = __webpack_require__(316);
+	var ChampionRouter = __webpack_require__(317);
 	var ChampionSocket = __webpack_require__(305);
 	var State = __webpack_require__(308).State;
 	var url_for = __webpack_require__(311).url_for;
@@ -24648,7 +24649,9 @@
 
 	    var userMenu = function userMenu() {
 	        if (!Client.is_logged_in()) return;
-
+	        if (!Client.is_virtual()) {
+	            Notify.updateNotifications();
+	        }
 	        setMetaTrader();
 
 	        var selectedTemplate = function selectedTemplate(text, value, icon) {
@@ -24794,6 +24797,168 @@
 
 /***/ }),
 /* 316 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Client = __webpack_require__(301);
+	var ChampionSocket = __webpack_require__(305);
+	var State = __webpack_require__(308).State;
+	var url_for = __webpack_require__(311).url_for;
+	var template = __webpack_require__(309).template;
+
+	var Notify = function () {
+	    'use strict';
+
+	    var numberOfNotification = 0;
+
+	    var init = function init() {
+	        if (!Client.is_logged_in()) return;
+	        createUI();
+	        updateNotifications();
+	    };
+
+	    var updateNotifications = function updateNotifications() {
+	        ChampionSocket.wait('authorize').then(function () {
+	            var get_account_status = void 0,
+	                status = void 0,
+	                has_mt_account = false;
+
+	            var riskAssessment = function riskAssessment() {
+	                return (get_account_status.risk_classification === 'high' || has_mt_account) && /financial_assessment_not_complete/.test(status);
+	            };
+
+	            var messages = {
+	                authenticate: function authenticate() {
+	                    return template('Please [_1]authenticate your account[_2] to lift your withdrawal and trading limits.', ['<a href="' + url_for('user/authenticate') + '">', '</a>']);
+	                },
+	                risk: function risk() {
+	                    return template('Please complete the [_1]financial assessment form[_2] to lift your withdrawal and trading limits.', ['<a href="' + url_for('user/profile') + '#assessment">', '</a>']);
+	                },
+	                tnc: function tnc() {
+	                    return template('Please [_1]accept the updated Terms and Conditions[_2] to lift your withdrawal and trading limits.', ['<a href="' + url_for('user/tnc-approval') + '">', '</a>']);
+	                },
+	                unwelcome: function unwelcome() {
+	                    return template('Your account is restricted. Kindly [_1]contact customer support[_2] for assistance.', ['<a href="' + url_for('contact') + '">', '</a>']);
+	                }
+	            };
+
+	            var validations = {
+	                authenticate: function authenticate() {
+	                    return get_account_status.prompt_client_to_authenticate;
+	                },
+	                risk: function risk() {
+	                    return riskAssessment();
+	                },
+	                tnc: function tnc() {
+	                    return Client.should_accept_tnc();
+	                },
+	                unwelcome: function unwelcome() {
+	                    return (/(unwelcome|(cashier|withdrawal)_locked)/.test(status)
+	                    );
+	                }
+	            };
+
+	            var check_statuses = [{ validation: validations.tnc, message: messages.tnc }, { validation: validations.risk, message: messages.risk }, { validation: validations.authenticate, message: messages.authenticate }, { validation: validations.unwelcome, message: messages.unwelcome }];
+
+	            ChampionSocket.wait('website_status', 'get_account_status', 'get_settings', 'get_financial_assessment').then(function () {
+	                get_account_status = State.get(['response', 'get_account_status', 'get_account_status']) || {};
+	                status = get_account_status.status;
+	                ChampionSocket.wait('mt5_login_list').then(function (response) {
+	                    if (response.mt5_login_list.length) {
+	                        has_mt_account = true;
+	                    }
+	                    check_statuses.some(function (object) {
+	                        var key = object.validation.name;
+	                        if (object.validation()) {
+	                            addToNotifications(object.message(), key);
+	                        } else {
+	                            removeFromNotifications(key);
+	                        }
+	                    });
+	                });
+	            });
+	        });
+	    };
+
+	    var createUI = function createUI() {
+	        if ($('.notify .toggle-notification').length) return;
+
+	        var toggler = '<a class="toggle-notification bell" href="javascript:;"></a>\n                               <div class="talk-bubble"></div>';
+	        var notifications = '<div class="notifications">\n                                  <div class="notifications__header">Notifications<a class="close"></a></div>\n                                  <div class="notifications__list"></div>\n                               </div>';
+
+	        $('.notify').append(toggler);
+	        $('body').append(notifications);
+
+	        // attach event listeners
+	        $('.toggle-notification, .talk-bubble').off('click').on('click', showNotifications);
+	        $('.notifications__header .close').off('click').on('click', hideNotifications);
+	    };
+
+	    var showNotifications = function showNotifications(e) {
+	        e.stopPropagation();
+	        hideTalkBubble();
+	        $('.notifications').toggleClass('notifications--show');
+	        if ($('.overlay').length) {
+	            $('.overlay').remove();
+	        } else {
+	            $('body').append('<div class="overlay"></div>');
+	            $('.overlay').off('click').on('click', hideNotifications);
+	        }
+	    };
+
+	    var hideNotifications = function hideNotifications(e) {
+	        e.stopPropagation();
+	        $('.notifications').removeClass('notifications--show');
+	        $('.overlay').remove();
+	    };
+
+	    var updateUI = function updateUI() {
+	        $('.toggle-notification')[numberOfNotification ? 'addClass' : 'removeClass']('bell-active');
+
+	        if (!Client.get('notification_shown')) {
+	            // avoid showing talk bubble on every page refresh
+	            showTalkBubble();
+	            Client.set('notification_shown', 1);
+	        }
+	    };
+
+	    var addToNotifications = function addToNotifications(msg, key) {
+	        if ($('.notifications__list .notification.' + key).length) return;
+	        $('.notifications__list').append('<div class="notification ' + key + '">' + msg + '</div>');
+	        $('.notification > a').off('click').on('click', hideNotifications);
+	        numberOfNotification++;
+	        updateUI();
+	    };
+
+	    var removeFromNotifications = function removeFromNotifications(key) {
+	        if (!key) return;
+	        var $note = $('.notifications__list .notification.' + key);
+	        if (!$note.length) return;
+	        numberOfNotification--;
+	        $note.remove();
+	        updateUI();
+	    };
+
+	    var showTalkBubble = function showTalkBubble() {
+	        $('.talk-bubble').html('You got ' + numberOfNotification + ' notification' + (numberOfNotification === 1 ? '' : 's')).fadeIn(500);
+	        setTimeout(hideTalkBubble, 5000);
+	    };
+
+	    var hideTalkBubble = function hideTalkBubble() {
+	        $('.talk-bubble').fadeOut();
+	    };
+
+	    return {
+	        init: init,
+	        updateNotifications: updateNotifications
+	    };
+	}();
+
+	module.exports = Notify;
+
+/***/ }),
+/* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24998,7 +25163,7 @@
 	module.exports = ChampionRouter;
 
 /***/ }),
-/* 317 */
+/* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25091,12 +25256,12 @@
 	module.exports = LoggedIn;
 
 /***/ }),
-/* 318 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var ChampionRouter = __webpack_require__(316);
+	var ChampionRouter = __webpack_require__(317);
 	var Url = __webpack_require__(311);
 
 	var Redirect = function () {
@@ -25123,7 +25288,7 @@
 	module.exports = Redirect;
 
 /***/ }),
-/* 319 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25199,158 +25364,6 @@
 	}();
 
 	module.exports = SessionDurationLimit;
-
-/***/ }),
-/* 320 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var Client = __webpack_require__(301);
-	var ChampionSocket = __webpack_require__(305);
-	var State = __webpack_require__(308).State;
-	var url_for = __webpack_require__(311).url_for;
-	var template = __webpack_require__(309).template;
-
-	var Notify = function () {
-	    'use strict';
-
-	    var numberOfNotification = 0;
-
-	    var init = function init() {
-	        if (!Client.is_logged_in()) return;
-
-	        createUI();
-
-	        ChampionSocket.wait('authorize').then(function () {
-	            var get_account_status = void 0,
-	                status = void 0,
-	                has_mt_account = false;
-
-	            var riskAssessment = function riskAssessment() {
-	                return (get_account_status.risk_classification === 'high' || has_mt_account) && /financial_assessment_not_complete/.test(status);
-	            };
-
-	            var messages = {
-	                authenticate: function authenticate() {
-	                    return template('Please [_1]authenticate your account[_2] to lift your withdrawal and trading limits.', ['<a href="' + url_for('user/authenticate') + '">', '</a>']);
-	                },
-	                risk: function risk() {
-	                    return template('Please complete the [_1]financial assessment form[_2] to lift your withdrawal and trading limits.', ['<a href="' + url_for('user/profile') + '#assessment">', '</a>']);
-	                },
-	                tnc: function tnc() {
-	                    return template('Please [_1]accept the updated Terms and Conditions[_2] to lift your withdrawal and trading limits.', ['<a href="' + url_for('user/tnc-approval') + '">', '</a>']);
-	                },
-	                unwelcome: function unwelcome() {
-	                    return template('Your account is restricted. Kindly [_1]contact customer support[_2] for assistance.', ['<a href="' + url_for('contact') + '">', '</a>']);
-	                }
-	            };
-
-	            var validations = {
-	                authenticate: function authenticate() {
-	                    return get_account_status.prompt_client_to_authenticate;
-	                },
-	                risk: function risk() {
-	                    return riskAssessment();
-	                },
-	                tnc: function tnc() {
-	                    return Client.should_accept_tnc();
-	                },
-	                unwelcome: function unwelcome() {
-	                    return (/(unwelcome|(cashier|withdrawal)_locked)/.test(status)
-	                    );
-	                }
-	            };
-
-	            var check_statuses = [{ validation: validations.tnc, message: messages.tnc }, { validation: validations.risk, message: messages.risk }, { validation: validations.authenticate, message: messages.authenticate }, { validation: validations.unwelcome, message: messages.unwelcome }];
-
-	            ChampionSocket.wait('website_status', 'get_account_status', 'get_settings', 'get_financial_assessment').then(function () {
-	                get_account_status = State.get(['response', 'get_account_status', 'get_account_status']) || {};
-	                status = get_account_status.status;
-	                ChampionSocket.wait('mt5_login_list').then(function (response) {
-	                    if (response.mt5_login_list.length) {
-	                        has_mt_account = true;
-	                    }
-	                    var notified = check_statuses.some(function (object) {
-	                        if (object.validation()) {
-	                            addToNotifications(object.message());
-	                            return true;
-	                        }
-	                        return false;
-	                    });
-	                    if (!notified) removeFromNotifications();
-	                });
-	            });
-	        });
-	    };
-
-	    var createUI = function createUI() {
-	        var toggler = '<a class="toggle-notification" href="javascript:;">\n                                  <span class="bell"></span>\n                               </a>\n                               <div class="talk-bubble"></div>';
-	        var notifications = '<div class="notifications">\n                                  <div class="notifications__header">Notifications<a class="close"></a></div>\n                                  <div class="notifications__list"></div>\n                               </div>';
-
-	        $('.notify').append(toggler);
-	        $('body').append(notifications);
-
-	        // attach event listeners
-	        $('.toggle-notification, .talk-bubble').off('click').on('click', showNotifications);
-	        $('.notifications__header .close').off('click').on('click', hideNotifications);
-	    };
-
-	    var showNotifications = function showNotifications(e) {
-	        e.stopPropagation();
-	        hideTalkBubble();
-	        $('.notifications').toggleClass('notifications--show');
-	        if ($('.overlay').length) {
-	            $('.overlay').remove();
-	        } else {
-	            $('body').append('<div class="overlay"></div>');
-	            $('.overlay').off('click').on('click', hideNotifications);
-	        }
-	    };
-
-	    var hideNotifications = function hideNotifications(e) {
-	        e.stopPropagation();
-	        $('.notifications').removeClass('notifications--show');
-	        $('.overlay').remove();
-	    };
-
-	    var updateUI = function updateUI() {
-	        if (!numberOfNotification) return;
-	        $('.toggle-notification').html('<span class="bell-active"></span>');
-
-	        if (!Client.get('notification_shown')) {
-	            // avoid showing talk bubble on every page refresh
-	            showTalkBubble();
-	            Client.set('notification_shown', 1);
-	        }
-	    };
-
-	    var addToNotifications = function addToNotifications(msg) {
-	        $('.notifications__list').append('<div class="notification">' + msg + '</div>');
-	        $('.notification > a').off('click').on('click', hideNotifications);
-	        numberOfNotification++;
-	        updateUI();
-	    };
-
-	    var removeFromNotifications = function removeFromNotifications() {
-	        numberOfNotification = 0;
-	    };
-
-	    var showTalkBubble = function showTalkBubble() {
-	        $('.talk-bubble').html('You got ' + numberOfNotification + ' notification' + (numberOfNotification === 1 ? '' : 's')).fadeIn(500);
-	        setTimeout(hideTalkBubble, 5000);
-	    };
-
-	    var hideTalkBubble = function hideTalkBubble() {
-	        $('.talk-bubble').fadeOut();
-	    };
-
-	    return {
-	        init: init
-	    };
-	}();
-
-	module.exports = Notify;
 
 /***/ }),
 /* 321 */
@@ -30929,7 +30942,7 @@
 
 	'use strict';
 
-	var Header = __webpack_require__(314);
+	var Notify = __webpack_require__(316);
 	var ChampionSocket = __webpack_require__(305);
 	var State = __webpack_require__(308).State;
 	var isEmptyObject = __webpack_require__(309).isEmptyObject;
@@ -31033,7 +31046,7 @@
 	                    showFormMessage('Your changes have been updated successfully.', true);
 	                    // need to remove financial_assessment_not_complete from status if any
 	                    ChampionSocket.send({ get_account_status: 1 }, true).then(function () {
-	                        Header.displayAccountStatus();
+	                        Notify.updateNotifications();
 	                    });
 	                }
 	            });
@@ -37462,7 +37475,7 @@
 	'use strict';
 
 	var Client = __webpack_require__(301);
-	var Header = __webpack_require__(314);
+	var Notify = __webpack_require__(316);
 	var ChampionSocket = __webpack_require__(305);
 	var default_redirect_url = __webpack_require__(311).default_redirect_url;
 	var url_for = __webpack_require__(311).url_for;
@@ -37493,7 +37506,7 @@
 	        ChampionSocket.send({ tnc_approval: '1' }).then(function (response) {
 	            if (!Object.prototype.hasOwnProperty.call(response, 'error')) {
 	                ChampionSocket.send({ get_settings: 1 }, true).then(function () {
-	                    Header.displayAccountStatus();
+	                    Notify.updateNotifications();
 	                });
 	                window.location.href = default_redirect_url();
 	            } else {
