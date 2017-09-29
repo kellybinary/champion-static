@@ -25317,10 +25317,12 @@
 	    };
 
 	    var updateUI = function updateUI() {
-	        $('.toggle-notification').html('<span class="' + (!numberOfNotification ? 'bell' : 'bell-active') + '"></span>');
+	        if (!numberOfNotification) return;
+	        $('.toggle-notification').html('<span class="bell-active"></span>');
 	        var login_time = Cookies.get('login_time');
 
 	        if (lessThan5Seconds(login_time)) {
+	            // avoid showing talk bubble on every page refresh
 	            showTalkBubble();
 	        }
 	    };
@@ -31300,7 +31302,7 @@
 /* 353 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var require;var require;var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var require;var require;/*!
 	 * Select2 4.0.3
 	 * https://select2.github.io
 	 *
