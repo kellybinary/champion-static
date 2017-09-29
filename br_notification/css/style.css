@@ -2179,14 +2179,22 @@ p {
   position: relative;
 }
 
+.bell:before {
+  content: url("../images/bell.svg");
+}
+
+.bell-active:before {
+  content: url("../images/bell-active.svg");
+}
+
 .notify {
   position: absolute;
-  top: 0;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   z-index: 100000;
+  top: 0;
   right: 15px;
 }
 @media (min-width: 1024px) {
@@ -2194,34 +2202,28 @@ p {
     right: 280px;
   }
 }
-.notify .notify-bell:before {
-  content: url("../images/bell.svg");
-}
-.notify .notify-bell-active:before {
-  content: url("../images/bell-active.svg");
-}
-.notify .notify-bubble {
+.notify .talk-bubble {
   position: absolute;
+  top: 50px;
+  right: -5px;
+  min-width: 245px;
+  z-index: 1;
   background: #fff;
   border-radius: 5px;
-  min-width: 245px;
   padding: 10px;
-  text-align: center;
-  z-index: 1;
-  top: 50px;
-  font-size: 14px;
   -webkit-box-shadow: 0 0 0.5em 0 rgba(0, 0, 0, 0.2);
           box-shadow: 0 0 0.5em 0 rgba(0, 0, 0, 0.2);
   cursor: pointer;
+  font-size: 14px;
+  text-align: center;
   display: none;
-  right: -5px;
 }
 @media (min-width: 1024px) {
-  .notify .notify-bubble {
+  .notify .talk-bubble {
     right: -124px;
   }
 }
-.notify .notify-bubble:after {
+.notify .talk-bubble:after {
   content: '';
   position: absolute;
   top: 0;
@@ -2235,7 +2237,7 @@ p {
   margin-top: -10px;
 }
 @media (min-width: 1024px) {
-  .notify .notify-bubble:after {
+  .notify .talk-bubble:after {
     right: 50%;
   }
 }
@@ -2269,7 +2271,7 @@ p {
     right: -100%;
   }
 }
-.notifications .notifications-header {
+.notifications__header {
   background-color: #fff;
   padding: 15px 10px;
   color: #004385;
@@ -2277,13 +2279,13 @@ p {
           box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3);
   font-weight: 500;
 }
-.notifications .notifications-header .btn-close {
+.notifications__header .close {
   color: #004385;
   float: right;
   text-decoration: none;
   cursor: pointer;
 }
-.notifications .notifications-header .btn-close:before {
+.notifications__header .close:before {
   content: url("../images/cross_blue.svg");
 }
 .notifications .notification {
@@ -2291,8 +2293,6 @@ p {
   margin: 10px;
   -webkit-box-shadow: 0 0 0.5em 0 rgba(0, 0, 0, 0.1);
           box-shadow: 0 0 0.5em 0 rgba(0, 0, 0, 0.1);
-}
-.notifications .notification-message {
   padding: 15px 10px;
   font-size: 14px;
 }

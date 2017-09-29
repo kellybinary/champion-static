@@ -25033,6 +25033,7 @@
 	            Client.set_cookie('loginid_list', loginid_list);
 	        }
 	        Client.set_cookie('token', tokens[loginid].token);
+	        Client.set_cookie('login_time', new Date().toISOString());
 
 	        // set flags
 	        GTM.setLoginFlag();
@@ -25210,6 +25211,8 @@
 	var State = __webpack_require__(308).State;
 	var url_for = __webpack_require__(311).url_for;
 	var template = __webpack_require__(309).template;
+	var Cookies = __webpack_require__(306);
+	var moment = __webpack_require__(302);
 
 	var Notify = function () {
 	    'use strict';
@@ -25219,14 +25222,7 @@
 	    var init = function init() {
 	        if (!Client.is_logged_in()) return;
 
-	        // create ui
-	        $('.notify').append('<a class="toggle-notification"><span class="notify-bell"></span></a>\n                     <div class="notify-bubble"></div>');
-
-	        $('body').append('<div class="notifications">\n                     <div class="notifications-header">Notifications<a class="btn-close"></a></div>\n                     <div class="notifications-list"></div></div>');
-
-	        // attach event listeners
-	        $('.toggle-notification, .notify-bubble').off('click').on('click', showNotifications);
-	        $('.notifications-header .btn-close').off('click').on('click', hideNotifications);
+	        createUI();
 
 	        ChampionSocket.wait('authorize').then(function () {
 	            var get_account_status = void 0,
@@ -25279,20 +25275,32 @@
 	                    }
 	                    var notified = check_statuses.some(function (object) {
 	                        if (object.validation()) {
-	                            notify(object.message());
+	                            addToNotifications(object.message());
 	                            return true;
 	                        }
 	                        return false;
 	                    });
-	                    if (!notified) hideNotification();
+	                    if (!notified) removeFromNotifications();
 	                });
 	            });
 	        });
 	    };
 
+	    var createUI = function createUI() {
+	        var toggler = '<a class="toggle-notification" href="javascript:;">\n                                  <span class="bell"></span>\n                               </a>\n                               <div class="talk-bubble"></div>';
+	        var notifications = '<div class="notifications">\n                                  <div class="notifications__header">Notifications<a class="close"></a></div>\n                                  <div class="notifications__list"></div>\n                               </div>';
+
+	        $('.notify').append(toggler);
+	        $('body').append(notifications);
+
+	        // attach event listeners
+	        $('.toggle-notification, .talk-bubble').off('click').on('click', showNotifications);
+	        $('.notifications__header .close').off('click').on('click', hideNotifications);
+	    };
+
 	    var showNotifications = function showNotifications(e) {
 	        e.stopPropagation();
-	        hidePopUpMessage();
+	        hideTalkBubble();
 	        $('.notifications').toggleClass('notifications--show');
 	        if ($('.overlay').length) {
 	            $('.overlay').remove();
@@ -25309,36 +25317,43 @@
 	    };
 
 	    var updateUI = function updateUI() {
-	        $('.toggle-notification').html('<span class="' + (!numberOfNotification ? 'notify-bell' : 'notify-bell-active') + '"></span>');
-	        if (numberOfNotification) {
-	            showPopUpMessage();
+	        $('.toggle-notification').html('<span class="' + (!numberOfNotification ? 'bell' : 'bell-active') + '"></span>');
+	        var login_time = Cookies.get('login_time');
+
+	        if (lessThan5Seconds(login_time)) {
+	            showTalkBubble();
 	        }
 	    };
 
-	    var notify = function notify(msg) {
-	        $('.notifications-list').append('<div class="notification"><div class="notification-message">' + msg + '</div></div>');
+	    var addToNotifications = function addToNotifications(msg) {
+	        $('.notifications__list').append('<div class="notification">' + msg + '</div>');
+	        $('.notification > a').off('click').on('click', hideNotifications);
 	        numberOfNotification++;
 	        updateUI();
 	    };
 
-	    var showPopUpMessage = function showPopUpMessage() {
-	        $('.notify-bubble').html('You got ' + numberOfNotification + ' notification' + (numberOfNotification === 1 ? '' : 's')).fadeIn(500);
-	        setTimeout(hidePopUpMessage, 5000);
-	    };
-
-	    var hidePopUpMessage = function hidePopUpMessage() {
-	        $('.notify-bubble').fadeOut();
-	    };
-
-	    var hideNotification = function hideNotification() {
+	    var removeFromNotifications = function removeFromNotifications() {
 	        numberOfNotification = 0;
 	        updateUI();
 	    };
 
+	    var showTalkBubble = function showTalkBubble() {
+	        $('.talk-bubble').html('You got ' + numberOfNotification + ' notification' + (numberOfNotification === 1 ? '' : 's')).fadeIn(500);
+	        setTimeout(hideTalkBubble, 5000);
+	    };
+
+	    var hideTalkBubble = function hideTalkBubble() {
+	        $('.talk-bubble').fadeOut();
+	    };
+
+	    var lessThan5Seconds = function lessThan5Seconds(date) {
+	        return moment(date).isAfter(moment().subtract(5, 'seconds'));
+	    };
+
 	    return {
 	        init: init,
-	        notify: notify,
-	        hideNotification: hideNotification
+	        addToNotifications: addToNotifications,
+	        removeFromNotifications: removeFromNotifications
 	    };
 	}();
 
@@ -31285,7 +31300,7 @@
 /* 353 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var require;var require;/*!
+	var require;var require;var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 	 * Select2 4.0.3
 	 * https://select2.github.io
 	 *
