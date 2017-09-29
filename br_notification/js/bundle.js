@@ -25334,7 +25334,6 @@
 
 	    var removeFromNotifications = function removeFromNotifications() {
 	        numberOfNotification = 0;
-	        updateUI();
 	    };
 
 	    var showTalkBubble = function showTalkBubble() {
@@ -25347,9 +25346,7 @@
 	    };
 
 	    return {
-	        init: init,
-	        addToNotifications: addToNotifications,
-	        removeFromNotifications: removeFromNotifications
+	        init: init
 	    };
 	}();
 
