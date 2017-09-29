@@ -18528,7 +18528,6 @@
 	        container.on('champion:before', beforeContentChange);
 	        container.on('champion:after', afterContentChange);
 	        Client.init();
-	        Notify.init(); // call once
 
 	        ChampionSocket.init({
 	            authorize: function authorize(response) {
@@ -18547,6 +18546,7 @@
 	                SessionDurationLimit.exclusionResponseHandler(response);
 	            }
 	        }, Client.is_logged_in());
+	        Notify.init(); // call once
 	        ChampionRouter.init(container, '#champion-content');
 	        if (!Client.is_logged_in()) {
 	            $('.btn-login').on('click', function () {
