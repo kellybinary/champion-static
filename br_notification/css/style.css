@@ -2204,7 +2204,7 @@ p {
 }
 .notify .talk-bubble {
   position: absolute;
-  top: 50px;
+  top: 48px;
   right: -5px;
   min-width: 245px;
   z-index: 1;
