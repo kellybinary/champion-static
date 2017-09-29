@@ -25033,7 +25033,7 @@
 	            Client.set_cookie('loginid_list', loginid_list);
 	        }
 	        Client.set_cookie('token', tokens[loginid].token);
-	        Client.set_cookie('login_time', new Date().toISOString());
+	        Client.set('notification_shown', 0);
 
 	        // set flags
 	        GTM.setLoginFlag();
@@ -25211,8 +25211,6 @@
 	var State = __webpack_require__(308).State;
 	var url_for = __webpack_require__(311).url_for;
 	var template = __webpack_require__(309).template;
-	var Cookies = __webpack_require__(306);
-	var moment = __webpack_require__(302);
 
 	var Notify = function () {
 	    'use strict';
@@ -25319,11 +25317,11 @@
 	    var updateUI = function updateUI() {
 	        if (!numberOfNotification) return;
 	        $('.toggle-notification').html('<span class="bell-active"></span>');
-	        var login_time = Cookies.get('login_time');
 
-	        if (lessThan5Seconds(login_time)) {
+	        if (!Client.get('notification_shown')) {
 	            // avoid showing talk bubble on every page refresh
 	            showTalkBubble();
+	            Client.set('notification_shown', 1);
 	        }
 	    };
 
@@ -25346,10 +25344,6 @@
 
 	    var hideTalkBubble = function hideTalkBubble() {
 	        $('.talk-bubble').fadeOut();
-	    };
-
-	    var lessThan5Seconds = function lessThan5Seconds(date) {
-	        return moment(date).isAfter(moment().subtract(5, 'seconds'));
 	    };
 
 	    return {

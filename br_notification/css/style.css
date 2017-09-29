@@ -2249,10 +2249,10 @@ p {
 
 .notifications {
   position: fixed;
-  right: -300px;
+  right: -350px;
   z-index: 999;
   height: 100%;
-  width: 300px;
+  width: 350px;
   top: 50px;
   background-color: #f2f2f2;
   -webkit-transform: translateX(0);
@@ -2275,8 +2275,8 @@ p {
   background-color: #fff;
   padding: 15px 10px;
   color: #004385;
-  -webkit-box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3);
-          box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 2px 4px 0px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 2px 4px 0px rgba(0, 0, 0, 0.5);
   font-weight: 500;
 }
 .notifications__header .close {
