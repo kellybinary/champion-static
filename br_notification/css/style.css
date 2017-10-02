@@ -2665,10 +2665,13 @@ p {
   height: 100%;
   width: 100%;
   z-index: 1001;
+  top: 0;
+  left: 0;
 }
 @media (min-width: 1024px) {
   .overlay {
     z-index: initial;
+    top: 50px;
   }
 }
 
