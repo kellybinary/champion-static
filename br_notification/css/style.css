@@ -147,7 +147,6 @@ h1.main-title {
   -webkit-flex-grow: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
-  height: 100%;
 }
 #verify-email-form #email {
   text-align: center;
@@ -474,7 +473,7 @@ h1.main-title {
 }
 
 .contact-us-header {
-  background-image: url("../images/contact_us/contact_us_banner.png") top left/cover no-repeat;
+  background: url("../images/contact_us/contact_us_banner.png") top left/cover no-repeat;
 }
 .contact-us-header h4 {
   margin-bottom: 0;
@@ -1310,6 +1309,260 @@ iframe {
 
 .align-end {
   text-align: right;
+}
+
+.modal {
+  position: fixed;
+  background: #f2f2f2;
+  margin: auto;
+  top: 20px;
+  bottom: 20px;
+  right: 0;
+  left: 0;
+  text-align: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border-radius: 10px;
+  z-index: -1;
+  width: 300px;
+  height: 80vh;
+  max-height: 580px;
+  -webkit-box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+.modal h1 {
+  font-size: 18px;
+}
+@media screen and (min-width: 320px) {
+  .modal h1 {
+    font-size: calc(18px + 18 * ((100vw - 320px) / 880));
+  }
+}
+@media screen and (min-width: 1200px) {
+  .modal h1 {
+    font-size: 36px;
+  }
+}
+.modal h2 {
+  font-size: 16px;
+}
+@media screen and (min-width: 320px) {
+  .modal h2 {
+    font-size: calc(16px + 12 * ((100vw - 320px) / 880));
+  }
+}
+@media screen and (min-width: 1200px) {
+  .modal h2 {
+    font-size: 28px;
+  }
+}
+.modal h1, .modal h2, .modal h3, .modal h4 {
+  line-height: 1.25;
+}
+.modal p, .modal a {
+  line-height: 1.5;
+}
+.modal p, .modal a {
+  font-size: 12px;
+}
+@media screen and (min-width: 320px) {
+  .modal p, .modal a {
+    font-size: calc(12px + 4 * ((100vw - 320px) / 880));
+  }
+}
+@media screen and (min-width: 1200px) {
+  .modal p, .modal a {
+    font-size: 16px;
+  }
+}
+.modal--wrapper {
+  height: initial;
+  width: inherit;
+  margin: 0;
+}
+.modal__header {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.modal__header .close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 100002;
+}
+.modal__header .close:before {
+  content: url("../images/signup/cross.svg");
+}
+.modal__body {
+  padding: 30px 0 0;
+  background: #f2f2f2;
+}
+.modal__body h2 {
+  margin-bottom: 0 !important;
+}
+.modal__form_wrapper {
+  padding: 20px 0 30px;
+  width: 200px;
+  margin: 0 auto;
+}
+.modal__form_wrapper h1 {
+  margin-bottom: 0;
+}
+.modal__form_wrapper form {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 20px 0 !important;
+}
+.modal__form_wrapper input, .modal__form_wrapper button {
+  text-align: center;
+  width: 200px !important;
+  height: 40px;
+  font-size: 14px;
+}
+.modal__form_wrapper input ~ *, .modal__form_wrapper button ~ * {
+  margin: 10px 0 0;
+}
+.modal__form_wrapper .separator {
+  margin: 20px auto;
+  width: 200px;
+  background: #fff;
+}
+.modal__form_wrapper .error-msg:before {
+  content: '*';
+}
+.modal__form_message {
+  padding: 50px 30px;
+}
+.modal__footer {
+  margin: auto;
+  bottom: 0;
+  font-size: 12px !important;
+}
+.modal__footer a:hover {
+  color: #013365;
+}
+.modal .asterisk {
+  color: #ea202d;
+  font-size: 14px;
+}
+.modal .color-blue {
+  color: #004385;
+}
+.modal .dash {
+  height: 2px;
+  background: #fff;
+  width: 30px;
+  margin: 0 auto;
+}
+.modal .flex-display {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 100%;
+}
+.modal .flex-display-swap {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+  -webkit-flex-direction: column-reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
+  height: initial;
+}
+@media (min-width: 768px) {
+  .modal {
+    overflow: hidden;
+    width: 700px;
+    height: 395px;
+  }
+  .modal__body {
+    padding: 30px;
+    height: 395px;
+    background: #013365;
+  }
+  .modal__body h2, .modal__body p, .modal__body a {
+    color: #fff;
+  }
+  .modal__form_wrapper {
+    padding: 30px;
+    height: 395px;
+  }
+  .modal__form_wrapper h1 {
+    margin-bottom: 20px;
+  }
+  .modal__form_wrapper form {
+    margin: 40px 0 !important;
+  }
+  .modal__form_wrapper input, .modal__form_wrapper button {
+    width: 338px !important;
+  }
+  .modal__form_wrapper input ~ .error-msg.invisible ~ button, .modal__form_wrapper button ~ .error-msg.invisible ~ button {
+    margin: 20px 0 0;
+  }
+  .modal__form_wrapper input ~ .error-msg ~ button, .modal__form_wrapper button ~ .error-msg ~ button {
+    margin: 10px 0 0;
+  }
+  .modal__footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 0 30px 10px;
+  }
+  .modal__footer p, .modal__footer a, .modal__footer a:hover {
+    font-size: 12px;
+    color: #fff;
+  }
+  .modal .flex-display-swap {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    height: 100%;
+  }
+  .modal .invisible.visible-md-down {
+    display: block !important;
+  }
+}
+
+.modal--show {
+  opacity: 1;
+  z-index: 100001;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.5;
+  z-index: 99999;
+  height: 100%;
+  width: 100%;
+}
+
+.field-error {
+  border: 1px solid #ea202d;
 }
 
 .fx-advisors {
@@ -4137,7 +4390,8 @@ p {
   }
 
   .navbar__button-group {
-    width: 100px;
+    width: 40px;
+    padding: 25px 0;
   }
 }
 @media (max-width: 767px) {
@@ -4182,6 +4436,10 @@ p {
 
   .fx-row-margin-bottom {
     margin-bottom: 30px;
+  }
+
+  .hidden-sm-up {
+    display: none !important;
   }
 }
 @media (max-width: 991px) {

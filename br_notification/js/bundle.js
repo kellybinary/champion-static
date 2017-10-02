@@ -18499,7 +18499,6 @@
 	var ChampionSocket = __webpack_require__(306);
 	var State = __webpack_require__(309).State;
 	var default_redirect_url = __webpack_require__(312).default_redirect_url;
-	var url_for = __webpack_require__(312).url_for;
 	var Utility = __webpack_require__(310);
 	var Notify = __webpack_require__(317);
 	var Cashier = __webpack_require__(322);
@@ -18511,14 +18510,14 @@
 	var ChampionContact = __webpack_require__(300);
 	var ChampionEndpoint = __webpack_require__(329);
 	var Home = __webpack_require__(330);
-	var LostPassword = __webpack_require__(333);
-	var MT5 = __webpack_require__(334);
-	var MT5WebPlatform = __webpack_require__(335);
-	var BinaryOptions = __webpack_require__(336);
-	var ChampionNewReal = __webpack_require__(337);
-	var ChampionNewVirtual = __webpack_require__(339);
-	var ResetPassword = __webpack_require__(341);
-	var ChampionSignup = __webpack_require__(342);
+	var LostPassword = __webpack_require__(334);
+	var MT5 = __webpack_require__(335);
+	var MT5WebPlatform = __webpack_require__(336);
+	var BinaryOptions = __webpack_require__(337);
+	var ChampionNewReal = __webpack_require__(338);
+	var ChampionNewVirtual = __webpack_require__(340);
+	var ResetPassword = __webpack_require__(342);
+	var ChampionSignup = __webpack_require__(333);
 	var TradingTimes = __webpack_require__(343);
 	var Authenticate = __webpack_require__(344);
 	var ChangePassword = __webpack_require__(345);
@@ -18635,7 +18634,7 @@
 
 	    var errorMessages = {
 	        login: function login(module) {
-	            return module === MetaTrader ? Utility.template('To register an MT5 account, please <a href="[_1]" class="login">log in</a> to your ChampionFX account<br />\n                Don\'t have a ChampionFX account? <a href="[_2]">Create one</a> now', ['java' + 'script:;', url_for('/')]) : Utility.template('Please <a href="[_1]" class="login">log in</a> to view this page.', ['java' + 'script:;']);
+	            return module === MetaTrader ? Utility.template('To register an MT5 account, please <a href="[_1]" class="login">log in</a> to your ChampionFX account<br />\n                Don\'t have a ChampionFX account? <a href="[_1]" class="toggle-signup-modal">Create one</a> now', ['java' + 'script:;']) : Utility.template('Please <a href="[_1]" class="login">log in</a> to view this page.', ['java' + 'script:;']);
 	        },
 	        only_virtual: 'Sorry, this feature is available to virtual accounts only.',
 	        only_real: 'This feature is not relevant to virtual-money accounts.'
@@ -24693,6 +24692,8 @@
 	        if (!Client.is_logged_in()) return;
 	        if (!Client.is_virtual()) {
 	            Notify.updateNotifications();
+	        } else {
+	            Notify.removeUI();
 	        }
 	        setMetaTrader();
 
@@ -24854,7 +24855,7 @@
 	    var numberOfNotification = 0;
 
 	    var init = function init() {
-	        if (!Client.is_logged_in()) return;
+	        if (!Client.is_logged_in() || Client.is_virtual()) return;
 	        createUI();
 	        updateNotifications();
 	    };
@@ -24886,10 +24887,10 @@
 
 	            var validations = {
 	                authenticate: function authenticate() {
-	                    return get_account_status.prompt_client_to_authenticate && !Client.is_virtual();
+	                    return get_account_status.prompt_client_to_authenticate;
 	                },
 	                risk: function risk() {
-	                    return riskAssessment() && !Client.is_virtual();
+	                    return riskAssessment();
 	                },
 	                tnc: function tnc() {
 	                    return Client.should_accept_tnc();
@@ -24938,6 +24939,10 @@
 	        // attach event listeners
 	        $('.toggle-notification, .talk-bubble').off('click').on('click', showNotifications);
 	        $('.notifications__header .close, .navbar').off('click').on('click', hideNotifications);
+	    };
+
+	    var removeUI = function removeUI() {
+	        $('.toggle-notification, .talk-bubble, .notifications').remove();
 	    };
 
 	    var showNotifications = function showNotifications(e) {
@@ -24991,7 +24996,8 @@
 
 	    return {
 	        init: init,
-	        updateNotifications: updateNotifications
+	        updateNotifications: updateNotifications,
+	        removeUI: removeUI
 	    };
 	}();
 
@@ -25731,7 +25737,7 @@
 
 	    var validators_map = {
 	        req: { func: validRequired, message: '' },
-	        email: { func: validEmail, message: 'Invalid email address' },
+	        email: { func: validEmail, message: 'Invalid email address.' },
 	        password: { func: validPassword, message: 'Password should have lower and uppercase letters with numbers.' },
 	        general: { func: validGeneral, message: 'Only letters, numbers, space, hyphen, period, and apostrophe are allowed.' },
 	        address: { func: validAddress, message: 'Only letters, numbers, space, hyphen, period, and apostrophe are allowed.' },
@@ -25806,12 +25812,16 @@
 	    var clearError = function clearError(field) {
 	        if (field.$error && field.$error.length) {
 	            field.$error.addClass(hidden_class);
+	            field.$.removeClass('field-error');
 	        }
 	    };
 
 	    var showError = function showError(field, message) {
 	        clearError(field);
-	        field.$error.html(message).removeClass(hidden_class);
+	        if (field.type === 'input') {
+	            field.$.addClass('field-error');
+	        }
+	        field.$error.text(message).removeClass(hidden_class);
 	    };
 
 	    var validate = function validate(form_selector) {
@@ -26271,6 +26281,7 @@
 	'use strict';
 
 	var Slider = __webpack_require__(331);
+	var ChampionSignup = __webpack_require__(333);
 
 	var Home = function () {
 	    'use strict';
@@ -26279,9 +26290,7 @@
 	        Slider.init();
 	        var hash = window.location.hash.substring(1);
 	        if (hash === 'signup') {
-	            setTimeout(function () {
-	                $.scrollTo($('#verify-email-form'), 500);
-	            }, 500);
+	            ChampionSignup.showModal();
 	        }
 	    };
 
@@ -29014,6 +29023,121 @@
 
 	'use strict';
 
+	var ChampionSocket = __webpack_require__(306);
+	var Validation = __webpack_require__(324);
+
+	var ChampionSignup = function () {
+	    'use strict';
+
+	    var form_selector = '.frm-verify-email';
+	    var hidden_class = 'invisible';
+
+	    var is_active = false,
+	        $form = void 0,
+	        $input = void 0,
+	        $button = void 0,
+	        $after_signup_msg = void 0,
+	        $before_signup_el = void 0,
+	        $modal = void 0;
+
+	    var load = function load() {
+	        $after_signup_msg = $('.modal__form_message');
+	        $before_signup_el = $('.modal__form_wrapper, .modal__body, .modal__footer');
+	        $modal = $('.modal');
+
+	        $('.toggle-signup-modal').off('click').on('click', showModal);
+	        $('.modal__header .close').off('click').on('click', hideModal);
+
+	        eventHandler();
+	    };
+
+	    var showModal = function showModal(e) {
+	        if (e) e.stopPropagation();
+	        $modal.toggleClass('modal--show');
+	        if ($('.modal--show').length) {
+	            $('body').css('position', 'static').append('<div class="modal-overlay"></div>');
+	            $('.modal-overlay').off('click', hideModal).on('click', hideModal);
+	            resetForm();
+
+	            // if sign-up success message is already visible, show sign-up form
+	            if (!$after_signup_msg.hasClass(hidden_class)) {
+	                changeVisibility($after_signup_msg, 'hide');
+	                changeVisibility($before_signup_el, 'show');
+	            }
+	        }
+	    };
+
+	    var hideModal = function hideModal(e) {
+	        e.stopPropagation();
+	        $modal.removeClass('modal--show');
+	        $('.modal-overlay').remove();
+	    };
+
+	    var resetForm = function resetForm() {
+	        $input.val('').removeClass('field-error');
+	        $(form_selector + ':visible #signup_error').addClass(hidden_class);
+	    };
+
+	    var changeVisibility = function changeVisibility($selector, action) {
+	        if (action === 'hide') {
+	            $selector.addClass(hidden_class);
+	        } else {
+	            $selector.removeClass(hidden_class);
+	        }
+	    };
+
+	    var eventHandler = function eventHandler() {
+	        $form = $(form_selector + ':visible');
+	        $input = $form.find('input');
+	        $button = $form.find('button');
+	        $button.off('click', submit).on('click', submit);
+	        is_active = true;
+	        Validation.init(form_selector, [{ selector: '#email', validations: ['req', 'email'], msg_element: '#signup_error', no_scroll: true }]);
+	    };
+
+	    var unload = function unload() {
+	        if (is_active) {
+	            $button.off('click', submit);
+	            $input.val('');
+	        }
+	        is_active = false;
+
+	        $('toggle-modal').off('click');
+	        $('.modal__header .close').off('click');
+	    };
+
+	    var submit = function submit(e) {
+	        e.preventDefault();
+	        if (is_active && Validation.validate(form_selector)) {
+	            ChampionSocket.send({
+	                verify_email: $input.val(),
+	                type: 'account_opening'
+	            }).then(function (response) {
+	                if (response.verify_email) {
+	                    changeVisibility($after_signup_msg, 'show');
+	                    changeVisibility($before_signup_el, 'hide');
+	                } else if (response.error) {
+	                    $(form_selector + ':visible #signup_error').text(response.error.message).removeClass(hidden_class);
+	                }
+	            });
+	        }
+	    };
+
+	    return {
+	        load: load,
+	        unload: unload,
+	        showModal: showModal
+	    };
+	}();
+
+	module.exports = ChampionSignup;
+
+/***/ }),
+/* 334 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
 	var Client = __webpack_require__(302);
 	var Validation = __webpack_require__(324);
 	var ChampionSocket = __webpack_require__(306);
@@ -29070,10 +29194,12 @@
 	module.exports = LostPassword;
 
 /***/ }),
-/* 334 */
-/***/ (function(module, exports) {
+/* 335 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
+
+	var Client = __webpack_require__(302);
 
 	var MT5 = function () {
 	    'use strict';
@@ -29082,6 +29208,16 @@
 
 	    var load = function load() {
 	        $('.has-tabs').tabs().removeClass(hidden_class);
+
+	        if (!Client.is_logged_in()) {
+	            var $signup_btn = $('#mt5-accounts').find('a');
+	            $signup_btn.addClass('toggle-signup-modal');
+	            replaceHref($signup_btn);
+	        }
+	    };
+
+	    var replaceHref = function replaceHref($element) {
+	        $element.attr('href', 'java' + 'script:;');
 	    };
 
 	    return {
@@ -29092,7 +29228,7 @@
 	module.exports = MT5;
 
 /***/ }),
-/* 335 */
+/* 336 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29137,7 +29273,7 @@
 	module.exports = MT5WebPlatform;
 
 /***/ }),
-/* 336 */
+/* 337 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -29157,7 +29293,7 @@
 	module.exports = BinaryOptions;
 
 /***/ }),
-/* 337 */
+/* 338 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29168,7 +29304,7 @@
 	var Utility = __webpack_require__(310);
 	var default_redirect_url = __webpack_require__(312).default_redirect_url;
 	var Validation = __webpack_require__(324);
-	var DatePicker = __webpack_require__(338).DatePicker;
+	var DatePicker = __webpack_require__(339).DatePicker;
 
 	var ChampionNewRealAccount = function () {
 	    'use strict';
@@ -29324,7 +29460,7 @@
 	module.exports = ChampionNewRealAccount;
 
 /***/ }),
-/* 338 */
+/* 339 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29488,7 +29624,7 @@
 	};
 
 /***/ }),
-/* 339 */
+/* 340 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29497,7 +29633,7 @@
 	var Client = __webpack_require__(302);
 	var default_redirect_url = __webpack_require__(312).default_redirect_url;
 	var Utility = __webpack_require__(310);
-	var FormManager = __webpack_require__(340);
+	var FormManager = __webpack_require__(341);
 
 	var ChampionNewVirtualAccount = function () {
 	    'use strict';
@@ -29556,7 +29692,7 @@
 	module.exports = ChampionNewVirtualAccount;
 
 /***/ }),
-/* 340 */
+/* 341 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29705,7 +29841,7 @@
 	module.exports = FormManager;
 
 /***/ }),
-/* 341 */
+/* 342 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29717,7 +29853,7 @@
 	var get_params = __webpack_require__(312).get_params;
 	var Utility = __webpack_require__(310);
 	var Validation = __webpack_require__(324);
-	var DatePicker = __webpack_require__(338).DatePicker;
+	var DatePicker = __webpack_require__(339).DatePicker;
 
 	var ResetPassword = function () {
 	    'use strict';
@@ -29817,98 +29953,13 @@
 	module.exports = ResetPassword;
 
 /***/ }),
-/* 342 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var ChampionSocket = __webpack_require__(306);
-	var Validation = __webpack_require__(324);
-	var Client = __webpack_require__(302);
-
-	var ChampionSignup = function () {
-	    'use strict';
-
-	    var form_selector = '.frm-verify-email';
-	    var signup_selector = '#signup';
-	    var hidden_class = 'invisible';
-
-	    var is_active = false,
-	        $form = void 0,
-	        $input = void 0,
-	        $button = void 0;
-
-	    var load = function load() {
-	        if (Client.is_logged_in() || /(new-account|terms-and-conditions|user|cashier)/.test(window.location.pathname)) {
-	            changeVisibility($(form_selector), 'hide');
-	        } else {
-	            changeVisibility($(form_selector), 'show');
-	            if ($(form_selector).length === 1) {
-	                changeVisibility($(signup_selector), 'show');
-	            } else {
-	                changeVisibility($(signup_selector), 'hide');
-	            }
-	            eventHandler();
-	        }
-	    };
-
-	    var changeVisibility = function changeVisibility($selector, action) {
-	        if (action === 'hide') {
-	            $selector.addClass(hidden_class);
-	        } else {
-	            $selector.removeClass(hidden_class);
-	        }
-	    };
-
-	    var eventHandler = function eventHandler() {
-	        $form = $(form_selector + ':visible');
-	        $input = $form.find('input');
-	        $button = $form.find('button');
-	        $button.off('click', submit).on('click', submit);
-	        is_active = true;
-	        Validation.init(form_selector, [{ selector: '#email', validations: ['req', 'email'], msg_element: '#signup_error' }]);
-	    };
-
-	    var unload = function unload() {
-	        if (is_active) {
-	            $button.off('click', submit);
-	            $input.val('');
-	        }
-	        is_active = false;
-	    };
-
-	    var submit = function submit(e) {
-	        e.preventDefault();
-	        if (is_active && Validation.validate(form_selector)) {
-	            ChampionSocket.send({
-	                verify_email: $input.val(),
-	                type: 'account_opening'
-	            }).then(function (response) {
-	                if (response.verify_email) {
-	                    $('.signup-box').text('Thank you for signing up! Please check your email to complete the registration process.');
-	                } else if (response.error) {
-	                    $(form_selector + ':visible #signup_error').text(response.error.message).removeClass(hidden_class);
-	                }
-	            });
-	        }
-	    };
-
-	    return {
-	        load: load,
-	        unload: unload
-	    };
-	}();
-
-	module.exports = ChampionSignup;
-
-/***/ }),
 /* 343 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var ChampionSocket = __webpack_require__(306);
-	var DatePicker = __webpack_require__(338).DatePicker;
+	var DatePicker = __webpack_require__(339).DatePicker;
 	var moment = __webpack_require__(303);
 
 	var TradingTimes = function () {
@@ -37286,10 +37337,10 @@
 
 	var moment = __webpack_require__(303);
 	var Client = __webpack_require__(302);
-	var FormManager = __webpack_require__(340);
+	var FormManager = __webpack_require__(341);
 	var ChampionSocket = __webpack_require__(306);
 	var dateValueChanged = __webpack_require__(310).dateValueChanged;
-	var DatePicker = __webpack_require__(338).DatePicker;
+	var DatePicker = __webpack_require__(339).DatePicker;
 	var TimePicker = __webpack_require__(357);
 
 	var SelfExclusion = function () {
