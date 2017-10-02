@@ -3046,16 +3046,17 @@ p {
   border-right: 5px solid transparent;
   border-top: 5px solid #004385;
 }
-#mt_account_management #account_selector #mt5_account.open, #mt_account_management #account_selector #mt5_account:hover {
+#mt_account_management #account_selector #mt5_account:hover {
+  border-color: #004385;
+}
+#mt_account_management #account_selector #mt5_account.open {
   background: #004385;
   color: #fff;
   border-color: #004385;
-}
-#mt_account_management #account_selector #mt5_account.open:after, #mt_account_management #account_selector #mt5_account:hover:after {
-  border-top-color: #fff;
-}
-#mt_account_management #account_selector #mt5_account.open {
   border-radius: 5px 5px 0 0;
+}
+#mt_account_management #account_selector #mt5_account.open:after {
+  border-top-color: #fff;
 }
 #mt_account_management #account_selector #accounts_list {
   width: 100%;
