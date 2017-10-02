@@ -24937,7 +24937,7 @@
 
 	        // attach event listeners
 	        $('.toggle-notification, .talk-bubble').off('click').on('click', showNotifications);
-	        $('.notifications__header .close').off('click').on('click', hideNotifications);
+	        $('.notifications__header .close, .navbar').off('click').on('click', hideNotifications);
 	    };
 
 	    var showNotifications = function showNotifications(e) {
@@ -24980,6 +24980,7 @@
 	    };
 
 	    var showTalkBubble = function showTalkBubble() {
+	        if (!numberOfNotification) return;
 	        $('.talk-bubble').html('You got ' + numberOfNotification + ' notification' + (numberOfNotification === 1 ? '' : 's')).fadeIn(500);
 	        setTimeout(hideTalkBubble, 5000);
 	    };
