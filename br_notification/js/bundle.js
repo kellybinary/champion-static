@@ -24911,7 +24911,7 @@
 	                    }
 	                    check_statuses.some(function (object) {
 	                        var key = object.validation.name;
-	                        if ( /* object.validation() */true) {
+	                        if (object.validation()) {
 	                            addToNotifications(object.message(), key);
 	                        } else {
 	                            removeFromNotifications(key);
