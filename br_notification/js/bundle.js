@@ -24911,12 +24911,16 @@
 	                    }
 	                    check_statuses.some(function (object) {
 	                        var key = object.validation.name;
-	                        if (object.validation()) {
+	                        if ( /* object.validation() */true) {
 	                            addToNotifications(object.message(), key);
 	                        } else {
 	                            removeFromNotifications(key);
 	                        }
 	                    });
+	                    if (!Client.get('notification_shown')) {
+	                        showTalkBubble();
+	                        Client.set('notification_shown', 1);
+	                    }
 	                });
 	            });
 	        });
@@ -24956,12 +24960,6 @@
 
 	    var updateUI = function updateUI() {
 	        $('.toggle-notification')[numberOfNotification ? 'addClass' : 'removeClass']('bell-active');
-
-	        if (!Client.get('notification_shown')) {
-	            // avoid showing talk bubble on every page refresh
-	            showTalkBubble();
-	            Client.set('notification_shown', 1);
-	        }
 	    };
 
 	    var addToNotifications = function addToNotifications(msg, key) {
