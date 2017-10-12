@@ -1304,26 +1304,31 @@ iframe {
   background-image: url("../images/mt5/how_payment_works/arrow_withdraw.svg");
 }
 #how_payment_works fieldset .arrow-3 > div {
-  height: 110px;
-  line-height: 30px;
-  background: url("../images/mt5/how_payment_works/arrow_deposit_3.svg") no-repeat center;
+  height: 180px;
+  margin-bottom: 40px;
+  background: url("../images/mt5/how_payment_works/deposit.svg") no-repeat center;
 }
-@media (min-width: 769px) {
+#how_payment_works fieldset .arrow-3 > div div {
+  line-height: 50px;
+}
+@media (max-width: 768px) {
   #how_payment_works fieldset .arrow-3 > div {
-    height: 145px;
-    line-height: 40px;
+    height: 110px;
+  }
+  #how_payment_works fieldset .arrow-3 > div div {
+    line-height: 30px;
   }
 }
 #how_payment_works fieldset .arrow-3 > div.withdraw {
-  background-image: url("../images/mt5/how_payment_works/arrow_withdraw_3.svg");
+  background: url("../images/mt5/how_payment_works/withdraw.svg") no-repeat center;
 }
 #how_payment_works fieldset .arrow-3 > div :first-child {
-  -webkit-transform: rotate(-15deg) translateX(-5px);
-          transform: rotate(-15deg) translateX(-5px);
+  -webkit-transform: rotateZ(-15deg) translateY(-5px) translateX(-10px);
+          transform: rotateZ(-15deg) translateY(-5px) translateX(-10px);
 }
 #how_payment_works fieldset .arrow-3 > div :last-child {
-  -webkit-transform: rotate(15deg);
-          transform: rotate(15deg);
+  -webkit-transform: rotateZ(15deg) translateY(10px) translateX(5px);
+          transform: rotateZ(15deg) translateY(10px) translateX(5px);
 }
 #how_payment_works fieldset .mt5-account {
   text-align: left;
@@ -4472,7 +4477,7 @@ p {
     margin: 0;
   }
   #how_payment_works fieldset legend {
-    margin-left: 20px;
+    margin-left: 10px;
   }
   #how_payment_works fieldset .amount {
     font-size: 16px;
