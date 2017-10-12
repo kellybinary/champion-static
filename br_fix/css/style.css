@@ -4475,10 +4475,9 @@ p {
     margin-left: 20px;
   }
   #how_payment_works fieldset .amount {
-    position: relative;
     font-size: 16px;
   }
-  #how_payment_works fieldset .amount .hidden-sm-up {
+  #how_payment_works fieldset .amount span.hidden-sm-up {
     position: absolute;
     top: 35%;
     left: 0;
