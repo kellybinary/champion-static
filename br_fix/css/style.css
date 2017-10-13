@@ -4509,16 +4509,10 @@ p {
             align-items: center;
     margin: 20px 0;
   }
-  #how_payment_works fieldset .arrow-1 > div {
+  #how_payment_works fieldset .arrow-1 > div, #how_payment_works fieldset .arrow-3 > div {
     background: url("../images/mt5/how_payment_works/arrow_vertical_down.svg") no-repeat center;
   }
-  #how_payment_works fieldset .arrow-1 > div.withdraw {
-    background: url("../images/mt5/how_payment_works/arrow_vertical_up.svg") no-repeat center;
-  }
-  #how_payment_works fieldset .arrow-3 > div {
-    background: url("../images/mt5/how_payment_works/arrow_vertical_down.svg") no-repeat center;
-  }
-  #how_payment_works fieldset .arrow-3 > div.withdraw {
+  #how_payment_works fieldset .arrow-1 > div.withdraw, #how_payment_works fieldset .arrow-3 > div.withdraw {
     background: url("../images/mt5/how_payment_works/arrow_vertical_up.svg") no-repeat center;
   }
   #how_payment_works fieldset .mt5-account {
