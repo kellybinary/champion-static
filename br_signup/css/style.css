@@ -1495,30 +1495,6 @@ iframe {
   width: 30px;
   margin: 0 auto;
 }
-.modal .flex-display {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  height: 100%;
-}
-.modal .flex-display-swap {
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: reverse;
-  -webkit-flex-direction: column-reverse;
-      -ms-flex-direction: column-reverse;
-          flex-direction: column-reverse;
-  height: initial;
-}
 @media (min-width: 768px) {
   .modal {
     overflow: hidden;
@@ -1526,7 +1502,7 @@ iframe {
     height: 395px;
   }
   .modal__body {
-    padding: 30px;
+    padding: 25px;
     height: 395px;
     background: #013365;
   }
@@ -1567,13 +1543,6 @@ iframe {
   .modal__footer p, .modal__footer a, .modal__footer a:hover {
     font-size: 12px;
     color: #fff;
-  }
-  .modal .flex-display-swap {
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: row;
-        -ms-flex-direction: row;
-            flex-direction: row;
   }
   .modal .invisible.visible-md-down {
     display: block !important;
