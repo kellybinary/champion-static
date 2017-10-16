@@ -1404,7 +1404,10 @@ iframe {
 .modal__body h4 {
   margin: 10px 0;
 }
-.modal__body .flex-sm-middle p {
+.modal__body .flex-sm-middle.col-xs-9 {
+  padding-left: 5px;
+}
+.modal__body .flex-sm-middle.col-xs-9 p {
   text-align: left;
   font-size: 13px !important;
 }
