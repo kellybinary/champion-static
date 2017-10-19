@@ -29104,6 +29104,7 @@
 
 	        $('toggle-modal').off('click');
 	        $('.modal__header .close').off('click');
+	        $('#google-signup').off('click');
 	    };
 
 	    var submit = function submit(e) {
