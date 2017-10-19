@@ -24601,6 +24601,11 @@
 	        return server_url && /qa/.test(server_url) ? 'https://www.' + server_url.split('.')[1] + '.com/oauth2/authorize?app_id=' + getAppId() + '&l=' + getLanguage() + '&brand=champion' : 'https://oauth.champion-fx.com/oauth2/authorize?app_id=' + getAppId() + '&l=' + getLanguage();
 	    };
 
+	    var social_login = function social_login(social) {
+	        var server_url = localStorage.getItem('config.server_url');
+	        return server_url && /qa/.test(server_url) ? 'https://www.' + server_url.split('.')[1] + '.com/oauth2/authorize?app_id=' + getAppId() + '&l=' + getLanguage() + '&brand=champion&social_signup=' + social : 'https://oauth.champion-fx.com/oauth2/authorize?app_id=' + getAppId() + '&l=' + getLanguage();
+	    };
+
 	    var is_login_pages = function is_login_pages() {
 	        return (/logged_inws/.test(document.URL)
 	        );
@@ -24609,7 +24614,8 @@
 	    return {
 	        redirect_to_login: redirect_to_login,
 	        login_url: login_url,
-	        is_login_pages: is_login_pages
+	        is_login_pages: is_login_pages,
+	        social_login: social_login
 	    };
 	}();
 
@@ -29012,6 +29018,7 @@
 	'use strict';
 
 	var ChampionSocket = __webpack_require__(306);
+	var Login = __webpack_require__(314);
 	var Validation = __webpack_require__(324);
 
 	var ChampionSignup = function () {
@@ -29081,6 +29088,12 @@
 	        $button.off('click', submit).on('click', submit);
 	        is_active = true;
 	        Validation.init(form_selector, [{ selector: '#email', validations: ['req', 'email'], msg_element: '#signup_error', no_scroll: true }]);
+	        $('#google-signup').off('click', loginGoogle).on('click', loginGoogle);
+	    };
+
+	    var loginGoogle = function loginGoogle(e) {
+	        e.preventDefault();
+	        window.location.href = Login.social_login('google');
 	    };
 
 	    var unload = function unload() {
