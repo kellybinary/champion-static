@@ -52,8 +52,9 @@
 	window.$ = window.jQuery = __webpack_require__(1);
 
 	__webpack_require__(299);
+	__webpack_require__(300);
 
-	var Champion = __webpack_require__(300);
+	var Champion = __webpack_require__(301);
 
 	$(window).on('load', Champion.init);
 
@@ -18447,6 +18448,19 @@
 
 	'use strict';
 
+	(function ($) {
+	    $.fn.setVisibility = function (make_visible) {
+	        this[(make_visible ? 'remove' : 'add') + 'Class']('invisible');
+	        return this;
+	    };
+	})(jQuery);
+
+/***/ }),
+/* 300 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
 	var ChampionContact = function () {
 	    'use strict';
 
@@ -18469,52 +18483,52 @@
 	module.exports = ChampionContact;
 
 /***/ }),
-/* 300 */
+/* 301 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Client = __webpack_require__(301);
-	var GTM = __webpack_require__(312);
-	var Header = __webpack_require__(314);
-	var LoggedIn = __webpack_require__(317);
-	var Login = __webpack_require__(313);
-	var Redirect = __webpack_require__(318);
-	var ChampionRouter = __webpack_require__(316);
-	var SessionDurationLimit = __webpack_require__(319);
-	var ChampionSocket = __webpack_require__(305);
-	var State = __webpack_require__(308).State;
-	var default_redirect_url = __webpack_require__(311).default_redirect_url;
-	var url_for = __webpack_require__(311).url_for;
-	var Utility = __webpack_require__(309);
-	var Cashier = __webpack_require__(320);
-	var CashierPassword = __webpack_require__(321);
-	var CashierDepositWithdraw = __webpack_require__(323);
-	var CashierPaymentMethods = __webpack_require__(324);
-	var CashierTopUpVirtual = __webpack_require__(325);
-	var ClientType = __webpack_require__(326);
-	var ChampionContact = __webpack_require__(299);
-	var ChampionEndpoint = __webpack_require__(327);
-	var Home = __webpack_require__(328);
-	var LostPassword = __webpack_require__(331);
-	var MT5 = __webpack_require__(332);
-	var MT5WebPlatform = __webpack_require__(333);
-	var BinaryOptions = __webpack_require__(334);
-	var ChampionNewReal = __webpack_require__(335);
-	var ChampionNewVirtual = __webpack_require__(337);
-	var ResetPassword = __webpack_require__(339);
-	var ChampionSignup = __webpack_require__(340);
-	var TradingTimes = __webpack_require__(341);
-	var Authenticate = __webpack_require__(342);
-	var ChangePassword = __webpack_require__(343);
-	var Limits = __webpack_require__(344);
-	var LoginHistory = __webpack_require__(345);
-	var MetaTrader = __webpack_require__(346);
-	var ChampionProfile = __webpack_require__(349);
-	var ChampionSecurity = __webpack_require__(353);
-	var SelfExclusion = __webpack_require__(354);
-	var ChampionSettings = __webpack_require__(356);
-	var TNCApproval = __webpack_require__(357);
+	var Client = __webpack_require__(302);
+	var GTM = __webpack_require__(313);
+	var Header = __webpack_require__(315);
+	var LoggedIn = __webpack_require__(319);
+	var Login = __webpack_require__(314);
+	var Redirect = __webpack_require__(320);
+	var ChampionRouter = __webpack_require__(318);
+	var SessionDurationLimit = __webpack_require__(321);
+	var ChampionSocket = __webpack_require__(306);
+	var State = __webpack_require__(309).State;
+	var default_redirect_url = __webpack_require__(312).default_redirect_url;
+	var Utility = __webpack_require__(310);
+	var Notify = __webpack_require__(317);
+	var Cashier = __webpack_require__(322);
+	var CashierPassword = __webpack_require__(323);
+	var CashierDepositWithdraw = __webpack_require__(325);
+	var CashierPaymentMethods = __webpack_require__(326);
+	var CashierTopUpVirtual = __webpack_require__(327);
+	var ClientType = __webpack_require__(328);
+	var ChampionContact = __webpack_require__(300);
+	var ChampionEndpoint = __webpack_require__(329);
+	var Home = __webpack_require__(330);
+	var LostPassword = __webpack_require__(334);
+	var MT5 = __webpack_require__(335);
+	var MT5WebPlatform = __webpack_require__(336);
+	var BinaryOptions = __webpack_require__(337);
+	var ChampionNewReal = __webpack_require__(338);
+	var ChampionNewVirtual = __webpack_require__(340);
+	var ResetPassword = __webpack_require__(342);
+	var ChampionSignup = __webpack_require__(333);
+	var TradingTimes = __webpack_require__(343);
+	var Authenticate = __webpack_require__(344);
+	var ChangePassword = __webpack_require__(345);
+	var Limits = __webpack_require__(346);
+	var LoginHistory = __webpack_require__(347);
+	var MetaTrader = __webpack_require__(348);
+	var ChampionProfile = __webpack_require__(351);
+	var ChampionSecurity = __webpack_require__(355);
+	var SelfExclusion = __webpack_require__(356);
+	var ChampionSettings = __webpack_require__(358);
+	var TNCApproval = __webpack_require__(359);
 
 	var Champion = function () {
 	    'use strict';
@@ -18545,6 +18559,7 @@
 	                SessionDurationLimit.exclusionResponseHandler(response);
 	            }
 	        }, Client.is_logged_in());
+	        Notify.init(); // call once
 	        ChampionRouter.init(container, '#champion-content');
 	        if (!Client.is_logged_in()) {
 	            $('.btn-login').on('click', function () {
@@ -18619,7 +18634,7 @@
 
 	    var errorMessages = {
 	        login: function login(module) {
-	            return module === MetaTrader ? Utility.template('To register an MT5 account, please <a href="[_1]" class="login">log in</a> to your ChampionFX account<br />\n                Don\'t have a ChampionFX account? <a href="[_2]">Create one</a> now', ['java' + 'script:;', url_for('/')]) : Utility.template('Please <a href="[_1]" class="login">log in</a> to view this page.', ['java' + 'script:;']);
+	            return module === MetaTrader ? Utility.template('To register an MT5 account, please <a href="[_1]" class="login">log in</a> to your ChampionFX account<br />\n                Don\'t have a ChampionFX account? <a href="[_1]" class="toggle-signup-modal">Create one</a> now', ['java' + 'script:;']) : Utility.template('Please <a href="[_1]" class="login">log in</a> to view this page.', ['java' + 'script:;']);
 	        },
 	        only_virtual: 'Sorry, this feature is available to virtual accounts only.',
 	        only_real: 'This feature is not relevant to virtual-money accounts.'
@@ -18666,19 +18681,19 @@
 	module.exports = Champion;
 
 /***/ }),
-/* 301 */
+/* 302 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var moment = __webpack_require__(302);
-	var ChampionSocket = __webpack_require__(305);
-	var CookieStorage = __webpack_require__(308).CookieStorage;
-	var LocalStore = __webpack_require__(308).LocalStore;
-	var State = __webpack_require__(308).State;
-	var url = __webpack_require__(311);
-	var template = __webpack_require__(309).template;
-	var Cookies = __webpack_require__(306);
+	var moment = __webpack_require__(303);
+	var ChampionSocket = __webpack_require__(306);
+	var CookieStorage = __webpack_require__(309).CookieStorage;
+	var LocalStore = __webpack_require__(309).LocalStore;
+	var State = __webpack_require__(309).State;
+	var url = __webpack_require__(312);
+	var template = __webpack_require__(310).template;
+	var Cookies = __webpack_require__(307);
 
 	var Client = function () {
 	    var client_object = {};
@@ -18951,7 +18966,7 @@
 	module.exports = Client;
 
 /***/ }),
-/* 302 */
+/* 303 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {//! moment.js
@@ -23256,10 +23271,10 @@
 
 	})));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(303)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(304)(module)))
 
 /***/ }),
-/* 303 */
+/* 304 */
 /***/ (function(module, exports) {
 
 	module.exports = function(module) {
@@ -23275,7 +23290,7 @@
 
 
 /***/ }),
-/* 304 */
+/* 305 */
 /***/ (function(module, exports) {
 
 	function webpackContext(req) {
@@ -23284,20 +23299,20 @@
 	webpackContext.keys = function() { return []; };
 	webpackContext.resolve = webpackContext;
 	module.exports = webpackContext;
-	webpackContext.id = 304;
+	webpackContext.id = 305;
 
 
 /***/ }),
-/* 305 */
+/* 306 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var Cookies = __webpack_require__(306);
-	var getLanguage = __webpack_require__(307).getLanguage;
-	var State = __webpack_require__(308).State;
+	var Cookies = __webpack_require__(307);
+	var getLanguage = __webpack_require__(308).getLanguage;
+	var State = __webpack_require__(309).State;
 
 	var ChampionSocket = function () {
 	    'use strict';
@@ -23504,7 +23519,7 @@
 	module.exports = ChampionSocket;
 
 /***/ }),
-/* 306 */
+/* 307 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
@@ -23656,12 +23671,12 @@
 	});
 
 /***/ }),
-/* 307 */
+/* 308 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Cookies = __webpack_require__(306);
+	var Cookies = __webpack_require__(307);
 
 	var Language = function () {
 	    var all_languages = function all_languages() {
@@ -23721,14 +23736,14 @@
 	};
 
 /***/ }),
-/* 308 */
+/* 309 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var getPropertyValue = __webpack_require__(309).getPropertyValue;
-	var isEmptyObject = __webpack_require__(309).isEmptyObject;
-	var Cookies = __webpack_require__(306);
+	var getPropertyValue = __webpack_require__(310).getPropertyValue;
+	var isEmptyObject = __webpack_require__(310).isEmptyObject;
+	var Cookies = __webpack_require__(307);
 
 	var isStorageSupported = function isStorageSupported(storage) {
 	    if (typeof storage === 'undefined') {
@@ -23907,12 +23922,12 @@
 	};
 
 /***/ }),
-/* 309 */
+/* 310 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	__webpack_require__(310);
+	__webpack_require__(311);
 
 	function showLoadingImage(container) {
 	    var theme = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'dark';
@@ -23977,7 +23992,7 @@
 	            }
 	            $(content).find('> div').addClass(hidden_class).end().find(content_to_show).removeClass(hidden_class);
 
-	            $.scrollTo($(hash), 500, { offset: -5 });
+	            $.scrollTo($(hash), 500, { offset: getOffset(-5) });
 	        }
 	    }
 	}
@@ -24085,6 +24100,33 @@
 	    element.css({ position: type });
 	}
 
+	function getOffset() {
+	    var offset = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
+	    return -$('#top_group.logged-in').height() + (offset || -10);
+	}
+
+	function showLightBox(id, contents, has_close_button) {
+	    var $lightbox = $('<div/>', { id: id || '', class: 'lightbox' }).append($('<div/>', { class: 'lightbox-contents', html: contents }));
+
+	    if (has_close_button) {
+	        $lightbox.find('.lightbox-contents').prepend($('<div/>', { class: 'close' }));
+	        $lightbox.on('click', function (e) {
+	            if (e.target === this || $(e.target).hasClass('close')) {
+	                $lightbox.remove();
+	            }
+	        });
+	    }
+
+	    $('body').append($lightbox);
+	}
+
+	function showSuccessPopup(title, contents) {
+	    var $contents = $('<div/>', { class: 'center-text' }).append($('<div/>', { class: 'main-image' }), $('<h3/>', { text: title }), $('<div/>', { class: 'success-contents', html: contents }));
+
+	    showLightBox('success_popup', $contents, true);
+	}
+
 	module.exports = {
 	    showLoadingImage: showLoadingImage,
 	    isEmptyObject: isEmptyObject,
@@ -24101,12 +24143,15 @@
 	    getPropertyValue: getPropertyValue,
 	    slideIn: slideIn,
 	    slideOut: slideOut,
+	    getOffset: getOffset,
+	    showLightBox: showLightBox,
+	    showSuccessPopup: showSuccessPopup,
 
 	    compareBigUnsignedInt: compareBigUnsignedInt
 	};
 
 /***/ }),
-/* 310 */
+/* 311 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -24322,12 +24367,12 @@
 
 
 /***/ }),
-/* 311 */
+/* 312 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var getLanguage = __webpack_require__(307).getLanguage;
+	var getLanguage = __webpack_require__(308).getLanguage;
 
 	function url_for(path, params, language) {
 	    if (!path) {
@@ -24392,20 +24437,20 @@
 	};
 
 /***/ }),
-/* 312 */
+/* 313 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var moment = __webpack_require__(302);
-	var Client = __webpack_require__(301);
-	var getLanguage = __webpack_require__(307).getLanguage;
-	var Login = __webpack_require__(313);
-	var ChampionSocket = __webpack_require__(305);
-	var State = __webpack_require__(308).State;
-	var Cookies = __webpack_require__(306);
+	var moment = __webpack_require__(303);
+	var Client = __webpack_require__(302);
+	var getLanguage = __webpack_require__(308).getLanguage;
+	var Login = __webpack_require__(314);
+	var ChampionSocket = __webpack_require__(306);
+	var State = __webpack_require__(309).State;
+	var Cookies = __webpack_require__(307);
 
 	var GTM = function () {
 	    'use strict';
@@ -24528,14 +24573,14 @@
 	module.exports = GTM;
 
 /***/ }),
-/* 313 */
+/* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var getAppId = __webpack_require__(305).getAppId;
-	var getLanguage = __webpack_require__(307).getLanguage;
-	var Client = __webpack_require__(301);
+	var getAppId = __webpack_require__(306).getAppId;
+	var getLanguage = __webpack_require__(308).getLanguage;
+	var Client = __webpack_require__(302);
 
 	var Login = function () {
 	    'use strict';
@@ -24571,162 +24616,94 @@
 	module.exports = Login;
 
 /***/ }),
-/* 314 */
+/* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Client = __webpack_require__(301);
-	var formatMoney = __webpack_require__(315).formatMoney;
-	var GTM = __webpack_require__(312);
-	var ChampionRouter = __webpack_require__(316);
-	var ChampionSocket = __webpack_require__(305);
-	var State = __webpack_require__(308).State;
-	var url_for = __webpack_require__(311).url_for;
-	var Utility = __webpack_require__(309);
-	var template = __webpack_require__(309).template;
+	var Client = __webpack_require__(302);
+	var formatMoney = __webpack_require__(316).formatMoney;
+	var GTM = __webpack_require__(313);
+	var Notify = __webpack_require__(317);
+	var ChampionRouter = __webpack_require__(318);
+	var ChampionSocket = __webpack_require__(306);
+	var State = __webpack_require__(309).State;
+	var url_for = __webpack_require__(312).url_for;
 
 	var Header = function () {
 	    'use strict';
 
 	    var hidden_class = 'invisible';
-	    var media_query = window.matchMedia('(max-width: 1199px)');
 
 	    var init = function init() {
 	        ChampionSocket.wait('authorize').then(function () {
-	            updatePage(media_query);
+	            updatePage();
 	        });
 	        $(function () {
 	            var window_path = window.location.pathname;
 	            var path = window_path.replace(/\/$/, '');
 	            var href = decodeURIComponent(path);
-	            $('.top-nav-menu li a').each(function () {
+	            $('.navbar__nav__menu li a').each(function () {
 	                var target = $(this).attr('href');
 	                if (target === href) {
-	                    $(this).addClass('active');
+	                    $(this).parent().addClass('active');
 	                } else {
-	                    $(this).removeClass('active');
+	                    $(this).parent().removeClass('active');
 	                }
 	            });
-	            media_query.addListener(updatePage);
 	        });
 	    };
 
-	    var updatePage = function updatePage(mq) {
-	        if (mq.matches) {
-	            mobileMenu();
-	        } else {
-	            desktopMenu();
-	        }
+	    var updatePage = function updatePage() {
+	        desktopMenu();
 	        userMenu();
 	        if (!Client.is_logged_in()) {
 	            $('#top_group').removeClass('logged-in').find('.logged-out').removeClass(hidden_class);
 	            $('.trading-platform-header').removeClass(hidden_class);
+	            $('.navbar__brand, .navbar__toggle').removeClass('logged-in'); // show logo
 	        }
-	    };
-
-	    var mobileMenu = function mobileMenu() {
-	        var $menu_dropdown = $('.nav-menu-dropdown');
-
-	        $('#mobile-menu > ul').height($(window).innerHeight());
-	        $(window).on('orientationchange resize', function () {
-	            $('#mobile-menu > ul').height($(window).innerHeight());
-	        });
-
-	        $('.nav-menu:not(.selected-account)').unbind('click').on('click', function (e) {
-	            e.stopPropagation();
-	            if ($('.nav-menu-dropdown.slide-in').length) {
-	                Utility.slideOut($menu_dropdown);
-	            } else {
-	                Utility.slideIn($menu_dropdown);
-	            }
-	        });
-
-	        $(document).off('click.mobileMenu').on('click.mobileMenu', function (e) {
-	            e.stopPropagation();
-	            if ($('.nav-menu-dropdown.slide-in').length) {
-	                Utility.slideOut($menu_dropdown);
-	            }
-	        });
-
-	        $('.nav-dropdown-toggle').off('click').on('click', function (e) {
-	            e.stopPropagation();
-	            $(this).next().toggleClass(hidden_class);
-	        });
-
-	        if (!Client.is_logged_in()) {
-	            $('#topbar, #header').find('.logged-out').removeClass(hidden_class);
-	            return;
-	        }
-	        $('#topbar, #header').find('.logged-in').removeClass(hidden_class);
 	    };
 
 	    var desktopMenu = function desktopMenu() {
-	        var $all_accounts = $('#all-accounts');
-	        $all_accounts.find('li.has-sub > a').off('click').on('click', function (e) {
-	            e.stopPropagation();
-	            $(this).siblings('ul').toggleClass(hidden_class);
-	        });
-
 	        if (!Client.is_logged_in()) return;
 
 	        $(window).off('resize.updateBody').on('resize.updateBody', updateBody);
 	        updateBody();
 
 	        $('#header .logged-in').removeClass(hidden_class);
-	        $all_accounts.find('.account > a').removeClass('menu-icon');
-	        var language = $('#select_language');
-	        $('.nav-menu').unbind('click').on('click', function (e) {
-	            e.stopPropagation();
-	            Utility.animateDisappear(language);
-	            if (+$all_accounts.css('opacity') === 1) {
-	                Utility.animateDisappear($all_accounts);
-	            } else {
-	                Utility.animateAppear($all_accounts);
-	            }
-	        });
-
-	        $(document).off('click.desktopMenu').on('click.desktopMenu', function (e) {
-	            e.stopPropagation();
-	            Utility.animateDisappear($all_accounts);
-	        });
 	    };
 
 	    var updateBody = function updateBody() {
 	        $('#champion-container').css('margin-top', $('#top_group').height());
 	    };
-
 	    var userMenu = function userMenu() {
 	        if (!Client.is_logged_in()) return;
 	        if (!Client.is_virtual()) {
-	            displayAccountStatus();
+	            Notify.updateNotifications();
+	        } else {
+	            Notify.removeUI();
 	        }
-
 	        setMetaTrader();
 
 	        var selectedTemplate = function selectedTemplate(text, value, icon) {
-	            return '<div class="hidden-lg-up">\n                 <span class="selected" value="' + value + '">\n                     <li><span class="nav-menu-icon pull-left ' + icon + '"></span>' + text + '</li>\n                 </span>\n                 <div class="separator-line-thin-gray hidden-lg-down"></div>\n             </div>';
+	            return '<div class="hidden-lg-up invisible">\n                 <a rel="#" class="selected" value="' + value + '">\n                     <li><span class="fx ' + icon + '"></span>' + text + '</li>\n                 </a>\n             </div>';
 	        };
 	        var switchTemplate = function switchTemplate(text, value, icon, type, item_class) {
-	            return '<a href="javascript:;" value="' + value + '" class="' + item_class + '">\n                 <li>\n                     <span class="hidden-lg-up nav-menu-icon pull-left ' + icon + '"></span>\n                     <div>' + text + '</div>\n                     <div class="hidden-lg-down account-type">' + type + '</div>\n                 </li>\n                 <div class="separator-line-thin-gray hidden-lg-down"></div>\n            </a>';
+	            return '<li class="' + item_class + '">\n                <a href="javascript:;" value="' + value + '">\n                     <span class="hidden-lg-up fx ' + icon + '"></span>\n                     <div class="account-id">' + text + '</div>\n                     <div class="hidden-lg-down account-type">' + type + '</div>\n                </a>\n            </li>\n            ';
 	        };
 	        var is_mt_pages = State.get('is_mt_pages');
-	        var loginid_select = is_mt_pages ? selectedTemplate('MetaTrader 5', '', 'fx-mt5-icon') : '';
+	        var loginid_select = is_mt_pages ? selectedTemplate('MetaTrader 5', '', 'fx-mt5-o') : '';
 	        Client.get('loginid_array').forEach(function (login) {
 	            if (!login.disabled) {
 	                var curr_id = login.id;
 	                var type = '(Binary ' + (login.real ? 'Real' : 'Virtual') + ' Account)';
-	                var icon = login.real ? 'fx-real-icon' : 'fx-virtual-icon';
+	                var icon = login.real ? 'fx-account-real' : 'fx-account-virtual';
 	                var is_current = curr_id === Client.get('loginid');
 
 	                // default account
 	                if (is_current && !is_mt_pages) {
-	                    $('.main-account .account-type').html(type);
-	                    $('.main-account .account-id').html(curr_id);
-	                    loginid_select += selectedTemplate(curr_id, curr_id, icon);
-	                } else if (is_mt_pages && login.real && Client.is_virtual()) {
-	                    switchLoginId(curr_id);
-	                    return;
+	                    $('.account-type').html(type);
+	                    $('.account-id').html(curr_id);
 	                }
 	                loginid_select += switchTemplate(curr_id, curr_id, icon, type, is_current ? is_mt_pages ? 'mt-show' : 'invisible' : '');
 	            }
@@ -24734,16 +24711,17 @@
 
 	        $('.login-id-list').html(loginid_select);
 	        if (!Client.has_real()) {
-	            $('#all-accounts .upgrade').removeClass(hidden_class);
+	            $('.account-list .upgrade').removeClass(hidden_class);
 	        }
 	        $('.login-id-list a').off('click').on('click', function (e) {
 	            e.preventDefault();
 	            $(this).attr('disabled', 'disabled');
-	            switchLoginId($(this).attr('value'));
-	            if (State.get('is_mt_pages')) {
-	                State.remove('is_mt_pages');
+	            var is_mt = State.get('is_mt_pages');
+	            State.remove('is_mt_pages'); // needs to remove the flag before redirection
+	            if (is_mt || State.get('current_page') === 'metatrader') {
 	                ChampionRouter.forward(url_for('user/settings'));
 	            }
+	            switchLoginId($(this).attr('value')); // should be at the end as this reloads the page
 	        });
 	    };
 
@@ -24753,20 +24731,124 @@
 	        $('#header, #footer').find('.mt-show')[is_mt_pages ? 'removeClass' : 'addClass'](hidden_class);
 	    };
 
-	    var displayNotification = function displayNotification(message) {
-	        var $msg_notification = $('#msg_notification');
-	        $msg_notification.html(message);
-	        if ($msg_notification.is(':hidden')) $msg_notification.slideDown(500, updateBody);
+	    var switchLoginId = function switchLoginId(loginid) {
+	        if (!loginid || loginid.length === 0 || loginid === Client.get('loginid')) {
+	            return;
+	        }
+	        var token = Client.get_token(loginid);
+	        if (!token || token.length === 0) {
+	            ChampionSocket.send({ logout: 1 });
+	            return;
+	        }
+
+	        // cleaning the previous values
+	        Client.clear_storage_values();
+	        // set cookies: loginid, token
+	        Client.set('loginid', loginid);
+	        Client.set_cookie('loginid', loginid);
+	        Client.set_cookie('token', token);
+	        GTM.setLoginFlag();
+	        $('.login-id-list a').removeAttr('disabled');
+	        window.location.reload();
 	    };
 
-	    var hideNotification = function hideNotification() {
-	        var $msg_notification = $('#msg_notification');
-	        if ($msg_notification.is(':visible')) $msg_notification.slideUp(500, function () {
-	            $msg_notification.html('');
-	        });
+	    var updateBalance = function updateBalance(response) {
+	        if (response.error) {
+	            console.log(response.error.message);
+	            return;
+	        }
+	        var balance = response.balance.balance;
+	        Client.set('balance', balance);
+	        var currency = response.balance.currency;
+	        if (!currency) {
+	            return;
+	        }
+	        var view = formatMoney(balance, currency);
+	        $('.account-balance').text(view).css('visibility', 'visible');
 	    };
 
-	    var displayAccountStatus = function displayAccountStatus() {
+	    return {
+	        init: init,
+	        switchLoginId: switchLoginId,
+	        updateBalance: updateBalance
+	    };
+	}();
+
+	module.exports = Header;
+
+/***/ }),
+/* 316 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var addComma = __webpack_require__(310).addComma;
+	var getLanguage = __webpack_require__(308).getLanguage;
+	var State = __webpack_require__(309).State;
+
+	function formatMoney(amount, currency) {
+	    var money = void 0;
+	    currency = currency || State.get(['response', 'authorize', 'authorize', 'currency']);
+	    if (amount) amount = String(amount).replace(/,/g, '');
+	    if (typeof Intl !== 'undefined' && currency && currency !== '' && amount && amount !== '') {
+	        var options = { style: 'currency', currency: currency },
+	            language = typeof window !== 'undefined' ? getLanguage().toLowerCase() : 'en';
+	        money = new Intl.NumberFormat(language.replace('_', '-'), options).format(amount);
+	    } else {
+	        var updatedAmount = addComma(parseFloat(amount).toFixed(2));
+	        var symbol = formatCurrency(currency);
+	        if (symbol === undefined) {
+	            money = currency + ' ' + updatedAmount;
+	        } else {
+	            money = symbol + updatedAmount;
+	        }
+	    }
+	    return money;
+	}
+
+	function formatCurrency(currency) {
+	    // Taken with modifications from:
+	    //    https://github.com/bengourley/currency-symbol-map/blob/master/map.js
+	    // When we need to handle more currencies please look there.
+	    var currency_map = {
+	        USD: '$',
+	        GBP: '£',
+	        AUD: 'A$',
+	        EUR: '€',
+	        JPY: '¥'
+	    };
+
+	    return currency_map[currency];
+	}
+
+	module.exports = {
+	    formatMoney: formatMoney
+	};
+
+/***/ }),
+/* 317 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Client = __webpack_require__(302);
+	var ChampionSocket = __webpack_require__(306);
+	var State = __webpack_require__(309).State;
+	var url_for = __webpack_require__(312).url_for;
+	var template = __webpack_require__(310).template;
+
+	var Notify = function () {
+	    'use strict';
+
+	    var numberOfNotification = 0;
+
+	    var init = function init() {
+	        if (!Client.is_logged_in() || Client.is_virtual()) return;
+	        createUI();
+	        updateNotifications();
+	    };
+
+	    var updateNotifications = function updateNotifications() {
 	        ChampionSocket.wait('authorize').then(function () {
 	            var get_account_status = void 0,
 	                status = void 0,
@@ -24816,121 +24898,107 @@
 	                    if (response.mt5_login_list.length) {
 	                        has_mt_account = true;
 	                    }
-	                    var notified = check_statuses.some(function (object) {
+	                    check_statuses.some(function (object) {
+	                        var key = object.validation.name;
 	                        if (object.validation()) {
-	                            displayNotification(object.message());
-	                            return true;
+	                            addToNotifications(object.message(), key);
+	                        } else {
+	                            removeFromNotifications(key);
 	                        }
-	                        return false;
 	                    });
-	                    if (!notified) hideNotification();
+	                    if (!Client.get('notification_shown')) {
+	                        showTalkBubble();
+	                        Client.set('notification_shown', 1);
+	                    }
 	                });
 	            });
 	        });
 	    };
 
-	    var switchLoginId = function switchLoginId(loginid) {
-	        if (!loginid || loginid.length === 0 || loginid === Client.get('loginid')) {
-	            return;
-	        }
-	        var token = Client.get_token(loginid);
-	        if (!token || token.length === 0) {
-	            ChampionSocket.send({ logout: 1 });
-	            return;
-	        }
+	    var createUI = function createUI() {
+	        if ($('.notify .toggle-notification').length) return;
 
-	        // cleaning the previous values
-	        Client.clear_storage_values();
-	        // set cookies: loginid, token
-	        Client.set('loginid', loginid);
-	        Client.set_cookie('loginid', loginid);
-	        Client.set_cookie('token', token);
-	        GTM.setLoginFlag();
-	        $('.login-id-list a').removeAttr('disabled');
-	        window.location.reload();
+	        var toggler = '<a class="toggle-notification bell" href="javascript:;"></a>\n                               <div class="talk-bubble"></div>';
+	        var notifications = '<div class="notifications">\n                                  <div class="notifications__header">Notifications<a class="close"></a></div>\n                                  <div class="notifications__list"></div>\n                               </div>';
+
+	        $('.notify').append(toggler);
+	        $('body').append(notifications);
+
+	        // attach event listeners
+	        $('.toggle-notification, .talk-bubble').off('click').on('click', showNotifications);
+	        $('.notifications__header .close, .navbar').off('click').on('click', hideNotifications);
 	    };
 
-	    var updateBalance = function updateBalance(response) {
-	        if (response.error) {
-	            console.log(response.error.message);
-	            return;
+	    var removeUI = function removeUI() {
+	        $('.toggle-notification, .talk-bubble, .notifications').remove();
+	    };
+
+	    var showNotifications = function showNotifications(e) {
+	        e.stopPropagation();
+	        hideTalkBubble();
+	        $('.notifications').toggleClass('notifications--show');
+	        if ($('.overlay').length) {
+	            $('.overlay').remove();
+	        } else {
+	            $('body').append('<div class="overlay"></div>');
+	            $('.overlay').off('click').on('click', hideNotifications);
 	        }
-	        var balance = response.balance.balance;
-	        Client.set('balance', balance);
-	        var currency = response.balance.currency;
-	        if (!currency) {
-	            return;
-	        }
-	        var view = formatMoney(balance, currency);
-	        $('.account-balance').text(view).css('visibility', 'visible');
+	    };
+
+	    var hideNotifications = function hideNotifications(e) {
+	        e.stopPropagation();
+	        $('.notifications').removeClass('notifications--show');
+	        $('.overlay').remove();
+	    };
+
+	    var updateUI = function updateUI() {
+	        $('.toggle-notification')[numberOfNotification ? 'addClass' : 'removeClass']('bell-active');
+	    };
+
+	    var addToNotifications = function addToNotifications(msg, key) {
+	        if ($('.notifications__list .notification.' + key).length) return;
+	        $('.notifications__list').append('<div class="notification ' + key + '">' + msg + '</div>');
+	        $('.notification > a').off('click').on('click', hideNotifications);
+	        numberOfNotification++;
+	        updateUI();
+	    };
+
+	    var removeFromNotifications = function removeFromNotifications(key) {
+	        if (!key) return;
+	        var $note = $('.notifications__list .notification.' + key);
+	        if (!$note.length) return;
+	        numberOfNotification--;
+	        $note.remove();
+	        updateUI();
+	    };
+
+	    var showTalkBubble = function showTalkBubble() {
+	        if (!numberOfNotification) return;
+	        $('.talk-bubble').html('You got ' + numberOfNotification + ' notification' + (numberOfNotification === 1 ? '' : 's')).fadeIn(500);
+	        setTimeout(hideTalkBubble, 5000);
+	    };
+
+	    var hideTalkBubble = function hideTalkBubble() {
+	        $('.talk-bubble').fadeOut();
 	    };
 
 	    return {
 	        init: init,
-	        displayAccountStatus: displayAccountStatus,
-	        updateBalance: updateBalance
+	        updateNotifications: updateNotifications,
+	        removeUI: removeUI
 	    };
 	}();
 
-	module.exports = Header;
+	module.exports = Notify;
 
 /***/ }),
-/* 315 */
+/* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var addComma = __webpack_require__(309).addComma;
-	var getLanguage = __webpack_require__(307).getLanguage;
-	var State = __webpack_require__(308).State;
-
-	function formatMoney(amount, currency) {
-	    var money = void 0;
-	    currency = currency || State.get(['response', 'authorize', 'authorize', 'currency']);
-	    if (amount) amount = String(amount).replace(/,/g, '');
-	    if (typeof Intl !== 'undefined' && currency && currency !== '' && amount && amount !== '') {
-	        var options = { style: 'currency', currency: currency },
-	            language = typeof window !== 'undefined' ? getLanguage().toLowerCase() : 'en';
-	        money = new Intl.NumberFormat(language.replace('_', '-'), options).format(amount);
-	    } else {
-	        var updatedAmount = addComma(parseFloat(amount).toFixed(2));
-	        var symbol = formatCurrency(currency);
-	        if (symbol === undefined) {
-	            money = currency + ' ' + updatedAmount;
-	        } else {
-	            money = symbol + updatedAmount;
-	        }
-	    }
-	    return money;
-	}
-
-	function formatCurrency(currency) {
-	    // Taken with modifications from:
-	    //    https://github.com/bengourley/currency-symbol-map/blob/master/map.js
-	    // When we need to handle more currencies please look there.
-	    var currency_map = {
-	        USD: '$',
-	        GBP: '£',
-	        AUD: 'A$',
-	        EUR: '€',
-	        JPY: '¥'
-	    };
-
-	    return currency_map[currency];
-	}
-
-	module.exports = {
-	    formatMoney: formatMoney
-	};
-
-/***/ }),
-/* 316 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var getLanguage = __webpack_require__(307).getLanguage;
-	var State = __webpack_require__(308).State;
+	var getLanguage = __webpack_require__(308).getLanguage;
+	var State = __webpack_require__(309).State;
 
 	/**
 	 * Router module for ChampionFX
@@ -25129,19 +25197,19 @@
 	module.exports = ChampionRouter;
 
 /***/ }),
-/* 317 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Client = __webpack_require__(301);
-	var GTM = __webpack_require__(312);
-	var getLanguage = __webpack_require__(307).getLanguage;
-	var default_redirect_url = __webpack_require__(311).default_redirect_url;
-	var url_for = __webpack_require__(311).url_for;
-	var get_params = __webpack_require__(311).get_params;
-	var isEmptyObject = __webpack_require__(309).isEmptyObject;
-	var Cookies = __webpack_require__(306);
+	var Client = __webpack_require__(302);
+	var GTM = __webpack_require__(313);
+	var getLanguage = __webpack_require__(308).getLanguage;
+	var default_redirect_url = __webpack_require__(312).default_redirect_url;
+	var url_for = __webpack_require__(312).url_for;
+	var get_params = __webpack_require__(312).get_params;
+	var isEmptyObject = __webpack_require__(310).isEmptyObject;
+	var Cookies = __webpack_require__(307);
 
 	var LoggedIn = function () {
 	    'use strict';
@@ -25164,6 +25232,7 @@
 	            Client.set_cookie('loginid_list', loginid_list);
 	        }
 	        Client.set_cookie('token', tokens[loginid].token);
+	        Client.set('notification_shown', 0);
 
 	        // set flags
 	        GTM.setLoginFlag();
@@ -25221,13 +25290,13 @@
 	module.exports = LoggedIn;
 
 /***/ }),
-/* 318 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var ChampionRouter = __webpack_require__(316);
-	var Url = __webpack_require__(311);
+	var ChampionRouter = __webpack_require__(318);
+	var Url = __webpack_require__(312);
 
 	var Redirect = function () {
 	    'use strict';
@@ -25253,15 +25322,16 @@
 	module.exports = Redirect;
 
 /***/ }),
-/* 319 */
+/* 321 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var moment = __webpack_require__(302);
-	var Client = __webpack_require__(301);
-	var ChampionSocket = __webpack_require__(305);
-	var template = __webpack_require__(309).template;
+	var moment = __webpack_require__(303);
+	var Client = __webpack_require__(302);
+	var ChampionSocket = __webpack_require__(306);
+	var template = __webpack_require__(310).template;
+	var showLightBox = __webpack_require__(310).showLightBox;
 
 	var SessionDurationLimit = function () {
 	    'use strict';
@@ -25317,7 +25387,7 @@
 	    };
 
 	    var displayWarning = function displayWarning() {
-	        $('body').append($('<div id=\'session_limit\' class=\'lightbox\'><div><div><div class=\'limit_message\'>' + template('Your session duration limit will end in [_1] seconds.', [warning / 1000]) + '</div></div></div></div>'));
+	        showLightBox('session_limit', $('<div/>', { class: 'limit_message', text: template('Your session duration limit will end in [_1] seconds.', [warning / 1000]) }));
 	        $('#session_limit').click(function () {
 	            $(this).remove();
 	        });
@@ -25331,13 +25401,13 @@
 	module.exports = SessionDurationLimit;
 
 /***/ }),
-/* 320 */
+/* 322 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var ChampionSocket = __webpack_require__(305);
-	var Client = __webpack_require__(301);
+	var ChampionSocket = __webpack_require__(306);
+	var Client = __webpack_require__(302);
 
 	var Cashier = function () {
 	    'use strict';
@@ -25379,15 +25449,15 @@
 	module.exports = Cashier;
 
 /***/ }),
-/* 321 */
+/* 323 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-	var ChampionSocket = __webpack_require__(305);
-	var Validation = __webpack_require__(322);
+	var ChampionSocket = __webpack_require__(306);
+	var Validation = __webpack_require__(324);
 
 	var CashierPassword = function () {
 	    'use strict';
@@ -25479,14 +25549,15 @@
 	module.exports = CashierPassword;
 
 /***/ }),
-/* 322 */
+/* 324 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var get_params = __webpack_require__(311).get_params;
-	var compareBigUnsignedInt = __webpack_require__(309).compareBigUnsignedInt;
-	var template = __webpack_require__(309).template;
+	var get_params = __webpack_require__(312).get_params;
+	var compareBigUnsignedInt = __webpack_require__(310).compareBigUnsignedInt;
+	var getOffset = __webpack_require__(310).getOffset;
+	var template = __webpack_require__(310).template;
 
 	var Validation = function () {
 	    'use strict';
@@ -25588,7 +25659,7 @@
 	        return !/[`~!@#$%^&*)(_=+\[}{\]\\\/";:\?><|]+/.test(value);
 	    };
 	    var validAddress = function validAddress(value) {
-	        return !/[`~!#$%^&*)(_=+\[}{\]\\";:\?><|]+/.test(value);
+	        return !/[`~!$%^&*_=+\[}{\]\\"\?><|]+/.test(value);
 	    };
 	    var validPostCode = function validPostCode(value) {
 	        return (/^[a-zA-Z\d-\s]*$/.test(value)
@@ -25654,10 +25725,10 @@
 
 	    var validators_map = {
 	        req: { func: validRequired, message: '' },
-	        email: { func: validEmail, message: 'Invalid email address' },
+	        email: { func: validEmail, message: 'Invalid email address.' },
 	        password: { func: validPassword, message: 'Password should have lower and uppercase letters with numbers.' },
 	        general: { func: validGeneral, message: 'Only letters, numbers, space, hyphen, period, and apostrophe are allowed.' },
-	        address: { func: validAddress, message: 'Only letters, numbers, space, hyphen, period, and apostrophe are allowed.' },
+	        address: { func: validAddress, message: 'Only letters, numbers, space, and these special characters are allowed: - . \' # ; : ( ) , @ /' },
 	        letter_symbol: { func: validLetterSymbol, message: 'Only letters, space, hyphen, period, and apostrophe are allowed.' },
 	        postcode: { func: validPostCode, message: 'Only letters, numbers, space, and hyphen are allowed.' },
 	        phone: { func: validPhone, message: 'Only numbers and spaces are allowed.' },
@@ -25727,6 +25798,7 @@
 	    };
 
 	    var clearError = function clearError(field) {
+	        field.$.removeClass('field-error');
 	        if (field.$error && field.$error.length) {
 	            field.$error.addClass(hidden_class);
 	        }
@@ -25735,6 +25807,9 @@
 	    var showError = function showError(field, message) {
 	        clearError(field);
 	        field.$error.text(message).removeClass(hidden_class);
+	        if (field.type === 'input') {
+	            field.$.addClass('field-error');
+	        }
 	    };
 
 	    var validate = function validate(form_selector) {
@@ -25745,7 +25820,7 @@
 	            if (!checkField(field)) {
 	                if (form.is_ok && !field.no_scroll) {
 	                    // first error
-	                    $.scrollTo(field.$, 500, { offset: -10 });
+	                    $.scrollTo(field.$.parent('.form-row'), 500, { offset: getOffset() });
 	                }
 	                form.is_ok = false;
 	            }
@@ -25764,16 +25839,16 @@
 	module.exports = Validation;
 
 /***/ }),
-/* 323 */
+/* 325 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var ChampionSocket = __webpack_require__(305);
-	var url_for = __webpack_require__(311).url_for;
-	var Client = __webpack_require__(301);
-	var get_params = __webpack_require__(311).get_params;
-	var Validation = __webpack_require__(322);
+	var ChampionSocket = __webpack_require__(306);
+	var url_for = __webpack_require__(312).url_for;
+	var Client = __webpack_require__(302);
+	var get_params = __webpack_require__(312).get_params;
+	var Validation = __webpack_require__(324);
 
 	var CashierDepositWithdraw = function () {
 	    'use strict';
@@ -25883,15 +25958,15 @@
 	module.exports = CashierDepositWithdraw;
 
 /***/ }),
-/* 324 */
+/* 326 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-	var ChampionSocket = __webpack_require__(305);
-	var Client = __webpack_require__(301);
+	var ChampionSocket = __webpack_require__(306);
+	var Client = __webpack_require__(302);
 
 	var CashierPaymentMethods = function () {
 	    'use strict';
@@ -26038,13 +26113,13 @@
 	module.exports = CashierPaymentMethods;
 
 /***/ }),
-/* 325 */
+/* 327 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var ChampionSocket = __webpack_require__(305);
-	var Client = __webpack_require__(301);
+	var ChampionSocket = __webpack_require__(306);
+	var Client = __webpack_require__(302);
 
 	var CashierTopUpVirtual = function () {
 	    'use strict';
@@ -26085,14 +26160,14 @@
 	module.exports = CashierTopUpVirtual;
 
 /***/ }),
-/* 326 */
+/* 328 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	__webpack_require__(310);
-	var Client = __webpack_require__(301);
-	var Login = __webpack_require__(313);
+	__webpack_require__(311);
+	var Client = __webpack_require__(302);
+	var Login = __webpack_require__(314);
 
 	var ClientType = function () {
 	    'use strict';
@@ -26123,13 +26198,13 @@
 	module.exports = ClientType;
 
 /***/ }),
-/* 327 */
+/* 329 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var getAppId = __webpack_require__(305).getAppId;
-	var getServer = __webpack_require__(305).getServer;
+	var getAppId = __webpack_require__(306).getAppId;
+	var getServer = __webpack_require__(306).getServer;
 
 	var ChampionEndpoint = function () {
 	    'use strict';
@@ -26188,12 +26263,13 @@
 	module.exports = ChampionEndpoint;
 
 /***/ }),
-/* 328 */
+/* 330 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Slider = __webpack_require__(329);
+	var Slider = __webpack_require__(331);
+	var ChampionSignup = __webpack_require__(333);
 
 	var Home = function () {
 	    'use strict';
@@ -26202,9 +26278,7 @@
 	        Slider.init();
 	        var hash = window.location.hash.substring(1);
 	        if (hash === 'signup') {
-	            setTimeout(function () {
-	                $.scrollTo($('#verify-email-form'), 500);
-	            }, 500);
+	            ChampionSignup.showModal();
 	        }
 	    };
 
@@ -26221,12 +26295,12 @@
 	module.exports = Home;
 
 /***/ }),
-/* 329 */
+/* 331 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	__webpack_require__(330);
+	__webpack_require__(332);
 
 	var Slider = function () {
 	    var init = function init() {
@@ -26294,7 +26368,7 @@
 	module.exports = Slider;
 
 /***/ }),
-/* 330 */
+/* 332 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
@@ -28932,14 +29006,129 @@
 	});
 
 /***/ }),
-/* 331 */
+/* 333 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Client = __webpack_require__(301);
-	var Validation = __webpack_require__(322);
-	var ChampionSocket = __webpack_require__(305);
+	var ChampionSocket = __webpack_require__(306);
+	var Validation = __webpack_require__(324);
+
+	var ChampionSignup = function () {
+	    'use strict';
+
+	    var form_selector = '.frm-verify-email';
+	    var hidden_class = 'invisible';
+
+	    var is_active = false,
+	        $form = void 0,
+	        $input = void 0,
+	        $button = void 0,
+	        $after_signup_msg = void 0,
+	        $before_signup_el = void 0,
+	        $modal = void 0;
+
+	    var load = function load() {
+	        $after_signup_msg = $('.modal__form_message');
+	        $before_signup_el = $('.modal__form_wrapper, .modal__body, .modal__footer');
+	        $modal = $('.modal');
+
+	        $('.toggle-signup-modal').off('click').on('click', showModal);
+	        $('.modal__header .close').off('click').on('click', hideModal);
+
+	        eventHandler();
+	    };
+
+	    var showModal = function showModal(e) {
+	        if (e) e.stopPropagation();
+	        $modal.toggleClass('modal--show');
+	        if ($('.modal--show').length) {
+	            $('body').css('position', 'static').append('<div class="modal-overlay"></div>');
+	            $('.modal-overlay').off('click', hideModal).on('click', hideModal);
+	            resetForm();
+
+	            // if sign-up success message is already visible, show sign-up form
+	            if (!$after_signup_msg.hasClass(hidden_class)) {
+	                changeVisibility($after_signup_msg, 'hide');
+	                changeVisibility($before_signup_el, 'show');
+	            }
+	        }
+	    };
+
+	    var hideModal = function hideModal(e) {
+	        e.stopPropagation();
+	        $modal.removeClass('modal--show');
+	        $('.modal-overlay').remove();
+	    };
+
+	    var resetForm = function resetForm() {
+	        $input.val('').removeClass('field-error');
+	        $(form_selector + ':visible #signup_error').addClass(hidden_class);
+	    };
+
+	    var changeVisibility = function changeVisibility($selector, action) {
+	        if (action === 'hide') {
+	            $selector.addClass(hidden_class);
+	        } else {
+	            $selector.removeClass(hidden_class);
+	        }
+	    };
+
+	    var eventHandler = function eventHandler() {
+	        $form = $(form_selector + ':visible');
+	        $input = $form.find('input');
+	        $button = $form.find('button');
+	        $button.off('click', submit).on('click', submit);
+	        is_active = true;
+	        Validation.init(form_selector, [{ selector: '#email', validations: ['req', 'email'], msg_element: '#signup_error', no_scroll: true }]);
+	    };
+
+	    var unload = function unload() {
+	        if (is_active) {
+	            $button.off('click', submit);
+	            $input.val('');
+	        }
+	        is_active = false;
+
+	        $('toggle-modal').off('click');
+	        $('.modal__header .close').off('click');
+	    };
+
+	    var submit = function submit(e) {
+	        e.preventDefault();
+	        if (is_active && Validation.validate(form_selector)) {
+	            ChampionSocket.send({
+	                verify_email: $input.val(),
+	                type: 'account_opening'
+	            }).then(function (response) {
+	                if (response.verify_email) {
+	                    changeVisibility($after_signup_msg, 'show');
+	                    changeVisibility($before_signup_el, 'hide');
+	                } else if (response.error) {
+	                    $(form_selector + ':visible #signup_error').text(response.error.message).removeClass(hidden_class);
+	                }
+	            });
+	        }
+	    };
+
+	    return {
+	        load: load,
+	        unload: unload,
+	        showModal: showModal
+	    };
+	}();
+
+	module.exports = ChampionSignup;
+
+/***/ }),
+/* 334 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Client = __webpack_require__(302);
+	var Validation = __webpack_require__(324);
+	var ChampionSocket = __webpack_require__(306);
 
 	var LostPassword = function () {
 	    'use strict';
@@ -28993,10 +29182,12 @@
 	module.exports = LostPassword;
 
 /***/ }),
-/* 332 */
-/***/ (function(module, exports) {
+/* 335 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
+
+	var Client = __webpack_require__(302);
 
 	var MT5 = function () {
 	    'use strict';
@@ -29005,6 +29196,16 @@
 
 	    var load = function load() {
 	        $('.has-tabs').tabs().removeClass(hidden_class);
+
+	        if (!Client.is_logged_in()) {
+	            var $signup_btn = $('#mt5-accounts').find('a');
+	            $signup_btn.addClass('toggle-signup-modal');
+	            replaceHref($signup_btn);
+	        }
+	    };
+
+	    var replaceHref = function replaceHref($element) {
+	        $element.attr('href', 'java' + 'script:;');
 	    };
 
 	    return {
@@ -29015,13 +29216,13 @@
 	module.exports = MT5;
 
 /***/ }),
-/* 333 */
+/* 336 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Client = __webpack_require__(301);
-	var ChampionSocket = __webpack_require__(305);
+	var Client = __webpack_require__(302);
+	var ChampionSocket = __webpack_require__(306);
 
 	var MT5WebPlatform = function () {
 	    'use strict';
@@ -29060,7 +29261,7 @@
 	module.exports = MT5WebPlatform;
 
 /***/ }),
-/* 334 */
+/* 337 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -29080,18 +29281,18 @@
 	module.exports = BinaryOptions;
 
 /***/ }),
-/* 335 */
+/* 338 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var moment = __webpack_require__(302);
-	var ChampionSocket = __webpack_require__(305);
-	var Client = __webpack_require__(301);
-	var Utility = __webpack_require__(309);
-	var default_redirect_url = __webpack_require__(311).default_redirect_url;
-	var Validation = __webpack_require__(322);
-	var DatePicker = __webpack_require__(336).DatePicker;
+	var moment = __webpack_require__(303);
+	var ChampionSocket = __webpack_require__(306);
+	var Client = __webpack_require__(302);
+	var Utility = __webpack_require__(310);
+	var default_redirect_url = __webpack_require__(312).default_redirect_url;
+	var Validation = __webpack_require__(324);
+	var DatePicker = __webpack_require__(339).DatePicker;
 
 	var ChampionNewRealAccount = function () {
 	    'use strict';
@@ -29247,13 +29448,13 @@
 	module.exports = ChampionNewRealAccount;
 
 /***/ }),
-/* 336 */
+/* 339 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var moment = __webpack_require__(302);
-	var Utility = __webpack_require__(309);
+	var moment = __webpack_require__(303);
+	var Utility = __webpack_require__(310);
 
 	var DatePicker = function DatePicker(component_selector, select_type) {
 	    this.component_selector = component_selector;
@@ -29411,16 +29612,16 @@
 	};
 
 /***/ }),
-/* 337 */
+/* 340 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var ChampionSocket = __webpack_require__(305);
-	var Client = __webpack_require__(301);
-	var default_redirect_url = __webpack_require__(311).default_redirect_url;
-	var Utility = __webpack_require__(309);
-	var FormManager = __webpack_require__(338);
+	var ChampionSocket = __webpack_require__(306);
+	var Client = __webpack_require__(302);
+	var default_redirect_url = __webpack_require__(312).default_redirect_url;
+	var Utility = __webpack_require__(310);
+	var FormManager = __webpack_require__(341);
 
 	var ChampionNewVirtualAccount = function () {
 	    'use strict';
@@ -29479,16 +29680,16 @@
 	module.exports = ChampionNewVirtualAccount;
 
 /***/ }),
-/* 338 */
+/* 341 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var ChampionSocket = __webpack_require__(305);
-	var get_params = __webpack_require__(311).get_params;
-	var isEmptyObject = __webpack_require__(309).isEmptyObject;
-	var showLoadingImage = __webpack_require__(309).showLoadingImage;
-	var Validation = __webpack_require__(322);
+	var ChampionSocket = __webpack_require__(306);
+	var get_params = __webpack_require__(312).get_params;
+	var isEmptyObject = __webpack_require__(310).isEmptyObject;
+	var showLoadingImage = __webpack_require__(310).showLoadingImage;
+	var Validation = __webpack_require__(324);
 
 	var FormManager = function () {
 	    'use strict';
@@ -29628,19 +29829,19 @@
 	module.exports = FormManager;
 
 /***/ }),
-/* 339 */
+/* 342 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var moment = __webpack_require__(302);
-	var Client = __webpack_require__(301);
-	var Login = __webpack_require__(313);
-	var ChampionSocket = __webpack_require__(305);
-	var get_params = __webpack_require__(311).get_params;
-	var Utility = __webpack_require__(309);
-	var Validation = __webpack_require__(322);
-	var DatePicker = __webpack_require__(336).DatePicker;
+	var moment = __webpack_require__(303);
+	var Client = __webpack_require__(302);
+	var Login = __webpack_require__(314);
+	var ChampionSocket = __webpack_require__(306);
+	var get_params = __webpack_require__(312).get_params;
+	var Utility = __webpack_require__(310);
+	var Validation = __webpack_require__(324);
+	var DatePicker = __webpack_require__(339).DatePicker;
 
 	var ResetPassword = function () {
 	    'use strict';
@@ -29740,99 +29941,14 @@
 	module.exports = ResetPassword;
 
 /***/ }),
-/* 340 */
+/* 343 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var ChampionSocket = __webpack_require__(305);
-	var Validation = __webpack_require__(322);
-	var Client = __webpack_require__(301);
-
-	var ChampionSignup = function () {
-	    'use strict';
-
-	    var form_selector = '.frm-verify-email';
-	    var signup_selector = '#signup';
-	    var hidden_class = 'invisible';
-
-	    var is_active = false,
-	        $form = void 0,
-	        $input = void 0,
-	        $button = void 0;
-
-	    var load = function load() {
-	        if (Client.is_logged_in() || /(new-account|terms-and-conditions|user|cashier)/.test(window.location.pathname)) {
-	            changeVisibility($(form_selector), 'hide');
-	        } else {
-	            changeVisibility($(form_selector), 'show');
-	            if ($(form_selector).length === 1) {
-	                changeVisibility($(signup_selector), 'show');
-	            } else {
-	                changeVisibility($(signup_selector), 'hide');
-	            }
-	            eventHandler();
-	        }
-	    };
-
-	    var changeVisibility = function changeVisibility($selector, action) {
-	        if (action === 'hide') {
-	            $selector.addClass(hidden_class);
-	        } else {
-	            $selector.removeClass(hidden_class);
-	        }
-	    };
-
-	    var eventHandler = function eventHandler() {
-	        $form = $(form_selector + ':visible');
-	        $input = $form.find('input');
-	        $button = $form.find('button');
-	        $button.off('click', submit).on('click', submit);
-	        is_active = true;
-	        Validation.init(form_selector, [{ selector: '#email', validations: ['req', 'email'], msg_element: '#signup_error' }]);
-	    };
-
-	    var unload = function unload() {
-	        if (is_active) {
-	            $button.off('click', submit);
-	            $input.val('');
-	        }
-	        is_active = false;
-	    };
-
-	    var submit = function submit(e) {
-	        e.preventDefault();
-	        if (is_active && Validation.validate(form_selector)) {
-	            ChampionSocket.send({
-	                verify_email: $input.val(),
-	                type: 'account_opening'
-	            }).then(function (response) {
-	                if (response.verify_email) {
-	                    $('.signup-box').text('Thank you for signing up! Please check your email to complete the registration process.');
-	                } else if (response.error) {
-	                    $(form_selector + ':visible #signup_error').text(response.error.message).removeClass(hidden_class);
-	                }
-	            });
-	        }
-	    };
-
-	    return {
-	        load: load,
-	        unload: unload
-	    };
-	}();
-
-	module.exports = ChampionSignup;
-
-/***/ }),
-/* 341 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var ChampionSocket = __webpack_require__(305);
-	var DatePicker = __webpack_require__(336).DatePicker;
-	var moment = __webpack_require__(302);
+	var ChampionSocket = __webpack_require__(306);
+	var DatePicker = __webpack_require__(339).DatePicker;
+	var moment = __webpack_require__(303);
 
 	var TradingTimes = function () {
 	    'use strict';
@@ -29946,12 +30062,12 @@
 	module.exports = TradingTimes;
 
 /***/ }),
-/* 342 */
+/* 344 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var ChampionSocket = __webpack_require__(305);
+	var ChampionSocket = __webpack_require__(306);
 
 	var Authenticate = function () {
 	    'use strict';
@@ -29983,13 +30099,13 @@
 	module.exports = Authenticate;
 
 /***/ }),
-/* 343 */
+/* 345 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var ChampionSocket = __webpack_require__(305);
-	var Validation = __webpack_require__(322);
+	var ChampionSocket = __webpack_require__(306);
+	var Validation = __webpack_require__(324);
 
 	var ChangePassword = function () {
 	    'use strict';
@@ -30051,12 +30167,12 @@
 	module.exports = ChangePassword;
 
 /***/ }),
-/* 344 */
+/* 346 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var ChampionSocket = __webpack_require__(305);
+	var ChampionSocket = __webpack_require__(306);
 
 	var Limits = function () {
 	    'use strict';
@@ -30139,13 +30255,13 @@
 	module.exports = Limits;
 
 /***/ }),
-/* 345 */
+/* 347 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var ChampionSocket = __webpack_require__(305);
-	var moment = __webpack_require__(302);
+	var ChampionSocket = __webpack_require__(306);
+	var moment = __webpack_require__(303);
 
 	var LoginHistory = function () {
 	    'use strict';
@@ -30238,17 +30354,18 @@
 	module.exports = LoginHistory;
 
 /***/ }),
-/* 346 */
+/* 348 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var MetaTraderConfig = __webpack_require__(347);
-	var MetaTraderUI = __webpack_require__(348);
-	var Client = __webpack_require__(301);
-	var ChampionSocket = __webpack_require__(305);
-	var State = __webpack_require__(308).State;
-	var Validation = __webpack_require__(322);
+	var MetaTraderConfig = __webpack_require__(349);
+	var MetaTraderUI = __webpack_require__(350);
+	var Client = __webpack_require__(302);
+	var switchLoginId = __webpack_require__(315).switchLoginId;
+	var ChampionSocket = __webpack_require__(306);
+	var State = __webpack_require__(309).State;
+	var Validation = __webpack_require__(324);
 
 	var MetaTrader = function () {
 	    'use strict';
@@ -30259,6 +30376,15 @@
 
 	    var load = function load() {
 	        State.set('is_mt_pages', 1);
+
+	        if (Client.is_virtual() && Client.has_real()) {
+	            var real_login_id = Client.get('loginid_array').find(function (login) {
+	                return !login.disabled && login.real;
+	            }).id;
+	            switchLoginId(real_login_id);
+	            return;
+	        }
+
 	        ChampionSocket.wait('mt5_login_list').then(function (response) {
 	            responseLoginList(response);
 	        });
@@ -30275,29 +30401,35 @@
 	            }
 	        });
 
-	        Client.set('mt5_account', getDefaultAccount(response.mt5_login_list));
+	        Client.set('mt5_account', getDefaultAccount());
 
 	        // Update types with no account
-	        Object.keys(types_info).forEach(function (acc_type) {
-	            if (!types_info[acc_type].account_info) {
-	                MetaTraderUI.updateAccount(acc_type);
-	            }
+	        Object.keys(types_info).filter(function (acc_type) {
+	            return !hasAccount(acc_type);
+	        }).forEach(function (acc_type) {
+	            MetaTraderUI.updateAccount(acc_type);
 	        });
 	    };
 
-	    var getDefaultAccount = function getDefaultAccount(login_list) {
-	        return (
-	            // remove hash from url
-	            // const url = window.location.href.split('#')[0];
-	            // window.history.replaceState({ url: url }, null, url);
-	            Object.keys(types_info).indexOf(location.hash.substring(1)) >= 0 ? location.hash.substring(1) : Client.get('mt5_account') || (login_list && login_list.length ? Client.getMT5AccountType((login_list.find(function (login) {
-	                return (/real/.test(login.group)
-	                );
-	            }) || login_list.find(function (login) {
-	                return (/demo/.test(login.group)
-	                );
-	            })).group) : 'demo_champion_cent')
-	        );
+	    var getDefaultAccount = function getDefaultAccount() {
+	        var default_account = '';
+	        if (hasAccount(location.hash.substring(1))) {
+	            default_account = location.hash.substring(1);
+	            MetaTraderUI.removeUrlHash();
+	        } else if (hasAccount(Client.get('mt5_account'))) {
+	            default_account = Client.get('mt5_account');
+	        } else {
+	            default_account = Object.keys(types_info).filter(function (acc_type) {
+	                return hasAccount(acc_type);
+	            }).sort(function (acc_type) {
+	                return types_info[acc_type].is_demo ? 1 : -1;
+	            })[0] || ''; // real first
+	        }
+	        return default_account;
+	    };
+
+	    var hasAccount = function hasAccount(acc_type) {
+	        return (types_info[acc_type] || {}).account_info;
 	    };
 
 	    var getAccountDetails = function getAccountDetails(login, acc_type) {
@@ -30333,36 +30465,39 @@
 
 	    var submit = function submit(e) {
 	        e.preventDefault();
-	        MetaTraderUI.hideFormMessage();
 	        var $btn_submit = $(e.target);
 	        var acc_type = $btn_submit.attr('acc_type');
 	        var action = $btn_submit.attr('action');
+	        MetaTraderUI.hideFormMessage(action);
 	        if (Validation.validate('#frm_' + action)) {
-	            MetaTraderUI.disableButton();
+	            MetaTraderUI.disableButton(action);
 	            // further validations before submit (password_check)
 	            MetaTraderUI.postValidate(acc_type, action).then(function (is_ok) {
 	                if (!is_ok) {
-	                    MetaTraderUI.enableButton();
+	                    MetaTraderUI.enableButton(action);
 	                    return;
 	                }
 
 	                var req = makeRequestObject(acc_type, action);
 	                ChampionSocket.send(req).then(function (response) {
 	                    if (response.error) {
-	                        MetaTraderUI.displayFormMessage(response.error.message);
+	                        MetaTraderUI.displayFormMessage(response.error.message, action);
 	                    } else {
 	                        var login = actions_info[action].login ? actions_info[action].login(response) : types_info[acc_type].account_info.login;
 	                        if (!types_info[acc_type].account_info) {
 	                            types_info[acc_type].account_info = { login: login };
+	                            MetaTraderUI.setAccountType(acc_type, true);
 	                        }
 	                        MetaTraderUI.loadAction(null, acc_type);
-	                        MetaTraderUI.displayMainMessage(actions_info[action].success_msg(response));
 	                        getAccountDetails(login, acc_type);
+	                        if (typeof actions_info[action].success_msg === 'function') {
+	                            MetaTraderUI.displayMainMessage(actions_info[action].success_msg(response));
+	                        }
 	                        if (typeof actions_info[action].onSuccess === 'function') {
 	                            actions_info[action].onSuccess(response, acc_type);
 	                        }
 	                    }
-	                    MetaTraderUI.enableButton();
+	                    MetaTraderUI.enableButton(action);
 	                });
 	            });
 	        }
@@ -30376,16 +30511,18 @@
 	module.exports = MetaTrader;
 
 /***/ }),
-/* 347 */
+/* 349 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Client = __webpack_require__(301);
-	var formatMoney = __webpack_require__(315).formatMoney;
-	var GTM = __webpack_require__(312);
-	var ChampionSocket = __webpack_require__(305);
-	var url_for = __webpack_require__(311).url_for;
+	var Client = __webpack_require__(302);
+	var formatMoney = __webpack_require__(316).formatMoney;
+	var GTM = __webpack_require__(313);
+	var ChampionSocket = __webpack_require__(306);
+	var url_for = __webpack_require__(312).url_for;
+	var template = __webpack_require__(310).template;
+	var showSuccessPopup = __webpack_require__(310).showSuccessPopup;
 
 	var MetaTraderConfig = function () {
 	    'use strict';
@@ -30406,34 +30543,36 @@
 	    var actions_info = {
 	        new_account: {
 	            title: 'Sign up',
-	            success_msg: function success_msg(response) {
-	                return 'Congratulations! Your [_1] Account has been created.'.replace('[_1]', types_info[Object.keys(types_info).find(function (t) {
-	                    return types_info[t].account_type === response.mt5_new_account.account_type && types_info[t].mt5_account_type === response.mt5_new_account.mt5_account_type;
-	                })].title);
-	            },
 	            login: function login(response) {
 	                return response.mt5_new_account.login;
 	            },
-	            prerequisites: function prerequisites(acc_type) {
+	            prerequisites: function prerequisites(is_real) {
 	                return new Promise(function (resolve) {
-	                    if (types_info[acc_type].is_demo) {
+	                    if (!is_real) {
 	                        resolve();
 	                    } else if (Client.is_virtual()) {
-	                        resolve(needsRealMessage());
+	                        $('#msg_real_financial').html(needsRealMessage());
+	                        resolve(true);
 	                    } else {
-	                        ChampionSocket.send({ get_account_status: 1 }).then(function (response) {
-	                            resolve(/financial_assessment_not_complete/.test(response.get_account_status.status) ? $('#msg_assessment').html() : '');
+	                        ChampionSocket.send({ get_account_status: 1 }).then(function (response_get_account_status) {
+	                            var $message = $('#msg_real_financial');
+	                            var is_ok = true;
+	                            if (/financial_assessment_not_complete/.test(response_get_account_status.get_account_status.status)) {
+	                                $message.find('.assessment').setVisibility(1).find('a').attr('onclick', 'localStorage.setItem(\'financial_assessment_redirect\', \'' + url_for('user/metatrader') + '\')');
+	                                is_ok = false;
+	                            }
+	                            if (response_get_account_status.get_account_status.prompt_client_to_authenticate) {
+	                                $message.find('.authenticate').setVisibility(1);
+	                                is_ok = false;
+	                            }
+	                            resolve(!is_ok);
 	                        });
 	                    }
 	                });
 	            },
-	            formValues: function formValues($form, acc_type, action) {
-	                // Account type, Sub account type
-	                $form.find(fields[action].lbl_account_type.id).text(types_info[acc_type].title);
-	                // Email
-	                $form.find(fields[action].lbl_email.id).text(fields[action].additional_fields(acc_type).email);
-	            },
-	            onSuccess: function onSuccess(response) {
+	            onSuccess: function onSuccess(response, acc_type) {
+	                showSuccessPopup(template('Congratulation, you’ve successfully created your [_1] account.', [types_info[acc_type].title]), 'You can trade Forex, CFDs and Metals with our virtual money, launch our MetaTrader 5 on our sidebar Quick Links or Download it to your machine or mobile applications.');
+	                ChampionSocket.send({ mt5_login_list: 1 });
 	                GTM.mt5NewAccount(response);
 	            }
 	        },
@@ -30446,10 +30585,6 @@
 	                return new Promise(function (resolve) {
 	                    return resolve('');
 	                });
-	            },
-	            formValues: function formValues($form, acc_type, action) {
-	                // Login ID
-	                $form.find(fields[action].lbl_login.id).text(fields[action].additional_fields(acc_type).login);
 	            }
 	        },
 	        deposit: {
@@ -30471,11 +30606,6 @@
 	                        });
 	                    }
 	                });
-	            },
-	            formValues: function formValues($form, acc_type, action) {
-	                // From, To
-	                $form.find(fields[action].lbl_from.id).text(fields[action].additional_fields(acc_type).from_binary);
-	                $form.find(fields[action].lbl_to.id).text(fields[action].additional_fields(acc_type).to_mt5);
 	            }
 	        },
 	        withdrawal: {
@@ -30489,7 +30619,10 @@
 	                        resolve(needsRealMessage());
 	                    } else {
 	                        ChampionSocket.send({ get_account_status: 1 }).then(function (response_status) {
-	                            resolve($.inArray('authenticated', response_status.get_account_status.status) === -1 ? $('#msg_authenticate').find('.show_for_mt5').removeClass('invisible').end().html() : '');
+	                            // There are cases that prompt_client_to_authenticate=0
+	                            // but websocket returns authentication required error when trying to withdraw
+	                            // so we check for 'authenticated' status as well to display a user friendly message instead
+	                            resolve(+response_status.get_account_status.prompt_client_to_authenticate || !/authenticated/.test(response_status.get_account_status.status) ? $('#msg_authenticate').html() : '');
 	                        });
 	                    }
 	                });
@@ -30503,23 +30636,16 @@
 	                    if (+response.mt5_password_check === 1) {
 	                        return true;
 	                    } else if (response.error) {
-	                        displayFormMessage(response.error.message);
+	                        displayFormMessage(response.error.message, 'withdrawal');
 	                    }
 	                    return false;
 	                });
-	            },
-	            formValues: function formValues($form, acc_type, action) {
-	                // From, To
-	                $form.find(fields[action].lbl_from.id).text(fields[action].additional_fields(acc_type).from_mt5);
-	                $form.find(fields[action].lbl_to.id).text(fields[action].additional_fields(acc_type).to_binary);
 	            }
 	        }
 	    };
 
 	    var fields = {
 	        new_account: {
-	            lbl_account_type: { id: '#lbl_account_type' },
-	            lbl_email: { id: '#lbl_email' },
 	            txt_name: { id: '#txt_name', request_field: 'name' },
 	            txt_main_pass: { id: '#txt_main_pass', request_field: 'mainPassword' },
 	            txt_re_main_pass: { id: '#txt_re_main_pass' },
@@ -30536,7 +30662,6 @@
 	            }
 	        },
 	        password_change: {
-	            lbl_login: { id: '#lbl_login' },
 	            txt_old_password: { id: '#txt_old_password', request_field: 'old_password' },
 	            txt_new_password: { id: '#txt_new_password', request_field: 'new_password' },
 	            txt_re_new_password: { id: '#txt_re_new_password' },
@@ -30547,9 +30672,7 @@
 	            }
 	        },
 	        deposit: {
-	            lbl_from: { id: '#lbl_from' },
-	            lbl_to: { id: '#lbl_to' },
-	            txt_amount: { id: '#txt_amount', request_field: 'amount' },
+	            txt_amount: { id: '#txt_amount_deposit', request_field: 'amount' },
 	            additional_fields: function additional_fields(acc_type) {
 	                return {
 	                    from_binary: Client.get('loginid'),
@@ -30558,9 +30681,7 @@
 	            }
 	        },
 	        withdrawal: {
-	            lbl_from: { id: '#lbl_from' },
-	            lbl_to: { id: '#lbl_to' },
-	            txt_amount: { id: '#txt_amount', request_field: 'amount' },
+	            txt_amount: { id: '#txt_amount_withdrawal', request_field: 'amount' },
 	            txt_main_pass: { id: '#txt_main_pass' },
 	            additional_fields: function additional_fields(acc_type) {
 	                return {
@@ -30572,9 +30693,11 @@
 	    };
 
 	    var validations = {
-	        new_account: [{ selector: fields.new_account.txt_name.id, validations: ['req', 'letter_symbol', ['length', { min: 2, max: 30 }]] }, { selector: fields.new_account.txt_main_pass.id, validations: ['req', ['password', 'mt']] }, { selector: fields.new_account.txt_re_main_pass.id, validations: ['req', ['compare', { to: fields.new_account.txt_main_pass.id }]] }, { selector: fields.new_account.txt_investor_pass.id, validations: ['req', ['password', 'mt'], ['not_equal', { to: fields.new_account.txt_main_pass.id, name1: 'Main password', name2: 'Investor password' }]] }, { selector: fields.new_account.chk_tnc.id, validations: ['req'] }],
+	        new_account: [{ selector: fields.new_account.txt_name.id, validations: ['req', 'letter_symbol', ['length', { min: 2, max: 30 }]] }, { selector: fields.new_account.txt_main_pass.id, validations: ['req', ['password', 'mt']] }, { selector: fields.new_account.txt_re_main_pass.id, validations: ['req', ['compare', { to: fields.new_account.txt_main_pass.id }]] }, { selector: fields.new_account.txt_investor_pass.id, validations: ['req', ['password', 'mt'], ['not_equal', { to: fields.new_account.txt_main_pass.id, name1: 'Main password', name2: 'Investor password' }]] }],
 	        password_change: [{ selector: fields.password_change.txt_old_password.id, validations: ['req'] }, { selector: fields.password_change.txt_new_password.id, validations: ['req', ['password', 'mt'], ['not_equal', { to: fields.password_change.txt_old_password.id, name1: 'Current password', name2: 'New password' }]] }, { selector: fields.password_change.txt_re_new_password.id, validations: ['req', ['compare', { to: fields.password_change.txt_new_password.id }]] }],
-	        deposit: [{ selector: fields.deposit.txt_amount.id, validations: ['req', ['number', { type: 'float', min: 1, max: 20000, decimals: '0, 2' }]] }],
+	        deposit: [{ selector: fields.deposit.txt_amount.id, validations: ['req', ['number', { type: 'float', min: 1, max: 20000, decimals: '0, 2' }], ['custom', { func: function func() {
+	                    return +Client.get('balance') >= +$(fields.deposit.txt_amount.id).val();
+	                }, message: template('You have insufficient funds in your Binary account, please <a href="[_1]">add fund</a>.', [url_for('cashier')]) }]] }],
 	        withdrawal: [{ selector: fields.withdrawal.txt_main_pass.id, validations: ['req'] }, { selector: fields.withdrawal.txt_amount.id, validations: ['req', ['number', { type: 'float', min: 1, max: 20000, decimals: '0, 2' }]] }]
 	    };
 
@@ -30582,23 +30705,28 @@
 	        types_info: types_info,
 	        actions_info: actions_info,
 	        fields: fields,
-	        validations: validations
+	        validations: validations,
+	        needsRealMessage: needsRealMessage,
+	        mt5Currency: function mt5Currency() {
+	            return 'USD';
+	        }
 	    };
 	}();
 
 	module.exports = MetaTraderConfig;
 
 /***/ }),
-/* 348 */
+/* 350 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var MetaTraderConfig = __webpack_require__(347);
-	var Client = __webpack_require__(301);
-	var formatMoney = __webpack_require__(315).formatMoney;
-	var showLoadingImage = __webpack_require__(309).showLoadingImage;
-	var Validation = __webpack_require__(322);
+	var MetaTraderConfig = __webpack_require__(349);
+	var Client = __webpack_require__(302);
+	var formatMoney = __webpack_require__(316).formatMoney;
+	var getOffset = __webpack_require__(310).getOffset;
+	var showLoadingImage = __webpack_require__(310).showLoadingImage;
+	var Validation = __webpack_require__(324);
 
 	var MetaTraderUI = function () {
 	    'use strict';
@@ -30612,46 +30740,38 @@
 	        $templates = void 0,
 	        _$form = void 0,
 	        $main_msg = void 0,
+	        new_account_type = void 0,
 	        submit = void 0;
-
-	    var hidden_class = 'invisible';
 
 	    var types_info = MetaTraderConfig.types_info;
 	    var actions_info = MetaTraderConfig.actions_info;
 	    var validations = MetaTraderConfig.validations;
+	    var mt5_currency = MetaTraderConfig.mt5Currency();
 
 	    var init = function init(submit_func) {
 	        submit = submit_func;
 	        $container = $('#mt_account_management');
 	        $mt5_account = $container.find('#mt5_account');
 	        $list_cont = $container.find('#accounts_list');
-	        $list = $list_cont.find('> div');
-	        $detail = $container.find('#account_detail');
+	        $list = $list_cont.find('> div.list');
+	        $detail = $container.find('#account_details');
 	        $action = $container.find('#fst_action');
 	        $templates = $container.find('#templates');
 	        $main_msg = $container.find('#main_msg');
-	        $detail.find('[class*="act_"]').click(populateForm);
+	        $container.find('[class*="act_"]').click(populateForm);
 
 	        populateAccountList();
 	    };
 
 	    var populateAccountList = function populateAccountList() {
 	        var $acc_name = $templates.find('> .acc-name');
-	        var no_real = Client.is_virtual() && !Client.has_real();
-	        $('#top_msg')[no_real ? 'removeClass' : 'addClass'](hidden_class);
 	        Object.keys(types_info).sort(function (a, b) {
-	            return types_info[a].order > types_info[b].order;
-	        }).forEach(function (acc_type, idx) {
-	            if ($list.find('#' + acc_type).length === 0) {
+	            return types_info[a].order - types_info[b].order;
+	        }).forEach(function (acc_type) {
+	            if ($list.find('[value="' + acc_type + '"]').length === 0) {
 	                var $acc_item = $acc_name.clone();
 	                $acc_item.attr('value', acc_type);
-	                if (no_real && /real/.test(acc_type)) {
-	                    $acc_item.addClass('disabled');
-	                }
 	                $list.append($acc_item);
-	                if (idx % 2 === 1 && idx < Object.keys(types_info).length - 1) {
-	                    $list.append($('<div/>', { class: 'separator fill-bg-color' }));
-	                }
 	            }
 	        });
 
@@ -30685,9 +30805,12 @@
 	        if ($mt5_account.attr('value') !== acc_type) {
 	            Client.set('mt5_account', acc_type);
 	            $mt5_account.attr('value', acc_type).html(types_info[acc_type].title).removeClass('empty');
-	            $action.addClass(hidden_class);
+	            $list.find('.acc-name').removeClass('selected');
+	            $list.find('[value="' + acc_type + '"]').addClass('selected');
+	            $action.setVisibility(0);
 	            if (should_set_account) {
 	                setCurrentAccount(acc_type);
+	                $.scrollTo($container, 300, { offset: getOffset() });
 	            }
 	        }
 	    };
@@ -30698,51 +30821,72 @@
 	    };
 
 	    var updateListItem = function updateListItem(acc_type) {
-	        var $acc_item = $list.find('[value=' + acc_type + ']');
+	        var $acc_item = $list.find('[value="' + acc_type + '"]');
 	        $acc_item.find('.mt-type').text('' + types_info[acc_type].title);
 	        if (types_info[acc_type].account_info) {
 	            $acc_item.find('.mt-login').text(types_info[acc_type].account_info.login);
-	            $acc_item.find('.mt-balance').text(formatMoney(+types_info[acc_type].account_info.balance, 'USD'));
-	            $acc_item.find('.mt-new').addClass(hidden_class);
+	            $acc_item.setVisibility(1);
+	            if (acc_type === Client.get('mt5_account')) {
+	                $container.find('.mt-balance').html(formatMoney(+types_info[acc_type].account_info.balance, mt5_currency));
+	            }
+	            if (Object.keys(types_info).every(function (type) {
+	                return types_info[type].account_info;
+	            })) {
+	                $container.find('.act_new_account').remove();
+	            }
 	        } else {
-	            $acc_item.find('.mt-new').removeClass(hidden_class);
+	            $acc_item.setVisibility(0);
 	        }
 	    };
 
-	    var setCurrentAccount = function setCurrentAccount(acc_type) {
-	        if (acc_type !== Client.get('mt5_account')) return;
+	    var displayAccountDescription = function displayAccountDescription(acc_type) {
+	        $container.find('#account_desc').html($templates.find('.account-desc .' + acc_type).clone());
+	    };
 
-	        $detail.find('#account_desc').html($templates.find('.account-desc .' + acc_type).clone());
+	    var setCurrentAccount = function setCurrentAccount(acc_type) {
+	        if (Client.get('mt5_account') && Client.get('mt5_account') !== acc_type) return;
+
+	        $detail.find('#acc_icon').attr('class', types_info[acc_type].mt5_account_type);
+	        if (!$('#frm_new_account').is(':visible')) {
+	            displayAccountDescription(acc_type);
+	        }
 
 	        if (types_info[acc_type].account_info) {
 	            // Update account info
-	            $detail.find('.acc-info div[data]').map(function () {
+	            $detail.find('.acc-info [data]').map(function () {
 	                var key = $(this).attr('data');
 	                var info = types_info[acc_type].account_info[key];
-	                $(this).text(key === 'balance' ? formatMoney(+info, 'USD') : key === 'leverage' ? '1:' + info : info);
+	                $(this).text(key === 'balance' ? isNaN(info) ? '' : formatMoney(+info, mt5_currency) : key === 'leverage' ? '1:' + info : info);
 	            });
-	            $detail.find('.act_deposit, .act_withdrawal')[types_info[acc_type].is_demo ? 'addClass' : 'removeClass'](hidden_class);
-	            $detail.find('.has-account').removeClass(hidden_class);
-	            $detail.find('#account_desc .more').addClass(hidden_class);
+	            $detail.find('.has-account').setVisibility(1);
 	        } else {
-	            $detail.find('.acc-info, .acc-actions').addClass(hidden_class);
+	            $detail.find('.acc-info, .acc-actions').setVisibility(0);
 	        }
 	        $('#mt_loading').remove();
-	        $container.removeClass(hidden_class);
+	        $container.setVisibility(1);
 
 	        setAccountType(acc_type);
 
-	        if ($action.hasClass(hidden_class)) {
-	            loadAction(defaultAction(acc_type));
+	        if ($action.hasClass('invisible')) {
+	            var action = defaultAction(acc_type);
+
+	            var hash = location.hash.substring(1);
+	            if (types_info[hash] && !types_info[hash].account_info) {
+	                action = 'new_account';
+	                new_account_type = hash;
+	                removeUrlHash();
+	            }
+
+	            loadAction(action);
 	        }
 	    };
 
 	    var defaultAction = function defaultAction(acc_type) {
-	        return types_info[acc_type].account_info ? types_info[acc_type].is_demo ? 'password_change' : 'deposit' : 'new_account';
+	        return types_info[acc_type].account_info ? types_info[acc_type].is_demo ? 'password_change' : 'cashier' : 'new_account';
 	    };
 
 	    var loadAction = function loadAction(action, acc_type) {
-	        $detail.find('.acc-actions [class*=act_' + (action || defaultAction(acc_type)) + ']').click();
+	        $container.find('[class*=act_' + (action || defaultAction(acc_type)) + ']').click();
 	    };
 
 	    var populateForm = function populateForm(e) {
@@ -30750,6 +30894,7 @@
 	        if ($target.prop('tagName').toLowerCase() !== 'a') {
 	            $target = $target.parents('a');
 	        }
+	        $main_msg.setVisibility(0);
 
 	        var acc_type = Client.get('mt5_account');
 	        var action = $target.attr('class').split(' ').find(function (c) {
@@ -30757,68 +30902,212 @@
 	            );
 	        }).replace('act_', '');
 
-	        // set active, update title
-	        $detail.find('[class*="act_"]').removeClass('selected');
-	        $target.addClass('selected');
-	        $action.find('h4').text(actions_info[action].title);
+	        var cloneForm = function cloneForm() {
+	            _$form = $templates.find('#frm_' + action).clone();
+	            _$form.find('.' + (/demo/.test(acc_type) ? 'demo' : 'real') + '-only').setVisibility(1);
+	            var formValues = (actions_info[action] || {}).formValues;
+	            if (formValues) formValues(_$form, acc_type, action);
+
+	            // append form
+	            $action.find('#frm_action').html(_$form).setVisibility(1).end().setVisibility(1);
+
+	            _$form.find('button[type="submit"]').each(function () {
+	                // cashier has two different actions
+	                var this_action = $(this).attr('action');
+	                actions_info[this_action].$form = $(this).parents('form');
+	                $(this).attr({ acc_type: acc_type }).on('click dblclick', submit);
+	                Validation.init('#frm_' + this_action, validations[this_action]);
+	            });
+
+	            handleNewAccountUI(action, acc_type, $target);
+	        };
+
+	        if (action === 'new_account') {
+	            cloneForm();
+	            return;
+	        }
+
+	        if (!actions_info[action]) {
+	            // Manage Fund
+	            cloneForm();
+	            _$form.find('.binary-balance').html(formatMoney(Client.get('balance'), Client.get('currency')));
+	            _$form.find('.binary-account').text('ChampionFX (' + Client.get('loginid') + ')');
+	            _$form.find('.cashier-guide div:first-child').html('ChampionFX<br>' + Client.get('loginid'));
+
+	            _$form.find('.mt-balance').html(formatMoney(+types_info[acc_type].account_info.balance, mt5_currency));
+	            _$form.find('.mt-account').text(types_info[acc_type].title + ' (' + types_info[acc_type].account_info.login + ')');
+	            _$form.find('.cashier-guide div:last-child').html('MetaTrader 5<br>' + types_info[acc_type].account_info.login);
+
+	            ['deposit', 'withdrawal'].forEach(function (act) {
+	                actions_info[act].prerequisites(acc_type).then(function (error_msg) {
+	                    if (error_msg) {
+	                        $container.find('#frm_' + act + ' .form').replaceWith($('<p/>', { class: 'unavailable' }));
+	                        displayMessage('#frm_' + act + ' .unavailable', error_msg, true);
+	                    }
+	                });
+	            });
+	            return;
+	        }
 
 	        actions_info[action].prerequisites(acc_type).then(function (error_msg) {
 	            if (error_msg) {
 	                // does not meet one of prerequisites
 	                displayMainMessage(error_msg);
-	                $action.find('#frm_action').empty().end().removeClass(hidden_class);
+	                $action.find('#frm_action').empty().end().setVisibility(1);
 	                return;
 	            }
 
 	            if (!$action.find('#frm_' + action).length) {
-	                $main_msg.addClass(hidden_class);
+	                $main_msg.setVisibility(0);
 	            }
 
-	            // clone form, event listener
-	            _$form = $templates.find('#frm_' + action).clone();
-	            var formValues = actions_info[action].formValues;
-	            if (formValues) formValues(_$form, acc_type, action);
-	            _$form.find('#btn_submit').attr({ acc_type: acc_type, action: action }).on('click dblclick', submit);
-
-	            // append form
-	            $action.find('#frm_action').html(_$form).removeClass(hidden_class).end().removeClass(hidden_class);
-	            // $.scrollTo($action, 500, { offset: -7 });
-	            Validation.init('#frm_' + action, validations[action]);
+	            cloneForm();
 	        });
 	    };
 
+	    // -----------------------
+	    // ----- New Account -----
+	    // -----------------------
+	    var handleNewAccountUI = function handleNewAccountUI(action, acc_type, $target) {
+	        var is_new_account = action === 'new_account';
+	        var $acc_actions = $container.find('.acc-actions');
+	        $acc_actions.find('.has-account').setVisibility(!is_new_account);
+	        $detail.setVisibility(!is_new_account);
+	        $('.fst-container').toggleClass('no-border', is_new_account);
+
+	        if (!is_new_account) {
+	            // set active tab
+	            $detail.setVisibility(1);
+	            $container.find('[class*="act_"]').removeClass('selected');
+	            $target.addClass('selected');
+	            return;
+	        }
+
+	        // is_new_account
+	        displayAccountDescription(action);
+	        _$form = actions_info[action].$form;
+	        actions_info[action].prerequisites(true).then(function (error_msg) {
+	            _$form.find('#rbtn_real')[error_msg ? 'addClass' : 'removeClass']('disabled');
+	            if (new_account_type) {
+	                if (!/real/.test(new_account_type) || !Client.is_virtual()) {
+	                    // simulate user clicks, so on click the back button correct choice is pre-selected
+	                    _$form.find('#rbtn_' + (types_info[new_account_type].is_demo ? 'demo' : 'real')).click();
+	                    _$form.find('#rbtn_' + new_account_type.split('_').slice(-2).join('_')).click();
+	                    _$form.find('#btn_next').click();
+	                    displayAccountDescription(new_account_type);
+	                }
+	                new_account_type = '';
+	            }
+	        });
+
+	        // Navigation buttons: cancel, next, back
+	        _$form.find('#btn_cancel').click(function () {
+	            loadAction(null, acc_type);
+	            displayAccountDescription(acc_type);
+	            $.scrollTo($('#champion-content'), 300, { offset: getOffset() });
+	        });
+	        var displayStep = function displayStep(step) {
+	            _$form.find('#mv_new_account div[id^="view_"]').setVisibility(0);
+	            _$form.find('#view_' + step).setVisibility(1);
+	        };
+	        _$form.find('#btn_next').click(function () {
+	            if (!$(this).hasClass('button-disabled')) {
+	                _$form.find('#view_2 #btn_submit').attr('acc_type', newAccountGetType());
+	                displayStep(2);
+	                $.scrollTo($container.find('.acc-actions'), 300, { offset: getOffset() });
+	            }
+	        });
+	        _$form.find('#btn_back').click(function () {
+	            displayStep(1);
+	        });
+
+	        // Account type selection
+	        _$form.find('.mt5-type-box').click(selectAccountTypeUI);
+	    };
+
+	    var newAccountGetType = function newAccountGetType() {
+	        return _$form.find('.step-1 .selected').attr('data-acc-type') + '_' + _$form.find('.step-2 .selected').attr('data-acc-type');
+	    };
+
+	    var selectAccountTypeUI = function selectAccountTypeUI(e) {
+	        var action = 'new_account';
+	        var box_class = 'mt5-type-box';
+	        var $item = $(e.target);
+	        if (!$item.hasClass(box_class)) {
+	            $item = $item.parents('.' + box_class);
+	        }
+	        if (/\b(disabled|selected|existed)\b/.test($item.attr('class'))) return;
+	        $item.parents('.type-group').find('.' + box_class + '.selected').removeClass('selected');
+	        $item.addClass('selected');
+	        var selected_acc_type = $item.attr('data-acc-type');
+	        if (/(demo|real)/.test(selected_acc_type)) {
+	            displayAccountDescription(action);
+	            updateAccountTypesUI(selected_acc_type);
+	            _$form.find('#view_1 #btn_next').addClass('button-disabled');
+	            _$form.find('#view_1 .step-2').setVisibility(1);
+	            displayMessage('#new_account_msg', selected_acc_type === 'real' && Client.get('is_virtual') ? MetaTraderConfig.needsRealMessage() : '', true);
+	        } else {
+	            var new_acc_type = newAccountGetType();
+	            displayAccountDescription(new_acc_type);
+	            _$form.find('#view_1 #btn_next').removeClass('button-disabled');
+	        }
+	    };
+
+	    var updateAccountTypesUI = function updateAccountTypesUI(type) {
+	        Object.keys(types_info).filter(function (acc_type) {
+	            return acc_type.indexOf(type) === 0;
+	        }).forEach(function (acc_type) {
+	            _$form.find('.step-2 #' + acc_type.replace(type, 'rbtn')).removeClass('existed disabled selected').addClass(types_info[acc_type].account_info ? 'existed' : type === 'real' && Client.get('is_virtual') ? 'disabled' : '');
+	        });
+	    };
+
+	    // -------------------
+	    // ----- General -----
+	    // -------------------
 	    var postValidate = function postValidate(acc_type, action) {
 	        var validate = actions_info[action].pre_submit;
-	        return validate ? validate(_$form, acc_type, displayFormMessage) : new Promise(function (resolve) {
+	        return validate ? validate(actions_info[action].$form, acc_type, displayFormMessage) : new Promise(function (resolve) {
 	            return resolve(true);
 	        });
 	    };
 
-	    var hideFormMessage = function hideFormMessage() {
-	        _$form.find('#msg_form').html('').addClass(hidden_class);
+	    var removeUrlHash = function removeUrlHash() {
+	        var url = location.href.split('#')[0];
+	        window.history.replaceState({ url: url }, document.title, url);
 	    };
 
-	    var displayFormMessage = function displayFormMessage(message) {
-	        _$form.find('#msg_form').text(message).removeClass(hidden_class);
+	    var hideFormMessage = function hideFormMessage(action) {
+	        actions_info[action].$form.find('#msg_form').html('').setVisibility(0);
+	    };
+
+	    var displayFormMessage = function displayFormMessage(message, action) {
+	        actions_info[action].$form.find('#msg_form').html(message).setVisibility(1);
 	    };
 
 	    var displayMainMessage = function displayMainMessage(message) {
-	        $main_msg.html(message).removeClass(hidden_class);
-	        $.scrollTo($action, 500, { offset: -80 });
+	        $main_msg.html(message).setVisibility(1);
+	        $.scrollTo($action, 500, { offset: getOffset(-80) });
+	        setTimeout(function () {
+	            $main_msg.setVisibility(0);
+	        }, 5000);
 	    };
 
-	    var disableButton = function disableButton() {
-	        var $btn = _$form.find('button');
+	    var displayMessage = function displayMessage(selector, message, is_centered) {
+	        $container.find(selector).html(message).attr('class', 'notice-msg hint ' + (is_centered ? 'center-text' : 'align-start')).setVisibility(message.length);
+	    };
+
+	    var disableButton = function disableButton(action) {
+	        var $btn = actions_info[action].$form.find('button');
 	        if ($btn.length && !$btn.find('.barspinner').length) {
 	            $btn.attr('disabled', 'disabled');
-	            var $btn_text = $('<span/>', { text: $btn.text(), class: hidden_class });
+	            var $btn_text = $('<span/>', { text: $btn.text() }).setVisibility(0);
 	            showLoadingImage($btn, 'white');
 	            $btn.append($btn_text);
 	        }
 	    };
 
-	    var enableButton = function enableButton() {
-	        var $btn = _$form.find('button');
+	    var enableButton = function enableButton(action) {
+	        var $btn = actions_info[action].$form.find('button');
 	        if ($btn.length && $btn.find('.barspinner').length) {
 	            $btn.removeAttr('disabled').html($btn.find('span').text());
 	        }
@@ -30829,9 +31118,11 @@
 	        $form: function $form() {
 	            return _$form;
 	        },
+	        setAccountType: setAccountType,
 	        loadAction: loadAction,
 	        updateAccount: updateAccount,
 	        postValidate: postValidate,
+	        removeUrlHash: removeUrlHash,
 	        hideFormMessage: hideFormMessage,
 	        displayFormMessage: displayFormMessage,
 	        displayMainMessage: displayMainMessage,
@@ -30843,15 +31134,15 @@
 	module.exports = MetaTraderUI;
 
 /***/ }),
-/* 349 */
+/* 351 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Client = __webpack_require__(301);
-	var showLoadingImage = __webpack_require__(309).showLoadingImage;
-	var FinancialAssessment = __webpack_require__(350);
-	var PersonalDetails = __webpack_require__(351);
+	var Client = __webpack_require__(302);
+	var showLoadingImage = __webpack_require__(310).showLoadingImage;
+	var FinancialAssessment = __webpack_require__(352);
+	var PersonalDetails = __webpack_require__(353);
 
 	var Profile = function () {
 	    'use strict';
@@ -30902,17 +31193,17 @@
 	module.exports = Profile;
 
 /***/ }),
-/* 350 */
+/* 352 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Header = __webpack_require__(314);
-	var ChampionSocket = __webpack_require__(305);
-	var State = __webpack_require__(308).State;
-	var isEmptyObject = __webpack_require__(309).isEmptyObject;
-	var showLoadingImage = __webpack_require__(309).showLoadingImage;
-	var Validation = __webpack_require__(322);
+	var Notify = __webpack_require__(317);
+	var ChampionSocket = __webpack_require__(306);
+	var State = __webpack_require__(309).State;
+	var isEmptyObject = __webpack_require__(310).isEmptyObject;
+	var showLoadingImage = __webpack_require__(310).showLoadingImage;
+	var Validation = __webpack_require__(324);
 
 	var FinancialAssessment = function () {
 	    'use strict';
@@ -31011,7 +31302,7 @@
 	                    showFormMessage('Your changes have been updated successfully.', true);
 	                    // need to remove financial_assessment_not_complete from status if any
 	                    ChampionSocket.send({ get_account_status: 1 }, true).then(function () {
-	                        Header.displayAccountStatus();
+	                        Notify.updateNotifications();
 	                    });
 	                }
 	            });
@@ -31059,16 +31350,16 @@
 	module.exports = FinancialAssessment;
 
 /***/ }),
-/* 351 */
+/* 353 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Client = __webpack_require__(301);
-	var ChampionSocket = __webpack_require__(305);
-	var Validation = __webpack_require__(322);
-	var moment = __webpack_require__(302);
-	__webpack_require__(352);
+	var Client = __webpack_require__(302);
+	var ChampionSocket = __webpack_require__(306);
+	var Validation = __webpack_require__(324);
+	var moment = __webpack_require__(303);
+	__webpack_require__(354);
 
 	var PersonalDetails = function () {
 	    'use strict';
@@ -31268,7 +31559,7 @@
 	module.exports = PersonalDetails;
 
 /***/ }),
-/* 352 */
+/* 354 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var require;var require;/*!
@@ -36999,12 +37290,12 @@
 
 
 /***/ }),
-/* 353 */
+/* 355 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Client = __webpack_require__(301);
+	var Client = __webpack_require__(302);
 
 	var ChampionSecurity = function () {
 	    'use strict';
@@ -37027,18 +37318,18 @@
 	module.exports = ChampionSecurity;
 
 /***/ }),
-/* 354 */
+/* 356 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var moment = __webpack_require__(302);
-	var Client = __webpack_require__(301);
-	var FormManager = __webpack_require__(338);
-	var ChampionSocket = __webpack_require__(305);
-	var dateValueChanged = __webpack_require__(309).dateValueChanged;
-	var DatePicker = __webpack_require__(336).DatePicker;
-	var TimePicker = __webpack_require__(355);
+	var moment = __webpack_require__(303);
+	var Client = __webpack_require__(302);
+	var FormManager = __webpack_require__(341);
+	var ChampionSocket = __webpack_require__(306);
+	var dateValueChanged = __webpack_require__(310).dateValueChanged;
+	var DatePicker = __webpack_require__(339).DatePicker;
+	var TimePicker = __webpack_require__(357);
 
 	var SelfExclusion = function () {
 	    'use strict';
@@ -37259,13 +37550,13 @@
 	module.exports = SelfExclusion;
 
 /***/ }),
-/* 355 */
+/* 357 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var moment = __webpack_require__(302);
-	var checkInput = __webpack_require__(309).checkInput;
+	var moment = __webpack_require__(303);
+	var checkInput = __webpack_require__(310).checkInput;
 
 	var TimePicker = function TimePicker(component_selector) {
 	    this.component_selector = component_selector;
@@ -37402,13 +37693,13 @@
 	module.exports = TimePicker;
 
 /***/ }),
-/* 356 */
+/* 358 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Client = __webpack_require__(301);
-	var State = __webpack_require__(308).State;
+	var Client = __webpack_require__(302);
+	var State = __webpack_require__(309).State;
 
 	var ChampionSettings = function () {
 	    'use strict';
@@ -37434,18 +37725,18 @@
 	module.exports = ChampionSettings;
 
 /***/ }),
-/* 357 */
+/* 359 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Client = __webpack_require__(301);
-	var Header = __webpack_require__(314);
-	var ChampionSocket = __webpack_require__(305);
-	var default_redirect_url = __webpack_require__(311).default_redirect_url;
-	var url_for = __webpack_require__(311).url_for;
-	var url_for_static = __webpack_require__(311).url_for_static;
-	var template = __webpack_require__(309).template;
+	var Client = __webpack_require__(302);
+	var Notify = __webpack_require__(317);
+	var ChampionSocket = __webpack_require__(306);
+	var default_redirect_url = __webpack_require__(312).default_redirect_url;
+	var url_for = __webpack_require__(312).url_for;
+	var url_for_static = __webpack_require__(312).url_for_static;
+	var template = __webpack_require__(310).template;
 
 	var TNCApproval = function () {
 	    'use strict';
@@ -37471,7 +37762,7 @@
 	        ChampionSocket.send({ tnc_approval: '1' }).then(function (response) {
 	            if (!Object.prototype.hasOwnProperty.call(response, 'error')) {
 	                ChampionSocket.send({ get_settings: 1 }, true).then(function () {
-	                    Header.displayAccountStatus();
+	                    Notify.updateNotifications();
 	                });
 	                window.location.href = default_redirect_url();
 	            } else {
