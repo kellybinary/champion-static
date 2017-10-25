@@ -24602,7 +24602,7 @@
 	    };
 
 	    var social_login = function social_login(brand) {
-	        return login_url() + '&brand=champion&social_signup=' + brand;
+	        return login_url() + '&social_signup=' + brand;
 	    };
 
 	    var is_login_pages = function is_login_pages() {
