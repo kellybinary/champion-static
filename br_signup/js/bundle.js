@@ -29302,6 +29302,7 @@
 	var moment = __webpack_require__(303);
 	var ChampionSocket = __webpack_require__(306);
 	var Client = __webpack_require__(302);
+	var State = __webpack_require__(309).State;
 	var Utility = __webpack_require__(310);
 	var default_redirect_url = __webpack_require__(312).default_redirect_url;
 	var Validation = __webpack_require__(324);
@@ -29315,7 +29316,7 @@
 
 	    var client_residence = void 0;
 
-	    var container = void 0,
+	    var $container = void 0,
 	        btn_submit = void 0,
 	        datePickerInst = void 0;
 
@@ -29325,6 +29326,7 @@
 	        txt_lname: '#txt_lname',
 	        txt_birth_date: '#txt_birth_date',
 	        lbl_residence: '#lbl_residence',
+	        ddl_residence: '#ddl_residence',
 	        txt_address1: '#txt_address1',
 	        txt_address2: '#txt_address2',
 	        txt_city: '#txt_city',
@@ -29346,14 +29348,20 @@
 	            return;
 	        }
 
-	        container = $('#champion-container');
+	        $container = $('#champion-container');
 	        client_residence = Client.get('residence');
+
+	        toggleForm();
 	        displayResidence();
 	        populateState();
 	        attachDatePicker();
 
-	        btn_submit = container.find(fields.btn_submit);
+	        btn_submit = $container.find(fields.btn_submit);
 	        btn_submit.on('click dblclick', submit);
+	    };
+
+	    var hasResidence = function hasResidence() {
+	        return Client.get('residence');
 	    };
 
 	    var unload = function unload() {
@@ -29365,32 +29373,59 @@
 	        }
 	    };
 
+	    var toggleForm = function toggleForm() {
+	        var is_upgrade = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : hasResidence();
+
+	        $container.find('.hide-upgrade')[is_upgrade ? 'addClass' : 'removeClass'](hidden_class);
+	        $container.find('.show-upgrade')[is_upgrade ? 'removeClass' : 'addClass'](hidden_class);
+	    };
+
 	    var initValidation = function initValidation() {
-	        Validation.init(form_selector, [{ selector: fields.txt_fname, validations: ['req', 'letter_symbol', ['min', { min: 2 }]] }, { selector: fields.txt_lname, validations: ['req', 'letter_symbol', ['min', { min: 2 }]] }, { selector: fields.txt_birth_date, validations: ['req'] }, { selector: fields.txt_address1, validations: ['req', 'address', ['length', { min: 1, max: 70 }]] }, { selector: fields.txt_address2, validations: ['address', ['length', { min: 0, max: 70 }]] }, { selector: fields.txt_city, validations: ['req', 'letter_symbol', ['length', { min: 1, max: 35 }]] }, { selector: fields.txt_state, validations: ['letter_symbol'] }, { selector: fields.txt_postcode, validations: ['postcode', ['length', { min: 0, max: 20 }]] }, { selector: fields.txt_phone, validations: ['req', 'phone', ['length', { min: 6, max: 35, exclude: /^\+/ }]] }, { selector: fields.ddl_secret_question, validations: ['req'] }, { selector: fields.txt_secret_answer, validations: ['req', 'general', ['length', { min: 4, max: 50 }]] }, { selector: fields.chk_tnc, validations: ['req'] }, { selector: fields.chk_not_pep, validations: ['req'] }, { selector: fields.ddl_opening_reason, validations: ['req'] }]);
+	        var validations = [{ selector: fields.txt_fname, validations: ['req', 'letter_symbol', ['min', { min: 2 }]] }, { selector: fields.txt_lname, validations: ['req', 'letter_symbol', ['min', { min: 2 }]] }, { selector: fields.txt_birth_date, validations: ['req'] }, { selector: fields.txt_address1, validations: ['req', 'address', ['length', { min: 1, max: 70 }]] }, { selector: fields.txt_address2, validations: ['address', ['length', { min: 0, max: 70 }]] }, { selector: fields.txt_city, validations: ['req', 'letter_symbol', ['length', { min: 1, max: 35 }]] }, { selector: fields.txt_state, validations: ['letter_symbol'] }, { selector: fields.txt_postcode, validations: ['postcode', ['length', { min: 0, max: 20 }]] }, { selector: fields.txt_phone, validations: ['req', 'phone', ['length', { min: 6, max: 35, exclude: /^\+/ }]] }, { selector: fields.ddl_secret_question, validations: ['req'] }, { selector: fields.txt_secret_answer, validations: ['req', 'general', ['length', { min: 4, max: 50 }]] }, { selector: fields.chk_tnc, validations: ['req'] }, { selector: fields.chk_not_pep, validations: ['req'] }, { selector: fields.ddl_opening_reason, validations: ['req'] }];
+	        if (!hasResidence()) {
+	            validations.push({ selector: fields.ddl_residence, validations: ['req'] });
+	        }
+
+	        Validation.init(form_selector, validations);
 	    };
 
 	    var displayResidence = function displayResidence() {
 	        ChampionSocket.send({ residence_list: 1 }).then(function (response) {
-	            container.find('#residence_loading').remove();
-	            var $lbl_residence = container.find(fields.lbl_residence);
-	            var country_obj = response.residence_list.find(function (r) {
-	                return r.value === client_residence;
-	            });
-	            if (country_obj) {
-	                $lbl_residence.text(country_obj.text);
-	                if (country_obj.phone_idd) {
-	                    $(fields.txt_phone).val('+' + country_obj.phone_idd);
-	                }
+	            $container.find('#ddl_residence_loading, #lbl_residence_loading').remove();
+	            if (hasResidence()) {
+	                $container.find(fields.lbl_residence).text(setPhoneIdd(client_residence).text).parent().removeClass(hidden_class);
+	                populateState();
+	            } else {
+	                var $ddl_residence = $container.find(fields.ddl_residence);
+	                Utility.dropDownFromObject($ddl_residence, response.residence_list);
+	                $ddl_residence.off('change').on('change', residenceOnChange);
+	                residenceOnChange();
+	                $ddl_residence.removeClass(hidden_class);
 	            }
-	            $lbl_residence.parent().removeClass(hidden_class);
 	        });
 	    };
 
+	    var residenceOnChange = function residenceOnChange() {
+	        client_residence = $container.find(fields.ddl_residence).val();
+	        setPhoneIdd(client_residence);
+	        populateState(client_residence);
+	    };
+
+	    var setPhoneIdd = function setPhoneIdd(country) {
+	        var country_obj = State.get(['response', 'residence_list']).residence_list.find(function (r) {
+	            return r.value === country;
+	        });
+	        $(fields.txt_phone).val(country_obj && country_obj.phone_idd ? '+' + country_obj.phone_idd : '');
+	        return country_obj;
+	    };
+
 	    var populateState = function populateState() {
-	        ChampionSocket.send({ states_list: client_residence }).then(function (response) {
-	            var $ddl_state = container.find(fields.ddl_state);
+	        var country = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : client_residence;
+
+	        ChampionSocket.send({ states_list: country }).then(function (response) {
+	            var $ddl_state = $container.find(fields.ddl_state);
 	            var states = response.states_list;
-	            container.find('#state_loading').remove();
+	            $container.find('#state_loading').remove();
 	            if (states && states.length) {
 	                Utility.dropDownFromObject($ddl_state, states);
 	                $ddl_state.removeClass(hidden_class);
