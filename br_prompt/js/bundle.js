@@ -29347,8 +29347,8 @@
 	        btn_submit.on('click dblclick', submit);
 	    };
 
-	    var isUpgrade = function isUpgrade() {
-	        return Client.is_logged_in();
+	    var hasResidence = function hasResidence() {
+	        return Client.get('residence');
 	    };
 
 	    var unload = function unload() {
@@ -29361,7 +29361,7 @@
 	    };
 
 	    var toggleForm = function toggleForm() {
-	        var is_upgrade = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : isUpgrade();
+	        var is_upgrade = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : hasResidence();
 
 	        $container.find('.hide-upgrade')[is_upgrade ? 'addClass' : 'removeClass'](hidden_class);
 	        $container.find('.show-upgrade')[is_upgrade ? 'removeClass' : 'addClass'](hidden_class);
@@ -29369,8 +29369,8 @@
 
 	    var initValidation = function initValidation() {
 	        var validations = [{ selector: fields.txt_fname, validations: ['req', 'letter_symbol', ['min', { min: 2 }]] }, { selector: fields.txt_lname, validations: ['req', 'letter_symbol', ['min', { min: 2 }]] }, { selector: fields.txt_birth_date, validations: ['req'] }, { selector: fields.txt_address1, validations: ['req', 'address', ['length', { min: 1, max: 70 }]] }, { selector: fields.txt_address2, validations: ['address', ['length', { min: 0, max: 70 }]] }, { selector: fields.txt_city, validations: ['req', 'letter_symbol', ['length', { min: 1, max: 35 }]] }, { selector: fields.txt_state, validations: ['letter_symbol'] }, { selector: fields.txt_postcode, validations: ['postcode', ['length', { min: 0, max: 20 }]] }, { selector: fields.txt_phone, validations: ['req', 'phone', ['length', { min: 6, max: 35, exclude: /^\+/ }]] }, { selector: fields.ddl_secret_question, validations: ['req'] }, { selector: fields.txt_secret_answer, validations: ['req', 'general', ['length', { min: 4, max: 50 }]] }, { selector: fields.chk_tnc, validations: ['req'] }, { selector: fields.chk_not_pep, validations: ['req'] }, { selector: fields.ddl_opening_reason, validations: ['req'] }];
-	        if (!isUpgrade()) {
-	            validations.push({ selector: fields.txt_verification_code, validations: ['req', 'email_token'] }, { selector: fields.txt_password, validations: ['req', 'password'] }, { selector: fields.txt_re_password, validations: ['req', ['compare', { to: fields.txt_password }]] }, { selector: fields.ddl_residence, validations: ['req'] });
+	        if (!hasResidence()) {
+	            validations.push({ selector: fields.ddl_residence, validations: ['req'] });
 	        }
 
 	        Validation.init(form_selector, validations);
@@ -29379,7 +29379,7 @@
 	    var displayResidence = function displayResidence() {
 	        ChampionSocket.send({ residence_list: 1 }).then(function (response) {
 	            $container.find('#ddl_residence_loading, #lbl_residence_loading').remove();
-	            if (isUpgrade()) {
+	            if (hasResidence()) {
 	                $container.find(fields.lbl_residence).text(setPhoneIdd(client_residence).text).parent().removeClass(hidden_class);
 	                populateState();
 	            } else {
@@ -29393,9 +29393,9 @@
 	    };
 
 	    var residenceOnChange = function residenceOnChange() {
-	        var residence = $container.find(fields.ddl_residence).val();
-	        setPhoneIdd(residence);
-	        populateState(residence);
+	        client_residence = $container.find(fields.ddl_residence).val();
+	        setPhoneIdd(client_residence);
+	        populateState(client_residence);
 	    };
 
 	    var setPhoneIdd = function setPhoneIdd(country) {
