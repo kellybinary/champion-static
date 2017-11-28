@@ -29360,8 +29360,8 @@
 	    };
 
 	    var hasResidence = function hasResidence() {
-	        return Client.get('residence');
-	    };
+	        return '';
+	    }; //Client.get('residence');
 
 	    var unload = function unload() {
 	        if (btn_submit) {
@@ -29396,10 +29396,12 @@
 	                populateState();
 	            } else {
 	                var $ddl_residence = $container.find(fields.ddl_residence);
-	                Utility.dropDownFromObject($ddl_residence, response.residence_list);
-	                $ddl_residence.off('change').on('change', residenceOnChange);
-	                residenceOnChange();
-	                $ddl_residence.removeClass(hidden_class);
+	                if ($ddl_residence) {
+	                    Utility.dropDownFromObject($ddl_residence, response.residence_list);
+	                    $ddl_residence.off('change').on('change', residenceOnChange);
+	                    residenceOnChange();
+	                    $ddl_residence.removeClass(hidden_class);
+	                }
 	            }
 	        });
 	    };
