@@ -24006,7 +24006,7 @@
 	    return true;
 	}
 
-	function dropDownFromObject($ddl, obj_array, default_value, first, on_change) {
+	function dropDownFromObject($ddl, obj_array, default_value, first) {
 	    if (!initDropDown($ddl, first)) return;
 	    obj_array.forEach(function (obj) {
 	        var $option = $('<option/>', { text: obj.text, value: obj.value });
@@ -24018,9 +24018,6 @@
 	        }
 	        $ddl.append($option);
 	    });
-	    if (on_change) {
-	        $ddl.off('change').on('change', on_change);
-	    }
 	}
 
 	function padLeft(text, len, char) {
@@ -29399,8 +29396,8 @@
 	                populateState();
 	            } else {
 	                var $ddl_residence = $container.find(fields.ddl_residence);
-	                Utility.dropDownFromObject($ddl_residence, response.residence_list, null, null, residenceOnChange);
-	                // $ddl_residence.off('change').on('change', residenceOnChange);
+	                Utility.dropDownFromObject($ddl_residence, response.residence_list);
+	                $ddl_residence.off('change').on('change', residenceOnChange);
 	                residenceOnChange();
 	                $ddl_residence.removeClass(hidden_class);
 	            }
