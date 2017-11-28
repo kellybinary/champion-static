@@ -29353,7 +29353,7 @@
 
 	        toggleForm();
 	        displayResidence();
-	        populateState();
+	        // populateState();
 	        attachDatePicker();
 
 	        btn_submit = $container.find(fields.btn_submit);
@@ -29420,7 +29420,9 @@
 	    };
 
 	    var populateState = function populateState() {
-	        ChampionSocket.send({ states_list: client_residence }).then(function (response) {
+	        var country = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : client_residence;
+
+	        ChampionSocket.send({ states_list: country }).then(function (response) {
 	            var $ddl_state = $container.find(fields.ddl_state);
 	            var states = response.states_list;
 	            $container.find('#state_loading').remove();
