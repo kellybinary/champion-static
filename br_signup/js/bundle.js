@@ -29408,7 +29408,7 @@
 	    var residenceOnChange = function residenceOnChange() {
 	        client_residence = $container.find(fields.ddl_residence).val();
 	        setPhoneIdd(client_residence);
-	        populateState(client_residence);
+	        populateState();
 	    };
 
 	    var setPhoneIdd = function setPhoneIdd(country) {
@@ -29420,9 +29420,7 @@
 	    };
 
 	    var populateState = function populateState() {
-	        var country = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : client_residence;
-
-	        ChampionSocket.send({ states_list: country }).then(function (response) {
+	        ChampionSocket.send({ states_list: client_residence }).then(function (response) {
 	            var $ddl_state = $container.find(fields.ddl_state);
 	            var states = response.states_list;
 	            $container.find('#state_loading').remove();
