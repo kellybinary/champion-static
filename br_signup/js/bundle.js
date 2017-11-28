@@ -29353,7 +29353,6 @@
 
 	        toggleForm();
 	        displayResidence();
-	        // populateState();
 	        attachDatePicker();
 
 	        btn_submit = $container.find(fields.btn_submit);
@@ -29399,7 +29398,7 @@
 	                var $ddl_residence = $container.find(fields.ddl_residence);
 	                Utility.dropDownFromObject($ddl_residence, response.residence_list);
 	                $ddl_residence.off('change').on('change', residenceOnChange);
-	                $ddl_residence.trigger('change');
+	                residenceOnChange();
 	                $ddl_residence.removeClass(hidden_class);
 	            }
 	        });
