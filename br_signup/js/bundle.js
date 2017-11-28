@@ -29395,9 +29395,9 @@
 	                $container.find(fields.lbl_residence).text(setPhoneIdd(client_residence).text).parent().removeClass(hidden_class);
 	                populateState();
 	            } else {
-	                var $ddl_residence = $('' + fields.ddl_residence);
+	                var $ddl_residence = $container.find(fields.ddl_residence);
 	                Utility.dropDownFromObject($ddl_residence, response.residence_list);
-	                $ddl_residence[0].addEventListener('change', residenceOnChange);
+	                $ddl_residence[0].addEventListener('change', residenceOnChange); // jQuery .on('change') doesn't work
 	                residenceOnChange();
 	                $ddl_residence.removeClass(hidden_class);
 	            }
