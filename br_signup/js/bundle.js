@@ -29398,8 +29398,8 @@
 	            } else {
 	                var $ddl_residence = $container.find(fields.ddl_residence);
 	                Utility.dropDownFromObject($ddl_residence, response.residence_list);
-	                $ddl_residence.on('change', residenceOnChange);
-	                residenceOnChange();
+	                $ddl_residence.off('change').on('change', residenceOnChange);
+	                $ddl_residence.trigger('change');
 	                $ddl_residence.removeClass(hidden_class);
 	            }
 	        });
@@ -29408,7 +29408,7 @@
 	    var residenceOnChange = function residenceOnChange() {
 	        client_residence = $container.find(fields.ddl_residence).val();
 	        setPhoneIdd(client_residence);
-	        populateState();
+	        populateState(client_residence);
 	    };
 
 	    var setPhoneIdd = function setPhoneIdd(country) {
