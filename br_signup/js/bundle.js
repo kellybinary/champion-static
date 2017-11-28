@@ -29422,10 +29422,14 @@
 	        var country = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : client_residence;
 
 	        ChampionSocket.send({ states_list: country }).then(function (response) {
-	            var $ddl_state = $container.find(fields.ddl_state);
+	            var $ddl_state = $container.find(fields.ddl_state).length ? $container.find(fields.ddl_state) : $container.find(fields.txt_state);
 	            var states = response.states_list;
 	            $container.find('#state_loading').remove();
 	            if (states && states.length) {
+	                if (/INPUT/.test($ddl_state[0].nodeName)) {
+	                    $ddl_state.replaceWith($('<select/>', { id: fields.txt_state.replace('#', '') }));
+	                    populateState(country);
+	                }
 	                Utility.dropDownFromObject($ddl_state, states);
 	                $ddl_state.removeClass(hidden_class);
 	            } else {
