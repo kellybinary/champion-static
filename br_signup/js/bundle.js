@@ -29398,7 +29398,7 @@
 	            } else {
 	                var $ddl_residence = $container.find(fields.ddl_residence);
 	                Utility.dropDownFromObject($ddl_residence, response.residence_list);
-	                $ddl_residence.off('change').on('change', residenceOnChange);
+	                $ddl_residence.change(residenceOnChange);
 	                residenceOnChange();
 	                $ddl_residence.removeClass(hidden_class);
 	            }
