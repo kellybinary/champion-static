@@ -29494,7 +29494,6 @@
 	    };
 
 	    var setResidence = function setResidence() {
-	        if (!Client.is_virtual()) return;
 	        var req = {
 	            set_settings: 1,
 	            residence: client_residence
