@@ -29454,6 +29454,9 @@
 	    var submit = function submit(e) {
 	        e.preventDefault();
 	        btn_submit.attr('disabled', 'disabled');
+	        if (!hasResidence()) {
+	            setResidence();
+	        }
 	        if (Validation.validate(form_selector)) {
 	            var data = {
 	                new_account_real: 1,
@@ -29488,6 +29491,20 @@
 	        } else {
 	            btn_submit.removeAttr('disabled');
 	        }
+	    };
+
+	    var setResidence = function setResidence() {
+	        if (!Client.is_virtual()) return;
+	        var req = {
+	            set_settings: 1,
+	            residence: client_residence
+	        };
+	        ChampionSocket.send(req).then(function (response) {
+	            if (response.error) {
+	                $('#msg_form').removeClass(hidden_class).text(response.error.message);
+	                btn_submit.removeAttr('disabled');
+	            }
+	        });
 	    };
 
 	    return {
