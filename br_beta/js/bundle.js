@@ -23817,6 +23817,21 @@
 	};
 
 	var State = new InScriptStore();
+	State.prototype = InScriptStore.prototype;
+	/**
+	 * Shorthand function to get values from response object of State
+	 *
+	 * @param {String} pathname
+	 *     e.g. getResponse('authorize.currency') == get(['response', 'authorize', 'authorize', 'currency'])
+	 */
+	State.prototype.getResponse = function (pathname) {
+	    var path = pathname;
+	    if (typeof path === 'string') {
+	        var keys = path.split('.');
+	        path = ['response', keys[0]].concat(keys);
+	    }
+	    return this.get(path);
+	};
 	State.set('response', {});
 
 	var CookieStorage = function CookieStorage(cookie_name, cookie_domain) {
@@ -24129,6 +24144,12 @@
 	    showLightBox('success_popup', $contents, true);
 	}
 
+	function toTitleCase(str) {
+	    return (str || '').replace(/\w[^\s/\\]*/g, function (txt) {
+	        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+	    });
+	}
+
 	module.exports = {
 	    showLoadingImage: showLoadingImage,
 	    isEmptyObject: isEmptyObject,
@@ -24148,6 +24169,7 @@
 	    getOffset: getOffset,
 	    showLightBox: showLightBox,
 	    showSuccessPopup: showSuccessPopup,
+	    toTitleCase: toTitleCase,
 
 	    compareBigUnsignedInt: compareBigUnsignedInt
 	};
@@ -30431,52 +30453,88 @@
 	var MetaTraderConfig = __webpack_require__(349);
 	var MetaTraderUI = __webpack_require__(350);
 	var Client = __webpack_require__(302);
-	var switchLoginId = __webpack_require__(315).switchLoginId;
 	var ChampionSocket = __webpack_require__(306);
 	var State = __webpack_require__(309).State;
+	var toTitleCase = __webpack_require__(310).toTitleCase;
 	var Validation = __webpack_require__(324);
 
 	var MetaTrader = function () {
 	    'use strict';
 
-	    var types_info = MetaTraderConfig.types_info;
+	    var mt_companies = MetaTraderConfig.mt_companies;
+	    var accounts_info = MetaTraderConfig.accounts_info;
 	    var actions_info = MetaTraderConfig.actions_info;
 	    var fields = MetaTraderConfig.fields;
 
+	    var mt_company = {};
+
 	    var load = function load() {
-	        State.set('is_mt_pages', 1);
-
-	        if (Client.is_virtual() && Client.has_real()) {
-	            var real_login_id = Client.get('loginid_array').find(function (login) {
-	                return !login.disabled && login.real;
-	            }).id;
-	            switchLoginId(real_login_id);
-	            return;
-	        }
-
-	        ChampionSocket.wait('mt5_login_list').then(function (response) {
-	            responseLoginList(response);
-	        });
-	        MetaTraderUI.init(submit);
-	    };
-
-	    var responseLoginList = function responseLoginList(response) {
-	        (response.mt5_login_list || []).forEach(function (obj) {
-	            var acc_type = Client.getMT5AccountType(obj.group);
-	            if (acc_type) {
-	                // ignore old accounts which are not linked to any group
-	                types_info[acc_type].account_info = { login: obj.login };
-	                getAccountDetails(obj.login, acc_type);
+	        ChampionSocket.wait('landing_company', 'get_account_status').then(function () {
+	            if (isEligible()) {
+	                if (Client.get('is_virtual')) {
+	                    getAllAccountsInfo();
+	                } else {
+	                    ChampionSocket.send({ get_limits: 1 }).then(getAllAccountsInfo);
+	                }
 	            }
 	        });
+	    };
 
-	        Client.set('mt5_account', getDefaultAccount());
+	    var isEligible = function isEligible() {
+	        var has_mt_company = false;
+	        Object.keys(mt_companies).forEach(function (company) {
+	            mt_company[company] = State.getResponse('landing_company.mt_' + company + '_company.shortcode');
+	            if (mt_company[company]) {
+	                has_mt_company = true;
+	                addAccount(company);
+	            }
+	        });
+	        return has_mt_company;
+	    };
 
-	        // Update types with no account
-	        Object.keys(types_info).filter(function (acc_type) {
-	            return !hasAccount(acc_type);
-	        }).forEach(function (acc_type) {
-	            MetaTraderUI.updateAccount(acc_type);
+	    var addAccount = function addAccount(company) {
+	        ['demo', 'real'].forEach(function (type) {
+	            Object.keys(mt_companies[company]).forEach(function (acc_type) {
+	                var company_info = mt_companies[company][acc_type];
+	                var mt5_account_type = company_info.mt5_account_type;
+	                var title = toTitleCase(type) + ' ' + company_info.title;
+	                var is_demo = type === 'demo';
+
+	                accounts_info[type + '_' + mt_company[company] + (mt5_account_type ? '_' + mt5_account_type : '')] = {
+	                    title: title,
+	                    is_demo: is_demo,
+	                    mt5_account_type: mt5_account_type,
+	                    account_type: is_demo ? 'demo' : company,
+	                    max_leverage: company_info.max_leverage,
+	                    short_title: company_info.title
+	                };
+	            });
+	        });
+	    };
+
+	    var getAllAccountsInfo = function getAllAccountsInfo() {
+	        MetaTraderUI.init(submit);
+	        ChampionSocket.wait('mt5_login_list').then(function (response) {
+	            // Ignore old accounts which are not linked to any group or has deprecated group
+	            var mt5_login_list = (response.mt5_login_list || []).filter(function (obj) {
+	                return obj.group && Client.getMT5AccountType(obj.group) in accounts_info;
+	            });
+
+	            // Update account info
+	            mt5_login_list.forEach(function (obj) {
+	                var acc_type = Client.getMT5AccountType(obj.group);
+	                accounts_info[acc_type].info = { login: obj.login };
+	                getAccountDetails(obj.login, acc_type);
+	            });
+
+	            Client.set('mt5_account', getDefaultAccount());
+
+	            // Update types with no account
+	            Object.keys(accounts_info).filter(function (acc_type) {
+	                return !hasAccount(acc_type);
+	            }).forEach(function (acc_type) {
+	                MetaTraderUI.updateAccount(acc_type);
+	            });
 	        });
 	    };
 
@@ -30488,17 +30546,17 @@
 	        } else if (hasAccount(Client.get('mt5_account'))) {
 	            default_account = Client.get('mt5_account');
 	        } else {
-	            default_account = Object.keys(types_info).filter(function (acc_type) {
+	            default_account = Object.keys(accounts_info).filter(function (acc_type) {
 	                return hasAccount(acc_type);
 	            }).sort(function (acc_type) {
-	                return types_info[acc_type].is_demo ? 1 : -1;
+	                return accounts_info[acc_type].is_demo ? 1 : -1;
 	            })[0] || ''; // real first
 	        }
 	        return default_account;
 	    };
 
 	    var hasAccount = function hasAccount(acc_type) {
-	        return (types_info[acc_type] || {}).account_info;
+	        return (accounts_info[acc_type] || {}).account_info;
 	    };
 
 	    var getAccountDetails = function getAccountDetails(login, acc_type) {
@@ -30507,7 +30565,7 @@
 	            login: login
 	        }).then(function (response) {
 	            if (response.mt5_get_settings) {
-	                types_info[acc_type].account_info = response.mt5_get_settings;
+	                accounts_info[acc_type].account_info = response.mt5_get_settings;
 	                MetaTraderUI.updateAccount(acc_type);
 	            }
 	        });
@@ -30552,9 +30610,9 @@
 	                    if (response.error) {
 	                        MetaTraderUI.displayFormMessage(response.error.message, action);
 	                    } else {
-	                        var login = actions_info[action].login ? actions_info[action].login(response) : types_info[acc_type].account_info.login;
-	                        if (!types_info[acc_type].account_info) {
-	                            types_info[acc_type].account_info = { login: login };
+	                        var login = actions_info[action].login ? actions_info[action].login(response) : accounts_info[acc_type].account_info.login;
+	                        if (!accounts_info[acc_type].account_info) {
+	                            accounts_info[acc_type].account_info = { login: login };
 	                            MetaTraderUI.setAccountType(acc_type, true);
 	                        }
 	                        MetaTraderUI.loadAction(null, acc_type);
@@ -30596,14 +30654,14 @@
 	var MetaTraderConfig = function () {
 	    'use strict';
 
-	    var types_info = {
-	        demo_champion_cent: { account_type: 'demo', mt5_account_type: 'cent', title: 'Demo Cent', order: 1, max_leverage: 1000, is_demo: true },
-	        demo_champion_standard: { account_type: 'demo', mt5_account_type: 'standard', title: 'Demo Standard', order: 3, max_leverage: 300, is_demo: true },
-	        demo_champion_stp: { account_type: 'demo', mt5_account_type: 'stp', title: 'Demo STP', order: 5, max_leverage: 100, is_demo: true },
-	        real_champion_cent: { account_type: 'financial', mt5_account_type: 'cent', title: 'Real Cent', order: 2, max_leverage: 1000 },
-	        real_champion_standard: { account_type: 'financial', mt5_account_type: 'standard', title: 'Real Standard', order: 4, max_leverage: 300 },
-	        real_champion_stp: { account_type: 'financial', mt5_account_type: 'stp', title: 'Real STP', order: 6, max_leverage: 100 }
+	    var mt_companies = {
+	        financial: {
+	            standard: { mt5_account_type: 'standard', max_leverage: 500, title: 'Standard' },
+	            advanced: { mt5_account_type: 'advanced', max_leverage: 100, title: 'Advanced' }
+	        }
 	    };
+
+	    var accounts_info = {};
 
 	    var needsRealMessage = function needsRealMessage() {
 	        return $('#msg_' + (Client.has_real() ? 'switch' : 'upgrade')).html();
@@ -30623,7 +30681,7 @@
 	                        $('#msg_real_financial').html(needsRealMessage());
 	                        resolve(true);
 	                    } else {
-	                        ChampionSocket.send({ get_account_status: 1 }).then(function (response_get_account_status) {
+	                        ChampionSocket.wait('get_account_status').then(function (response_get_account_status) {
 	                            var $message = $('#msg_real_financial');
 	                            var is_ok = true;
 	                            if (/financial_assessment_not_complete/.test(response_get_account_status.get_account_status.status)) {
@@ -30640,7 +30698,7 @@
 	                });
 	            },
 	            onSuccess: function onSuccess(response, acc_type) {
-	                showSuccessPopup(template('Congratulation, you’ve successfully created your [_1] account.', [types_info[acc_type].title]), 'You can trade Forex, CFDs and Metals with our virtual money, launch our MetaTrader 5 on our sidebar Quick Links or Download it to your machine or mobile applications.');
+	                showSuccessPopup(template('Congratulations! You’ve successfully created your [_1] account.', [accounts_info[acc_type].title]), 'You can trade Forex, CFDs and Metals with our virtual money, launch our MetaTrader 5 on our sidebar Quick Links or Download it to your machine or mobile applications.');
 	                ChampionSocket.send({ mt5_login_list: 1 });
 	                GTM.mt5NewAccount(response);
 	            }
@@ -30699,7 +30757,7 @@
 	            pre_submit: function pre_submit($form, acc_type, displayFormMessage) {
 	                return ChampionSocket.send({
 	                    mt5_password_check: 1,
-	                    login: types_info[acc_type].account_info.login,
+	                    login: accounts_info[acc_type].account_info.login,
 	                    password: $form.find(fields.withdrawal.txt_main_pass.id).val()
 	                }).then(function (response) {
 	                    if (+response.mt5_password_check === 1) {
@@ -30722,11 +30780,11 @@
 	            chk_tnc: { id: '#chk_tnc' },
 	            additional_fields: function additional_fields(acc_type) {
 	                return $.extend({
-	                    account_type: types_info[acc_type].account_type,
+	                    account_type: accounts_info[acc_type].account_type,
 	                    email: Client.get('email')
-	                }, types_info[acc_type].mt5_account_type ? {
-	                    mt5_account_type: types_info[acc_type].mt5_account_type,
-	                    leverage: types_info[acc_type].max_leverage
+	                }, accounts_info[acc_type].mt5_account_type ? {
+	                    mt5_account_type: accounts_info[acc_type].mt5_account_type,
+	                    leverage: accounts_info[acc_type].max_leverage
 	                } : {});
 	            }
 	        },
@@ -30736,7 +30794,7 @@
 	            txt_re_new_password: { id: '#txt_re_new_password' },
 	            additional_fields: function additional_fields(acc_type) {
 	                return {
-	                    login: types_info[acc_type].account_info.login
+	                    login: accounts_info[acc_type].account_info.login
 	                };
 	            }
 	        },
@@ -30745,16 +30803,16 @@
 	            additional_fields: function additional_fields(acc_type) {
 	                return {
 	                    from_binary: Client.get('loginid'),
-	                    to_mt5: types_info[acc_type].account_info.login
+	                    to_mt5: accounts_info[acc_type].account_info.login
 	                };
 	            }
 	        },
 	        withdrawal: {
 	            txt_amount: { id: '#txt_amount_withdrawal', request_field: 'amount' },
-	            txt_main_pass: { id: '#txt_main_pass' },
+	            txt_main_pass: { id: '#txt_main_pass_wd' },
 	            additional_fields: function additional_fields(acc_type) {
 	                return {
-	                    from_mt5: types_info[acc_type].account_info.login,
+	                    from_mt5: accounts_info[acc_type].account_info.login,
 	                    to_binary: Client.get('loginid')
 	                };
 	            }
@@ -30771,7 +30829,8 @@
 	    };
 
 	    return {
-	        types_info: types_info,
+	        mt_companies: mt_companies,
+	        accounts_info: accounts_info,
 	        actions_info: actions_info,
 	        fields: fields,
 	        validations: validations,
@@ -30812,7 +30871,7 @@
 	        new_account_type = void 0,
 	        submit = void 0;
 
-	    var types_info = MetaTraderConfig.types_info;
+	    var accounts_info = MetaTraderConfig.accounts_info;
 	    var actions_info = MetaTraderConfig.actions_info;
 	    var validations = MetaTraderConfig.validations;
 	    var mt5_currency = MetaTraderConfig.mt5Currency();
@@ -30834,10 +30893,21 @@
 
 	    var populateAccountList = function populateAccountList() {
 	        var $acc_name = $templates.find('> .acc-name');
-	        Object.keys(types_info).sort(function (a, b) {
-	            return types_info[a].order - types_info[b].order;
+	        var acc_group_demo_set = false;
+	        var acc_group_real_set = false;
+	        Object.keys(accounts_info).sort(function (a, b) {
+	            return accounts_info[a].account_type > accounts_info[b].account_type ? 1 : -1;
 	        }).forEach(function (acc_type) {
 	            if ($list.find('[value="' + acc_type + '"]').length === 0) {
+	                if (/^demo/.test(acc_type)) {
+	                    if (!acc_group_demo_set) {
+	                        $list.append($('<div/>', { class: 'acc-group invisible', id: 'acc_group_demo', text: 'Demo Accounts' }));
+	                        acc_group_demo_set = true;
+	                    }
+	                } else if (!acc_group_real_set) {
+	                    $list.append($('<div/>', { class: 'acc-group invisible', id: 'acc_group_real', text: 'Real-Money Accounts' }));
+	                    acc_group_real_set = true;
+	                }
 	                var $acc_item = $acc_name.clone();
 	                $acc_item.attr('value', acc_type);
 	                $list.append($acc_item);
@@ -30873,7 +30943,7 @@
 	    var setAccountType = function setAccountType(acc_type, should_set_account) {
 	        if ($mt5_account.attr('value') !== acc_type) {
 	            Client.set('mt5_account', acc_type);
-	            $mt5_account.attr('value', acc_type).html(types_info[acc_type].title).removeClass('empty');
+	            $mt5_account.attr('value', acc_type).html(accounts_info[acc_type].title).removeClass('empty');
 	            $list.find('.acc-name').removeClass('selected');
 	            $list.find('[value="' + acc_type + '"]').addClass('selected');
 	            $action.setVisibility(0);
@@ -30891,15 +30961,22 @@
 
 	    var updateListItem = function updateListItem(acc_type) {
 	        var $acc_item = $list.find('[value="' + acc_type + '"]');
-	        $acc_item.find('.mt-type').text('' + types_info[acc_type].title);
-	        if (types_info[acc_type].account_info) {
-	            $acc_item.find('.mt-login').text(types_info[acc_type].account_info.login);
+	        $acc_item.find('.mt-type').text(accounts_info[acc_type].title.replace(/(demo|real)\s/i, ''));
+	        if (accounts_info[acc_type].info) {
+	            $acc_item.find('.mt-login').text('(' + accounts_info[acc_type].info.login + ')');
 	            $acc_item.setVisibility(1);
-	            if (acc_type === Client.get('mt5_account')) {
-	                $container.find('.mt-balance').html(formatMoney(+types_info[acc_type].account_info.balance, mt5_currency));
+	            if (/demo/.test(accounts_info[acc_type].account_type)) {
+	                $list.find('#acc_group_demo').setVisibility(1);
+	            } else {
+	                $list.find('#acc_group_real').setVisibility(1);
 	            }
-	            if (Object.keys(types_info).every(function (type) {
-	                return types_info[type].account_info;
+	            if (acc_type === Client.get('mt5_account')) {
+	                var mt_balance = formatMoney(MetaTraderConfig.mt5Currency, +accounts_info[acc_type].info.balance);
+	                $acc_item.find('.mt-balance').html(mt_balance);
+	                $action.find('.mt5-balance').html(mt_balance);
+	            }
+	            if (Object.keys(accounts_info).every(function (type) {
+	                return accounts_info[type].info;
 	            })) {
 	                $container.find('.act_new_account').remove();
 	            }
@@ -30915,16 +30992,16 @@
 	    var setCurrentAccount = function setCurrentAccount(acc_type) {
 	        if (Client.get('mt5_account') && Client.get('mt5_account') !== acc_type) return;
 
-	        $detail.find('#acc_icon').attr('class', types_info[acc_type].mt5_account_type);
+	        $detail.find('#acc_icon').attr('class', accounts_info[acc_type].mt5_account_type);
 	        if (!$('#frm_new_account').is(':visible')) {
 	            displayAccountDescription(acc_type);
 	        }
 
-	        if (types_info[acc_type].account_info) {
+	        if (accounts_info[acc_type].account_info) {
 	            // Update account info
 	            $detail.find('.acc-info [data]').map(function () {
 	                var key = $(this).attr('data');
-	                var info = types_info[acc_type].account_info[key];
+	                var info = accounts_info[acc_type].account_info[key];
 	                $(this).text(key === 'balance' ? isNaN(info) ? '' : formatMoney(+info, mt5_currency) : key === 'leverage' ? '1:' + info : info);
 	            });
 	            $detail.find('.has-account').setVisibility(1);
@@ -30940,7 +31017,7 @@
 	            var action = defaultAction(acc_type);
 
 	            var hash = location.hash.substring(1);
-	            if (types_info[hash] && !types_info[hash].account_info) {
+	            if (accounts_info[hash] && !accounts_info[hash].account_info) {
 	                action = 'new_account';
 	                new_account_type = hash;
 	                removeUrlHash();
@@ -30951,7 +31028,7 @@
 	    };
 
 	    var defaultAction = function defaultAction(acc_type) {
-	        return types_info[acc_type].account_info ? types_info[acc_type].is_demo ? 'password_change' : 'cashier' : 'new_account';
+	        return accounts_info[acc_type].account_info ? accounts_info[acc_type].is_demo ? 'password_change' : 'cashier' : 'new_account';
 	    };
 
 	    var loadAction = function loadAction(action, acc_type) {
@@ -31003,9 +31080,9 @@
 	            _$form.find('.binary-account').text('ChampionFX (' + Client.get('loginid') + ')');
 	            _$form.find('.cashier-guide div:first-child').html('ChampionFX<br>' + Client.get('loginid'));
 
-	            _$form.find('.mt-balance').html(formatMoney(+types_info[acc_type].account_info.balance, mt5_currency));
-	            _$form.find('.mt-account').text(types_info[acc_type].title + ' (' + types_info[acc_type].account_info.login + ')');
-	            _$form.find('.cashier-guide div:last-child').html('MetaTrader 5<br>' + types_info[acc_type].account_info.login);
+	            _$form.find('.mt-balance').html(formatMoney(+accounts_info[acc_type].account_info.balance, mt5_currency));
+	            _$form.find('.mt-account').text(accounts_info[acc_type].title + ' (' + accounts_info[acc_type].account_info.login + ')');
+	            _$form.find('.cashier-guide div:last-child').html('MetaTrader 5<br>' + accounts_info[acc_type].account_info.login);
 
 	            ['deposit', 'withdrawal'].forEach(function (act) {
 	                actions_info[act].prerequisites(acc_type).then(function (error_msg) {
@@ -31040,6 +31117,7 @@
 	    var handleNewAccountUI = function handleNewAccountUI(action, acc_type, $target) {
 	        var is_new_account = action === 'new_account';
 	        var $acc_actions = $container.find('.acc-actions');
+	        $acc_actions.find('.new-account').setVisibility(is_new_account);
 	        $acc_actions.find('.has-account').setVisibility(!is_new_account);
 	        $detail.setVisibility(!is_new_account);
 	        $('.fst-container').toggleClass('no-border', is_new_account);
@@ -31053,6 +31131,7 @@
 	        }
 
 	        // is_new_account
+	        newAccountSetTitle();
 	        displayAccountDescription(action);
 	        _$form = actions_info[action].$form;
 	        actions_info[action].prerequisites(true).then(function (error_msg) {
@@ -31060,7 +31139,7 @@
 	            if (new_account_type) {
 	                if (!/real/.test(new_account_type) || !Client.is_virtual()) {
 	                    // simulate user clicks, so on click the back button correct choice is pre-selected
-	                    _$form.find('#rbtn_' + (types_info[new_account_type].is_demo ? 'demo' : 'real')).click();
+	                    _$form.find('#rbtn_' + (accounts_info[new_account_type].is_demo ? 'demo' : 'real')).click();
 	                    _$form.find('#rbtn_' + new_account_type.split('_').slice(-2).join('_')).click();
 	                    _$form.find('#btn_next').click();
 	                    displayAccountDescription(new_account_type);
@@ -31081,7 +31160,9 @@
 	        };
 	        _$form.find('#btn_next').click(function () {
 	            if (!$(this).hasClass('button-disabled')) {
-	                _$form.find('#view_2 #btn_submit').attr('acc_type', newAccountGetType());
+	                var new_acc_type = newAccountGetType();
+	                newAccountSetTitle(new_acc_type);
+	                _$form.find('#view_2 #btn_submit_new_account').attr('acc_type', new_acc_type);
 	                displayStep(2);
 	                $.scrollTo($container.find('.acc-actions'), 300, { offset: getOffset() });
 	            }
@@ -31094,8 +31175,15 @@
 	        _$form.find('.mt5-type-box').click(selectAccountTypeUI);
 	    };
 
+	    var newAccountSetTitle = function newAccountSetTitle(acc_type) {
+	        $container.find('.acc-actions .new-account span').text($templates.find('#title_new_account').text().replace('[_1]', [acc_type ? accounts_info[acc_type].title : '']));
+	    };
+
 	    var newAccountGetType = function newAccountGetType() {
-	        return _$form.find('.step-1 .selected').attr('data-acc-type') + '_' + _$form.find('.step-2 .selected').attr('data-acc-type');
+	        if (_$form.find('.step-1 .selected').attr('data-acc-type')) {
+	            return _$form.find('.step-1 .selected').attr('data-acc-type') + '_' + _$form.find('.step-2 .selected').attr('data-acc-type');
+	        }
+	        return new_account_type;
 	    };
 
 	    var selectAccountTypeUI = function selectAccountTypeUI(e) {
@@ -31110,6 +31198,7 @@
 	        $item.addClass('selected');
 	        var selected_acc_type = $item.attr('data-acc-type');
 	        if (/(demo|real)/.test(selected_acc_type)) {
+	            newAccountSetTitle();
 	            displayAccountDescription(action);
 	            updateAccountTypesUI(selected_acc_type);
 	            _$form.find('#view_1 #btn_next').addClass('button-disabled');
@@ -31117,16 +31206,21 @@
 	            displayMessage('#new_account_msg', selected_acc_type === 'real' && Client.get('is_virtual') ? MetaTraderConfig.needsRealMessage() : '', true);
 	        } else {
 	            var new_acc_type = newAccountGetType();
+	            newAccountSetTitle(new_acc_type);
 	            displayAccountDescription(new_acc_type);
 	            _$form.find('#view_1 #btn_next').removeClass('button-disabled');
 	        }
 	    };
 
 	    var updateAccountTypesUI = function updateAccountTypesUI(type) {
-	        Object.keys(types_info).filter(function (acc_type) {
+	        Object.keys(accounts_info).filter(function (acc_type) {
 	            return acc_type.indexOf(type) === 0;
 	        }).forEach(function (acc_type) {
-	            _$form.find('.step-2 #' + acc_type.replace(type, 'rbtn')).removeClass('existed disabled selected').addClass(types_info[acc_type].account_info ? 'existed' : type === 'real' && Client.get('is_virtual') ? 'disabled' : '');
+	            var class_name = type === 'real' && Client.get('is_virtual') ? 'disabled' : '';
+	            if (accounts_info[acc_type].info) {
+	                class_name = 'existed';
+	            }
+	            _$form.find('.step-2 #' + acc_type.replace(type, 'rbtn')).removeClass('existed disabled selected').addClass(class_name);
 	        });
 	    };
 
@@ -31184,9 +31278,6 @@
 
 	    return {
 	        init: init,
-	        $form: function $form() {
-	            return _$form;
-	        },
 	        setAccountType: setAccountType,
 	        loadAction: loadAction,
 	        updateAccount: updateAccount,
@@ -31196,7 +31287,11 @@
 	        displayFormMessage: displayFormMessage,
 	        displayMainMessage: displayMainMessage,
 	        disableButton: disableButton,
-	        enableButton: enableButton
+	        enableButton: enableButton,
+
+	        $form: function $form() {
+	            return _$form;
+	        }
 	    };
 	}();
 
