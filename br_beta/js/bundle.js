@@ -18633,8 +18633,8 @@
 	    };
 
 	    var errorMessages = {
-	        login: function login(module) {
-	            return module === MetaTrader ? Utility.template('To register an MT5 account, please <a href="[_1]" class="login">log in</a> to your ChampionFX account<br />\n                Don\'t have a ChampionFX account? <a href="[_1]" class="toggle-signup-modal">Create one</a> now', ['java' + 'script:;']) : Utility.template('Please <a href="[_1]" class="login">log in</a> to view this page.', ['java' + 'script:;']);
+	        login: function login() {
+	            return Utility.template('Please <a href="[_1]" class="login">log in</a> to view this page.', ['java' + 'script:;']);
 	        },
 	        only_virtual: 'Sorry, this feature is available to virtual accounts only.',
 	        only_real: 'This feature is not relevant to virtual-money accounts.'
@@ -30520,6 +30520,13 @@
 	                return obj.group && Client.getMT5AccountType(obj.group) in accounts_info;
 	            });
 
+	            // Don't allow new MT5 account
+	            if (!mt5_login_list.length) {
+	                $('#page_error').html('Sorry, we are disabling this feature at the moment.').setVisibility(1);
+	                $('#mt_loading').remove();
+	                return;
+	            }
+
 	            // Update account info
 	            mt5_login_list.forEach(function (obj) {
 	                var acc_type = Client.getMT5AccountType(obj.group);
@@ -31043,6 +31050,7 @@
 	        $main_msg.setVisibility(0);
 
 	        var acc_type = Client.get('mt5_account');
+
 	        var action = $target.attr('class').split(' ').find(function (c) {
 	            return (/^act_/.test(c)
 	            );
