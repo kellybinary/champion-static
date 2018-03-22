@@ -1258,9 +1258,34 @@ iframe {
           flex: 0 1 auto;
 }
 
+.flex-column-swap {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
 #how_payment_works fieldset {
   border: 3px solid #f2f2f2 !important;
   padding: 40px;
+}
+#how_payment_works fieldset span, #how_payment_works fieldset p {
+  font-size: 12px;
+}
+@media screen and (min-width: 320px) {
+  #how_payment_works fieldset span, #how_payment_works fieldset p {
+    font-size: calc(12px + 4 * ((100vw - 320px) / 880));
+  }
+}
+@media screen and (min-width: 1200px) {
+  #how_payment_works fieldset span, #how_payment_works fieldset p {
+    font-size: 16px;
+  }
 }
 #how_payment_works fieldset legend {
   color: #004385;
@@ -1272,7 +1297,6 @@ iframe {
   font-size: 13px;
 }
 #how_payment_works fieldset .arrow-1 > div {
-  width: 155px;
   height: 33px;
   background: url("../images/mt5/how_payment_works/arrow_deposit.svg") no-repeat center;
 }
@@ -1280,27 +1304,40 @@ iframe {
   background-image: url("../images/mt5/how_payment_works/arrow_withdraw.svg");
 }
 #how_payment_works fieldset .arrow-3 > div {
-  width: 155px;
-  height: 145px;
-  line-height: 40px;
-  background: url("../images/mt5/how_payment_works/arrow_deposit_3.svg") no-repeat center;
+  height: 180px;
+  margin-bottom: 40px;
+  background: url("../images/mt5/how_payment_works/deposit.svg") no-repeat center;
+}
+#how_payment_works fieldset .arrow-3 > div div {
+  line-height: 50px;
+}
+@media (max-width: 768px) {
+  #how_payment_works fieldset .arrow-3 > div {
+    height: 110px;
+  }
+  #how_payment_works fieldset .arrow-3 > div div {
+    line-height: 30px;
+  }
 }
 #how_payment_works fieldset .arrow-3 > div.withdraw {
-  background-image: url("../images/mt5/how_payment_works/arrow_withdraw_3.svg");
+  background: url("../images/mt5/how_payment_works/withdraw.svg") no-repeat center;
 }
 #how_payment_works fieldset .arrow-3 > div :first-child {
-  -webkit-transform: rotate(-15deg);
-          transform: rotate(-15deg);
+  -webkit-transform: rotateZ(-15deg) translateY(-5px) translateX(-10px);
+          transform: rotateZ(-15deg) translateY(-5px) translateX(-10px);
 }
 #how_payment_works fieldset .arrow-3 > div :last-child {
-  -webkit-transform: rotate(15deg);
-          transform: rotate(15deg);
+  -webkit-transform: rotateZ(15deg) translateY(10px) translateX(5px);
+          transform: rotateZ(15deg) translateY(10px) translateX(5px);
 }
 #how_payment_works fieldset .mt5-account {
   text-align: left;
 }
 #how_payment_works fieldset .mt5-account > div {
   margin-bottom: 25px;
+}
+#how_payment_works fieldset .mt5-account > div span {
+  display: block;
 }
 
 .button {
@@ -1398,11 +1435,18 @@ iframe {
   content: url("../images/signup/cross.svg");
 }
 .modal__body {
-  padding: 30px 0 0;
+  padding: 30px 30px 0;
   background: #f2f2f2;
 }
-.modal__body h2 {
-  margin-bottom: 0 !important;
+.modal__body h4 {
+  margin: 10px 0;
+}
+.modal__body .flex-sm-middle.col-xs-9 {
+  padding-left: 5px;
+}
+.modal__body .flex-sm-middle.col-xs-9 p {
+  text-align: left;
+  font-size: 13px !important;
 }
 .modal__form_wrapper {
   padding: 20px 0 30px;
@@ -1432,6 +1476,29 @@ iframe {
 }
 .modal__form_wrapper input ~ *, .modal__form_wrapper button ~ * {
   margin: 10px 0 0;
+}
+.modal__form_wrapper a.button-secondary {
+  text-decoration: none;
+}
+.modal__form_wrapper a.button-secondary span {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 200px;
+  height: 40px;
+  padding: 0;
+}
+.modal__form_wrapper a.button-secondary span.fx:before {
+  padding-right: 10px;
 }
 .modal__form_wrapper .separator {
   margin: 20px auto;
@@ -1465,30 +1532,6 @@ iframe {
   width: 30px;
   margin: 0 auto;
 }
-.modal .flex-display {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  height: 100%;
-}
-.modal .flex-display-swap {
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: reverse;
-  -webkit-flex-direction: column-reverse;
-      -ms-flex-direction: column-reverse;
-          flex-direction: column-reverse;
-  height: initial;
-}
 @media (min-width: 768px) {
   .modal {
     overflow: hidden;
@@ -1496,12 +1539,15 @@ iframe {
     height: 395px;
   }
   .modal__body {
-    padding: 30px;
+    padding: 25px;
     height: 395px;
     background: #013365;
   }
-  .modal__body h2, .modal__body p, .modal__body a {
+  .modal__body * {
     color: #fff;
+  }
+  .modal__body h4 {
+    font-size: 16px;
   }
   .modal__form_wrapper {
     padding: 30px;
@@ -1522,6 +1568,9 @@ iframe {
   .modal__form_wrapper input ~ .error-msg ~ button, .modal__form_wrapper button ~ .error-msg ~ button {
     margin: 10px 0 0;
   }
+  .modal__form_wrapper a.button-secondary span {
+    width: 338px;
+  }
   .modal__footer {
     position: absolute;
     left: 0;
@@ -1531,14 +1580,6 @@ iframe {
   .modal__footer p, .modal__footer a, .modal__footer a:hover {
     font-size: 12px;
     color: #fff;
-  }
-  .modal .flex-display-swap {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    height: 100%;
   }
   .modal .invisible.visible-md-down {
     display: block !important;
@@ -1563,6 +1604,10 @@ iframe {
 
 .field-error {
   border: 1px solid #ea202d;
+}
+
+.google-signup:before {
+  content: url("../images/signup/google_logo.svg");
 }
 
 .fx-advisors {
@@ -2028,16 +2073,12 @@ iframe {
   content: url("../images/milestones/recruitment.svg");
 }
 
-.fx-cent-account:before {
-  content: url("../images/metatrader/cent.svg");
-}
-
 .fx-standard-account:before {
-  content: url("../images/metatrader/standard.svg");
+  content: url("../images/metatrader/standard_account.svg");
 }
 
-.fx-stp-account:before {
-  content: url("../images/metatrader/stp.svg");
+.fx-advanced-account:before {
+  content: url("../images/metatrader/advanced_account.svg");
 }
 
 .fx-android:before {
@@ -3071,17 +3112,27 @@ p {
   background: #fff;
   z-index: 1;
 }
+#mt_account_management #account_selector #accounts_list .acc-group {
+  line-height: 30px;
+  padding: 0 5px;
+  color: #004385;
+}
+#mt_account_management #account_selector #accounts_list .acc-group:hover {
+  cursor: auto;
+}
 #mt_account_management #account_selector #accounts_list .acc-name {
   line-height: 30px;
   padding: 0 20px;
-  border-top: 1px solid #f2f2f2;
 }
 #mt_account_management #account_selector #accounts_list .acc-name:hover {
   background: #f2f2f2;
 }
 #mt_account_management #account_selector #accounts_list .acc-name.selected {
-  color: #004385;
   background: #f2f2f2;
+}
+#mt_account_management #account_selector #accounts_list .acc-name .mt-balance {
+  float: right;
+  font-size: 11px;
 }
 #mt_account_management #account_selector #accounts_list .acc-name .mt-icon {
   float: right;
@@ -3132,14 +3183,11 @@ p {
   background: no-repeat center;
   background-size: 50px;
 }
-#mt_account_management #account_details #acc_icon.cent {
-  background-image: url("../images/metatrader/dashboard/acc_cent.svg");
-}
 #mt_account_management #account_details #acc_icon.standard {
   background-image: url("../images/metatrader/dashboard/acc_standard.svg");
 }
-#mt_account_management #account_details #acc_icon.stp {
-  background-image: url("../images/metatrader/dashboard/acc_stp.svg");
+#mt_account_management #account_details #acc_icon.advanced {
+  background-image: url("../images/metatrader/dashboard/acc_advanced.svg");
 }
 #mt_account_management #account_details .acc-info {
   font-size: 13px;
@@ -3161,7 +3209,6 @@ p {
   float: right;
 }
 #mt_account_management .tab-container {
-  padding: 0 10px 10px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -3210,6 +3257,16 @@ p {
   color: #004385;
   padding-bottom: 2px;
   margin-bottom: -2px;
+}
+#mt_account_management .tab-container .acc-actions .new-account {
+  background: #f2f2f2;
+  padding: 0 10px;
+  line-height: 40px;
+  font-weight: normal;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
 }
 #mt_account_management .fst-container {
   border: 2px solid #f2f2f2;
@@ -4431,6 +4488,82 @@ p {
 
   .fx-partnerships-margin-bottom {
     margin-bottom: 20px;
+  }
+
+  #how_payment_works fieldset {
+    padding: 20px 0 0;
+  }
+  #how_payment_works fieldset p {
+    margin: 0;
+  }
+  #how_payment_works fieldset legend {
+    margin-left: 10px;
+  }
+  #how_payment_works fieldset .amount {
+    font-size: 16px;
+  }
+  #how_payment_works fieldset .amount span.hidden-sm-up {
+    position: absolute;
+    top: 35%;
+    left: 0;
+    right: 0;
+    font-size: 16px;
+  }
+  #how_payment_works fieldset .amount .deposit div, #how_payment_works fieldset .amount .withdraw div {
+    display: none;
+  }
+  #how_payment_works fieldset .arrow-1 div, #how_payment_works fieldset .arrow-3 div {
+    width: 100%;
+    height: 60px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    margin: 20px 0;
+  }
+  #how_payment_works fieldset .arrow-1 > div, #how_payment_works fieldset .arrow-3 > div {
+    background: url("../images/mt5/how_payment_works/arrow_vertical_down.svg") no-repeat center;
+  }
+  #how_payment_works fieldset .arrow-1 > div.withdraw, #how_payment_works fieldset .arrow-3 > div.withdraw {
+    background: url("../images/mt5/how_payment_works/arrow_vertical_up.svg") no-repeat center;
+  }
+  #how_payment_works fieldset .mt5-account {
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-pack: space-evenly;
+    -webkit-justify-content: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
+    text-align: center !important;
+  }
+  #how_payment_works fieldset .mt5-account div {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+
+  .flex-column-swap {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+    -webkit-flex-direction: column-reverse;
+        -ms-flex-direction: column-reverse;
+            flex-direction: column-reverse;
   }
 }
 @media (min-width: 768px) {
