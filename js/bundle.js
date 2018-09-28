@@ -19447,7 +19447,7 @@
 	            cfd: { module: MT5 },
 	            metals: { module: MT5 },
 	            profile: { module: ChampionProfile, is_authenticated: true },
-	            real: { module: ChampionNewReal, is_authenticated: true, only_virtual: true, is_disabled: true }, // eslint-disable-line max-len
+	            real: { module: ChampionNewReal, is_authenticated: true, only_virtual: true }, // eslint-disable-line max-len
 	            redirect: { module: Redirect },
 	            settings: { module: ChampionSettings, is_authenticated: true },
 	            security: { module: ChampionSecurity, is_authenticated: true },
@@ -25678,7 +25678,7 @@
 
 	    var login_url = function login_url() {
 	        var server_url = localStorage.getItem('config.server_url');
-	        return server_url && /qa/.test(server_url) ? 'https://www.' + server_url.split('.')[1] + '.com/oauth2/authorize?app_id=' + getAppId() + '&l=' + getLanguage() + '&brand=champion' : 'https://oauth.champion-fx.com/oauth2/authorize?app_id=' + getAppId() + '&l=' + getLanguage() + '&brand=champion';
+	        return server_url && /qa/.test(server_url) ? 'https://www.' + server_url.split('.')[1] + '.com/oauth2/authorize?app_id=' + getAppId() + '&l=' + getLanguage() : 'https://oauth.champion-fx.com/oauth2/authorize?app_id=' + getAppId() + '&l=' + getLanguage();
 	    };
 
 	    var social_login = function social_login(brand) {
@@ -32792,7 +32792,7 @@
 /* 383 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var require;var require;var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var require;var require;/*!
 	 * Select2 4.0.5
 	 * https://select2.github.io
 	 *
